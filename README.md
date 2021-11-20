@@ -25,6 +25,11 @@ masterにコミットするとgithub actionsによって、本番環境にデプ
 $ TODO
 ```
 
+### Vercel
+[Dashboard](https://vercel.com/pkshimizu/gmemo)
+
+[Go To Site](https://gmemo.vercel.app/)
+
 ## 構成
 ### ディレクトリ構成
 
