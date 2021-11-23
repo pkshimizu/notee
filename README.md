@@ -11,7 +11,7 @@ $ yarn install
 ```shell
 $ yarn dev
 ```
-http://localhost:3000 にアクセスする
+http://localhost:4000 にアクセスする
 
 コードのフォーマットチェックと自動整形
 ```shell

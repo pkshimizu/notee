@@ -1,14 +1,14 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Style from '../components/systems/Style'
-import { Provider } from 'next-auth/client'
+import Auth from '../components/systems/Auth'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Style>
-      <Provider session={pageProps.session}>
+      <Auth>
         <Component {...pageProps} />
-      </Provider>
+      </Auth>
     </Style>
   )
 }

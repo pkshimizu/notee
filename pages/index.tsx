@@ -2,11 +2,22 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useSession, signIn, signOut } from 'next-auth/client'
+import { useCallback, useContext } from 'react'
+import { AuthContext } from '../components/systems/Auth'
+import { GoogleAuthProvider, signInWithRedirect, signOut } from '@firebase/auth'
+import { auth } from '../services/firebase'
 
 const Home: NextPage = () => {
-  const [session, loading] = useSession()
-  
+  const { currentUser } = useContext(AuthContext)
+
+  const handleLogIn = useCallback(() => {
+    const provider = new GoogleAuthProvider()
+    signInWithRedirect(auth, provider)
+  }, [])
+  const handleLogOut = useCallback(() => {
+    signOut(auth)
+  }, [])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,19 +31,18 @@ const Home: NextPage = () => {
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
 
-        {session ? (
+        {currentUser ? (
           <>
-            Hello {session.user?.name}
-            <br />
-            email: {session.user?.email}
-            <br />
-            <button onClick={() => signOut()}>Logout</button>
+            Hello {currentUser.displayName} <br />
+            email: {currentUser.email}
+            {currentUser.photoURL && (
+              <Image src={currentUser.photoURL} alt={'Profile Photo'} width={100} height={100} />
+            )}
+            <button onClick={handleLogOut}>Logout</button>
           </>
         ) : (
           <>
-            Please Login
-            <br />
-            <button onClick={() => signIn()}>Login</button>
+            <button onClick={handleLogIn}>Login</button>
           </>
         )}
 
