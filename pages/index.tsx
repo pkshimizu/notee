@@ -1,12 +1,12 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
+import { useSession, signIn, signOut } from 'next-auth/client'
 
 const Home: NextPage = () => {
-  const [session, loading] = useSession();
-
+  const [session, loading] = useSession()
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -23,6 +23,8 @@ const Home: NextPage = () => {
         {session ? (
           <>
             Hello {session.user?.name}
+            <br />
+            email: {session.user?.email}
             <br />
             <button onClick={() => signOut()}>Logout</button>
           </>
@@ -77,7 +79,7 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
