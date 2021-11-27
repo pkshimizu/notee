@@ -4,19 +4,18 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useCallback, useContext } from 'react'
 import { AuthContext } from '../components/systems/Auth'
-import { GoogleAuthProvider, signInWithRedirect, signOut } from '@firebase/auth'
-import { auth } from '../services/firebase'
+import { Repository } from '../components/systems/RepositoryProvider'
 
 const Home: NextPage = () => {
   const { currentUser } = useContext(AuthContext)
+  const { authRepository } = useContext(Repository)
 
   const handleLogIn = useCallback(() => {
-    const provider = new GoogleAuthProvider()
-    signInWithRedirect(auth, provider)
-  }, [])
+    authRepository.loginWithGoogle()
+  }, [authRepository])
   const handleLogOut = useCallback(() => {
-    signOut(auth)
-  }, [])
+    authRepository.logout()
+  }, [authRepository])
 
   return (
     <div className={styles.container}>
@@ -33,10 +32,10 @@ const Home: NextPage = () => {
 
         {currentUser ? (
           <>
-            Hello {currentUser.displayName} <br />
+            Hello {currentUser.name} <br />
             email: {currentUser.email}
-            {currentUser.photoURL && (
-              <Image src={currentUser.photoURL} alt={'Profile Photo'} width={100} height={100} />
+            {currentUser.imageUrl && (
+              <Image src={currentUser.imageUrl} alt={'Profile Photo'} width={100} height={100} />
             )}
             <button onClick={handleLogOut}>Logout</button>
           </>
