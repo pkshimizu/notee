@@ -8,7 +8,7 @@ type AppBarProps = {
 
 export default function AppBar({ children }: AppBarProps) {
   return (
-    <MuiAppBar position={'static'}>
+    <MuiAppBar position={'static'} elevation={0}>
       <MuiToolbar>{children}</MuiToolbar>
     </MuiAppBar>
   )
