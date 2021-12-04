@@ -1,10 +1,10 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Style from '../components/systems/Style'
-import Auth from '../components/systems/Auth'
+import Auth, { AuthContext } from '../components/systems/Auth'
 import RepositoryProvider from '../components/systems/RepositoryProvider'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <RepositoryProvider>
       <Style>
@@ -15,5 +15,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </RepositoryProvider>
   )
 }
-
-export default MyApp

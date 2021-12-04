@@ -8,5 +8,5 @@ type UserImageProps = {
 export default function UserImage({ user }: UserImageProps) {
   const defaultImage = ''
 
-  return <CircleImage url={user.imageUrl ?? defaultImage} alt={user.name ?? 'user image'} width={64} height={64} />
+  return <CircleImage url={user.imageUrl ?? defaultImage} alt={user.name ?? 'user image'} width={48} height={48} />
 }
