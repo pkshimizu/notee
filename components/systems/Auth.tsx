@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { Repository } from './RepositoryProvider'
 import { User } from '../../repositories/AuthRepository'
-import { useRouter } from 'next/router'
+import { Router } from './RouterProvider'
 
 type AuthContextProps = {
   currentUser: User | undefined
@@ -16,19 +16,19 @@ type AuthProps = {
 export default function Auth({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined)
   const { authRepository } = useContext(Repository)
-  const router = useRouter()
+  const { go } = useContext(Router)
 
   useEffect(() => {
     authRepository.onChangeAuthState((user) => {
-      if (currentUser === undefined && user === undefined) {
-        return
-      }
       setCurrentUser(user ?? undefined)
-      if (user === undefined) {
-        router.push('/login')
-      }
     })
-  }, [authRepository, currentUser, router])
+  }, [authRepository])
+
+  useEffect(() => {
+    if (currentUser === undefined) {
+      go('/login')
+    }
+  }, [currentUser, go])
 
   return <AuthContext.Provider value={{ currentUser: currentUser }}>{children}</AuthContext.Provider>
 }

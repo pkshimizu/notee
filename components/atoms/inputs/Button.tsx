@@ -13,6 +13,7 @@ export default function Button({ icon, variant = 'contained', children, onClick 
     <MuiButton
       startIcon={icon}
       variant={variant}
+      disableElevation
       sx={{
         textTransform: 'none',
       }}

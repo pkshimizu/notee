@@ -6,17 +6,18 @@ import { useCallback, useContext, useEffect } from 'react'
 import { Repository } from '../components/systems/RepositoryProvider'
 import { AuthContext } from '../components/systems/Auth'
 import { useRouter } from 'next/router'
+import { Router } from '../components/systems/RouterProvider'
 
 const Login: NextPage = () => {
   const { currentUser } = useContext(AuthContext)
   const { authRepository } = useContext(Repository)
-  const router = useRouter()
+  const { go } = useContext(Router)
 
   useEffect(() => {
     if (currentUser) {
-      router.push('/')
+      go('/', undefined)
     }
-  }, [currentUser, router])
+  }, [currentUser, go])
 
   const handleLogInWithGoogle = useCallback(() => {
     authRepository.loginWithGoogle()

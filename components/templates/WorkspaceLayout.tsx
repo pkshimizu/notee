@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useContext, useState } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
 import AppBar from '../atoms/surfaces/AppBar'
 import { AuthContext } from '../systems/Auth'
-import UserImage from '../molecules/display/UserImage'
+import UserAvatar from '../molecules/display/UserAvatar'
 import Flex from '../atoms/layout/Flex'
 import Button from '../atoms/inputs/Button'
 import UserMenu from '../organisms/UserMenu'
@@ -24,9 +24,11 @@ export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutPr
       <>
         <Drawer open={false}>
           <AppBar>
-            <Button onClick={handleClickMenu} variant={'text'}>
-              <UserImage user={currentUser} />
-            </Button>
+            <Flex direction={'row'} justify={'flex-end'} align={'center'} width={'160px'}>
+              <Button onClick={handleClickMenu} variant={'text'}>
+                <UserAvatar user={currentUser} />
+              </Button>
+            </Flex>
             <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />
           </AppBar>
           <Flex direction={'column'} justify={'space-between'} height={'100%'}>
