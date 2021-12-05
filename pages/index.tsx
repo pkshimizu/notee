@@ -3,6 +3,8 @@ import WorkspaceLayout from '../components/templates/WorkspaceLayout'
 import { useContext, useEffect } from 'react'
 import { Repository } from '../components/systems/RepositoryProvider'
 import { AuthContext } from '../components/systems/Auth'
+import MemoTree from '../components/organisms/MemoTree'
+import { Folder } from '../repositories/MemoRepository'
 
 const Home: NextPage = () => {
   const { currentUser } = useContext(AuthContext)
@@ -11,10 +13,10 @@ const Home: NextPage = () => {
     if (currentUser) {
       memoRepository.create(currentUser)
     }
-  }, [currentUser])
-  
+  }, [currentUser, memoRepository])
+
   return (
-    <WorkspaceLayout sidebar={<></>}>
+    <WorkspaceLayout sidebar={<MemoTree folder={new Folder('フォルダー', [])} />}>
       <></>
     </WorkspaceLayout>
   )

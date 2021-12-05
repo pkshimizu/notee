@@ -27,6 +27,16 @@ export class Memo {
   }
 }
 
+export class Folder {
+  readonly name: string
+  readonly memos: Memo[]
+
+  constructor(name: string, memos: Memo[]) {
+    this.name = name
+    this.memos = memos
+  }
+}
+
 export default class MemoRepository {
   create(user: User) {
     const memo = new Memo()
