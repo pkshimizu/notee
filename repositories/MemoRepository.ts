@@ -1,14 +1,18 @@
-import {firestore} from "./firebase";
-import {addDoc, collection, doc} from "@firebase/firestore";
-import {User} from "./AuthRepository";
-import dayjs from "dayjs";
+import { firestore } from './firebase'
+import { addDoc, collection, doc } from '@firebase/firestore'
+import { User } from './AuthRepository'
+import dayjs from 'dayjs'
 
 export class Memo {
   readonly content: string
   readonly createdAt: string
   readonly updatedAt: string
 
-  constructor(content: string = "", createdAt: string = dayjs().toISOString(), updatedAt: string = dayjs().toISOString()) {
+  constructor(
+    content: string = '',
+    createdAt: string = dayjs().toISOString(),
+    updatedAt: string = dayjs().toISOString()
+  ) {
     this.content = content
     this.createdAt = createdAt
     this.updatedAt = updatedAt
@@ -18,7 +22,7 @@ export class Memo {
     return {
       content: this.content,
       createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+      updatedAt: this.updatedAt,
     }
   }
 }
