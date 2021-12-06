@@ -1,5 +1,4 @@
 import NextImage from 'next/image'
-import MuiBox from '@mui/material/Box'
 
 type ImageProps = {
   url: string
@@ -9,9 +8,5 @@ type ImageProps = {
 }
 
 export default function Image({ url, alt, width, height }: ImageProps) {
-  return (
-    <MuiBox>
-      <NextImage src={url} alt={alt} width={width} height={height} />
-    </MuiBox>
-  )
+  return <NextImage src={url} alt={alt} width={width} height={height} />
 }

@@ -1,5 +1,4 @@
 import NextImage from 'next/image'
-import MuiBox from '@mui/material/Box'
 import { styled } from '@mui/material'
 
 type ImageProps = {
@@ -14,9 +13,5 @@ const StyledImage = styled(NextImage)({
 })
 
 export default function CircleImage({ url, alt, width, height }: ImageProps) {
-  return (
-    <MuiBox>
-      <StyledImage src={url} alt={alt} width={width} height={height} />
-    </MuiBox>
-  )
+  return <StyledImage src={url} alt={alt} width={width} height={height} />
 }

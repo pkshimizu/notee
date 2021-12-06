@@ -1,5 +1,5 @@
-import { Folder } from '@mui/icons-material'
+import { FolderOutlined } from '@mui/icons-material'
 
 export default function FolderIcon() {
-  return <Folder />
+  return <FolderOutlined />
 }
