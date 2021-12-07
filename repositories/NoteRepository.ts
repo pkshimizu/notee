@@ -1,13 +1,13 @@
 import { firestore } from './firebase'
 import { addDoc, collection, doc } from '@firebase/firestore'
-import { Memo } from '../models/memo'
+import { Note } from '../models/note'
 import { User } from '../models/user'
 
-export default class MemoRepository {
+export default class NoteRepository {
   create(user: User) {
-    const memo = new Memo()
+    const note = new Note()
     const userDoc = doc(firestore, `/users/${user.uid}`)
-    const memos = collection(userDoc, 'memos')
-    addDoc(memos, memo.toJson())
+    const notes = collection(userDoc, 'notes')
+    addDoc(notes, note.toJson())
   }
 }

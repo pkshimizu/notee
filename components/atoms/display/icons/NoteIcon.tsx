@@ -1,5 +1,5 @@
 import { TextSnippetOutlined } from '@mui/icons-material'
 
-export default function MemoIcon() {
+export default function NoteIcon() {
   return <TextSnippetOutlined />
 }

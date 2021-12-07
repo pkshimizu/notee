@@ -1,5 +1,5 @@
-# gmemo
-Google Driveに保存するメモサービス
+# notee
+ノートサービス
 
 ## 初期設定
 ```shell
@@ -52,4 +52,4 @@ $ TODO
 - スタイルは、Atomコンポーネントに使用して、その他のコンポーネントは、AtomコンポーネントのPropsを通してスタイルを指定する
 
 ## 環境
-- [本番環境](https://dmemo.net/)
+- [本番環境](https://notee.net/)

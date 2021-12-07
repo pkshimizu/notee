@@ -1,5 +1,5 @@
 {
-  "name": "gmemo",
+  "name": "notee",
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000",

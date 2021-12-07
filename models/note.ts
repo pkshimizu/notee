@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export class Memo {
+export class Note {
   readonly content: string
   readonly createdAt: string
   readonly updatedAt: string
@@ -26,10 +26,10 @@ export class Memo {
 
 export class Folder {
   readonly name: string
-  readonly memos: Memo[]
+  readonly notes: Note[]
 
-  constructor(name: string, memos: Memo[]) {
+  constructor(name: string, notes: Note[]) {
     this.name = name
-    this.memos = memos
+    this.notes = notes
   }
 }
