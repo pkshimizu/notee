@@ -1,15 +1,19 @@
 import AuthRepository from '../repositories/AuthRepository'
 import { combineReducers, Store } from 'redux'
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { createLogger } from 'redux-logger'
 import sessionSlice, { sessionInitialState } from './session'
+import notesSlice, { notesInitialState } from './notes'
+import NoteRepository from '../repositories/NoteRepository'
 
 const rootReducer = combineReducers({
   session: sessionSlice.reducer,
+  notes: notesSlice.reducer,
 })
 
 const preloadedState = () => ({
   session: sessionInitialState,
+  notes: notesInitialState,
 })
 
 export type StoreState = ReturnType<typeof preloadedState>
@@ -18,6 +22,7 @@ export type ReduxStore = Store<StoreState>
 
 export type Repositories = {
   authRepository: AuthRepository
+  noteRepository: NoteRepository
 }
 
 export type ThunkExtra = {
@@ -27,33 +32,23 @@ export type ThunkExtra = {
 const thunkExtra: ThunkExtra = {
   repositories: {
     authRepository: new AuthRepository(),
+    noteRepository: new NoteRepository(),
   },
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const createStore = () => {
-  const middlewareList = [
-    ...getDefaultMiddleware({
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
       thunk: { extraArgument: thunkExtra },
-    }),
-  ]
-
-  if (process.env.NODE_ENV !== 'production') {
-    const logger = createLogger({
-      diff: true,
-      collapsed: true,
-    })
-    middlewareList.push(logger)
-  }
-
-  return configureStore({
-    reducer: rootReducer,
-    middleware: middlewareList,
-    devTools: process.env.NODE_ENV !== 'production',
-    preloadedState: preloadedState(),
-  })
-}
-
-const store = createStore()
+    }).concat(
+      createLogger({
+        diff: true,
+        collapsed: true,
+      })
+    ),
+  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState: preloadedState(),
+})
 
 export default store
