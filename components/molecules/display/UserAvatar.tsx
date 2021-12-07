@@ -1,5 +1,5 @@
 import Avatar from '../../atoms/display/Avatar'
-import {User} from "../../../models/user";
+import { User } from '../../../models/user'
 
 type UserImageProps = {
   user: User
