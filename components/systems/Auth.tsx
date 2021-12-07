@@ -1,28 +1,28 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
-import { Repository } from './RepositoryProvider'
-import { User } from '../../repositories/AuthRepository'
+import { ReactNode, useContext, useEffect } from 'react'
 import { Router } from './RouterProvider'
-
-type AuthContextProps = {
-  currentUser: User | undefined
-}
-
-export const AuthContext = createContext<AuthContextProps>({ currentUser: undefined })
+import { useDispatch, useSelector } from 'react-redux'
+import { StoreState } from '../../store'
+import { User } from '../../models/user'
+import sessionSlice, { initializeSession } from '../../store/session'
 
 type AuthProps = {
   children: ReactNode
 }
 
 export default function Auth({ children }: AuthProps) {
-  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined)
-  const { authRepository } = useContext(Repository)
+  const currentUser = useSelector<StoreState, User | undefined>((state) => state.session.currentUser)
   const { go } = useContext(Router)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    authRepository.onChangeAuthState((user) => {
-      setCurrentUser(user ?? undefined)
-    })
-  }, [authRepository])
+    dispatch(
+      initializeSession({
+        handleChangeAuthState: (user?: User) => {
+          dispatch(sessionSlice.actions.changeCurrentUser(user))
+        },
+      })
+    )
+  }, [dispatch])
 
   useEffect(() => {
     if (currentUser === undefined) {
@@ -30,5 +30,5 @@ export default function Auth({ children }: AuthProps) {
     }
   }, [currentUser, go])
 
-  return <AuthContext.Provider value={{ currentUser: currentUser }}>{children}</AuthContext.Provider>
+  return <>{children}</>
 }

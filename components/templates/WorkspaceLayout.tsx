@@ -1,11 +1,13 @@
-import { ReactNode, useCallback, useContext, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
 import AppBar from '../atoms/surfaces/AppBar'
-import { AuthContext } from '../systems/Auth'
 import UserAvatar from '../molecules/display/UserAvatar'
 import Flex from '../atoms/layout/Flex'
 import Button from '../atoms/inputs/Button'
 import UserMenu from '../organisms/UserMenu'
+import { useSelector } from 'react-redux'
+import { StoreState } from '../../store'
+import { User } from '../../models/user'
 
 type WorkspaceLayoutProps = {
   sidebar: ReactNode
@@ -13,7 +15,7 @@ type WorkspaceLayoutProps = {
 }
 
 export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutProps) {
-  const { currentUser } = useContext(AuthContext)
+  const currentUser = useSelector<StoreState, User | undefined>((state) => state.session.currentUser)
   const [menuTarget, setMenuTarget] = useState<Element | undefined>(undefined)
   const handleClickMenu = useCallback((target) => {
     setMenuTarget(target)

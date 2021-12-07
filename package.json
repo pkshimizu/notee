@@ -18,15 +18,21 @@
     "@mui/icons-material": "^5.2.0",
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.1.0",
+    "@reduxjs/toolkit": "^1.6.2",
     "dayjs": "^1.10.7",
     "firebase": "^9.5.0",
     "next": "12.0.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-redux": "^7.2.6",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "16.11.7",
     "@types/react": "17.0.34",
+    "@types/react-redux": "^7.1.20",
+    "@types/redux-logger": "^3.0.9",
     "eslint": "7",
     "eslint-config-next": "12.0.3",
     "eslint-config-prettier": "^8.3.0",

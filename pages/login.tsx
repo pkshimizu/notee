@@ -3,15 +3,16 @@ import Flex from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
 import GoogleIcon from '../components/atoms/display/icons/GoogleIcon'
 import { useCallback, useContext, useEffect } from 'react'
-import { Repository } from '../components/systems/RepositoryProvider'
-import { AuthContext } from '../components/systems/Auth'
-import { useRouter } from 'next/router'
 import { Router } from '../components/systems/RouterProvider'
+import { useDispatch, useSelector } from 'react-redux'
+import { StoreState } from '../store'
+import { User } from '../models/user'
+import { loginWithGoogle } from '../store/session'
 
 const Login: NextPage = () => {
-  const { currentUser } = useContext(AuthContext)
-  const { authRepository } = useContext(Repository)
+  const currentUser = useSelector<StoreState, User | undefined>((state) => state.session.currentUser)
   const { go } = useContext(Router)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (currentUser) {
@@ -20,8 +21,8 @@ const Login: NextPage = () => {
   }, [currentUser, go])
 
   const handleLogInWithGoogle = useCallback(() => {
-    authRepository.loginWithGoogle()
-  }, [authRepository])
+    dispatch(loginWithGoogle())
+  }, [dispatch])
 
   return (
     <Flex direction={'column'} align={'center'}>

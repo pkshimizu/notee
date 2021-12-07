@@ -1,8 +1,9 @@
 import Menu from '../atoms/navigation/Menu'
 import MenuItem from '../atoms/navigation/MenuItem'
 import LogoutIcon from '../atoms/display/icons/LogoutIcon'
-import { useContext } from 'react'
-import { Repository } from '../systems/RepositoryProvider'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../store/session'
 
 type UserMenuProps = {
   target?: Element
@@ -10,11 +11,14 @@ type UserMenuProps = {
 }
 
 export default function UserMenu({ target, onClose }: UserMenuProps) {
-  const { authRepository } = useContext(Repository)
+  const dispatch = useDispatch()
+  const handleLogout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
   return (
     <Menu target={target} onClose={onClose}>
-      <MenuItem icon={<LogoutIcon />} onClick={authRepository.logout}>
+      <MenuItem icon={<LogoutIcon />} onClick={handleLogout}>
         Logout
       </MenuItem>
     </Menu>

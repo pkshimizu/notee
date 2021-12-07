@@ -1,13 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Style from '../components/systems/Style'
-import Auth, { AuthContext } from '../components/systems/Auth'
-import RepositoryProvider from '../components/systems/RepositoryProvider'
+import Auth from '../components/systems/Auth'
 import RouterProvider from '../components/systems/RouterProvider'
+import Store from '../components/systems/Store'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <RepositoryProvider>
+    <Store>
       <RouterProvider>
         <Style>
           <Auth>
@@ -15,6 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </Auth>
         </Style>
       </RouterProvider>
-    </RepositoryProvider>
+    </Store>
   )
 }
