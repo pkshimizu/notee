@@ -1,6 +1,6 @@
 import MuiTreeItem from '@mui/lab/TreeItem'
 import { ReactNode } from 'react'
-import MuiBox from "@mui/material/Box";
+import MuiBox from '@mui/material/Box'
 
 type TreeItemProps = {
   id: string
@@ -15,11 +15,9 @@ export default function TreeItem({ id, icon, label, end, children }: TreeItemPro
     <MuiTreeItem
       nodeId={id}
       label={
-        <MuiBox sx={{display: 'flex', flexDirection: 'row', my: 1}}>
-          <MuiBox sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, }}>
-            <MuiBox sx={{mr: 1}}>
-              {icon}
-            </MuiBox>
+        <MuiBox sx={{ display: 'flex', flexDirection: 'row', my: 1 }}>
+          <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
+            <MuiBox sx={{ mr: 1 }}>{icon}</MuiBox>
             {label}
           </MuiBox>
           {end}

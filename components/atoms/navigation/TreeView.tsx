@@ -9,7 +9,7 @@ type TreeViewProps = {
 
 export default function TreeView({ width, children }: TreeViewProps) {
   return (
-    <MuiTreeView defaultCollapseIcon={<ExpandMore />} defaultExpandIcon={<ChevronRight />} sx={{width: width}}>
+    <MuiTreeView defaultCollapseIcon={<ExpandMore />} defaultExpandIcon={<ChevronRight />} sx={{ width: width }}>
       {children}
     </MuiTreeView>
   )
