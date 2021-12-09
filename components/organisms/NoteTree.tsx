@@ -2,20 +2,28 @@ import TreeView from '../atoms/navigation/TreeView'
 import TreeItem from '../atoms/navigation/TreeItem'
 import FolderIcon from '../atoms/display/icons/FolderIcon'
 import NoteIcon from '../atoms/display/icons/NoteIcon'
-import { Folder } from '../../models/note'
+import {Folder, Note} from '../../models/note'
+import NoteTitleLabel from "../molecules/display/NoteTitleLabel";
 
 type NoteTreeProps = {
   folder: Folder
 }
 
-export default function NoteTree({}: NoteTreeProps) {
+function NoteTreeNoteItem({note}: {note: Note}) {
+  return <TreeItem id={note.id} label={<NoteTitleLabel note={note}/>} icon={<NoteIcon />} />
+}
+
+function NoteTreeFolderItem({folder}: {folder: Folder}) {
+  return <TreeItem id={folder.id} label={folder.name} icon={<FolderIcon />}>
+    {folder.folders.map(subFolder => <NoteTreeFolderItem folder={subFolder} />)}
+    {folder.notes.map(note => <NoteTreeNoteItem note={note} />)}
+  </TreeItem>
+}
+
+export default function NoteTree({folder}: NoteTreeProps) {
   return (
-    <TreeView>
-      <TreeItem id={'item1'} label={'フォルダー１'} icon={<FolderIcon />}>
-        <TreeItem id={'item4'} icon={<NoteIcon />} label={'メモ１'} />
-      </TreeItem>
-      <TreeItem id={'item2'} label={'フォルダー２'} icon={<FolderIcon />} />
-      <TreeItem id={'item3'} label={'フォルダー３'} icon={<FolderIcon />} />
+    <TreeView width={"256px"}>
+      <NoteTreeFolderItem folder={folder} />
     </TreeView>
   )
 }

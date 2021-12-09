@@ -26,7 +26,7 @@ export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutPr
       <>
         <Drawer open={false}>
           <AppBar>
-            <Flex direction={'row'} justify={'flex-end'} align={'center'} width={'160px'}>
+            <Flex direction={'row'} justify={'flex-end'} align={'center'} width={'100%'}>
               <Button onClick={handleClickMenu} variant={'text'}>
                 <UserAvatar user={currentUser} />
               </Button>

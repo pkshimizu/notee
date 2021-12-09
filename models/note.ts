@@ -1,15 +1,18 @@
 import dayjs from 'dayjs'
 
 export class Note {
+  readonly id: string
   readonly content: string
   readonly createdAt: string
   readonly updatedAt: string
 
   constructor(
+    id: string,
     content: string = '',
     createdAt: string = dayjs().toISOString(),
     updatedAt: string = dayjs().toISOString()
   ) {
+    this.id = id
     this.content = content
     this.createdAt = createdAt
     this.updatedAt = updatedAt
@@ -25,11 +28,15 @@ export class Note {
 }
 
 export class Folder {
+  readonly id: string
   readonly name: string
+  readonly folders: Folder[]
   readonly notes: Note[]
 
-  constructor(name: string, notes: Note[]) {
+  constructor(id: string, name: string, folders: Folder[] = [], notes: Note[] = []) {
+    this.id = id
     this.name = name
+    this.folders = folders
     this.notes = notes
   }
 }

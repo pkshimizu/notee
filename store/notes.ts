@@ -1,4 +1,4 @@
-import { Folder } from '../models/note'
+import {Folder, Note} from '../models/note'
 import { createSlice } from '@reduxjs/toolkit'
 
 export type NotesState = {
@@ -6,7 +6,17 @@ export type NotesState = {
 }
 
 export const notesInitialState: NotesState = {
-  root: new Folder('全てのノート', []),
+  root: new Folder('root', 'すべてのノート', [
+    new Folder('sub-folder-1', 'aaaaaaaaa'),
+    new Folder('sub-folder-2', 'ああああああああああああああああああ', [
+    ], [
+      new Note('note-3', 'AWSコマンド集（ECS編）'),
+      new Note('note-4', 'ええええええええええええええ'),
+    ])
+  ], [
+    new Note('note-1', 'おおおおおおおおおおおおおおおおおおおお'),
+    new Note('note-2', '')
+  ]),
 }
 
 const notesSlice = createSlice({
