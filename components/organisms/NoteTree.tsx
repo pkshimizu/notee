@@ -17,10 +17,10 @@ function NoteTreeFolderItem({ folder }: { folder: Folder }) {
   return (
     <TreeItem id={folder.id} label={folder.name} icon={<FolderIcon />}>
       {folder.folders.map((subFolder) => (
-        <NoteTreeFolderItem folder={subFolder} />
+        <NoteTreeFolderItem key={subFolder.id} folder={subFolder} />
       ))}
       {folder.notes.map((note) => (
-        <NoteTreeNoteItem note={note} />
+        <NoteTreeNoteItem key={note.id} note={note} />
       ))}
     </TreeItem>
   )
