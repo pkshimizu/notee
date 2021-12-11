@@ -7,7 +7,7 @@ import { StoreState } from '../store'
 
 const Home: NextPage = () => {
   const root = useSelector<StoreState, Folder>((state) => state.notes.root)
-  
+
   return (
     <WorkspaceLayout sidebar={<NoteTree folder={root} />}>
       <></>

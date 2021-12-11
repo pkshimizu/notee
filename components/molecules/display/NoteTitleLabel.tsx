@@ -13,12 +13,12 @@ function makeNoteTitle(note: Note) {
   if (note.content && note.content.length > 0) {
     return truncate(note.content.split('\n')[0])
   }
-  
+
   return '名前なし'
 }
 
 export default function NoteTitleLabel({ note }: NoteTitleLabelProps) {
   const title = makeNoteTitle(note)
-  
+
   return <Label>{title}</Label>
 }
