@@ -28,7 +28,7 @@ function NoteTreeFolderItem({ folder }: { folder: Folder }) {
 
 export default function NoteTree({ folder }: NoteTreeProps) {
   return (
-    <TreeView width={'256px'}>
+    <TreeView>
       <NoteTreeFolderItem folder={folder} />
     </TreeView>
   )

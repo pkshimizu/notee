@@ -8,6 +8,7 @@ import UserMenu from '../organisms/UserMenu'
 import { useSelector } from 'react-redux'
 import { StoreState } from '../../store'
 import { User } from '../../models/user'
+import Margin from "../atoms/layout/Margin";
 
 type WorkspaceLayoutProps = {
   sidebar: ReactNode
@@ -33,11 +34,13 @@ export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutPr
             </Flex>
             <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />
           </AppBar>
-          <Flex direction={'column'} justify={'space-between'} height={'100%'}>
+          <Flex direction={'column'} justify={'space-between'} height={'100%'} width={256}>
             {sidebar}
           </Flex>
         </Drawer>
-        {children}
+        <Margin left={32}>
+          {children}
+        </Margin>
       </>
     )
   }
