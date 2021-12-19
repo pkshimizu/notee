@@ -1,25 +1,67 @@
-import { Folder, Note } from '../models/note'
 import { createSlice } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
+
+export type Note = {
+  id: string
+  title: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type Folder = {
+  id: string
+  name: string
+  folders: Folder[]
+  notes: Note[]
+}
+
+function makeTitle(content: string): string {
+  if (content.length > 0) {
+    return content.split('\n')[0]
+  }
+  return '名前無し'
+}
 
 export type NotesState = {
   root: Folder
 }
 
 export const notesInitialState: NotesState = {
-  root: new Folder(
-    'root',
-    'すべてのノート',
-    [
-      new Folder('sub-folder-1', 'aaaaaaaaa'),
-      new Folder(
-        'sub-folder-2',
-        'ああああああああああああああああああ',
-        [],
-        [new Note('note-3', 'AWSコマンド集（ECS編）'), new Note('note-4', 'ええええええええええええええ')]
-      ),
+  root: {
+    id: 'root',
+    name: 'すべてのノート',
+    folders: [
+      {
+        id: 'folder-1',
+        name: 'aaaaaaaaaaaaaaaaaaaaaa',
+        folders: [],
+        notes: [],
+      },
+      {
+        id: 'folder-2',
+        name: 'あああああああああああああああ',
+        folders: [],
+        notes: [
+          {
+            id: 'note-1',
+            title: makeTitle('AWSコマンド集（ECS編）'),
+            content: 'AWSコマンド集（ECS編）',
+            createdAt: dayjs().toISOString(),
+            updatedAt: dayjs().toISOString(),
+          },
+          {
+            id: 'note-2',
+            title: makeTitle(''),
+            content: '',
+            createdAt: dayjs().toISOString(),
+            updatedAt: dayjs().toISOString(),
+          },
+        ],
+      },
     ],
-    [new Note('note-1', 'おおおおおおおおおおおおおおおおおおおお'), new Note('note-2', '')]
-  ),
+    notes: [],
+  },
 }
 
 const notesSlice = createSlice({

@@ -6,8 +6,7 @@ import { useCallback, useContext, useEffect } from 'react'
 import { Router } from '../components/systems/RouterProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../store'
-import { User } from '../models/user'
-import { loginWithGoogle } from '../store/session'
+import { loginWithGoogle, User } from '../store/session'
 
 const Login: NextPage = () => {
   const currentUser = useSelector<StoreState, User | undefined>((state) => state.session.currentUser)

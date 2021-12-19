@@ -1,6 +1,12 @@
-import { User } from '../models/user'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncAction } from './actions'
+
+export type User = {
+  uid: string
+  name: string | undefined
+  email: string | undefined
+  imageUrl: string | undefined
+}
 
 export type SessionState = {
   initialize: boolean

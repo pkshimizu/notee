@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, onAuthStateChanged, signInWithRedirect, signOut } from '@firebase/auth'
 import { auth } from './firebase'
-import { User } from '../models/user'
+import { User } from '../store/session'
 
 export default class AuthRepository {
   loginWithGoogle() {
@@ -11,7 +11,12 @@ export default class AuthRepository {
   onChangeAuthState(handler: (user: User | undefined) => void) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const loggedInUser = new User(user.uid, user.displayName, user.email, user.photoURL)
+        const loggedInUser: User = {
+          uid: user.uid,
+          name: user.displayName ?? undefined,
+          email: user.email ?? undefined,
+          imageUrl: user.photoURL ?? undefined,
+        }
         handler(loggedInUser)
       } else {
         handler(undefined)

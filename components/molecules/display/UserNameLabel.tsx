@@ -1,5 +1,5 @@
-import { User } from '../../../models/user'
 import Text from '../../atoms/display/Text'
+import { User } from '../../../store/session'
 
 type UserNameLabelProps = {
   user: User

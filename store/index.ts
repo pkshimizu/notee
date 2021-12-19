@@ -5,14 +5,17 @@ import { createLogger } from 'redux-logger'
 import sessionSlice, { sessionInitialState } from './session'
 import notesSlice, { notesInitialState } from './notes'
 import NoteRepository from '../repositories/NoteRepository'
+import workspaceSlice, { workspaceInitialState } from './workspace'
 
 const rootReducer = combineReducers({
   session: sessionSlice.reducer,
+  workspace: workspaceSlice.reducer,
   notes: notesSlice.reducer,
 })
 
 const preloadedState = () => ({
   session: sessionInitialState,
+  workspace: workspaceInitialState,
   notes: notesInitialState,
 })
 

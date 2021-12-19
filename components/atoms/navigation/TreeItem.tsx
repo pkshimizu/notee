@@ -8,9 +8,10 @@ type TreeItemProps = {
   label: ReactNode
   end?: ReactNode
   children?: ReactNode
+  onClick?: () => void
 }
 
-export default function TreeItem({ id, icon, label, end, children }: TreeItemProps) {
+export default function TreeItem({ id, icon, label, end, children, onClick }: TreeItemProps) {
   return (
     <MuiTreeItem
       nodeId={id}
@@ -23,6 +24,7 @@ export default function TreeItem({ id, icon, label, end, children }: TreeItemPro
           {end}
         </MuiBox>
       }
+      onClick={onClick}
     >
       {children}
     </MuiTreeItem>

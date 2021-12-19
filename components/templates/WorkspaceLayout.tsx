@@ -7,8 +7,8 @@ import Button from '../atoms/inputs/Button'
 import UserMenu from '../organisms/UserMenu'
 import { useSelector } from 'react-redux'
 import { StoreState } from '../../store'
-import { User } from '../../models/user'
 import Margin from '../atoms/layout/Margin'
+import { User } from '../../store/session'
 
 type WorkspaceLayoutProps = {
   sidebar: ReactNode

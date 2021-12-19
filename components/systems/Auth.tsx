@@ -2,8 +2,7 @@ import { ReactNode, useContext, useEffect } from 'react'
 import { Router } from './RouterProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../../store'
-import { User } from '../../models/user'
-import sessionSlice, { initializeSession } from '../../store/session'
+import sessionSlice, { initializeSession, User } from '../../store/session'
 
 type AuthProps = {
   children: ReactNode
