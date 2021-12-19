@@ -8,7 +8,8 @@ export default class NoteRepository {
   create(user: User) {
     const note: Note = {
       id: 'id',
-      context: '',
+      title: '',
+      content: '',
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
     }
