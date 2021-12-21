@@ -1,15 +1,28 @@
 import MuiTreeView from '@mui/lab/TreeView'
-import { ReactNode } from 'react'
+import React, { ReactNode, useCallback } from 'react'
 import { ChevronRight, ExpandMore } from '@mui/icons-material'
 
 type TreeViewProps = {
   width?: string
   children: ReactNode
+  onSelect: (value: string) => void
 }
 
-export default function TreeView({ width, children }: TreeViewProps) {
+export default function TreeView({ width, children, onSelect }: TreeViewProps) {
+  const handleSelect = useCallback(
+    (event: React.SyntheticEvent, nodeIds: string[]) => {
+      onSelect(nodeIds[0])
+    },
+    [onSelect]
+  )
+
   return (
-    <MuiTreeView defaultCollapseIcon={<ExpandMore />} defaultExpandIcon={<ChevronRight />} sx={{ width: width }}>
+    <MuiTreeView
+      defaultCollapseIcon={<ExpandMore />}
+      defaultExpandIcon={<ChevronRight />}
+      onNodeSelect={handleSelect}
+      sx={{ width: width }}
+    >
       {children}
     </MuiTreeView>
   )

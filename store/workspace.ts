@@ -21,7 +21,7 @@ const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
   reducers: {
-    addFolder: (state: WorkspaceState, action: PayloadAction<Folder>) => {
+    openFolder: (state: WorkspaceState, action: PayloadAction<Folder>) => {
       if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
         return {
           ...state,
@@ -38,7 +38,7 @@ const workspaceSlice = createSlice({
         activeTabId: action.payload.id,
       }
     },
-    addNote: (state: WorkspaceState, action: PayloadAction<Note>) => {
+    openNote: (state: WorkspaceState, action: PayloadAction<Note>) => {
       if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
         return {
           ...state,
@@ -56,6 +56,14 @@ const workspaceSlice = createSlice({
         activeTabId: action.payload.id,
       }
     },
+    close: (state: WorkspaceState, action: PayloadAction<string>) => ({
+      ...state,
+      tabs: state.tabs.filter((tab) => tab.value !== action.payload),
+    }),
+    active: (state: WorkspaceState, action: PayloadAction<string>) => ({
+      ...state,
+      activeTabId: action.payload,
+    }),
   },
 })
 
