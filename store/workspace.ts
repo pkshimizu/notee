@@ -67,10 +67,23 @@ const workspaceSlice = createSlice({
         activeTabValue: action.payload.id,
       }
     },
-    close: (state: WorkspaceState, action: PayloadAction<string>) => ({
-      ...state,
-      tabs: state.tabs.filter((tab) => tab.value !== action.payload),
-    }),
+    close: (state: WorkspaceState, action: PayloadAction<string>) => {
+      if (state.tabs.length === 1) {
+        return {
+          ...state,
+          tabs: [],
+          activeTabValue: undefined,
+        }
+      }
+      const index = state.tabs.map((tab) => tab.value).indexOf(action.payload)
+      const nextTab = index === 0 ? state.tabs[1] : state.tabs[index - 1]
+      const tabs = state.tabs.filter((tab) => tab.value !== action.payload)
+      return {
+        ...state,
+        tabs: tabs,
+        activeTabValue: nextTab.value,
+      }
+    },
     active: (state: WorkspaceState, action: PayloadAction<string>) => ({
       ...state,
       activeTabValue: action.payload,

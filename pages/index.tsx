@@ -10,6 +10,9 @@ import workspaceSlice, { activeTabSelector, tabsSelector, WorkspaceTab } from '.
 import { useCallback } from 'react'
 import FolderIcon from '../components/atoms/display/icons/FolderIcon'
 import NoteIcon from '../components/atoms/display/icons/NoteIcon'
+import Flex from '../components/atoms/layout/Flex'
+import FolderMenu from '../components/organisms/FolderMenu'
+import NoteMenu from '../components/organisms/NoteMenu'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
@@ -35,14 +38,20 @@ const Home: NextPage = () => {
             if (tab.folder) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
-                  {tab.folder.name}
+                  <Flex direction={'column'}>
+                    <FolderMenu folder={tab.folder} />
+                    {tab.folder.name}
+                  </Flex>
                 </TabPanel>
               )
             }
             if (tab.note) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
-                  {tab.note.content}
+                  <Flex direction={'column'}>
+                    <NoteMenu note={tab.note} />
+                    {tab.note.content}
+                  </Flex>
                 </TabPanel>
               )
             }
