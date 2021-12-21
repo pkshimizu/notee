@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncAction } from './actions'
+import { StoreState } from './index'
 
 export type User = {
   uid: string
@@ -17,6 +18,8 @@ export const sessionInitialState: SessionState = {
   initialize: false,
   currentUser: undefined,
 }
+
+// actions
 
 type InitializeSessionParams = {
   handleChangeAuthState: (user?: User) => void
@@ -39,6 +42,11 @@ export const logout = createAsyncAction<void, void>('logout', async (params, rep
   repositories.authRepository.logout()
 })
 
+// selectors
+const sessionSelector = (state: StoreState) => state.session
+export const currentUserSelector = createSelector([sessionSelector], (state) => state.currentUser)
+
+// slice
 const sessionSlice = createSlice({
   name: 'session',
   initialState: sessionInitialState,

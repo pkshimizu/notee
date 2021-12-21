@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Folder, Note } from './notes'
 import { Tab } from '../components/atoms/navigation/TabView'
+import { StoreState } from './index'
 
 export type WorkspaceTab = {
   folder?: Folder
@@ -9,14 +10,24 @@ export type WorkspaceTab = {
 
 export type WorkspaceState = {
   tabs: WorkspaceTab[]
-  activeTabId?: string
+  activeTabValue?: string
 }
 
 export const workspaceInitialState: WorkspaceState = {
   tabs: [],
-  activeTabId: undefined,
+  activeTabValue: undefined,
 }
 
+// actions
+
+// selectors
+const workspaceSelector = (state: StoreState) => state.workspace
+export const tabsSelector = createSelector([workspaceSelector], (state) => state.tabs)
+export const activeTabSelector = createSelector([workspaceSelector], (state) =>
+  state.tabs.find((tab) => tab.value === state.activeTabValue)
+)
+
+// slice
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
@@ -25,7 +36,7 @@ const workspaceSlice = createSlice({
       if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
         return {
           ...state,
-          activeTabId: action.payload.id,
+          activeTabValue: action.payload.id,
         }
       }
       return {
@@ -35,14 +46,14 @@ const workspaceSlice = createSlice({
           label: action.payload.name,
           folder: action.payload,
         }),
-        activeTabId: action.payload.id,
+        activeTabValue: action.payload.id,
       }
     },
     openNote: (state: WorkspaceState, action: PayloadAction<Note>) => {
       if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
         return {
           ...state,
-          activeTabId: action.payload.id,
+          activeTabValue: action.payload.id,
         }
       }
 
@@ -53,7 +64,7 @@ const workspaceSlice = createSlice({
           label: action.payload.title,
           note: action.payload,
         }),
-        activeTabId: action.payload.id,
+        activeTabValue: action.payload.id,
       }
     },
     close: (state: WorkspaceState, action: PayloadAction<string>) => ({
@@ -62,7 +73,7 @@ const workspaceSlice = createSlice({
     }),
     active: (state: WorkspaceState, action: PayloadAction<string>) => ({
       ...state,
-      activeTabId: action.payload,
+      activeTabValue: action.payload,
     }),
   },
 })

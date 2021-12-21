@@ -2,20 +2,19 @@ import type { NextPage } from 'next'
 import WorkspaceLayout from '../components/templates/WorkspaceLayout'
 import NoteTree from '../components/organisms/NoteTree'
 import { useDispatch, useSelector } from 'react-redux'
-import { StoreState } from '../store'
 import TabView from '../components/atoms/navigation/TabView'
 import TabPanel from '../components/atoms/navigation/TabPanel'
 import Label from '../components/atoms/display/Label'
-import { Folder } from '../store/notes'
-import workspaceSlice, { WorkspaceTab } from '../store/workspace'
+import { rootFolderSelector } from '../store/notes'
+import workspaceSlice, { activeTabSelector, tabsSelector, WorkspaceTab } from '../store/workspace'
 import { useCallback } from 'react'
 import FolderIcon from '../components/atoms/display/icons/FolderIcon'
 import NoteIcon from '../components/atoms/display/icons/NoteIcon'
 
 const Home: NextPage = () => {
-  const root = useSelector<StoreState, Folder>((state) => state.notes.root)
-  const tabs = useSelector<StoreState, WorkspaceTab[]>((state) => state.workspace.tabs)
-  const activeTabId = useSelector<StoreState, string | undefined>((state) => state.workspace.activeTabId)
+  const root = useSelector(rootFolderSelector)
+  const tabs = useSelector(tabsSelector)
+  const activeTab = useSelector(activeTabSelector)
   const dispatch = useDispatch()
   const handleChangeTab = useCallback(
     (value: string) => {
@@ -26,9 +25,9 @@ const Home: NextPage = () => {
 
   return (
     <WorkspaceLayout sidebar={<NoteTree folder={root} />}>
-      {activeTabId ? (
+      {activeTab ? (
         <TabView
-          value={activeTabId}
+          value={activeTab.value}
           tabs={tabs.map((tab) => ({ ...tab, icon: tab.folder ? <FolderIcon /> : <NoteIcon /> }))}
           onChange={handleChangeTab}
         >

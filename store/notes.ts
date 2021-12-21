@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
+import { StoreState } from './index'
 
 export type Note = {
   id: string
@@ -63,7 +64,13 @@ export const notesInitialState: NotesState = {
     notes: [],
   },
 }
+// actions
 
+// selectors
+const noteSelector = (state: StoreState) => state.notes
+export const rootFolderSelector = createSelector([noteSelector], (state) => state.root)
+
+// slice
 const notesSlice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
