@@ -38,13 +38,13 @@ export default function NoteTree({ folder }: NoteTreeProps) {
       const folder = folders.find((folder) => folder.id === value)
       if (folder) {
         dispatch(workspaceSlice.actions.openFolder(folder))
-        
+
         return
       }
       const note = notes.find((note) => note.id === value)
       if (note) {
         dispatch(workspaceSlice.actions.openNote(note))
-        
+
         return
       }
     },

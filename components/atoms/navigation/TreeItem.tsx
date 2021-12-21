@@ -33,7 +33,7 @@ const CustomContent = React.forwardRef(function CustomContent(props: TreeItemCon
   }
 
   return (
-    <div
+    <MuiBox
       className={clsx(className, classes.root, {
         [classes.expanded]: expanded,
         [classes.selected]: selected,
@@ -43,13 +43,13 @@ const CustomContent = React.forwardRef(function CustomContent(props: TreeItemCon
       onMouseDown={handleMouseDown}
       ref={ref as React.Ref<HTMLDivElement>}
     >
-      <div onClick={handleExpansionClick} className={classes.iconContainer}>
+      <MuiBox onClick={handleExpansionClick} className={classes.iconContainer}>
         {icon}
-      </div>
+      </MuiBox>
       <MuiTypography onClick={handleSelectionClick} component='div' className={classes.label}>
         {label}
       </MuiTypography>
-    </div>
+    </MuiBox>
   )
 })
 
@@ -61,7 +61,9 @@ export default function TreeItem({ id, icon, label, end, children }: TreeItemPro
       nodeId={id}
       label={
         <MuiBox sx={{ display: 'flex', flexDirection: 'row', my: 1 }}>
-          <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
+          <MuiBox
+            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, wordBreak: 'break-all' }}
+          >
             <MuiBox sx={{ mr: 1 }}>{icon}</MuiBox>
             {label}
           </MuiBox>
