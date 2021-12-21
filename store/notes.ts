@@ -70,10 +70,10 @@ export const notesInitialState: NotesState = {
 const noteSelector = (state: StoreState) => state.notes
 export const rootFolderSelector = createSelector([noteSelector], (state) => state.root)
 const pickupFolders = (folder: Folder): Folder[] => {
-  return folder.folders.flatMap(folder => pickupFolders(folder)).concat(folder)
+  return folder.folders.flatMap((folder) => pickupFolders(folder)).concat(folder)
 }
 const pickupNotes = (folder: Folder): Note[] => {
-  return folder.folders.flatMap(folder => pickupNotes(folder)).concat(folder.notes)
+  return folder.folders.flatMap((folder) => pickupNotes(folder)).concat(folder.notes)
 }
 export const foldersSelector = createSelector([noteSelector], (state) => pickupFolders(state.root))
 export const notesSelector = createSelector([noteSelector], (state) => pickupNotes(state.root))
