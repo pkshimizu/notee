@@ -7,5 +7,9 @@ type TabPanelProps = {
 }
 
 export default function TabPanel({ value, children }: TabPanelProps) {
-  return <MuiTabPanel value={value}>{children}</MuiTabPanel>
+  return (
+    <MuiTabPanel value={value} sx={{ p: 0 }}>
+      {children}
+    </MuiTabPanel>
+  )
 }

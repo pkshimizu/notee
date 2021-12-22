@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import MuiBox from '@mui/material/Box'
 
 export type FlexAlign = 'flex-start' | 'center' | 'flex-end' | 'baseline'
-export type FlexJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between'
+export type FlexJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
 
 type FlexProps = {
   direction: 'row' | 'column'
@@ -24,6 +24,7 @@ export default function Flex({ direction, align, justify, width, height, space =
         justifyContent: justify,
         width,
         height,
+        flexGrow: 1,
         '& > *:not(:last-child)': {
           mr: direction === 'row' ? space : undefined,
           mb: direction === 'column' ? space : undefined,

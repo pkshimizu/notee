@@ -9,7 +9,7 @@ type AppBarProps = {
 export default function AppBar({ children }: AppBarProps) {
   return (
     <MuiAppBar position={'static'} elevation={0}>
-      <MuiToolbar>{children}</MuiToolbar>
+      <MuiToolbar variant={'dense'}>{children}</MuiToolbar>
     </MuiAppBar>
   )
 }
