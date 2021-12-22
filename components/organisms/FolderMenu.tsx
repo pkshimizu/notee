@@ -20,7 +20,7 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleCreateFolder = useCallback(() => {
     dispatch(createFolder({ name: 'new folder', parentFolder: folder }))
   }, [dispatch, folder])
-  const handleCreateNote = useCallback(() => {}, [dispatch, folder])
+  const handleCreateNote = useCallback(() => {}, [])
   const handleDeleteFolder = useCallback(() => {
     dispatch(deleteFolder({ folder: folder }))
   }, [dispatch, folder])
