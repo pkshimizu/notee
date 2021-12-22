@@ -6,6 +6,7 @@ import sessionSlice, { sessionInitialState } from './session'
 import notesSlice, { notesInitialState } from './notes'
 import NoteRepository from '../repositories/NoteRepository'
 import workspaceSlice, { workspaceInitialState } from './workspace'
+import UserRepository from '../repositories/UserRepository'
 
 const rootReducer = combineReducers({
   session: sessionSlice.reducer,
@@ -25,6 +26,7 @@ export type ReduxStore = Store<StoreState>
 
 export type Repositories = {
   authRepository: AuthRepository
+  userRepository: UserRepository
   noteRepository: NoteRepository
 }
 
@@ -35,6 +37,7 @@ export type ThunkExtra = {
 const thunkExtra: ThunkExtra = {
   repositories: {
     authRepository: new AuthRepository(),
+    userRepository: new UserRepository(),
     noteRepository: new NoteRepository(),
   },
 }

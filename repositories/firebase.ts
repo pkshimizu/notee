@@ -1,7 +1,7 @@
 import { getAnalytics } from 'firebase/analytics'
 import { initializeApp } from '@firebase/app'
 import { getAuth } from '@firebase/auth'
-import { getFirestore } from '@firebase/firestore'
+import { initializeFirestore } from '@firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -16,4 +16,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const analytics = getAnalytics(app)
 export const auth = getAuth()
-export const firestore = getFirestore(app)
+export const firestore = initializeFirestore(app, { ignoreUndefinedProperties: true })

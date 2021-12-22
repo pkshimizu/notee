@@ -1,21 +1,27 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 import { StoreState } from './index'
+import { createAsyncAction } from './actions'
 
 export type Note = {
   id: string
+  parentId: string
   title: string
   content: string
   createdAt: string
   updatedAt: string
 }
 
+export type FolderDoc = {
+  parentId?: string
+  name: string
+}
+
 export type Folder = {
   id: string
-  name: string
   folders: Folder[]
   notes: Note[]
-}
+} & FolderDoc
 
 function makeTitle(content: string): string {
   if (content.length > 0) {
@@ -25,46 +31,23 @@ function makeTitle(content: string): string {
 }
 
 export type NotesState = {
-  root: Folder
+  root?: Folder
 }
 
 export const notesInitialState: NotesState = {
-  root: {
-    id: 'root',
-    name: 'すべてのノート',
-    folders: [
-      {
-        id: 'folder-1',
-        name: 'aaaaaaaaaaaaaaaaaaaaaa',
-        folders: [],
-        notes: [],
-      },
-      {
-        id: 'folder-2',
-        name: 'あああああああああああああああ',
-        folders: [],
-        notes: [
-          {
-            id: 'note-1',
-            title: makeTitle('AWSコマンド集（ECS編）'),
-            content: 'AWSコマンド集（ECS編）',
-            createdAt: dayjs().toISOString(),
-            updatedAt: dayjs().toISOString(),
-          },
-          {
-            id: 'note-2',
-            title: makeTitle(''),
-            content: '',
-            createdAt: dayjs().toISOString(),
-            updatedAt: dayjs().toISOString(),
-          },
-        ],
-      },
-    ],
-    notes: [],
-  },
+  root: undefined,
 }
+
 // actions
+export const fetchFolders = createAsyncAction<void, void>('fetchFolders', async (params, { noteRepository }, state) => {
+  if (state.session.currentUser) {
+    const currentUser = state.session.currentUser
+    const root = await noteRepository.loadRootFolder(currentUser)
+    if (root === undefined) {
+      await noteRepository.createFolder(currentUser, '全てのノート')
+    }
+  }
+})
 
 // selectors
 const noteSelector = (state: StoreState) => state.notes
@@ -75,8 +58,8 @@ const pickupFolders = (folder: Folder): Folder[] => {
 const pickupNotes = (folder: Folder): Note[] => {
   return folder.folders.flatMap((folder) => pickupNotes(folder)).concat(folder.notes)
 }
-export const foldersSelector = createSelector([noteSelector], (state) => pickupFolders(state.root))
-export const notesSelector = createSelector([noteSelector], (state) => pickupNotes(state.root))
+export const foldersSelector = createSelector([noteSelector], (state) => (state.root ? pickupFolders(state.root) : []))
+export const notesSelector = createSelector([noteSelector], (state) => (state.root ? pickupNotes(state.root) : []))
 
 // slice
 const notesSlice = createSlice({

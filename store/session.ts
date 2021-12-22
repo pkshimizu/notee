@@ -20,16 +20,19 @@ export const sessionInitialState: SessionState = {
 }
 
 // actions
-
-type InitializeSessionParams = {
-  handleChangeAuthState: (user?: User) => void
-}
-
-export const initializeSession = createAsyncAction<InitializeSessionParams, void>(
+export const initializeSession = createAsyncAction<void, void>(
   'initializeSession',
-  async (params, repositories, state) => {
+  async (params, { authRepository, userRepository }, state, dispatch) => {
     if (!state.session.initialize) {
-      repositories.authRepository.onChangeAuthState(params.handleChangeAuthState)
+      authRepository.onChangeAuthState(async (user) => {
+        if (user) {
+          const result = await userRepository.loadUser(user)
+          if (!result) {
+            await userRepository.createUser(user)
+          }
+        }
+        dispatch(sessionSlice.actions.changeCurrentUser(user))
+      })
     }
   }
 )

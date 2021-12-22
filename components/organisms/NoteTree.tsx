@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 
 type NoteTreeProps = {
-  folder: Folder
+  folder?: Folder
 }
 
 function NoteTreeNoteItem({ note }: { note: Note }) {
@@ -51,9 +51,5 @@ export default function NoteTree({ folder }: NoteTreeProps) {
     [folders, notes, dispatch]
   )
 
-  return (
-    <TreeView onSelect={handleSelectTab}>
-      <NoteTreeFolderItem folder={folder} />
-    </TreeView>
-  )
+  return <TreeView onSelect={handleSelectTab}>{folder && <NoteTreeFolderItem folder={folder} />}</TreeView>
 }
