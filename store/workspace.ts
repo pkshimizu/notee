@@ -2,7 +2,6 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Folder, Note } from './notes'
 import { Tab } from '../components/atoms/navigation/TabView'
 import { StoreState } from './index'
-import { createAsyncAction } from './actions'
 
 export type WorkspaceTab = {
   folder?: Folder
@@ -20,42 +19,6 @@ export const workspaceInitialState: WorkspaceState = {
 }
 
 // actions
-type CreateFolderParams = {
-  name: string
-  parentFolder: Folder
-}
-
-export const createFolder = createAsyncAction<CreateFolderParams, void>(
-  'CreateFolder',
-  async (params, repositories, state) => {}
-)
-
-type CreateNoteParams = {
-  parentFolder: Folder
-}
-
-export const createNote = createAsyncAction<CreateNoteParams, void>(
-  'CreateNote',
-  async (params, repositories, state) => {}
-)
-
-type DeleteFolderParams = {
-  folder: Folder
-}
-
-export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
-  'DeleteFolder',
-  async (params, repositories, state) => {}
-)
-
-type DeleteNoteParams = {
-  note: Note
-}
-
-export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
-  'DeleteNote',
-  async (params, repositories, state) => {}
-)
 
 // selectors
 const workspaceSelector = (state: StoreState) => state.workspace

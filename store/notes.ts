@@ -3,17 +3,20 @@ import dayjs from 'dayjs'
 import { StoreState } from './index'
 import { createAsyncAction } from './actions'
 
-export type Note = {
-  id: string
-  parentId: string
-  title: string
+export type NoteDoc = {
+  folderId: string
   content: string
   createdAt: string
   updatedAt: string
 }
 
+export type Note = {
+  id: string
+  title: string
+} & NoteDoc
+
 export type FolderDoc = {
-  parentId?: string
+  folderId?: string
   name: string
 }
 
@@ -22,13 +25,6 @@ export type Folder = {
   folders: Folder[]
   notes: Note[]
 } & FolderDoc
-
-function makeTitle(content: string): string {
-  if (content.length > 0) {
-    return content.split('\n')[0]
-  }
-  return '名前無し'
-}
 
 export type NotesState = {
   root?: Folder
@@ -39,15 +35,77 @@ export const notesInitialState: NotesState = {
 }
 
 // actions
-export const fetchFolders = createAsyncAction<void, void>('fetchFolders', async (params, { noteRepository }, state) => {
-  if (state.session.currentUser) {
-    const currentUser = state.session.currentUser
-    const root = await noteRepository.loadRootFolder(currentUser)
-    if (root === undefined) {
-      await noteRepository.createFolder(currentUser, '全てのノート')
+type FetchRootResults = {
+  root?: Folder
+}
+const fetchNoteToFolder = (folder: Folder, note: Note) => {
+  if (folder.id === note.folderId) {
+    folder.notes.push(note)
+    return true
+  }
+  folder.folders.forEach((subFolder) => fetchNoteToFolder(subFolder, note))
+}
+export const fetchRoot = createAsyncAction<void, FetchRootResults>(
+  'fetchRoot',
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      const currentUser = state.session.currentUser
+      const root = await noteRepository.loadRootFolder(currentUser)
+      if (root === undefined) {
+        return { root: await noteRepository.createFolder(currentUser, 'マイノート') }
+      }
+      const notes = await noteRepository.loadNotes(currentUser)
+      notes.forEach((note) => fetchNoteToFolder(root, note))
+      return { root: root }
+    }
+    return { root: undefined }
+  }
+)
+
+type CreateFolderParams = {
+  name: string
+  parentFolder: Folder
+}
+
+export const createFolder = createAsyncAction<CreateFolderParams, void>(
+  'CreateFolder',
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.createFolder(state.session.currentUser, params.name, params.parentFolder)
     }
   }
-})
+)
+
+type CreateNoteParams = {
+  parentFolder: Folder
+}
+
+export const createNote = createAsyncAction<CreateNoteParams, void>(
+  'CreateNote',
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.createNote(state.session.currentUser, params.parentFolder)
+    }
+  }
+)
+
+type DeleteFolderParams = {
+  folder: Folder
+}
+
+export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
+  'DeleteFolder',
+  async (params, repositories, state) => {}
+)
+
+type DeleteNoteParams = {
+  note: Note
+}
+
+export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
+  'DeleteNote',
+  async (params, repositories, state) => {}
+)
 
 // selectors
 const noteSelector = (state: StoreState) => state.notes
@@ -66,7 +124,12 @@ const notesSlice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchRoot.fulfilled, (state, action) => ({
+      ...state,
+      root: action.payload.root,
+    }))
+  },
 })
 
 export default notesSlice

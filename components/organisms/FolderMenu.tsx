@@ -1,9 +1,9 @@
-import { Folder } from '../../store/notes'
+import { createFolder, createNote, deleteFolder, Folder } from '../../store/notes'
 import Flex from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import workspaceSlice, { createFolder, deleteFolder } from '../../store/workspace'
+import workspaceSlice from '../../store/workspace'
 import CloseIcon from '../atoms/display/icons/CloseIcon'
 import AppBar from '../atoms/surfaces/AppBar'
 import CreateFolderIcon from '../atoms/display/icons/CreateFolderIcon'
@@ -19,7 +19,9 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleCreateFolder = useCallback(() => {
     dispatch(createFolder({ name: 'new folder', parentFolder: folder }))
   }, [dispatch, folder])
-  const handleCreateNote = useCallback(() => {}, [])
+  const handleCreateNote = useCallback(() => {
+    dispatch(createNote({ parentFolder: folder }))
+  }, [dispatch, folder])
   const handleDeleteFolder = useCallback(() => {
     dispatch(deleteFolder({ folder: folder }))
   }, [dispatch, folder])

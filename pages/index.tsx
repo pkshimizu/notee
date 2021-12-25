@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import TabView from '../components/atoms/navigation/TabView'
 import TabPanel from '../components/atoms/navigation/TabPanel'
 import Label from '../components/atoms/display/Label'
-import { fetchFolders, rootFolderSelector } from '../store/notes'
+import { fetchRoot, rootFolderSelector } from '../store/notes'
 import workspaceSlice, { activeTabSelector, tabsSelector, WorkspaceTab } from '../store/workspace'
 import { useCallback, useEffect } from 'react'
 import FolderIcon from '../components/atoms/display/icons/FolderIcon'
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   const activeTab = useSelector(activeTabSelector)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchFolders())
+    dispatch(fetchRoot())
   }, [dispatch])
   const handleChangeTab = useCallback(
     (value: string) => {
