@@ -1,7 +1,7 @@
-import { createFolder, createNote, deleteFolder, Folder } from '../../store/notes'
+import { createFolder, createNote, deleteFolder, deleteNote, Folder } from '../../store/notes'
 import Flex from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
-import { useCallback } from 'react'
+import { Dispatch, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import CloseIcon from '../atoms/display/icons/CloseIcon'
@@ -14,6 +14,16 @@ type FolderMenuProps = {
   folder: Folder
 }
 
+const deleteFolderItems = async (dispatch: Dispatch<any>, folder: Folder) => {
+  for (const subFolder of folder.folders) {
+    await deleteFolderItems(dispatch, subFolder)
+  }
+  for (const note of folder.notes) {
+    await dispatch(await deleteNote({ note: note }))
+  }
+  await dispatch(deleteFolder({ folder: folder }))
+}
+
 export default function FolderMenu({ folder }: FolderMenuProps) {
   const dispatch = useDispatch()
   const handleCreateFolder = useCallback(() => {
@@ -22,8 +32,8 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleCreateNote = useCallback(() => {
     dispatch(createNote({ parentFolder: folder }))
   }, [dispatch, folder])
-  const handleDeleteFolder = useCallback(() => {
-    dispatch(deleteFolder({ folder: folder }))
+  const handleDeleteFolder = useCallback(async () => {
+    await deleteFolderItems(dispatch, folder)
   }, [dispatch, folder])
   const handleClose = useCallback(() => {
     dispatch(workspaceSlice.actions.close(folder.id))
@@ -39,9 +49,11 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
           <IconButton onClick={handleCreateNote}>
             <CreateNoteIcon />
           </IconButton>
-          <IconButton onClick={handleDeleteFolder}>
-            <DeleteIcon />
-          </IconButton>
+          {folder.folderId && (
+            <IconButton onClick={handleDeleteFolder}>
+              <DeleteIcon />
+            </IconButton>
+          )}
         </Flex>
         <Flex direction={'row'} justify={'flex-end'}>
           <IconButton onClick={handleClose}>

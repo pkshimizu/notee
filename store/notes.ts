@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 import { StoreState } from './index'
 import { createAsyncAction } from './actions'
@@ -47,7 +47,7 @@ const fetchNoteToFolder = (folder: Folder, note: Note) => {
 }
 export const fetchRoot = createAsyncAction<void, FetchRootResults>(
   'fetchRoot',
-  async (params, { noteRepository }, state) => {
+  async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       const currentUser = state.session.currentUser
       const root = await noteRepository.loadRootFolder(currentUser)
@@ -56,6 +56,30 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
       }
       const notes = await noteRepository.loadNotes(currentUser)
       notes.forEach((note) => fetchNoteToFolder(root, note))
+      noteRepository.onSnapshotFolders(
+        currentUser,
+        (folder) => {
+          dispatch(notesSlice.actions.addFolder(folder))
+        },
+        (folder) => {
+          dispatch(notesSlice.actions.modifyFolder(folder))
+        },
+        (folder) => {
+          dispatch(notesSlice.actions.removeFolder(folder))
+        }
+      )
+      noteRepository.onSnapshotNotes(
+        currentUser,
+        (note) => {
+          dispatch(notesSlice.actions.addNote(note))
+        },
+        (note) => {
+          dispatch(notesSlice.actions.modifyNote(note))
+        },
+        (note) => {
+          dispatch(notesSlice.actions.removeNote(note))
+        }
+      )
       return { root: root }
     }
     return { root: undefined }
@@ -95,7 +119,12 @@ type DeleteFolderParams = {
 
 export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
   'DeleteFolder',
-  async (params, repositories, state) => {}
+  async (params, { noteRepository }, state, dispatch) => {
+    const folder = params.folder
+    if (state.session.currentUser) {
+      await noteRepository.deleteFolder(state.session.currentUser, folder)
+    }
+  }
 )
 
 type DeleteNoteParams = {
@@ -104,7 +133,11 @@ type DeleteNoteParams = {
 
 export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
   'DeleteNote',
-  async (params, repositories, state) => {}
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.deleteNote(state.session.currentUser, params.note)
+    }
+  }
 )
 
 // selectors
@@ -120,10 +153,113 @@ export const foldersSelector = createSelector([noteSelector], (state) => (state.
 export const notesSelector = createSelector([noteSelector], (state) => (state.root ? pickupNotes(state.root) : []))
 
 // slice
+const addFolder = (folder: Folder, addedFolder: Folder): Folder => {
+  if (folder.id === addedFolder.folderId) {
+    if (folder.folders.some((subFolder) => subFolder.id === addedFolder.id)) {
+      return folder
+    }
+    return {
+      ...folder,
+      folders: folder.folders.concat(addedFolder),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => addFolder(subFolder, addedFolder)),
+  }
+}
+const modifyFolder = (folder: Folder, modifiedFolder: Folder): Folder => {
+  if (folder.id === modifiedFolder.folderId) {
+    return {
+      ...folder,
+      folders: folder.folders.map((subFolder) => (subFolder.id === modifiedFolder.id ? modifiedFolder : subFolder)),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => modifyFolder(subFolder, modifiedFolder)),
+  }
+}
+const removeFolder = (folder: Folder, removedFolder: Folder): Folder => {
+  if (folder.id === removedFolder.folderId) {
+    return {
+      ...folder,
+      folders: folder.folders.filter((subFolder) => subFolder.id !== removedFolder.id),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => removeFolder(subFolder, removedFolder)),
+  }
+}
+const addNote = (folder: Folder, addedNote: Note): Folder => {
+  if (folder.id === addedNote.folderId) {
+    if (folder.notes.some((note) => note.id === addedNote.id)) {
+      return folder
+    }
+    return {
+      ...folder,
+      notes: folder.notes.concat(addedNote),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => addNote(subFolder, addedNote)),
+  }
+}
+const modifyNote = (folder: Folder, modifiedNote: Note): Folder => {
+  if (folder.id === modifiedNote.folderId) {
+    return {
+      ...folder,
+      notes: folder.notes.map((note) => (note.id === modifiedNote.id ? modifiedNote : note)),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => modifyNote(subFolder, modifiedNote)),
+  }
+}
+const removeNote = (folder: Folder, removedNote: Note): Folder => {
+  if (folder.id === removedNote.folderId) {
+    return {
+      ...folder,
+      notes: folder.notes.filter((note) => note.id !== removedNote.id),
+    }
+  }
+  return {
+    ...folder,
+    folders: folder.folders.map((subFolder) => removeNote(subFolder, removedNote)),
+  }
+}
 const notesSlice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
-  reducers: {},
+  reducers: {
+    addFolder: (state, action: PayloadAction<Folder>) => ({
+      ...state,
+      root: state.root ? addFolder(state.root, action.payload) : undefined,
+    }),
+    modifyFolder: (state, action: PayloadAction<Folder>) => ({
+      ...state,
+      root: state.root ? modifyFolder(state.root, action.payload) : undefined,
+    }),
+    removeFolder: (state, action: PayloadAction<Folder>) => ({
+      ...state,
+      root: state.root ? removeFolder(state.root, action.payload) : undefined,
+    }),
+    addNote: (state, action: PayloadAction<Note>) => ({
+      ...state,
+      root: state.root ? addNote(state.root, action.payload) : undefined,
+    }),
+    modifyNote: (state, action: PayloadAction<Note>) => ({
+      ...state,
+      root: state.root ? modifyNote(state.root, action.payload) : undefined,
+    }),
+    removeNote: (state, action: PayloadAction<Note>) => ({
+      ...state,
+      root: state.root ? removeNote(state.root, action.payload) : undefined,
+    }),
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchRoot.fulfilled, (state, action) => ({
       ...state,
