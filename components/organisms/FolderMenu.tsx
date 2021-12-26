@@ -19,7 +19,7 @@ const deleteFolderItems = async (dispatch: Dispatch<any>, folder: Folder) => {
     await deleteFolderItems(dispatch, subFolder)
   }
   for (const note of folder.notes) {
-    await dispatch(await deleteNote({ note: note }))
+    await dispatch(deleteNote({ note: note }))
   }
   await dispatch(deleteFolder({ folder: folder }))
 }
@@ -32,8 +32,8 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleCreateNote = useCallback(() => {
     dispatch(createNote({ parentFolder: folder }))
   }, [dispatch, folder])
-  const handleDeleteFolder = useCallback(async () => {
-    await deleteFolderItems(dispatch, folder)
+  const handleDeleteFolder = useCallback(() => {
+    return deleteFolderItems(dispatch, folder)
   }, [dispatch, folder])
   const handleClose = useCallback(() => {
     dispatch(workspaceSlice.actions.close(folder.id))

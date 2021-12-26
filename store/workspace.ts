@@ -3,13 +3,8 @@ import { Folder, Note } from './notes'
 import { Tab } from '../components/atoms/navigation/TabView'
 import { StoreState } from './index'
 
-export type WorkspaceTab = {
-  folder?: Folder
-  note?: Note
-} & Tab
-
 export type WorkspaceState = {
-  tabs: WorkspaceTab[]
+  tabs: Tab[]
   activeTabValue?: string
 }
 
@@ -32,39 +27,20 @@ const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
   reducers: {
-    openFolder: (state: WorkspaceState, action: PayloadAction<Folder>) => {
-      if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
+    open: (state: WorkspaceState, action: PayloadAction<Tab>) => {
+      if (state.tabs.map((tab) => tab.value).includes(action.payload.value)) {
         return {
           ...state,
-          activeTabValue: action.payload.id,
+          activeTabValue: action.payload.value,
         }
       }
       return {
         ...state,
         tabs: state.tabs.concat({
-          value: action.payload.id,
-          label: action.payload.name,
-          folder: action.payload,
+          value: action.payload.value,
+          label: action.payload.label,
         }),
-        activeTabValue: action.payload.id,
-      }
-    },
-    openNote: (state: WorkspaceState, action: PayloadAction<Note>) => {
-      if (state.tabs.map((tab) => tab.value).includes(action.payload.id)) {
-        return {
-          ...state,
-          activeTabValue: action.payload.id,
-        }
-      }
-
-      return {
-        ...state,
-        tabs: state.tabs.concat({
-          value: action.payload.id,
-          label: action.payload.title,
-          note: action.payload,
-        }),
-        activeTabValue: action.payload.id,
+        activeTabValue: action.payload.value,
       }
     },
     close: (state: WorkspaceState, action: PayloadAction<string>) => {

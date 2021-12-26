@@ -10,7 +10,7 @@ import {
   QueryDocumentSnapshot,
 } from '@firebase/firestore'
 import { User } from '../store/session'
-import { Folder, FolderDoc, Note } from '../store/notes'
+import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
 import dayjs from 'dayjs'
 import { Ace } from 'ace-builds'
 
@@ -134,10 +134,8 @@ export default class NoteRepository {
     }
   }
   async createNote(user: User, folder: Folder) {
-    const note: Note = {
-      id: 'id',
+    const note: NoteDoc = {
       folderId: folder.id,
-      title: '',
       content: '',
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),

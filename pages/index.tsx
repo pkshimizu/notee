@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import TabView from '../components/atoms/navigation/TabView'
 import TabPanel from '../components/atoms/navigation/TabPanel'
 import Label from '../components/atoms/display/Label'
-import { fetchRoot, rootFolderSelector } from '../store/notes'
-import workspaceSlice, { activeTabSelector, tabsSelector, WorkspaceTab } from '../store/workspace'
+import { fetchRoot, foldersSelector, notesSelector, rootFolderSelector } from '../store/notes'
+import workspaceSlice, { activeTabSelector, tabsSelector } from '../store/workspace'
 import { useCallback, useEffect } from 'react'
 import FolderIcon from '../components/atoms/display/icons/FolderIcon'
 import NoteIcon from '../components/atoms/display/icons/NoteIcon'
@@ -16,6 +16,8 @@ import NoteMenu from '../components/organisms/NoteMenu'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
+  const folders = useSelector(foldersSelector)
+  const notes = useSelector(notesSelector)
   const tabs = useSelector(tabsSelector)
   const activeTab = useSelector(activeTabSelector)
   const dispatch = useDispatch()
@@ -34,26 +36,32 @@ const Home: NextPage = () => {
       {activeTab ? (
         <TabView
           value={activeTab.value}
-          tabs={tabs.map((tab) => ({ ...tab, icon: tab.folder ? <FolderIcon /> : <NoteIcon /> }))}
+          tabs={tabs.map((tab) => {
+            const folder = folders.find((folder) => folder.id === tab.value)
+            
+            return { ...tab, icon: folder ? <FolderIcon /> : <NoteIcon /> }
+          })}
           onChange={handleChangeTab}
         >
           {tabs.map((tab) => {
-            if (tab.folder) {
+            const folder = folders.find((folder) => folder.id === tab.value)
+            const note = notes.find((note) => note.id === tab.value)
+            if (folder) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
                   <Flex direction={'column'}>
-                    <FolderMenu folder={tab.folder} />
-                    {tab.folder.name}
+                    <FolderMenu folder={folder} />
+                    {folder.name}
                   </Flex>
                 </TabPanel>
               )
             }
-            if (tab.note) {
+            if (note) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
                   <Flex direction={'column'}>
-                    <NoteMenu note={tab.note} />
-                    {tab.note.content}
+                    <NoteMenu note={note} />
+                    {note.content}
                   </Flex>
                 </TabPanel>
               )

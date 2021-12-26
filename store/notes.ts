@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 import { StoreState } from './index'
 import { createAsyncAction } from './actions'
+import workspaceSlice from './workspace'
 
 export type NoteDoc = {
   folderId: string
@@ -123,6 +124,7 @@ export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
     const folder = params.folder
     if (state.session.currentUser) {
       await noteRepository.deleteFolder(state.session.currentUser, folder)
+      await dispatch(workspaceSlice.actions.close(params.folder.id))
     }
   }
 )
@@ -133,9 +135,10 @@ type DeleteNoteParams = {
 
 export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
   'DeleteNote',
-  async (params, { noteRepository }, state) => {
+  async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.deleteNote(state.session.currentUser, params.note)
+      await dispatch(workspaceSlice.actions.close(params.note.id))
     }
   }
 )
