@@ -7,12 +7,14 @@ import TabPanel from '../components/atoms/navigation/TabPanel'
 import Label from '../components/atoms/display/Label'
 import { fetchRoot, foldersSelector, notesSelector, rootFolderSelector } from '../store/notes'
 import workspaceSlice, { activeTabSelector, tabsSelector } from '../store/workspace'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import FolderIcon from '../components/atoms/display/icons/FolderIcon'
 import NoteIcon from '../components/atoms/display/icons/NoteIcon'
 import Flex from '../components/atoms/layout/Flex'
 import FolderMenu from '../components/organisms/FolderMenu'
 import NoteMenu from '../components/organisms/NoteMenu'
+import IconButton from '../components/atoms/inputs/IconButton'
+import MenuIcon from '../components/atoms/display/icons/MenuIcon'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
@@ -20,6 +22,7 @@ const Home: NextPage = () => {
   const notes = useSelector(notesSelector)
   const tabs = useSelector(tabsSelector)
   const activeTab = useSelector(activeTabSelector)
+  const [openSideBar, setOpenSideBar] = useState(true)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchRoot())
@@ -30,9 +33,16 @@ const Home: NextPage = () => {
     },
     [dispatch]
   )
+  const handleClickSideBarMenu = useCallback(() => {
+    setOpenSideBar(!openSideBar)
+  }, [openSideBar, setOpenSideBar])
 
   return (
-    <WorkspaceLayout sidebar={<NoteTree folder={root} />}>
+    <WorkspaceLayout
+      sidebar={<NoteTree folder={root} />}
+      openSideBar={openSideBar}
+      onCloseSideBar={() => setOpenSideBar(false)}
+    >
       {activeTab ? (
         <TabView
           value={activeTab.value}
@@ -41,6 +51,11 @@ const Home: NextPage = () => {
 
             return { ...tab, icon: folder ? <FolderIcon /> : <NoteIcon /> }
           })}
+          leftItem={
+            <IconButton onClick={handleClickSideBarMenu}>
+              <MenuIcon />
+            </IconButton>
+          }
           onChange={handleChangeTab}
         >
           {tabs.map((tab) => {

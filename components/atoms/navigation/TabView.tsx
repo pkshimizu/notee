@@ -14,28 +14,32 @@ export type Tab = {
 type TabViewProps = {
   value: string
   tabs: Tab[]
+  leftItem?: ReactNode
   children: ReactNode
   onChange?: (value: string) => void
 }
 
-export default function TabView({ value, tabs, children, onChange }: TabViewProps) {
+export default function TabView({ value, tabs, leftItem, children, onChange }: TabViewProps) {
   return (
     <MuiTabContext value={value}>
-      <MuiTabList onChange={(event, newValue) => onChange && onChange(newValue)}>
-        {tabs.map((tab) => (
-          <MuiTab
-            label={
-              <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-                {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
-                <MuiTypography variant='button'>{tab.label}</MuiTypography>
-              </MuiBox>
-            }
-            value={tab.value}
-            iconPosition='start'
-            key={tab.value}
-          />
-        ))}
-      </MuiTabList>
+      <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        {leftItem}
+        <MuiTabList onChange={(event, newValue) => onChange && onChange(newValue)}>
+          {tabs.map((tab) => (
+            <MuiTab
+              label={
+                <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
+                  {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
+                  <MuiTypography variant='button'>{tab.label}</MuiTypography>
+                </MuiBox>
+              }
+              value={tab.value}
+              iconPosition='start'
+              key={tab.value}
+            />
+          ))}
+        </MuiTabList>
+      </MuiBox>
       {children}
     </MuiTabContext>
   )

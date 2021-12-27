@@ -18,7 +18,7 @@ export default function Drawer({ anchor = 'left', open, children, onClose }: Dra
   }, [onClose])
 
   return (
-    <MuiDrawer anchor={anchor} open={open} variant={'permanent'} onClose={handleClose}>
+    <MuiDrawer anchor={anchor} open={open} variant={'persistent'} onClose={handleClose}>
       {children}
     </MuiDrawer>
   )

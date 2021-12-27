@@ -11,10 +11,12 @@ import { currentUserSelector } from '../../store/session'
 
 type WorkspaceLayoutProps = {
   sidebar: ReactNode
+  openSideBar: boolean
   children: ReactNode
+  onCloseSideBar: () => void
 }
 
-export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutProps) {
+export default function WorkspaceLayout({ sidebar, openSideBar, children, onCloseSideBar }: WorkspaceLayoutProps) {
   const currentUser = useSelector(currentUserSelector)
   const [menuTarget, setMenuTarget] = useState<Element | undefined>(undefined)
   const handleClickMenu = useCallback((target) => {
@@ -24,7 +26,7 @@ export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutPr
   if (currentUser) {
     return (
       <>
-        <Drawer open={false}>
+        <Drawer open={openSideBar} onClose={onCloseSideBar}>
           <AppBar>
             <Flex direction={'row'} justify={'flex-end'} align={'center'} width={'100%'}>
               <Button onClick={handleClickMenu} variant={'text'}>
@@ -37,7 +39,7 @@ export default function WorkspaceLayout({ sidebar, children }: WorkspaceLayoutPr
             {sidebar}
           </Flex>
         </Drawer>
-        <Margin left={32}>{children}</Margin>
+        <Margin left={openSideBar ? 32 : 0}>{children}</Margin>
       </>
     )
   }
