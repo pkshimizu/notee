@@ -4,9 +4,8 @@ import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
-import CloseIcon from '../atoms/display/icons/CloseIcon'
 import AppBar from '../atoms/surfaces/AppBar'
-import DeleteIcon from '../atoms/display/icons/DeleteIcon'
+import { CloseIcon, DeleteIcon } from '../atoms/display/Icons'
 
 type NoteMenuProps = {
   note: Note
@@ -26,7 +25,7 @@ export default function NoteMenu({ note }: NoteMenuProps) {
       <Flex direction={'row'} justify={'space-around'}>
         <Flex direction={'row'}>
           <IconButton onClick={handleDeleteNote}>
-            <DeleteIcon />
+            <DeleteIcon color={'white'} />
           </IconButton>
         </Flex>
         <Flex direction={'row'} justify={'flex-end'}>

@@ -8,13 +8,11 @@ import Label from '../components/atoms/display/Label'
 import { fetchRoot, foldersSelector, notesSelector, rootFolderSelector } from '../store/notes'
 import workspaceSlice, { activeTabSelector, tabsSelector } from '../store/workspace'
 import { useCallback, useEffect, useState } from 'react'
-import FolderIcon from '../components/atoms/display/icons/FolderIcon'
-import NoteIcon from '../components/atoms/display/icons/NoteIcon'
+import { FolderIcon, NoteIcon, MenuIcon } from '../components/atoms/display/Icons'
 import Flex from '../components/atoms/layout/Flex'
 import FolderMenu from '../components/organisms/FolderMenu'
 import NoteMenu from '../components/organisms/NoteMenu'
 import IconButton from '../components/atoms/inputs/IconButton'
-import MenuIcon from '../components/atoms/display/icons/MenuIcon'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)

@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Flex from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
-import GoogleIcon from '../components/atoms/display/icons/GoogleIcon'
+import { GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useContext, useEffect } from 'react'
 import { Router } from '../components/systems/RouterProvider'
 import { useDispatch, useSelector } from 'react-redux'

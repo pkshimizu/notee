@@ -4,11 +4,8 @@ import IconButton from '../atoms/inputs/IconButton'
 import { Dispatch, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
-import CloseIcon from '../atoms/display/icons/CloseIcon'
 import AppBar from '../atoms/surfaces/AppBar'
-import CreateFolderIcon from '../atoms/display/icons/CreateFolderIcon'
-import CreateNoteIcon from '../atoms/display/icons/CreateNoteIcon'
-import DeleteIcon from '../atoms/display/icons/DeleteIcon'
+import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, SettingsIcon, CloseIcon } from '../atoms/display/Icons'
 
 type FolderMenuProps = {
   folder: Folder
@@ -26,6 +23,7 @@ const deleteFolderItems = async (dispatch: Dispatch<any>, folder: Folder) => {
 
 export default function FolderMenu({ folder }: FolderMenuProps) {
   const dispatch = useDispatch()
+  const handleSettings = useCallback(() => {}, [])
   const handleCreateFolder = useCallback(() => {
     dispatch(createFolder({ name: 'new folder', parentFolder: folder }))
   }, [dispatch, folder])
@@ -43,11 +41,14 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
     <AppBar>
       <Flex direction={'row'} justify={'space-around'}>
         <Flex direction={'row'}>
+          <IconButton onClick={handleSettings}>
+            <SettingsIcon color={'white'} />
+          </IconButton>
           <IconButton onClick={handleCreateFolder}>
-            <CreateFolderIcon />
+            <CreateFolderIcon color={'white'} />
           </IconButton>
           <IconButton onClick={handleCreateNote}>
-            <CreateNoteIcon />
+            <CreateNoteIcon color={'white'} />
           </IconButton>
           {folder.folderId && (
             <IconButton onClick={handleDeleteFolder}>

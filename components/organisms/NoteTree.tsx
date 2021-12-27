@@ -1,7 +1,6 @@
 import TreeView from '../atoms/navigation/TreeView'
 import TreeItem from '../atoms/navigation/TreeItem'
-import FolderIcon from '../atoms/display/icons/FolderIcon'
-import NoteIcon from '../atoms/display/icons/NoteIcon'
+import { FolderIcon, NoteIcon } from '../atoms/display/Icons'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 import { useCallback } from 'react'
 import { Folder, foldersSelector, Note, notesSelector } from '../../store/notes'
