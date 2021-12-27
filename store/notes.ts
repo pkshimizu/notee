@@ -1,8 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import dayjs from 'dayjs'
 import { StoreState } from './index'
 import { createAsyncAction } from './actions'
 import workspaceSlice from './workspace'
+
+type Item = {
+  id: string
+}
 
 export type NoteDoc = {
   folderId: string
@@ -12,9 +15,9 @@ export type NoteDoc = {
 }
 
 export type Note = {
-  id: string
   title: string
-} & NoteDoc
+} & Item &
+  NoteDoc
 
 export type FolderDoc = {
   folderId?: string
@@ -22,10 +25,10 @@ export type FolderDoc = {
 }
 
 export type Folder = {
-  id: string
   folders: Folder[]
   notes: Note[]
-} & FolderDoc
+} & Item &
+  FolderDoc
 
 export type NotesState = {
   root?: Folder
@@ -60,25 +63,25 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
       noteRepository.onSnapshotFolders(
         currentUser,
         (folder) => {
-          dispatch(notesSlice.actions.addFolder(folder))
+          dispatch(notesSlice.actions.addFolder({ folder }))
         },
         (folder) => {
-          dispatch(notesSlice.actions.modifyFolder(folder))
+          dispatch(notesSlice.actions.modifyFolder({ folder }))
         },
         (folder) => {
-          dispatch(notesSlice.actions.removeFolder(folder))
+          dispatch(notesSlice.actions.removeFolder({ folder }))
         }
       )
       noteRepository.onSnapshotNotes(
         currentUser,
         (note) => {
-          dispatch(notesSlice.actions.addNote(note))
+          dispatch(notesSlice.actions.addNote({ note }))
         },
         (note) => {
-          dispatch(notesSlice.actions.modifyNote(note))
+          dispatch(notesSlice.actions.modifyNote({ note }))
         },
         (note) => {
-          dispatch(notesSlice.actions.removeNote(note))
+          dispatch(notesSlice.actions.removeNote({ note }))
         }
       )
       return { root: root }
@@ -124,7 +127,7 @@ export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
     const folder = params.folder
     if (state.session.currentUser) {
       await noteRepository.deleteFolder(state.session.currentUser, folder)
-      await dispatch(workspaceSlice.actions.close(params.folder.id))
+      await dispatch(workspaceSlice.actions.close({ id: params.folder.id }))
     }
   }
 )
@@ -138,7 +141,7 @@ export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.deleteNote(state.session.currentUser, params.note)
-      await dispatch(workspaceSlice.actions.close(params.note.id))
+      await dispatch(workspaceSlice.actions.close({ id: params.note.id }))
     }
   }
 )
@@ -234,33 +237,52 @@ const removeNote = (folder: Folder, removedNote: Note): Folder => {
     folders: folder.folders.map((subFolder) => removeNote(subFolder, removedNote)),
   }
 }
+type AddFolderParams = {
+  folder: Folder
+}
+type ModifyFolderParams = {
+  folder: Folder
+}
+type RemoveFolderParams = {
+  folder: Folder
+}
+type AddNoteParams = {
+  note: Note
+}
+type ModifyNoteParams = {
+  note: Note
+}
+type RemoveNoteParams = {
+  note: Note
+}
+
 const notesSlice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
   reducers: {
-    addFolder: (state, action: PayloadAction<Folder>) => ({
+    addFolder: (state, action: PayloadAction<AddFolderParams>) => ({
       ...state,
-      root: state.root ? addFolder(state.root, action.payload) : undefined,
+      root: state.root ? addFolder(state.root, action.payload.folder) : undefined,
     }),
-    modifyFolder: (state, action: PayloadAction<Folder>) => ({
+    modifyFolder: (state, action: PayloadAction<ModifyFolderParams>) => ({
       ...state,
-      root: state.root ? modifyFolder(state.root, action.payload) : undefined,
+      root: state.root ? modifyFolder(state.root, action.payload.folder) : undefined,
     }),
-    removeFolder: (state, action: PayloadAction<Folder>) => ({
+    removeFolder: (state, action: PayloadAction<RemoveFolderParams>) => ({
       ...state,
-      root: state.root ? removeFolder(state.root, action.payload) : undefined,
+      root: state.root ? removeFolder(state.root, action.payload.folder) : undefined,
     }),
-    addNote: (state, action: PayloadAction<Note>) => ({
+    addNote: (state, action: PayloadAction<AddNoteParams>) => ({
       ...state,
-      root: state.root ? addNote(state.root, action.payload) : undefined,
+      root: state.root ? addNote(state.root, action.payload.note) : undefined,
     }),
-    modifyNote: (state, action: PayloadAction<Note>) => ({
+    modifyNote: (state, action: PayloadAction<ModifyNoteParams>) => ({
       ...state,
-      root: state.root ? modifyNote(state.root, action.payload) : undefined,
+      root: state.root ? modifyNote(state.root, action.payload.note) : undefined,
     }),
-    removeNote: (state, action: PayloadAction<Note>) => ({
+    removeNote: (state, action: PayloadAction<RemoveNoteParams>) => ({
       ...state,
-      root: state.root ? removeNote(state.root, action.payload) : undefined,
+      root: state.root ? removeNote(state.root, action.payload.note) : undefined,
     }),
   },
   extraReducers: (builder) => {

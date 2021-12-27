@@ -31,7 +31,7 @@ export const initializeSession = createAsyncAction<void, void>(
             await userRepository.createUser(user)
           }
         }
-        dispatch(sessionSlice.actions.changeCurrentUser(user))
+        dispatch(sessionSlice.actions.changeCurrentUser({ user }))
       })
     }
   }
@@ -50,13 +50,16 @@ const sessionSelector = (state: StoreState) => state.session
 export const currentUserSelector = createSelector([sessionSelector], (state) => state.currentUser)
 
 // slice
+type ChangeCurrentUserParams = {
+  user?: User
+}
 const sessionSlice = createSlice({
   name: 'session',
   initialState: sessionInitialState,
   reducers: {
-    changeCurrentUser: (state: SessionState, action: PayloadAction<User | undefined>) => ({
+    changeCurrentUser: (state: SessionState, action: PayloadAction<ChangeCurrentUserParams>) => ({
       ...state,
-      currentUser: action.payload,
+      currentUser: action.payload.user,
     }),
   },
   extraReducers: (builder) => {

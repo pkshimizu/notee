@@ -18,7 +18,7 @@ export default function NoteMenu({ note }: NoteMenuProps) {
     dispatch(deleteNote({ note: note }))
   }, [dispatch, note])
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close(note.id))
+    dispatch(workspaceSlice.actions.close({ id: note.id }))
   }, [dispatch, note])
 
   return (

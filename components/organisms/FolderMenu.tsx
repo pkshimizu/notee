@@ -36,7 +36,7 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
     return deleteFolderItems(dispatch, folder)
   }, [dispatch, folder])
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close(folder.id))
+    dispatch(workspaceSlice.actions.close({ id: folder.id }))
   }, [dispatch, folder])
 
   return (

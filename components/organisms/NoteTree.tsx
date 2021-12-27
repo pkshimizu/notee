@@ -37,13 +37,13 @@ export default function NoteTree({ folder }: NoteTreeProps) {
     (value: string) => {
       const folder = folders.find((folder) => folder.id === value)
       if (folder) {
-        dispatch(workspaceSlice.actions.open({ value: folder.id, label: folder.name }))
+        dispatch(workspaceSlice.actions.open({ tab: { value: folder.id, label: folder.name } }))
 
         return
       }
       const note = notes.find((note) => note.id === value)
       if (note) {
-        dispatch(workspaceSlice.actions.open({ value: note.id, label: note.title }))
+        dispatch(workspaceSlice.actions.open({ tab: { value: note.id, label: note.title } }))
 
         return
       }

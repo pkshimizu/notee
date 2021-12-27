@@ -12,7 +12,6 @@ import {
 import { User } from '../store/session'
 import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
 import dayjs from 'dayjs'
-import { Ace } from 'ace-builds'
 
 function makeTitle(content: string): string {
   if (content.length > 0) {

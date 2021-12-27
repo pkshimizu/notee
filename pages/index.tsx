@@ -26,7 +26,7 @@ const Home: NextPage = () => {
   }, [dispatch])
   const handleChangeTab = useCallback(
     (value: string) => {
-      dispatch(workspaceSlice.actions.active(value))
+      dispatch(workspaceSlice.actions.active({ id: value }))
     },
     [dispatch]
   )
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
           value={activeTab.value}
           tabs={tabs.map((tab) => {
             const folder = folders.find((folder) => folder.id === tab.value)
-            
+
             return { ...tab, icon: folder ? <FolderIcon /> : <NoteIcon /> }
           })}
           onChange={handleChangeTab}

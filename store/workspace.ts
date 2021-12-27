@@ -1,5 +1,4 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Folder, Note } from './notes'
 import { Tab } from '../components/atoms/navigation/TabView'
 import { StoreState } from './index'
 
@@ -23,27 +22,35 @@ export const activeTabSelector = createSelector([workspaceSelector], (state) =>
 )
 
 // slice
+type OpenParams = {
+  tab: Tab
+}
+type CloseParams = {
+  id: string
+}
+type ActiveParams = {
+  id: string
+}
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
   reducers: {
-    open: (state: WorkspaceState, action: PayloadAction<Tab>) => {
-      if (state.tabs.map((tab) => tab.value).includes(action.payload.value)) {
+    open: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
+      if (state.tabs.map((tab) => tab.value).includes(action.payload.tab.value)) {
         return {
           ...state,
-          activeTabValue: action.payload.value,
+          activeTabValue: action.payload.tab.value,
         }
       }
       return {
         ...state,
         tabs: state.tabs.concat({
-          value: action.payload.value,
-          label: action.payload.label,
+          ...action.payload.tab,
         }),
-        activeTabValue: action.payload.value,
+        activeTabValue: action.payload.tab.value,
       }
     },
-    close: (state: WorkspaceState, action: PayloadAction<string>) => {
+    close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => {
       if (state.tabs.length === 1) {
         return {
           ...state,
@@ -51,18 +58,18 @@ const workspaceSlice = createSlice({
           activeTabValue: undefined,
         }
       }
-      const index = state.tabs.map((tab) => tab.value).indexOf(action.payload)
+      const index = state.tabs.map((tab) => tab.value).indexOf(action.payload.id)
       const nextTab = index === 0 ? state.tabs[1] : state.tabs[index - 1]
-      const tabs = state.tabs.filter((tab) => tab.value !== action.payload)
+      const tabs = state.tabs.filter((tab) => tab.value !== action.payload.id)
       return {
         ...state,
         tabs: tabs,
         activeTabValue: nextTab.value,
       }
     },
-    active: (state: WorkspaceState, action: PayloadAction<string>) => ({
+    active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => ({
       ...state,
-      activeTabValue: action.payload,
+      activeTabValue: action.payload.id,
     }),
   },
 })
