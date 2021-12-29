@@ -1,29 +1,21 @@
 import { createFolder, createNote, deleteFolder, deleteNote, Folder } from '../../store/notes'
 import Flex from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
-import { Dispatch, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
 import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, SettingsIcon, CloseIcon } from '../atoms/display/Icons'
 import FolderSettingsDialog from './FolderSettingsDialog'
+import FolderDeleteDialog from './FolderDeleteDialog'
 
 type FolderMenuProps = {
   folder: Folder
 }
 
-const deleteFolderItems = async (dispatch: Dispatch<any>, folder: Folder) => {
-  for (const subFolder of folder.folders) {
-    await deleteFolderItems(dispatch, subFolder)
-  }
-  for (const note of folder.notes) {
-    await dispatch(deleteNote({ note: note }))
-  }
-  await dispatch(deleteFolder({ folder: folder }))
-}
-
 export default function FolderMenu({ folder }: FolderMenuProps) {
   const [openSettings, setOpenSettings] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
   const dispatch = useDispatch()
   const handleOpenSettings = useCallback(() => {
     setOpenSettings(true)
@@ -37,12 +29,15 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleCreateNote = useCallback(() => {
     dispatch(createNote({ parentFolder: folder }))
   }, [dispatch, folder])
-  const handleDeleteFolder = useCallback(() => {
-    return deleteFolderItems(dispatch, folder)
-  }, [dispatch, folder])
+  const handleOpenDelete = useCallback(() => {
+    setOpenDelete(true)
+  }, [])
   const handleClose = useCallback(() => {
     dispatch(workspaceSlice.actions.close({ id: folder.id }))
   }, [dispatch, folder])
+  const handleCloseDelete = useCallback(() => {
+    setOpenDelete(false)
+  }, [])
 
   return (
     <AppBar>
@@ -59,10 +54,11 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
             <CreateNoteIcon color={'white'} />
           </IconButton>
           {folder.folderId && (
-            <IconButton onClick={handleDeleteFolder}>
-              <DeleteIcon />
+            <IconButton onClick={handleOpenDelete}>
+              <DeleteIcon color={'white'} />
             </IconButton>
           )}
+          <FolderDeleteDialog open={openDelete} folder={folder} onClose={handleCloseDelete} />
         </Flex>
         <Flex direction={'row'} justify={'flex-end'}>
           <IconButton onClick={handleClose}>
