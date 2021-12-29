@@ -10,12 +10,12 @@ export type User = {
 }
 
 export type SessionState = {
-  initialize: boolean
+  initialized: boolean
   currentUser?: User
 }
 
 export const sessionInitialState: SessionState = {
-  initialize: false,
+  initialized: false,
   currentUser: undefined,
 }
 
@@ -23,7 +23,7 @@ export const sessionInitialState: SessionState = {
 export const initializeSession = createAsyncAction<void, void>(
   'initializeSession',
   async (params, { authRepository, userRepository }, state, dispatch) => {
-    if (!state.session.initialize) {
+    if (!state.session.initialized) {
       authRepository.onChangeAuthState(async (user) => {
         if (user) {
           const result = await userRepository.loadUser(user)
@@ -48,6 +48,7 @@ export const logout = createAsyncAction<void, void>('logout', async (params, rep
 // selectors
 const sessionSelector = (state: StoreState) => state.session
 export const currentUserSelector = createSelector([sessionSelector], (state) => state.currentUser)
+export const initializedSelector = createSelector([sessionSelector], (state) => state.initialized)
 
 // slice
 type ChangeCurrentUserParams = {
@@ -60,14 +61,10 @@ const sessionSlice = createSlice({
     changeCurrentUser: (state: SessionState, action: PayloadAction<ChangeCurrentUserParams>) => ({
       ...state,
       currentUser: action.payload.user,
+      initialized: true,
     }),
   },
-  extraReducers: (builder) => {
-    builder.addCase(initializeSession.fulfilled, (state) => ({
-      ...state,
-      initialize: true,
-    }))
-  },
+  extraReducers: () => {},
 })
 
 export default sessionSlice

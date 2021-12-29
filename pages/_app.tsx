@@ -4,6 +4,7 @@ import Style from '../components/systems/Style'
 import Auth from '../components/systems/Auth'
 import RouterProvider from '../components/systems/RouterProvider'
 import Store from '../components/systems/Store'
+import DataProvider from '../components/systems/DataProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <RouterProvider>
         <Style>
           <Auth>
-            <Component {...pageProps} />
+            <DataProvider>
+              <Component {...pageProps} />
+            </DataProvider>
           </Auth>
         </Style>
       </RouterProvider>

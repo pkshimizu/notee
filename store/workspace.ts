@@ -5,11 +5,13 @@ import { StoreState } from './index'
 export type WorkspaceState = {
   tabs: Tab[]
   activeTabValue?: string
+  openSideBar: boolean
 }
 
 export const workspaceInitialState: WorkspaceState = {
   tabs: [],
   activeTabValue: undefined,
+  openSideBar: true,
 }
 
 // actions
@@ -20,6 +22,7 @@ export const tabsSelector = createSelector([workspaceSelector], (state) => state
 export const activeTabSelector = createSelector([workspaceSelector], (state) =>
   state.tabs.find((tab) => tab.value === state.activeTabValue)
 )
+export const openSideBarSelector = createSelector([workspaceSelector], (state) => state.openSideBar)
 
 // slice
 type OpenParams = {
@@ -70,6 +73,10 @@ const workspaceSlice = createSlice({
     active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => ({
       ...state,
       activeTabValue: action.payload.id,
+    }),
+    toggleSideBar: (state: WorkspaceState) => ({
+      ...state,
+      openSideBar: !state.openSideBar,
     }),
   },
 })

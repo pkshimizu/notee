@@ -2,10 +2,9 @@ import TreeView from '../atoms/navigation/TreeView'
 import TreeItem from '../atoms/navigation/TreeItem'
 import { FolderIcon, NoteIcon } from '../atoms/display/Icons'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
-import { useCallback } from 'react'
-import { Folder, foldersSelector, Note, notesSelector } from '../../store/notes'
-import { useDispatch, useSelector } from 'react-redux'
-import workspaceSlice from '../../store/workspace'
+import { useCallback, useContext } from 'react'
+import { Folder, Note } from '../../store/notes'
+import { Router } from '../systems/RouterProvider'
 
 type NoteTreeProps = {
   folder?: Folder
@@ -29,25 +28,12 @@ function NoteTreeFolderItem({ folder }: { folder: Folder }) {
 }
 
 export default function NoteTree({ folder }: NoteTreeProps) {
-  const folders = useSelector(foldersSelector)
-  const notes = useSelector(notesSelector)
-  const dispatch = useDispatch()
+  const { go } = useContext(Router)
   const handleSelectTab = useCallback(
     (value: string) => {
-      const folder = folders.find((folder) => folder.id === value)
-      if (folder) {
-        dispatch(workspaceSlice.actions.open({ tab: { value: folder.id, label: folder.name } }))
-
-        return
-      }
-      const note = notes.find((note) => note.id === value)
-      if (note) {
-        dispatch(workspaceSlice.actions.open({ tab: { value: note.id, label: note.title } }))
-
-        return
-      }
+      go(`/notes/${value}`)
     },
-    [folders, notes, dispatch]
+    [go]
   )
 
   return <TreeView onSelect={handleSelectTab}>{folder && <NoteTreeFolderItem folder={folder} />}</TreeView>

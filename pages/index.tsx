@@ -1,93 +1,19 @@
 import type { NextPage } from 'next'
-import WorkspaceLayout from '../components/templates/WorkspaceLayout'
-import NoteTree from '../components/organisms/NoteTree'
-import { useDispatch, useSelector } from 'react-redux'
-import TabView from '../components/atoms/navigation/TabView'
-import TabPanel from '../components/atoms/navigation/TabPanel'
-import Label from '../components/atoms/display/Label'
-import { fetchRoot, foldersSelector, notesSelector, rootFolderSelector } from '../store/notes'
-import workspaceSlice, { activeTabSelector, tabsSelector } from '../store/workspace'
-import { useCallback, useEffect, useState } from 'react'
-import { FolderIcon, NoteIcon, MenuIcon } from '../components/atoms/display/Icons'
-import { FlexColumn } from '../components/atoms/layout/Flex'
-import FolderMenu from '../components/organisms/FolderMenu'
-import NoteMenu from '../components/organisms/NoteMenu'
-import IconButton from '../components/atoms/inputs/IconButton'
+import { useSelector } from 'react-redux'
+import { rootFolderSelector } from '../store/notes'
+import { useContext, useEffect } from 'react'
+import { Router } from '../components/systems/RouterProvider'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
-  const folders = useSelector(foldersSelector)
-  const notes = useSelector(notesSelector)
-  const tabs = useSelector(tabsSelector)
-  const activeTab = useSelector(activeTabSelector)
-  const [openSideBar, setOpenSideBar] = useState(true)
-  const dispatch = useDispatch()
+  const { go } = useContext(Router)
   useEffect(() => {
-    dispatch(fetchRoot())
-  }, [dispatch])
-  const handleChangeTab = useCallback(
-    (value: string) => {
-      dispatch(workspaceSlice.actions.active({ id: value }))
-    },
-    [dispatch]
-  )
-  const handleClickSideBarMenu = useCallback(() => {
-    setOpenSideBar(!openSideBar)
-  }, [openSideBar, setOpenSideBar])
+    if (root) {
+      go(`/notes/${root.id}`)
+    }
+  }, [root, go])
 
-  return (
-    <WorkspaceLayout
-      sidebar={<NoteTree folder={root} />}
-      openSideBar={openSideBar}
-      onCloseSideBar={() => setOpenSideBar(false)}
-    >
-      {activeTab ? (
-        <TabView
-          value={activeTab.value}
-          tabs={tabs.map((tab) => {
-            const folder = folders.find((folder) => folder.id === tab.value)
-
-            return { ...tab, icon: folder ? <FolderIcon /> : <NoteIcon /> }
-          })}
-          leftItem={
-            <IconButton onClick={handleClickSideBarMenu}>
-              <MenuIcon />
-            </IconButton>
-          }
-          onChange={handleChangeTab}
-        >
-          {tabs.map((tab) => {
-            const folder = folders.find((folder) => folder.id === tab.value)
-            const note = notes.find((note) => note.id === tab.value)
-            if (folder) {
-              return (
-                <TabPanel value={tab.value} key={tab.value}>
-                  <FlexColumn>
-                    <FolderMenu folder={folder} />
-                    {folder.name}
-                  </FlexColumn>
-                </TabPanel>
-              )
-            }
-            if (note) {
-              return (
-                <TabPanel value={tab.value} key={tab.value}>
-                  <FlexColumn>
-                    <NoteMenu note={note} />
-                    {note.content}
-                  </FlexColumn>
-                </TabPanel>
-              )
-            }
-
-            return <></>
-          })}
-        </TabView>
-      ) : (
-        <Label>フォルダーかノートを選択してください</Label>
-      )}
-    </WorkspaceLayout>
-  )
+  return <></>
 }
 
 export default Home

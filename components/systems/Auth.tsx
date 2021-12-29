@@ -1,7 +1,7 @@
 import { ReactNode, useContext, useEffect } from 'react'
 import { Router } from './RouterProvider'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentUserSelector, initializeSession } from '../../store/session'
+import { currentUserSelector, initializedSelector, initializeSession } from '../../store/session'
 
 type AuthProps = {
   children: ReactNode
@@ -9,6 +9,7 @@ type AuthProps = {
 
 export default function Auth({ children }: AuthProps) {
   const currentUser = useSelector(currentUserSelector)
+  const initialized = useSelector(initializedSelector)
   const { go } = useContext(Router)
   const dispatch = useDispatch()
 
@@ -17,10 +18,14 @@ export default function Auth({ children }: AuthProps) {
   }, [dispatch])
 
   useEffect(() => {
-    if (currentUser === undefined) {
+    if (initialized && currentUser === undefined) {
       go('/login')
     }
-  }, [currentUser, go])
+  }, [initialized, currentUser, go])
 
-  return <>{children}</>
+  if (initialized) {
+    return <>{children}</>
+  } else {
+    return <></>
+  }
 }

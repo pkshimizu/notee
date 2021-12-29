@@ -1,5 +1,4 @@
 import MuiAppBar from '@mui/material/AppBar'
-import MuiToolbar from '@mui/material/Toolbar'
 import { ReactNode } from 'react'
 
 type AppBarProps = {
@@ -9,7 +8,7 @@ type AppBarProps = {
 export default function AppBar({ children }: AppBarProps) {
   return (
     <MuiAppBar position={'static'} elevation={0}>
-      <MuiToolbar variant={'dense'}>{children}</MuiToolbar>
+      {children}
     </MuiAppBar>
   )
 }
