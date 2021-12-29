@@ -1,10 +1,10 @@
 import { deleteNote, Note } from '../../store/notes'
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
 import { useCallback } from 'react'
-import Flex from '../atoms/layout/Flex'
 import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 
 type NoteDeleteDialogProps = {
   open: boolean
@@ -21,13 +21,13 @@ export default function NoteDeleteDialog({ open, note, onClose }: NoteDeleteDial
 
   return (
     <ConfirmDialog open={open} onOk={handleOk} onCancel={onClose}>
-      <Flex direction={'column'}>
-        <Flex direction={'row'}>
+      <FlexColumn>
+        <FlexRow>
           <FolderIcon />
           <Label>{note.title}</Label>
-        </Flex>
+        </FlexRow>
         <Label>このノートを削除しますか？</Label>
-      </Flex>
+      </FlexColumn>
     </ConfirmDialog>
   )
 }

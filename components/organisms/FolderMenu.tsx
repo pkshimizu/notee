@@ -1,5 +1,5 @@
 import { createFolder, createNote, deleteFolder, deleteNote, Folder } from '../../store/notes'
-import Flex from '../atoms/layout/Flex'
+import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -41,8 +41,8 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
 
   return (
     <AppBar>
-      <Flex direction={'row'} justify={'space-around'}>
-        <Flex direction={'row'}>
+      <FlexRow justify={'space-around'}>
+        <FlexRow>
           <IconButton onClick={handleOpenSettings}>
             <SettingsIcon color={'white'} />
           </IconButton>
@@ -59,13 +59,13 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
             </IconButton>
           )}
           <FolderDeleteDialog open={openDelete} folder={folder} onClose={handleCloseDelete} />
-        </Flex>
-        <Flex direction={'row'} justify={'flex-end'}>
+        </FlexRow>
+        <FlexRow justify={'flex-end'}>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
-        </Flex>
-      </Flex>
+        </FlexRow>
+      </FlexRow>
     </AppBar>
   )
 }

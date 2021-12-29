@@ -9,7 +9,7 @@ import { fetchRoot, foldersSelector, notesSelector, rootFolderSelector } from '.
 import workspaceSlice, { activeTabSelector, tabsSelector } from '../store/workspace'
 import { useCallback, useEffect, useState } from 'react'
 import { FolderIcon, NoteIcon, MenuIcon } from '../components/atoms/display/Icons'
-import Flex from '../components/atoms/layout/Flex'
+import { FlexColumn } from '../components/atoms/layout/Flex'
 import FolderMenu from '../components/organisms/FolderMenu'
 import NoteMenu from '../components/organisms/NoteMenu'
 import IconButton from '../components/atoms/inputs/IconButton'
@@ -62,20 +62,20 @@ const Home: NextPage = () => {
             if (folder) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
-                  <Flex direction={'column'}>
+                  <FlexColumn>
                     <FolderMenu folder={folder} />
                     {folder.name}
-                  </Flex>
+                  </FlexColumn>
                 </TabPanel>
               )
             }
             if (note) {
               return (
                 <TabPanel value={tab.value} key={tab.value}>
-                  <Flex direction={'column'}>
+                  <FlexColumn>
                     <NoteMenu note={note} />
                     {note.content}
-                  </Flex>
+                  </FlexColumn>
                 </TabPanel>
               )
             }

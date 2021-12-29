@@ -1,10 +1,10 @@
 import { deleteFolder, deleteNote, Folder } from '../../store/notes'
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
 import { Dispatch, useCallback } from 'react'
-import Flex from '../atoms/layout/Flex'
 import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 
 type FolderDeleteDialogProps = {
   open: boolean
@@ -31,13 +31,13 @@ export default function FolderDeleteDialog({ open, folder, onClose }: FolderDele
 
   return (
     <ConfirmDialog open={open} onOk={handleOk} onCancel={onClose}>
-      <Flex direction={'column'}>
-        <Flex direction={'row'}>
+      <FlexColumn>
+        <FlexRow>
           <FolderIcon />
           <Label>{folder.name}</Label>
-        </Flex>
+        </FlexRow>
         <Label>このフォルダーを削除しますか？</Label>
-      </Flex>
+      </FlexColumn>
     </ConfirmDialog>
   )
 }

@@ -1,5 +1,4 @@
 import { deleteNote, Note } from '../../store/notes'
-import Flex from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -7,6 +6,7 @@ import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
 import { CloseIcon, DeleteIcon } from '../atoms/display/Icons'
 import NoteDeleteDialog from './NoteDeleteDialog'
+import { FlexRow } from '../atoms/layout/Flex'
 
 type NoteMenuProps = {
   note: Note
@@ -27,19 +27,19 @@ export default function NoteMenu({ note }: NoteMenuProps) {
 
   return (
     <AppBar>
-      <Flex direction={'row'} justify={'space-around'}>
-        <Flex direction={'row'}>
+      <FlexRow justify={'space-around'}>
+        <FlexRow>
           <IconButton onClick={handleOpenDelete}>
             <DeleteIcon color={'white'} />
           </IconButton>
           <NoteDeleteDialog open={openDelete} note={note} onClose={handleCloseDelete} />
-        </Flex>
-        <Flex direction={'row'} justify={'flex-end'}>
+        </FlexRow>
+        <FlexRow justify={'flex-end'}>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
-        </Flex>
-      </Flex>
+        </FlexRow>
+      </FlexRow>
     </AppBar>
   )
 }

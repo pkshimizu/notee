@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import Dialog from '../../atoms/feedback/Dialog'
 import Form from '../../atoms/display/Form'
 import Button from '../../atoms/inputs/Button'
-import Flex from '../../atoms/layout/Flex'
 
 type FormDialogProps = {
   open: boolean

@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useState } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
 import AppBar from '../atoms/surfaces/AppBar'
 import UserAvatar from '../molecules/display/UserAvatar'
-import Flex from '../atoms/layout/Flex'
+import Flex, { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Button from '../atoms/inputs/Button'
 import UserMenu from '../organisms/UserMenu'
 import { useSelector } from 'react-redux'
@@ -28,16 +28,16 @@ export default function WorkspaceLayout({ sidebar, openSideBar, children, onClos
       <>
         <Drawer open={openSideBar} onClose={onCloseSideBar}>
           <AppBar>
-            <Flex direction={'row'} justify={'flex-end'} align={'center'} width={'100%'}>
+            <FlexRow justify={'flex-end'} align={'center'} width={'100%'}>
               <Button onClick={handleClickMenu} variant={'text'}>
                 <UserAvatar user={currentUser} />
               </Button>
-            </Flex>
+            </FlexRow>
             <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />
           </AppBar>
-          <Flex direction={'column'} justify={'space-between'} height={'100%'} width={256}>
+          <FlexColumn justify={'space-between'} height={'100%'} width={256}>
             {sidebar}
-          </Flex>
+          </FlexColumn>
         </Drawer>
         <Margin left={openSideBar ? 32 : 0}>{children}</Margin>
       </>

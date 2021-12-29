@@ -5,7 +5,6 @@ export type FlexAlign = 'flex-start' | 'center' | 'flex-end' | 'baseline'
 export type FlexJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
 
 type FlexProps = {
-  direction: 'row' | 'column'
   align?: FlexAlign
   justify?: FlexJustify
   width?: number | string
@@ -14,7 +13,27 @@ type FlexProps = {
   children: ReactNode
 }
 
-export default function Flex({ direction, align, justify, width, height, space = 1, children }: FlexProps) {
+export function FlexColumn(props: FlexProps) {
+  return (
+    <Flex direction={'column'} {...props}>
+      {props.children}
+    </Flex>
+  )
+}
+
+export function FlexRow(props: FlexProps) {
+  return (
+    <Flex direction={'row'} {...props}>
+      {props.children}
+    </Flex>
+  )
+}
+
+type BaseFlexProps = {
+  direction: 'row' | 'column'
+} & FlexProps
+
+function Flex({ direction, align, justify, width, height, space = 1, children }: BaseFlexProps) {
   return (
     <MuiBox
       sx={{

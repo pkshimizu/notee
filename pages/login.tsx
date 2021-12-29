@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Flex from '../components/atoms/layout/Flex'
+import { FlexColumn } from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
 import { GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useContext, useEffect } from 'react'
@@ -23,11 +23,11 @@ const Login: NextPage = () => {
   }, [dispatch])
 
   return (
-    <Flex direction={'column'} align={'center'}>
+    <FlexColumn align={'center'}>
       <Button icon={<GoogleIcon />} onClick={handleLogInWithGoogle}>
         Login with Google
       </Button>
-    </Flex>
+    </FlexColumn>
   )
 }
 
