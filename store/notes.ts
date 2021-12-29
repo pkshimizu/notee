@@ -104,6 +104,20 @@ export const createFolder = createAsyncAction<CreateFolderParams, void>(
   }
 )
 
+type UpdateFolderParams = {
+  folder: Folder
+  name: string
+}
+
+export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
+  'UpdateFolder',
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.updateFolder(state.session.currentUser, params.folder, params.name)
+    }
+  }
+)
+
 type CreateNoteParams = {
   parentFolder: Folder
 }
@@ -175,10 +189,23 @@ const addFolder = (folder: Folder, addedFolder: Folder): Folder => {
   }
 }
 const modifyFolder = (folder: Folder, modifiedFolder: Folder): Folder => {
+  if (folder.folderId === undefined && modifiedFolder.folderId === undefined) {
+    return {
+      ...folder,
+      name: modifiedFolder.name,
+    }
+  }
   if (folder.id === modifiedFolder.folderId) {
     return {
       ...folder,
-      folders: folder.folders.map((subFolder) => (subFolder.id === modifiedFolder.id ? modifiedFolder : subFolder)),
+      folders: folder.folders.map((subFolder) =>
+        subFolder.id === modifiedFolder.id
+          ? {
+              ...subFolder,
+              name: modifiedFolder.name,
+            }
+          : subFolder
+      ),
     }
   }
   return {

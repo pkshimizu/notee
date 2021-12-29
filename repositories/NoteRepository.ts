@@ -8,6 +8,7 @@ import {
   getDocs,
   onSnapshot,
   QueryDocumentSnapshot,
+  updateDoc,
 } from '@firebase/firestore'
 import { User } from '../store/session'
 import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
@@ -142,6 +143,17 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notes = collection(userDoc, 'notes')
     return addDoc(notes, note)
+  }
+  async updateFolder(user: User, folder: Folder, name: string): Promise<Folder> {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const folderDoc = doc(userDoc, 'folders', folder.id)
+    await updateDoc(folderDoc, {
+      name: name,
+    })
+    return {
+      ...folder,
+      name: name,
+    }
   }
   deleteFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
