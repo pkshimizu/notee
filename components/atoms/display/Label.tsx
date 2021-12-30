@@ -20,6 +20,6 @@ type LabelProps = {
   children: string
 }
 
-export default function Label({ variant, children }: LabelProps) {
+export default function Label({ variant = 'body', children }: LabelProps) {
   return <MuiTypography variant={typographyVariant(variant)}>{children}</MuiTypography>
 }
