@@ -15,8 +15,8 @@ export default function FolderCard({ folder }: FolderCardProps) {
   const { go } = useContext(Router)
   const handleOpenFolder = useCallback(() => {
     go(`/notes/${folder.id}`)
-  }, [go])
-  
+  }, [go, folder])
+
   return (
     <Card
       header={<Label>{folder.name}</Label>}

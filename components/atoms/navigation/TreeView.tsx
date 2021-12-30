@@ -4,11 +4,12 @@ import { ChevronRight, ExpandMore } from '@mui/icons-material'
 
 type TreeViewProps = {
   width?: string
+  selectedId?: string
   children: ReactNode
   onSelect: (value: string) => void
 }
 
-export default function TreeView({ width, children, onSelect }: TreeViewProps) {
+export default function TreeView({ width, selectedId, children, onSelect }: TreeViewProps) {
   const handleSelect = useCallback(
     (event: React.SyntheticEvent, nodeId: string) => {
       onSelect(nodeId)
@@ -21,6 +22,7 @@ export default function TreeView({ width, children, onSelect }: TreeViewProps) {
       defaultCollapseIcon={<ExpandMore />}
       defaultExpandIcon={<ChevronRight />}
       onNodeSelect={handleSelect}
+      selected={selectedId}
       sx={{ width: width }}
     >
       {children}

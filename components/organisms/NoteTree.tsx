@@ -5,6 +5,8 @@ import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 import { useCallback, useContext } from 'react'
 import { Folder, Note } from '../../store/notes'
 import { Router } from '../systems/RouterProvider'
+import { useSelector } from 'react-redux'
+import { activeTabSelector } from '../../store/workspace'
 
 type NoteTreeProps = {
   folder?: Folder
@@ -29,6 +31,7 @@ function NoteTreeFolderItem({ folder }: { folder: Folder }) {
 
 export default function NoteTree({ folder }: NoteTreeProps) {
   const { go } = useContext(Router)
+  const activeTab = useSelector(activeTabSelector)
   const handleSelectTab = useCallback(
     (value: string) => {
       go(`/notes/${value}`)
@@ -36,5 +39,9 @@ export default function NoteTree({ folder }: NoteTreeProps) {
     [go]
   )
 
-  return <TreeView onSelect={handleSelectTab}>{folder && <NoteTreeFolderItem folder={folder} />}</TreeView>
+  return (
+    <TreeView selectedId={activeTab?.value} onSelect={handleSelectTab}>
+      {folder && <NoteTreeFolderItem folder={folder} />}
+    </TreeView>
+  )
 }

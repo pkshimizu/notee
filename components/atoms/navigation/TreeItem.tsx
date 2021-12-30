@@ -9,6 +9,7 @@ type TreeItemProps = {
   icon: ReactNode
   label: ReactNode
   end?: ReactNode
+  selected?: boolean
   children?: ReactNode
 }
 
@@ -55,7 +56,7 @@ const CustomContent = React.forwardRef(function CustomContent(props: TreeItemCon
 
 const CustomTreeItem = (props: MuiTreeItemProps) => <MuiTreeItem ContentComponent={CustomContent} {...props} />
 
-export default function TreeItem({ id, icon, label, end, children }: TreeItemProps) {
+export default function TreeItem({ id, icon, label, end, selected, children }: TreeItemProps) {
   return (
     <CustomTreeItem
       nodeId={id}

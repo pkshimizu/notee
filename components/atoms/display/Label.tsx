@@ -4,14 +4,14 @@ type LabelVariant = 'body' | 'caption' | 'title' | 'subtitle'
 
 const typographyVariant = (variant: LabelVariant) => {
   switch (variant) {
-    case 'body':
-      return 'body1'
-    case 'caption':
-      return 'caption'
-    case 'title':
-      return 'h5'
-    case 'subtitle':
-      return 'subtitle1'
+  case 'body':
+    return 'body1'
+  case 'caption':
+    return 'caption'
+  case 'title':
+    return 'h5'
+  case 'subtitle':
+    return 'subtitle1'
   }
 }
 
