@@ -10,6 +10,7 @@ import { useCallback, useContext } from 'react'
 import { foldersSelector, notesSelector } from '../../store/notes'
 import IconButton from '../atoms/inputs/IconButton'
 import { Router } from '../systems/RouterProvider'
+import FolderTabPanel from './FolderTabPanel'
 
 type WorkspaceTabViewProps = {}
 
@@ -55,14 +56,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
         const folder = folders.find((folder) => folder.id === tab.value)
         const note = notes.find((note) => note.id === tab.value)
         if (folder) {
-          return (
-            <TabPanel value={tab.value} key={tab.value}>
-              <FlexColumn>
-                <FolderMenu folder={folder} />
-                {folder.name}
-              </FlexColumn>
-            </TabPanel>
-          )
+          return <FolderTabPanel folder={folder} key={folder.id} />
         }
         if (note) {
           return (

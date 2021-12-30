@@ -6,6 +6,7 @@ import {
   Google,
   Logout,
   NoteAdd,
+  OpenInNew,
   Settings,
   TextSnippet,
 } from '@mui/icons-material'
@@ -61,6 +62,10 @@ export function MenuIcon(props: IconProps) {
 
 export function NoteIcon(props: IconProps) {
   return <Icon {...props} icon={TextSnippet} />
+}
+
+export function OpenIcon(props: IconProps) {
+  return <Icon {...props} icon={OpenInNew} />
 }
 
 export function SettingsIcon(props: IconProps) {

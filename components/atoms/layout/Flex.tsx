@@ -44,10 +44,8 @@ function Flex({ direction, align, justify, width, height, space = 1, children }:
         width,
         height,
         flexGrow: 1,
-        '& > *:not(:last-child)': {
-          mr: direction === 'row' ? space : undefined,
-          mb: direction === 'column' ? space : undefined,
-        },
+        flexWrap: 'wrap',
+        gap: space,
       }}
     >
       {children}

@@ -24,18 +24,18 @@ const Workspace: NextPage = () => {
     const folder = folders.find((folder) => folder.id === id)
     if (folder) {
       dispatch(workspaceSlice.actions.open({ tab: { value: folder.id, label: folder.name } }))
-      
+
       return
     }
     const note = notes.find((note) => note.id === id)
     if (note) {
       dispatch(workspaceSlice.actions.open({ tab: { value: note.id, label: note.title } }))
-      
+
       return
     }
     if (root) {
       dispatch(workspaceSlice.actions.open({ tab: { value: root.id, label: root.name } }))
-      
+
       return
     }
   }, [dispatch, id, folders, notes, root])
