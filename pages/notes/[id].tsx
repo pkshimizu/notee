@@ -8,16 +8,16 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import WorkspaceAppBar from '../../components/organisms/WorkspaceAppBar'
-import { Router } from '../../components/systems/RouterProvider'
 import { FlexColumn } from '../../components/atoms/layout/Flex'
+import { useNotesPage } from '../../hooks/usePages'
 
 const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
-  const activeValue = useSelector(activeTabSelector)
+  const activeTab = useSelector(activeTabSelector)
   const openSideBar = useSelector(openSideBarSelector)
-  const { go } = useContext(Router)
+  const notesPage = useNotesPage()
   const router = useRouter()
   const { id } = router.query
   const dispatch = useDispatch()
@@ -41,10 +41,10 @@ const Workspace: NextPage = () => {
     }
   }, [dispatch, id, folders, notes, root])
   useEffect(() => {
-    if (activeValue) {
-      go(`/notes/${activeValue.value}`)
+    if (activeTab) {
+      notesPage(activeTab.value)
     }
-  }, [go, activeValue])
+  }, [notesPage, activeTab])
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])

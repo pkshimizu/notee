@@ -3,19 +3,19 @@ import Card from '../../atoms/surfaces/Card'
 import Label from '../../atoms/display/Label'
 import IconButton from '../../atoms/inputs/IconButton'
 import { OpenIcon } from '../../atoms/display/Icons'
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { FlexRow } from '../../atoms/layout/Flex'
-import { Router } from '../../systems/RouterProvider'
+import { useNotesPage } from '../../../hooks/usePages'
 
 type FolderCardProps = {
   folder: Folder
 }
 
 export default function FolderCard({ folder }: FolderCardProps) {
-  const { go } = useContext(Router)
+  const notesPage = useNotesPage()
   const handleOpenFolder = useCallback(() => {
-    go(`/notes/${folder.id}`)
-  }, [go, folder])
+    notesPage(folder.id)
+  }, [notesPage, folder])
 
   return (
     <Card

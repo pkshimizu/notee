@@ -1,17 +1,17 @@
 import type { NextPage } from 'next'
 import { useSelector } from 'react-redux'
 import { rootFolderSelector } from '../store/notes'
-import { useContext, useEffect } from 'react'
-import { Router } from '../components/systems/RouterProvider'
+import { useEffect } from 'react'
+import { useNotesPage } from '../hooks/usePages'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
-  const { go } = useContext(Router)
+  const notesPage = useNotesPage()
   useEffect(() => {
     if (root) {
-      go(`/notes/${root.id}`)
+      notesPage(root.id)
     }
-  }, [root, go])
+  }, [root, notesPage])
 
   return <></>
 }

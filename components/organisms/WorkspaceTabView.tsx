@@ -2,12 +2,12 @@ import TabView from '../atoms/navigation/TabView'
 import { FolderIcon, MenuIcon, NoteIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import workspaceSlice, { activeTabSelector, openSideBarSelector, tabsSelector } from '../../store/workspace'
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { foldersSelector, notesSelector } from '../../store/notes'
 import IconButton from '../atoms/inputs/IconButton'
-import { Router } from '../systems/RouterProvider'
 import FolderTabPanel from './FolderTabPanel'
 import NoteTabPanel from './NoteTabPanel'
+import { useNotesPage } from '../../hooks/usePages'
 
 type WorkspaceTabViewProps = {}
 
@@ -17,13 +17,13 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const activeTab = useSelector(activeTabSelector)
   const tabs = useSelector(tabsSelector)
   const openSideBar = useSelector(openSideBarSelector)
-  const { go } = useContext(Router)
+  const notesPage = useNotesPage()
   const dispatch = useDispatch()
   const handleChangeTab = useCallback(
     (value: string) => {
-      go(`/notes/${value}`)
+      notesPage(value)
     },
-    [go]
+    [notesPage]
   )
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())

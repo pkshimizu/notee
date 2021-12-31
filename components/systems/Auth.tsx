@@ -1,7 +1,7 @@
-import { ReactNode, useContext, useEffect } from 'react'
-import { Router } from './RouterProvider'
+import { ReactNode, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUserSelector, initializedSelector, initializeSession } from '../../store/session'
+import { useLoginPage } from '../../hooks/usePages'
 
 type AuthProps = {
   children: ReactNode
@@ -10,7 +10,7 @@ type AuthProps = {
 export default function Auth({ children }: AuthProps) {
   const currentUser = useSelector(currentUserSelector)
   const initialized = useSelector(initializedSelector)
-  const { go } = useContext(Router)
+  const loginPage = useLoginPage()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -19,9 +19,9 @@ export default function Auth({ children }: AuthProps) {
 
   useEffect(() => {
     if (initialized && currentUser === undefined) {
-      go('/login')
+      loginPage()
     }
-  }, [initialized, currentUser, go])
+  }, [initialized, currentUser, loginPage])
 
   if (initialized) {
     return <>{children}</>

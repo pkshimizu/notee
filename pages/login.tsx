@@ -2,21 +2,21 @@ import { NextPage } from 'next'
 import { FlexColumn } from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
 import { GoogleIcon } from '../components/atoms/display/Icons'
-import { useCallback, useContext, useEffect } from 'react'
-import { Router } from '../components/systems/RouterProvider'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUserSelector, loginWithGoogle } from '../store/session'
+import { useRootPage } from '../hooks/usePages'
 
 const Login: NextPage = () => {
   const currentUser = useSelector(currentUserSelector)
-  const { go } = useContext(Router)
+  const rootPage = useRootPage()
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (currentUser) {
-      go('/', undefined)
+      rootPage()
     }
-  }, [currentUser, go])
+  }, [currentUser, rootPage])
 
   const handleLogInWithGoogle = useCallback(() => {
     dispatch(loginWithGoogle())
