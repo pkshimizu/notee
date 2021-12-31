@@ -104,6 +104,19 @@ export const createFolder = createAsyncAction<CreateFolderParams, void>(
   }
 )
 
+type CreateNoteParams = {
+  parentFolder: Folder
+}
+
+export const createNote = createAsyncAction<CreateNoteParams, void>(
+  'CreateNote',
+  async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.createNote(state.session.currentUser, params.parentFolder)
+    }
+  }
+)
+
 type UpdateFolderParams = {
   folder: Folder
   name: string
@@ -118,15 +131,16 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
   }
 )
 
-type CreateNoteParams = {
-  parentFolder: Folder
+type UpdateNoteParams = {
+  note: Note
+  content: string
 }
 
-export const createNote = createAsyncAction<CreateNoteParams, void>(
-  'CreateNote',
+export const updateNote = createAsyncAction<UpdateNoteParams, void>(
+  'UpdateNote',
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
-      await noteRepository.createNote(state.session.currentUser, params.parentFolder)
+      await noteRepository.updateNote(state.session.currentUser, params.note, params.content)
     }
   }
 )

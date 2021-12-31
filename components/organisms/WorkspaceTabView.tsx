@@ -44,8 +44,13 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
       value={activeTab.value}
       tabs={tabs.map((tab) => {
         const folder = folders.find((folder) => folder.id === tab.value)
+        const note = notes.find((note) => note.id === tab.value)
 
-        return { ...tab, icon: folder ? <FolderIcon key={tab.value} /> : <NoteIcon key={tab.value} /> }
+        return {
+          ...tab,
+          label: folder?.name || note?.title || '名前無し',
+          icon: folder ? <FolderIcon key={tab.value} /> : <NoteIcon key={tab.value} />,
+        }
       })}
       onChange={handleChangeTab}
     >

@@ -155,6 +155,17 @@ export default class NoteRepository {
       name: name,
     }
   }
+  async updateNote(user: User, note: Note, content: string): Promise<Note> {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const noteDoc = doc(userDoc, 'notes', note.id)
+    await updateDoc(noteDoc, {
+      content: content,
+    })
+    return {
+      ...note,
+      content: content,
+    }
+  }
   deleteFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersCollection = collection(userDoc, 'folders')

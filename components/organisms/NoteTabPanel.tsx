@@ -1,4 +1,4 @@
-import { Note } from '../../store/notes'
+import { Note, updateNote } from '../../store/notes'
 import TabPanel from '../atoms/navigation/TabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NoteMenu from './NoteMenu'
@@ -7,6 +7,7 @@ import RelativeBox from '../atoms/layout/RelativeBox'
 import AbsoluteBox from '../atoms/layout/AbsoluteBox'
 import { useCallback, useState } from 'react'
 import { Ace } from 'ace-builds'
+import { useDispatch } from 'react-redux'
 
 type NoteTabPanelProps = {
   note: Note
@@ -14,6 +15,7 @@ type NoteTabPanelProps = {
 
 export default function NoteTabPanel({ note }: NoteTabPanelProps) {
   const [editor, setEditor] = useState<Ace.Editor | undefined>(undefined)
+  const dispatch = useDispatch()
   const handleLoad = useCallback((editor) => {
     setEditor(editor)
   }, [])
@@ -22,6 +24,12 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
       editor.resize()
     }
   }, [editor])
+  const handleChangeContent = useCallback(
+    (content: string) => {
+      dispatch(updateNote({ note, content }))
+    },
+    [dispatch, note]
+  )
 
   return (
     <TabPanel value={note.id}>
@@ -30,7 +38,7 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
         <FlexRow>
           <RelativeBox width={'100%'} height={'100%'}>
             <AbsoluteBox top={0} bottom={0} left={0} right={0} onResize={handleResize}>
-              <TextEditor content={note.content} onLoad={handleLoad} />
+              <TextEditor content={note.content} onLoad={handleLoad} onChangeContent={handleChangeContent} />
             </AbsoluteBox>
           </RelativeBox>
         </FlexRow>
