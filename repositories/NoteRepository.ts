@@ -158,12 +158,15 @@ export default class NoteRepository {
   async updateNote(user: User, note: Note, content: string): Promise<Note> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const noteDoc = doc(userDoc, 'notes', note.id)
+    const updatedAt = dayjs().toISOString()
     await updateDoc(noteDoc, {
       content: content,
+      updatedAt: updatedAt,
     })
     return {
       ...note,
       content: content,
+      updatedAt: updatedAt,
     }
   }
   deleteFolder(user: User, folder: Folder) {
