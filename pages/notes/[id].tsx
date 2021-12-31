@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import WorkspaceAppBar from '../../components/organisms/WorkspaceAppBar'
 import { Router } from '../../components/systems/RouterProvider'
+import { FlexColumn } from '../../components/atoms/layout/Flex'
 
 const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)
@@ -55,7 +56,9 @@ const Workspace: NextPage = () => {
       openSideBar={openSideBar}
       onCloseSideBar={handleToggleSideBar}
     >
-      <WorkspaceTabView />
+      <FlexColumn height={'100vh'} space={0}>
+        <WorkspaceTabView />
+      </FlexColumn>
     </WorkspaceLayout>
   )
 }

@@ -1,35 +1,44 @@
-import AceEditor from 'react-ace'
-import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/mode-java'
-import 'ace-builds/src-noconflict/mode-python'
-import 'ace-builds/src-noconflict/mode-xml'
-import 'ace-builds/src-noconflict/mode-ruby'
-import 'ace-builds/src-noconflict/mode-sass'
-import 'ace-builds/src-noconflict/mode-markdown'
-import 'ace-builds/src-noconflict/mode-mysql'
-import 'ace-builds/src-noconflict/mode-json'
-import 'ace-builds/src-noconflict/mode-html'
-import 'ace-builds/src-noconflict/mode-handlebars'
-import 'ace-builds/src-noconflict/mode-golang'
-import 'ace-builds/src-noconflict/mode-csharp'
-import 'ace-builds/src-noconflict/mode-elixir'
-import 'ace-builds/src-noconflict/mode-typescript'
-import 'ace-builds/src-noconflict/mode-css'
-import 'ace-builds/src-noconflict/keybinding-emacs'
-import 'ace-builds/src-noconflict/keybinding-sublime'
-import 'ace-builds/src-noconflict/keybinding-vim'
-import 'ace-builds/src-noconflict/keybinding-vscode'
-import 'ace-builds/src-noconflict/theme-monokai'
-import 'ace-builds/src-noconflict/theme-github'
-import 'ace-builds/src-noconflict/theme-tomorrow'
-import 'ace-builds/src-noconflict/theme-kuroir'
-import 'ace-builds/src-noconflict/theme-twilight'
-import 'ace-builds/src-noconflict/theme-xcode'
-import 'ace-builds/src-noconflict/theme-textmate'
-import 'ace-builds/src-noconflict/theme-solarized_dark'
-import 'ace-builds/src-noconflict/theme-solarized_light'
-import 'ace-builds/src-noconflict/theme-terminal'
 import { Ace } from 'ace-builds'
+import dynamic from 'next/dynamic'
+
+const AceEditor = dynamic(
+  async () => {
+    const ace = await import('react-ace')
+    await import('ace-builds/src-noconflict/mode-javascript')
+    await import('ace-builds/src-noconflict/mode-java')
+    await import('ace-builds/src-noconflict/mode-python')
+    await import('ace-builds/src-noconflict/mode-xml')
+    await import('ace-builds/src-noconflict/mode-ruby')
+    await import('ace-builds/src-noconflict/mode-sass')
+    await import('ace-builds/src-noconflict/mode-markdown')
+    await import('ace-builds/src-noconflict/mode-mysql')
+    await import('ace-builds/src-noconflict/mode-json')
+    await import('ace-builds/src-noconflict/mode-html')
+    await import('ace-builds/src-noconflict/mode-handlebars')
+    await import('ace-builds/src-noconflict/mode-golang')
+    await import('ace-builds/src-noconflict/mode-csharp')
+    await import('ace-builds/src-noconflict/mode-elixir')
+    await import('ace-builds/src-noconflict/mode-typescript')
+    await import('ace-builds/src-noconflict/mode-css')
+    await import('ace-builds/src-noconflict/keybinding-emacs')
+    await import('ace-builds/src-noconflict/keybinding-sublime')
+    await import('ace-builds/src-noconflict/keybinding-vim')
+    await import('ace-builds/src-noconflict/keybinding-vscode')
+    await import('ace-builds/src-noconflict/theme-monokai')
+    await import('ace-builds/src-noconflict/theme-github')
+    await import('ace-builds/src-noconflict/theme-tomorrow')
+    await import('ace-builds/src-noconflict/theme-kuroir')
+    await import('ace-builds/src-noconflict/theme-twilight')
+    await import('ace-builds/src-noconflict/theme-xcode')
+    await import('ace-builds/src-noconflict/theme-textmate')
+    await import('ace-builds/src-noconflict/theme-solarized_dark')
+    await import('ace-builds/src-noconflict/theme-solarized_light')
+    await import('ace-builds/src-noconflict/theme-terminal')
+
+    return ace
+  },
+  { ssr: false }
+)
 
 export type ContentType =
   | 'csharp'

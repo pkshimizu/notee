@@ -10,7 +10,6 @@ type TreeViewProps = {
 }
 
 export default function TreeView({ width, selectedId = '', children, onSelect }: TreeViewProps) {
-  console.log(selectedId)
   const handleSelect = useCallback(
     (event: React.SyntheticEvent, nodeId: string) => {
       onSelect(nodeId)

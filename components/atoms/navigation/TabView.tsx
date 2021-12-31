@@ -4,6 +4,7 @@ import MuiTabContext from '@mui/lab/TabContext'
 import MuiTabList from '@mui/lab/TabList'
 import MuiBox from '@mui/material/Box'
 import MuiTypography from '@mui/material/Typography'
+import { FlexColumn } from '../layout/Flex'
 
 export type Tab = {
   value: string
@@ -40,7 +41,9 @@ export default function TabView({ value, tabs, leftItem, children, onChange }: T
           ))}
         </MuiTabList>
       </MuiBox>
-      {children}
+      <FlexColumn space={0} height={'calc(100% - 52.5px)'}>
+        {children}
+      </FlexColumn>
     </MuiTabContext>
   )
 }
