@@ -16,7 +16,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
     <TabPanel value={folder.id}>
       <FlexColumn>
         <FolderMenu folder={folder} />
-        <Margin left={2} right={2}>
+        <Margin left={2} right={2} bottom={4}>
           {folder.folders.length > 0 && (
             <>
               <Margin top={3} bottom={3}>
