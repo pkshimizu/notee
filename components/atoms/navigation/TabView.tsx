@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from 'react'
 import MuiTab from '@mui/material/Tab'
+import MuiTabs from '@mui/material/Tabs'
 import MuiTabContext from '@mui/lab/TabContext'
 import MuiTabList from '@mui/lab/TabList'
 import MuiBox from '@mui/material/Box'
@@ -23,9 +24,14 @@ type TabViewProps = {
 export default function TabView({ value, tabs, leftItem, children, onChange }: TabViewProps) {
   return (
     <MuiTabContext value={value}>
-      <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
         {leftItem}
-        <MuiTabList onChange={(event, newValue) => onChange && onChange(newValue)}>
+        <MuiTabs
+          value={value}
+          onChange={(event, newValue) => onChange && onChange(newValue)}
+          variant={'scrollable'}
+          scrollButtons={'auto'}
+        >
           {tabs.map((tab) => (
             <MuiTab
               label={
@@ -39,7 +45,7 @@ export default function TabView({ value, tabs, leftItem, children, onChange }: T
               key={tab.value}
             />
           ))}
-        </MuiTabList>
+        </MuiTabs>
       </MuiBox>
       <FlexColumn space={0} height={'calc(100% - 52.5px)'}>
         {children}
