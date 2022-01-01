@@ -1,20 +1,15 @@
 import MuiTextField from '@mui/material/TextField'
-import { useCallback, useRef, useState } from 'react'
-
-type TextValidation = {
-  required?: boolean
-  maxLength?: number
-  pattern?: string
-}
+import { useCallback } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
 
 type TextSize = 'sm' | 'md' | 'lg'
 
 type TextFieldProps = {
   label?: string
   value?: string
-  validation?: TextValidation
   size?: TextSize
-  onChange: (value: string) => void
+  register: UseFormRegisterReturn
+  error?: any
 }
 
 const width = (size: TextSize) => {
@@ -28,19 +23,7 @@ const width = (size: TextSize) => {
   }
 }
 
-export default function TextField({ label, value, validation, size = 'md', onChange }: TextFieldProps) {
-  const inputRef = useRef<any | undefined>(undefined)
-  const [error, setError] = useState(false)
-  const handleChange = useCallback(
-    (e) => {
-      const ref = inputRef.current
-      if (ref) {
-        setError(!ref.validity.valid)
-      }
-      onChange(e.target.value)
-    },
-    [onChange]
-  )
+export default function TextField({ label, value, size = 'md', register, error }: TextFieldProps) {
   const handlePress = useCallback((e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -51,14 +34,12 @@ export default function TextField({ label, value, validation, size = 'md', onCha
     <MuiTextField
       label={label}
       value={value}
-      error={error}
       variant={'filled'}
-      inputRef={inputRef}
-      inputProps={validation}
-      helperText={inputRef?.current?.validationMessage}
-      onChange={handleChange}
       onKeyPress={handlePress}
       sx={{ width: width(size) }}
+      {...register}
+      error={error}
+      helperText={error}
     />
   )
 }

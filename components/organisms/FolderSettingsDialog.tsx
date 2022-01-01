@@ -3,6 +3,9 @@ import { useCallback, useState } from 'react'
 import { Folder, updateFolder } from '../../store/notes'
 import TextField from '../atoms/inputs/TextField'
 import { useDispatch } from 'react-redux'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 type FolderSettingDialogProps = {
   open: boolean
@@ -11,24 +14,37 @@ type FolderSettingDialogProps = {
 }
 
 export default function FolderSettingsDialog({ open, folder, onClose }: FolderSettingDialogProps) {
-  const [name, setName] = useState(folder.name)
+  const schema = yup.object().shape({
+    name: yup.string().max(30).required(),
+  })
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onChange',
+    defaultValues: {
+      name: folder.name,
+    },
+  })
   const dispatch = useDispatch()
-  const handleSaveFolderSettings = useCallback(async () => {
-    await dispatch(updateFolder({ folder: folder, name: name }))
+  const handleClose = useCallback(() => {
     onClose()
-  }, [dispatch, folder, name, onClose])
-  const handleChangeName = useCallback((value: string) => {
-    setName(value)
-  }, [])
+    reset()
+  }, [onClose, reset])
+  const handleSaveFolderSettings = useCallback(
+    async (data) => {
+      await dispatch(updateFolder({ folder: folder, name: data.name }))
+      onClose()
+    },
+    [dispatch, folder, onClose]
+  )
 
   return (
-    <FormDialog open={open} onSubmit={handleSaveFolderSettings} onClose={onClose}>
-      <TextField
-        label={'フォルダ名'}
-        value={name}
-        onChange={handleChangeName}
-        validation={{ required: true, maxLength: 30 }}
-      />
+    <FormDialog open={open} onSubmit={handleSubmit(handleSaveFolderSettings)} onClose={handleClose}>
+      <TextField label={'フォルダ名'} register={register('name')} error={errors.name?.message} />
     </FormDialog>
   )
 }
