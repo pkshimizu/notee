@@ -1,12 +1,15 @@
 import createCache from '@emotion/cache'
-import { CacheProvider } from '@emotion/react'
+import { CacheProvider, EmotionCache } from '@emotion/react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { ReactNode } from 'react'
+import Head from 'next/head'
+import { CssBaseline } from '@mui/material'
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-})
+export function createEmotionCache() {
+  return createCache({ key: 'css', prepend: true })
+}
+
+const clientSideEmotionCache = createEmotionCache()
 
 const theme = createTheme({
   palette: {
@@ -45,13 +48,20 @@ const theme = createTheme({
 })
 
 type StyleProps = {
+  cache?: EmotionCache
   children: ReactNode
 }
 
-export default function Style({ children }: StyleProps) {
+export default function Style({ cache = clientSideEmotionCache, children }: StyleProps) {
   return (
     <CacheProvider value={cache}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <Head>
+        <meta name='viewport' content='initial-scale=1, width=device-width' />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </CacheProvider>
   )
 }

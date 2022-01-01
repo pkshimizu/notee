@@ -1,14 +1,19 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps as NextAppProps } from 'next/app'
 import Style from '../components/systems/Style'
 import Auth from '../components/systems/Auth'
 import Store from '../components/systems/Store'
 import DataProvider from '../components/systems/DataProvider'
+import { EmotionCache } from '@emotion/react'
 
-export default function App({ Component, pageProps }: AppProps) {
+interface AppProps extends NextAppProps {
+  emotionCache?: EmotionCache
+}
+
+export default function App({ emotionCache, Component, pageProps }: AppProps) {
   return (
     <Store>
-      <Style>
+      <Style cache={emotionCache}>
         <Auth>
           <DataProvider>
             <Component {...pageProps} />
