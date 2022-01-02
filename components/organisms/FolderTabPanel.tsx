@@ -6,8 +6,8 @@ import FolderCard from '../molecules/feedback/FolderCard'
 import NoteCard from '../molecules/feedback/NoteCard'
 import Label from '../atoms/display/Label'
 import Margin from '../atoms/layout/Margin'
-import RelativeBox from "../atoms/layout/RelativeBox";
-import AbsoluteBox from "../atoms/layout/AbsoluteBox";
+import RelativeBox from '../atoms/layout/RelativeBox'
+import AbsoluteBox from '../atoms/layout/AbsoluteBox'
 
 type FolderTabPanelProps = {
   folder: Folder
