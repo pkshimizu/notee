@@ -110,7 +110,9 @@ export default class NoteRepository {
             onAdded(note)
             return
           case 'modified':
-            onModified(note)
+            if (change.doc.metadata.hasPendingWrites) {
+              onModified(note)
+            }
             return
           case 'removed':
             onRemoved(note)
