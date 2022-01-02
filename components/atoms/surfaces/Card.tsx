@@ -26,7 +26,7 @@ type CardProps = {
 
 export default function Card({ header, children, actions, size = 'md' }: CardProps) {
   return (
-    <MuiCard sx={{ width: width(size) }}>
+    <MuiCard sx={{ width: width(size), marginBottom: 1 }}>
       {header && <MuiCardHeader title={header} />}
       <MuiCardContent>{children}</MuiCardContent>
       {actions && <MuiCardActions>{actions}</MuiCardActions>}
