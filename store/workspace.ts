@@ -62,6 +62,9 @@ const workspaceSlice = createSlice({
         }
       }
       const index = state.tabs.map((tab) => tab.value).indexOf(action.payload.id)
+      if (index < 0) {
+        return state
+      }
       const nextTab = index === 0 ? state.tabs[1] : state.tabs[index - 1]
       const tabs = state.tabs.filter((tab) => tab.value !== action.payload.id)
       return {

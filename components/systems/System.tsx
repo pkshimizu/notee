@@ -21,7 +21,14 @@ export default function System({ children }: SystemProps) {
   return (
     <>
       {children}
-      {error && <Snackbar open={true} message={error.message} severity={'error'} onClose={handleCloseError} />}
+      {error && (
+        <Snackbar
+          open={true}
+          message={`${error.message}(${error.code})`}
+          severity={'error'}
+          onClose={handleCloseError}
+        />
+      )}
       {message && <Snackbar open={true} message={message} severity={'success'} onClose={handleCloseMessage} />}
     </>
   )

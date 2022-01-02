@@ -46,6 +46,15 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
   }
 }
 
+const noteToDoc = (note: Note): NoteDoc => {
+  return {
+    folderId: note.folderId,
+    content: note.content,
+    createdAt: note.createdAt,
+    updatedAt: note.updatedAt,
+  }
+}
+
 export default class NoteRepository {
   async loadRootFolder(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
@@ -176,9 +185,9 @@ export default class NoteRepository {
     const foldersCollection = collection(userDoc, 'folders')
     return deleteDoc(doc(foldersCollection, folder.id))
   }
-  deleteNote(user: User, note: Note) {
+  async deleteNote(user: User, note: Note) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
-    return deleteDoc(doc(notesCollection, note.id))
+    await deleteDoc(doc(notesCollection, note.id))
   }
 }

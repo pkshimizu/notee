@@ -32,12 +32,12 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
   const handleOpenDelete = useCallback(() => {
     setOpenDelete(true)
   }, [])
-  const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close({ id: folder.id }))
-  }, [dispatch, folder])
   const handleCloseDelete = useCallback(() => {
     setOpenDelete(false)
   }, [])
+  const handleClose = useCallback(() => {
+    dispatch(workspaceSlice.actions.close({ id: folder.id }))
+  }, [dispatch, folder])
 
   return (
     <AppBar>

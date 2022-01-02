@@ -1,5 +1,4 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { FirebaseError } from '@firebase/util'
 import { StoreState } from './index'
 
 export type SystemState = {
@@ -22,7 +21,8 @@ type MessageParams = {
 }
 
 type FirebaseErrorParams = {
-  error: FirebaseError
+  code: string
+  message: string
 }
 
 const systemSlice = createSlice({
@@ -40,8 +40,8 @@ const systemSlice = createSlice({
     firebaseError: (state: SystemState, action: PayloadAction<FirebaseErrorParams>) => ({
       ...state,
       error: {
-        code: action.payload.error.code,
-        message: action.payload.error.message,
+        code: action.payload.code,
+        message: action.payload.message,
       },
     }),
     clearError: (state: SystemState) => ({
