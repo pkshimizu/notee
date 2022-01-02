@@ -45,6 +45,7 @@ function Flex({ direction, align, justify, width, height, space = 1, noWrap = fa
         width,
         height,
         flexGrow: 1,
+        overflowY: 'auto',
         flexWrap: noWrap ? 'nowrap' : 'wrap',
         gap: space,
       }}
