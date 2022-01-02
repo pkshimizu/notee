@@ -13,7 +13,7 @@ export default function System({ children }: SystemProps) {
   const handleCloseError = useCallback(() => {
     dispatch(systemSlice.actions.clearError())
   }, [dispatch])
-  
+
   return (
     <>
       {children}
