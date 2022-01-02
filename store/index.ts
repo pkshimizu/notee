@@ -7,14 +7,17 @@ import notesSlice, { notesInitialState } from './notes'
 import NoteRepository from '../repositories/NoteRepository'
 import workspaceSlice, { workspaceInitialState } from './workspace'
 import UserRepository from '../repositories/UserRepository'
+import systemSlice, { systemInitialState } from './system'
 
 const rootReducer = combineReducers({
+  system: systemSlice.reducer,
   session: sessionSlice.reducer,
   workspace: workspaceSlice.reducer,
   notes: notesSlice.reducer,
 })
 
 const preloadedState = () => ({
+  system: systemInitialState,
   session: sessionInitialState,
   workspace: workspaceInitialState,
   notes: notesInitialState,

@@ -1,5 +1,7 @@
 import { AsyncThunk, createAsyncThunk, Dispatch } from '@reduxjs/toolkit'
 import { Repositories, StoreState, ThunkExtra } from './index'
+import systemSlice from './system'
+import { FirebaseError } from '@firebase/util'
 
 export function createAsyncAction<P, R>(
   actionName: string,
@@ -9,7 +11,14 @@ export function createAsyncAction<P, R>(
     actionName,
     async (params, { extra, getState, dispatch }) => {
       const state = getState()
-      return action(params, extra.repositories, state, dispatch)
+      try {
+        return await action(params, extra.repositories, state, dispatch)
+      } catch (e) {
+        if (e instanceof FirebaseError) {
+          dispatch(systemSlice.actions.firebaseError({ error: e }))
+        }
+        throw e
+      }
     }
   )
 }
