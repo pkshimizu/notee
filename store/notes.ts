@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StoreState } from './index'
 import { createAsyncAction } from './actions'
 import workspaceSlice from './workspace'
+import systemSlice from './system'
 
 type Item = {
   id: string
@@ -97,9 +98,10 @@ type CreateFolderParams = {
 
 export const createFolder = createAsyncAction<CreateFolderParams, void>(
   'CreateFolder',
-  async (params, { noteRepository }, state) => {
+  async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createFolder(state.session.currentUser, params.name, params.parentFolder)
+      dispatch(systemSlice.actions.message({ message: '新しいフォルダを作成しました' }))
     }
   }
 )
@@ -110,9 +112,10 @@ type CreateNoteParams = {
 
 export const createNote = createAsyncAction<CreateNoteParams, void>(
   'CreateNote',
-  async (params, { noteRepository }, state) => {
+  async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createNote(state.session.currentUser, params.parentFolder)
+      dispatch(systemSlice.actions.message({ message: '新しいノートを作成しました' }))
     }
   }
 )
@@ -156,6 +159,7 @@ export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
     if (state.session.currentUser) {
       await noteRepository.deleteFolder(state.session.currentUser, folder)
       await dispatch(workspaceSlice.actions.close({ id: params.folder.id }))
+      dispatch(systemSlice.actions.message({ message: 'フォルダを削除しました' }))
     }
   }
 )
@@ -170,6 +174,7 @@ export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
     if (state.session.currentUser) {
       await noteRepository.deleteNote(state.session.currentUser, params.note)
       await dispatch(workspaceSlice.actions.close({ id: params.note.id }))
+      dispatch(systemSlice.actions.message({ message: 'ノートを削除しました' }))
     }
   }
 )

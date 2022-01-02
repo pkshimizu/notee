@@ -1,15 +1,19 @@
 import { ReactNode, useCallback } from 'react'
 import Snackbar from '../atoms/feedback/Snackbar'
 import { useDispatch, useSelector } from 'react-redux'
-import systemSlice, { errorSelector } from '../../store/system'
+import systemSlice, { errorSelector, systemMessageSelector } from '../../store/system'
 
 type SystemProps = {
   children: ReactNode
 }
 
 export default function System({ children }: SystemProps) {
+  const message = useSelector(systemMessageSelector)
   const error = useSelector(errorSelector)
   const dispatch = useDispatch()
+  const handleCloseMessage = useCallback(() => {
+    dispatch(systemSlice.actions.clearMessage())
+  }, [dispatch])
   const handleCloseError = useCallback(() => {
     dispatch(systemSlice.actions.clearError())
   }, [dispatch])
@@ -18,6 +22,7 @@ export default function System({ children }: SystemProps) {
     <>
       {children}
       {error && <Snackbar open={true} message={error.message} severity={'error'} onClose={handleCloseError} />}
+      {message && <Snackbar open={true} message={message} severity={'success'} onClose={handleCloseMessage} />}
     </>
   )
 }
