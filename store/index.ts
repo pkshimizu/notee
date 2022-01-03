@@ -8,9 +8,11 @@ import NoteRepository from '../repositories/NoteRepository'
 import workspaceSlice, { workspaceInitialState } from './workspace'
 import UserRepository from '../repositories/UserRepository'
 import systemSlice, { systemInitialState } from './system'
+import dialogsSlice, { dialogsInitialState } from './dialogs'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
+  dialogs: dialogsSlice.reducer,
   session: sessionSlice.reducer,
   workspace: workspaceSlice.reducer,
   notes: notesSlice.reducer,
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
 
 const preloadedState = () => ({
   system: systemInitialState,
+  dialogs: dialogsInitialState,
   session: sessionInitialState,
   workspace: workspaceInitialState,
   notes: notesInitialState,

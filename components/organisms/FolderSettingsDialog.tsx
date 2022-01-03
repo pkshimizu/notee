@@ -1,5 +1,5 @@
 import FormDialog from '../molecules/feedback/FormDialog'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { Folder, updateFolder } from '../../store/notes'
 import TextField from '../atoms/inputs/TextField'
 import { useDispatch } from 'react-redux'

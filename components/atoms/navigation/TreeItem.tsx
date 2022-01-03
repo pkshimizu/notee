@@ -1,8 +1,6 @@
 import MuiTreeItem, { TreeItemContentProps, useTreeItem, TreeItemProps as MuiTreeItemProps } from '@mui/lab/TreeItem'
 import React, { ReactNode } from 'react'
 import MuiBox from '@mui/material/Box'
-import clsx from 'clsx'
-import MuiTypography from '@mui/material/Typography'
 
 type TreeItemProps = {
   id: string

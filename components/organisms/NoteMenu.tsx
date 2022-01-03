@@ -1,26 +1,20 @@
-import { deleteNote, Note } from '../../store/notes'
+import { Note } from '../../store/notes'
 import IconButton from '../atoms/inputs/IconButton'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
 import { CloseIcon, DeleteIcon } from '../atoms/display/Icons'
-import NoteDeleteDialog from './NoteDeleteDialog'
 import { FlexRow } from '../atoms/layout/Flex'
+import { useNoteDeleteDialog } from '../../hooks/useDialogs'
 
 type NoteMenuProps = {
   note: Note
 }
 
 export default function NoteMenu({ note }: NoteMenuProps) {
-  const [openDelete, setOpenDelete] = useState(false)
+  const noteDeleteDialog = useNoteDeleteDialog()
   const dispatch = useDispatch()
-  const handleOpenDelete = useCallback(() => {
-    setOpenDelete(true)
-  }, [])
-  const handleCloseDelete = useCallback(() => {
-    setOpenDelete(false)
-  }, [])
   const handleClose = useCallback(() => {
     dispatch(workspaceSlice.actions.close({ id: note.id }))
   }, [dispatch, note])
@@ -29,10 +23,9 @@ export default function NoteMenu({ note }: NoteMenuProps) {
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton onClick={handleOpenDelete}>
+          <IconButton onClick={() => noteDeleteDialog.open(note)}>
             <DeleteIcon color={'white'} />
           </IconButton>
-          <NoteDeleteDialog open={openDelete} note={note} onClose={handleCloseDelete} />
         </FlexRow>
         <FlexRow justify={'flex-end'}>
           <IconButton onClick={handleClose}>

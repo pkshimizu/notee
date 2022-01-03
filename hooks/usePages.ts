@@ -8,11 +8,18 @@ export const useRootPage = () => {
   }, [])
 }
 
-export const useNotesPage = () => {
+export const useNotesPage = (defaultId?: string) => {
   const router = useRouter()
-  return useCallback((id: string) => {
-    router.push(`/notes/${id}`)
-  }, [])
+  return useCallback(
+    (id?: string) => {
+      if (id) {
+        router.push(`/notes/${id}`)
+        return
+      }
+      router.push(`/notes/${defaultId}`)
+    },
+    [defaultId]
+  )
 }
 
 export const useLoginPage = () => {

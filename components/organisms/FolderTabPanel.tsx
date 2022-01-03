@@ -2,18 +2,25 @@ import { Folder } from '../../store/notes'
 import TabPanel from '../atoms/navigation/TabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
-import FolderCard from '../molecules/feedback/FolderCard'
-import NoteCard from '../molecules/feedback/NoteCard'
+import FolderCard from '../molecules/surfaces/FolderCard'
+import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
 import Margin from '../atoms/layout/Margin'
 import RelativeBox from '../atoms/layout/RelativeBox'
 import AbsoluteBox from '../atoms/layout/AbsoluteBox'
+import { useFolderDeleteDialog, useFolderSettingsDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useNotesPage } from '../../hooks/usePages'
 
 type FolderTabPanelProps = {
   folder: Folder
 }
 
 export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
+  const folderDeleteDialog = useFolderDeleteDialog()
+  const folderSettingsDialog = useFolderSettingsDialog()
+  const noteDeleteDialog = useNoteDeleteDialog()
+  const openNotePage = useNotesPage()
+
   return (
     <TabPanel value={folder.id}>
       <FlexColumn space={0} height={'100%'}>
@@ -29,7 +36,13 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                     </Margin>
                     <FlexRow>
                       {folder.folders.map((folder) => (
-                        <FolderCard folder={folder} key={folder.id} />
+                        <FolderCard
+                          folder={folder}
+                          key={folder.id}
+                          onClickFolderLink={() => openNotePage(folder.id)}
+                          onClickSettings={() => folderSettingsDialog.open(folder)}
+                          onClickDelete={() => folderDeleteDialog.open(folder)}
+                        />
                       ))}
                     </FlexRow>
                   </>
@@ -41,7 +54,12 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                     </Margin>
                     <FlexRow>
                       {folder.notes.map((note) => (
-                        <NoteCard note={note} key={note.id} />
+                        <NoteCard
+                          note={note}
+                          key={note.id}
+                          onClickNoteLink={() => openNotePage(note.id)}
+                          onClickDelete={() => noteDeleteDialog.open(note)}
+                        />
                       ))}
                     </FlexRow>
                   </>
