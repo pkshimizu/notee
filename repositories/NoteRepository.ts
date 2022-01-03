@@ -41,6 +41,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
     title: makeTitle(content),
     folderId: data.folderId,
     content: content,
+    logs: data.logs ?? [],
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
   }
@@ -50,6 +51,7 @@ const noteToDoc = (note: Note): NoteDoc => {
   return {
     folderId: note.folderId,
     content: note.content,
+    logs: note.logs,
     createdAt: note.createdAt,
     updatedAt: note.updatedAt,
   }
@@ -148,6 +150,7 @@ export default class NoteRepository {
     const note: NoteDoc = {
       folderId: folder.id,
       content: '',
+      logs: [],
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
     }
@@ -172,6 +175,12 @@ export default class NoteRepository {
     const updatedAt = dayjs().toISOString()
     await updateDoc(noteDoc, {
       content: content,
+      logs: note.logs
+        .concat({
+          content: note.content,
+          updatedAt: note.updatedAt,
+        })
+        .slice(-100),
       updatedAt: updatedAt,
     })
     return {

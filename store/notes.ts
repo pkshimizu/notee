@@ -8,9 +8,15 @@ type Item = {
   id: string
 }
 
+type NoteLog = {
+  content: string
+  updatedAt: string
+}
+
 export type NoteDoc = {
   folderId: string
   content: string
+  logs: NoteLog[]
   createdAt: string
   updatedAt: string
 }
