@@ -1,4 +1,4 @@
-import Label from '../atoms/display/Label'
+import Label from '../../atoms/display/Label'
 import dayjs from 'dayjs'
 
 type DateTimeLabelProps = {

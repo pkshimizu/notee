@@ -3,7 +3,7 @@ import Card from '../../atoms/surfaces/Card'
 import IconButton from '../../atoms/inputs/IconButton'
 import { DeleteIcon, OpenIcon } from '../../atoms/display/Icons'
 import NoteTitleLabel from '../display/NoteTitleLabel'
-import DateTimeLabel from '../DateTimeLabel'
+import DateTimeLabel from '../display/DateTimeLabel'
 import { FlexColumn, FlexRow } from '../../atoms/layout/Flex'
 import Label from '../../atoms/display/Label'
 
