@@ -20,6 +20,14 @@ type TabViewProps = {
   onChange?: (value: string) => void
 }
 
+const tabLabel = (label: string) => {
+  if (label.length > 20) {
+    return label.substr(0, 18) + '...'
+  }
+
+  return label
+}
+
 export default function TabView({ value, tabs, leftItem, children, onChange }: TabViewProps) {
   return (
     <MuiTabContext value={value}>
@@ -36,7 +44,7 @@ export default function TabView({ value, tabs, leftItem, children, onChange }: T
               label={
                 <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
                   {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
-                  <MuiTypography variant='button'>{tab.label}</MuiTypography>
+                  <MuiTypography variant='button'>{tabLabel(tab.label)}</MuiTypography>
                 </MuiBox>
               }
               value={tab.value}

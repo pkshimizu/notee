@@ -11,18 +11,6 @@ import { useNotesPage } from '../../hooks/usePages'
 
 type WorkspaceTabViewProps = {}
 
-const tabLabel = (label?: string) => {
-  if (label) {
-    if (label.length > 20) {
-      return label.substr(0, 18) + '...'
-    }
-    
-    return label
-  }
-  
-  return '名前無し'
-}
-
 export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
@@ -60,7 +48,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
 
         return {
           ...tab,
-          label: tabLabel(folder?.name || note?.title),
+          label: folder?.name || note?.title || '名前無し',
           icon: folder ? <FolderIcon key={tab.value} /> : <NoteIcon key={tab.value} />,
         }
       })}
