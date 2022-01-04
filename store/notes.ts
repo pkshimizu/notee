@@ -8,7 +8,7 @@ type Item = {
   id: string
 }
 
-type NoteLog = {
+export type NoteLog = {
   content: string
   updatedAt: string
 }

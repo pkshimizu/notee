@@ -9,13 +9,14 @@ import { FlexColumn } from '../layout/Flex'
 export type Tab = {
   value: string
   icon?: ReactElement
-  label: string
+  label?: string
 }
 
 type TabViewProps = {
   value: string
   tabs: Tab[]
   leftItem?: ReactNode
+  variant?: 'scrollable' | 'fullWidth'
   children: ReactNode
   onChange?: (value: string) => void
 }
@@ -28,7 +29,7 @@ const tabLabel = (label: string) => {
   return label
 }
 
-export default function TabView({ value, tabs, leftItem, children, onChange }: TabViewProps) {
+export default function TabView({ value, tabs, leftItem, variant = 'scrollable', children, onChange }: TabViewProps) {
   return (
     <MuiTabContext value={value}>
       <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
@@ -36,7 +37,7 @@ export default function TabView({ value, tabs, leftItem, children, onChange }: T
         <MuiTabs
           value={value}
           onChange={(event, newValue) => onChange && onChange(newValue)}
-          variant={'scrollable'}
+          variant={variant}
           scrollButtons={'auto'}
         >
           {tabs.map((tab) => (
@@ -44,7 +45,7 @@ export default function TabView({ value, tabs, leftItem, children, onChange }: T
               label={
                 <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
                   {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
-                  <MuiTypography variant='button'>{tabLabel(tab.label)}</MuiTypography>
+                  {tab.label && <MuiTypography variant='button'>{tabLabel(tab.label)}</MuiTypography>}
                 </MuiBox>
               }
               value={tab.value}

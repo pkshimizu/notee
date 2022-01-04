@@ -4,15 +4,16 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
-import { CloseIcon, DeleteIcon } from '../atoms/display/Icons'
+import { CloseIcon, DeleteIcon, SidebarIcon } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteDeleteDialog } from '../../hooks/useDialogs'
 
 type NoteMenuProps = {
   note: Note
+  onOpenProperties: () => void
 }
 
-export default function NoteMenu({ note }: NoteMenuProps) {
+export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const noteDeleteDialog = useNoteDeleteDialog()
   const dispatch = useDispatch()
   const handleClose = useCallback(() => {
@@ -28,6 +29,9 @@ export default function NoteMenu({ note }: NoteMenuProps) {
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>
+          <IconButton onClick={onOpenProperties}>
+            <SidebarIcon color={'white'} />
+          </IconButton>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>

@@ -8,6 +8,7 @@ import AbsoluteBox from '../atoms/layout/AbsoluteBox'
 import { useCallback, useState } from 'react'
 import { Ace } from 'ace-builds'
 import { useDispatch } from 'react-redux'
+import NotePropertiesPanel from './NotePropertiesPanel'
 
 type NoteTabPanelProps = {
   note: Note
@@ -15,6 +16,7 @@ type NoteTabPanelProps = {
 
 export default function NoteTabPanel({ note }: NoteTabPanelProps) {
   const [editor, setEditor] = useState<Ace.Editor | undefined>(undefined)
+  const [propertiesPanel, setPropertiesPanel] = useState(false)
   const dispatch = useDispatch()
   const handleLoad = useCallback((editor) => {
     setEditor(editor)
@@ -34,11 +36,20 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
   return (
     <TabPanel value={note.id}>
       <FlexColumn space={0} height={'100%'}>
-        <NoteMenu note={note} />
+        <NoteMenu note={note} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />
         <FlexRow>
           <RelativeBox width={'100%'} height={'100%'}>
-            <AbsoluteBox top={0} bottom={0} left={0} right={0} onResize={handleResize}>
+            <AbsoluteBox top={0} bottom={0} left={0} right={propertiesPanel ? 256 : 0} onResize={handleResize}>
               <TextEditor content={note.content} onLoad={handleLoad} onChangeContent={handleChangeContent} />
+            </AbsoluteBox>
+            <AbsoluteBox
+              top={0}
+              bottom={0}
+              left={propertiesPanel ? 'calc(100% - 256px)' : '100%'}
+              right={0}
+              onResize={handleResize}
+            >
+              <NotePropertiesPanel note={note} />
             </AbsoluteBox>
           </RelativeBox>
         </FlexRow>

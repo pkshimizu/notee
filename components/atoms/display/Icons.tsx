@@ -4,11 +4,14 @@ import {
   Delete,
   Folder,
   Google,
+  History,
+  Info,
   Logout,
   NoteAdd,
   OpenInNew,
   Settings,
   TextSnippet,
+  ViewSidebar,
 } from '@mui/icons-material'
 import { ElementType } from 'react'
 import { SvgIcon } from '@mui/material'
@@ -52,6 +55,14 @@ export function GoogleIcon(props: IconProps) {
   return <Icon {...props} icon={Google} />
 }
 
+export function InfoIcon(props: IconProps) {
+  return <Icon {...props} icon={Info} />
+}
+
+export function LogIcon(props: IconProps) {
+  return <Icon {...props} icon={History} />
+}
+
 export function LogoutIcon(props: IconProps) {
   return <Icon {...props} icon={Logout} />
 }
@@ -70,4 +81,8 @@ export function OpenIcon(props: IconProps) {
 
 export function SettingsIcon(props: IconProps) {
   return <Icon {...props} icon={Settings} />
+}
+
+export function SidebarIcon(props: IconProps) {
+  return <Icon {...props} icon={ViewSidebar} />
 }
