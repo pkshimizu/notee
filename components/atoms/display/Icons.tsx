@@ -4,6 +4,7 @@ import {
   CreateNewFolder,
   Delete,
   Folder,
+  GitHub,
   Google,
   History,
   Info,
@@ -56,6 +57,10 @@ export function DeleteIcon(props: IconProps) {
 
 export function FolderIcon(props: IconProps) {
   return <Icon {...props} icon={Folder} />
+}
+
+export function GitHubIcon(props: IconProps) {
+  return <Icon {...props} icon={GitHub} />
 }
 
 export function GoogleIcon(props: IconProps) {

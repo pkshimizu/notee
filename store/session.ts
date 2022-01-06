@@ -1,6 +1,8 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AnyAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncAction } from './actions'
 import { StoreState } from './index'
+import { Dispatch } from 'react'
+import UserRepository from '../repositories/UserRepository'
 
 export type User = {
   uid: string
@@ -20,18 +22,27 @@ export const sessionInitialState: SessionState = {
 }
 
 // actions
+const initializeUser = async (
+  user: User | undefined,
+  userRepository: UserRepository,
+  dispatch: Dispatch<AnyAction>
+) => {
+  if (user) {
+    const result = await userRepository.loadUser(user)
+    if (!result) {
+      await userRepository.createUser(user)
+    }
+  }
+  dispatch(sessionSlice.actions.changeCurrentUser({ user }))
+}
 export const initializeSession = createAsyncAction<void, void>(
   'initializeSession',
   async (params, { authRepository, userRepository }, state, dispatch) => {
     if (!state.session.initialized) {
+      const user = await authRepository.getUser()
+      await initializeUser(user, userRepository, dispatch)
       authRepository.onChangeAuthState(async (user) => {
-        if (user) {
-          const result = await userRepository.loadUser(user)
-          if (!result) {
-            await userRepository.createUser(user)
-          }
-        }
-        dispatch(sessionSlice.actions.changeCurrentUser({ user }))
+        await initializeUser(user, userRepository, dispatch)
       })
     }
   }
@@ -39,6 +50,10 @@ export const initializeSession = createAsyncAction<void, void>(
 
 export const loginWithGoogle = createAsyncAction<void, void>('loginWithGoogle', async (params, repositories) => {
   repositories.authRepository.loginWithGoogle()
+})
+
+export const loginWithGitHub = createAsyncAction<void, void>('loginWithGitHub', async (params, repositories) => {
+  repositories.authRepository.loginWithGitHub()
 })
 
 export const logout = createAsyncAction<void, void>('logout', async (params, repositories) => {
