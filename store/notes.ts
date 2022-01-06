@@ -9,6 +9,7 @@ type Item = {
 }
 
 export type NoteLog = {
+  id: string
   content: string
   updatedAt: string
 }

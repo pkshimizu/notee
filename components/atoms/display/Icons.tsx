@@ -1,4 +1,5 @@
 import {
+  Check,
   Close,
   CreateNewFolder,
   Delete,
@@ -7,6 +8,8 @@ import {
   History,
   Info,
   Logout,
+  NavigateBefore,
+  NavigateNext,
   NoteAdd,
   OpenInNew,
   Settings,
@@ -29,6 +32,10 @@ type BaseIconProps = {
 
 export function Icon({ color, icon }: BaseIconProps) {
   return <SvgIcon component={icon} sx={{ color: color }} />
+}
+
+export function ApplyIcon(props: IconProps) {
+  return <Icon {...props} icon={Check} />
 }
 
 export function CloseIcon(props: IconProps) {
@@ -71,12 +78,20 @@ export function MenuIcon(props: IconProps) {
   return <Icon {...props} icon={MuiMenuIcon} />
 }
 
+export function NextIcon(props: IconProps) {
+  return <Icon {...props} icon={NavigateNext} />
+}
+
 export function NoteIcon(props: IconProps) {
   return <Icon {...props} icon={TextSnippet} />
 }
 
 export function OpenIcon(props: IconProps) {
   return <Icon {...props} icon={OpenInNew} />
+}
+
+export function PrevIcon(props: IconProps) {
+  return <Icon {...props} icon={NavigateBefore} />
 }
 
 export function SettingsIcon(props: IconProps) {

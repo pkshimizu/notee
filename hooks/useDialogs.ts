@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react'
-import { Folder, Note } from '../store/notes'
+import { Folder, Note, NoteLog } from '../store/notes'
 import { useDispatch, useSelector } from 'react-redux'
 import dialogsSlice, {
-  dialogsDeleteFolderSelector,
-  dialogsDeleteNoteSelector,
-  dialogsSettingsFolderSelector,
+  dialogsFolderDeleteSelector,
+  dialogsNoteDeleteSelector,
+  dialogsFolderSettingsSelector,
+  dialogsNoteLogSelector,
 } from '../store/dialogs'
 
 export function useFolderSettingsDialog() {
-  const folder = useSelector(dialogsSettingsFolderSelector)
+  const folder = useSelector(dialogsFolderSettingsSelector)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -27,7 +28,7 @@ export function useFolderSettingsDialog() {
   }
 }
 export const useFolderDeleteDialog = () => {
-  const folder = useSelector(dialogsDeleteFolderSelector)
+  const folder = useSelector(dialogsFolderDeleteSelector)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -47,7 +48,7 @@ export const useFolderDeleteDialog = () => {
 }
 
 export const useNoteDeleteDialog = () => {
-  const note = useSelector(dialogsDeleteNoteSelector)
+  const note = useSelector(dialogsNoteDeleteSelector)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -61,6 +62,27 @@ export const useNoteDeleteDialog = () => {
   return {
     state: note !== undefined,
     note,
+    open,
+    close,
+  }
+}
+
+export const useNoteLogDialog = () => {
+  const dialog = useSelector(dialogsNoteLogSelector)
+  const dispatch = useDispatch()
+  const open = useCallback(
+    (note: Note, log: NoteLog) => {
+      dispatch(dialogsSlice.actions.openNoteLogDialog({ note: note, log: log }))
+    },
+    [dispatch]
+  )
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeNoteLogDialog())
+  }, [])
+  return {
+    state: dialog !== undefined,
+    note: dialog?.note,
+    log: dialog?.log,
     open,
     close,
   }

@@ -80,6 +80,7 @@ type TextEditorProps = {
   theme?: EditorTheme
   keyBinding?: KeyBinding
   tabSize?: number
+  readOnly?: boolean
   onLoad?: (editor: Ace.Editor) => void
   onChangeContent?: (content: string) => void
 }
@@ -93,6 +94,7 @@ export default function TextEditor({
   theme = 'textmate',
   keyBinding = 'vim',
   tabSize = 2,
+  readOnly = false,
   onLoad,
   onChangeContent,
 }: TextEditorProps) {
@@ -118,6 +120,7 @@ export default function TextEditor({
         $blockScrolling: true,
       }}
       debounceChangePeriod={1000}
+      readOnly={readOnly}
       onLoad={onLoad}
       onChange={onChangeContent}
     />

@@ -6,15 +6,16 @@ import { ReactNode } from 'react'
 
 type DialogProps = {
   open: boolean
-  title?: string
+  title?: ReactNode
+  width?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   children: ReactNode
   actions?: ReactNode
   onClose: () => void
 }
 
-export default function Dialog({ open, title, children, actions, onClose }: DialogProps) {
+export default function Dialog({ open, title, width = 'sm', children, actions, onClose }: DialogProps) {
   return (
-    <MuiDialog open={open} onClose={onClose}>
+    <MuiDialog open={open} maxWidth={width} onClose={onClose}>
       {title && <MuiDialogTitle>{title}</MuiDialogTitle>}
       <MuiDialogContent>{children}</MuiDialogContent>
       {actions && <MuiDialogActions>{actions}</MuiDialogActions>}

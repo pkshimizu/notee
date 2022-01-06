@@ -9,6 +9,7 @@ import Margin from '../atoms/layout/Margin'
 import { useCallback, useState } from 'react'
 import List from '../atoms/display/List'
 import ListItem from '../atoms/display/ListItem'
+import { useNoteLogDialog } from '../../hooks/useDialogs'
 
 type NotePropertiesPanelProps = {
   note: Note
@@ -16,7 +17,13 @@ type NotePropertiesPanelProps = {
 
 export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) {
   const [tab, setTab] = useState('info')
-  const handleSelectLog = useCallback((log: NoteLog) => {}, [])
+  const noteLogDialog = useNoteLogDialog()
+  const handleSelectLog = useCallback(
+    (log: NoteLog) => {
+      noteLogDialog.open(note, log)
+    },
+    [noteLogDialog, note]
+  )
 
   return (
     <TabView
@@ -46,7 +53,7 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
         <List>
           {[...note.logs].reverse().map((log) => (
             <ListItem
-              key={log.updatedAt}
+              key={log.id}
               label={<DateTimeLabel datetime={log.updatedAt} />}
               onClick={() => handleSelectLog(log)}
             />

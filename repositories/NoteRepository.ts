@@ -13,6 +13,7 @@ import {
 import { User } from '../store/session'
 import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
 import dayjs from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
 
 function makeTitle(content: string): string {
   if (content.length > 0) {
@@ -177,6 +178,7 @@ export default class NoteRepository {
       content: content,
       logs: note.logs
         .concat({
+          id: uuidv4(),
           content: note.content,
           updatedAt: note.updatedAt,
         })
