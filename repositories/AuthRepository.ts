@@ -23,7 +23,6 @@ export default class AuthRepository {
   async getUser(): Promise<User | undefined> {
     const result = await getRedirectResult(auth)
     const user = result?.user
-    console.log('getUser', user)
     if (user) {
       return {
         uid: user.uid,

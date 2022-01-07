@@ -40,7 +40,9 @@ export const initializeSession = createAsyncAction<void, void>(
   async (params, { authRepository, userRepository }, state, dispatch) => {
     if (!state.session.initialized) {
       const user = await authRepository.getUser()
-      await initializeUser(user, userRepository, dispatch)
+      if (user) {
+        await initializeUser(user, userRepository, dispatch)
+      }
       authRepository.onChangeAuthState(async (user) => {
         await initializeUser(user, userRepository, dispatch)
       })
@@ -79,7 +81,12 @@ const sessionSlice = createSlice({
       initialized: true,
     }),
   },
-  extraReducers: () => {},
+  extraReducers: (builder) => {
+    builder.addCase(initializeSession.rejected, (state) => ({
+      ...state,
+      initialized: true,
+    }))
+  },
 })
 
 export default sessionSlice
