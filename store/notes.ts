@@ -60,8 +60,8 @@ const fetchNoteToFolder = (folder: Folder, note: Note) => {
 export const fetchRoot = createAsyncAction<void, FetchRootResults>(
   'fetchRoot',
   async (params, { noteRepository }, state, dispatch) => {
-    if (state.session.currentUser) {
-      const currentUser = state.session.currentUser
+    const currentUser = state.session.currentUser
+    if (currentUser) {
       const root = await noteRepository.loadRootFolder(currentUser)
       if (root === undefined) {
         return { root: await noteRepository.createFolder(currentUser, 'マイノート') }
@@ -95,6 +95,36 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
       return { root: root }
     }
     return { root: undefined }
+  }
+)
+const updateNoteInFolder = (folder: Folder, updatedNotes: Note[]): Folder => {
+  return {
+    ...folder,
+    notes: folder.notes.map((note) => {
+      const updatedNote = updatedNotes.find((updatedNote) => updatedNote.id === note.id)
+      return updatedNote ?? note
+    }),
+    folders: folder.folders.map((subFolder) => updateNoteInFolder(subFolder, updatedNotes)),
+  }
+}
+
+type FetchNotesResults = {
+  root?: Folder
+}
+export const fetchNotes = createAsyncAction<void, FetchNotesResults>(
+  'fetchNotes',
+  async (params, { noteRepository }, state) => {
+    const currentUser = state.session.currentUser
+    const root = state.notes.root
+    if (currentUser && root) {
+      const notes = await noteRepository.loadNotes(currentUser)
+      return {
+        root: updateNoteInFolder(root, notes),
+      }
+    }
+    return {
+      root: root,
+    }
   }
 )
 
@@ -340,6 +370,10 @@ const notesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRoot.fulfilled, (state, action) => ({
+      ...state,
+      root: action.payload.root,
+    }))
+    builder.addCase(fetchNotes.fulfilled, (state, action) => ({
       ...state,
       root: action.payload.root,
     }))

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react'
-import { fetchRoot, rootFolderSelector } from '../../store/notes'
+import { fetchNotes, fetchRoot, rootFolderSelector } from '../../store/notes'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/session'
 
@@ -13,6 +13,14 @@ export default function DataProvider({ children }: DataProviderProps) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchRoot())
+    const onFocus = () => {
+      dispatch(fetchNotes())
+    }
+    window.addEventListener('focus', onFocus)
+    
+    return () => {
+      window.removeEventListener('focus', onFocus)
+    }
   }, [dispatch])
 
   if (currentUser === undefined || root) {
