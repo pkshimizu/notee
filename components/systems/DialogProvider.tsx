@@ -1,16 +1,16 @@
-import FolderSettingsDialog from '../organisms/FolderSettingsDialog'
+import FolderCreateDialog from '../organisms/FolderCreateDialog'
 import FolderDeleteDialog from '../organisms/FolderDeleteDialog'
 import NoteDeleteDialog from '../organisms/NoteDeleteDialog'
 import {
   useFolderDeleteDialog,
-  useFolderSettingsDialog,
+  useFolderCreateDialog,
   useNoteDeleteDialog,
   useNoteLogDialog,
 } from '../../hooks/useDialogs'
 import NoteLogDialog from '../organisms/NoteLogDialog'
 
 export default function DialogProvider() {
-  const folderSettingsDialog = useFolderSettingsDialog()
+  const folderSettingsDialog = useFolderCreateDialog()
   const folderDeleteDialog = useFolderDeleteDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const noteLogDialog = useNoteLogDialog()
@@ -18,7 +18,7 @@ export default function DialogProvider() {
   return (
     <>
       {folderSettingsDialog.folder && (
-        <FolderSettingsDialog
+        <FolderCreateDialog
           open={folderSettingsDialog.state}
           folder={folderSettingsDialog.folder}
           onClose={folderSettingsDialog.close}

@@ -1,24 +1,22 @@
-import { createFolder, createNote, deleteFolder, deleteNote, Folder } from '../../store/notes'
+import { createNote, Folder } from '../../store/notes'
 import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
-import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, SettingsIcon, CloseIcon } from '../atoms/display/Icons'
-import { useFolderDeleteDialog, useFolderSettingsDialog } from '../../hooks/useDialogs'
+import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, CloseIcon, SidebarIcon } from '../atoms/display/Icons'
+import { useFolderDeleteDialog, useFolderCreateDialog } from '../../hooks/useDialogs'
 
 type FolderMenuProps = {
   folder: Folder
+  onOpenProperties: () => void
 }
 
-export default function FolderMenu({ folder }: FolderMenuProps) {
-  const folderSettingsDialog = useFolderSettingsDialog()
+export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps) {
+  const folderCreateDialog = useFolderCreateDialog()
   const folderDeleteDialog = useFolderDeleteDialog()
   const dispatch = useDispatch()
-  const handleCreateFolder = useCallback(() => {
-    dispatch(createFolder({ name: 'new folder', parentFolder: folder }))
-  }, [dispatch, folder])
   const handleCreateNote = useCallback(() => {
     dispatch(createNote({ parentFolder: folder }))
   }, [dispatch, folder])
@@ -30,10 +28,7 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton onClick={() => folderSettingsDialog.open(folder)}>
-            <SettingsIcon color={'white'} />
-          </IconButton>
-          <IconButton onClick={handleCreateFolder}>
+          <IconButton onClick={() => folderCreateDialog.open(folder)}>
             <CreateFolderIcon color={'white'} />
           </IconButton>
           <IconButton onClick={handleCreateNote}>
@@ -46,6 +41,9 @@ export default function FolderMenu({ folder }: FolderMenuProps) {
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>
+          <IconButton onClick={onOpenProperties}>
+            <SidebarIcon color={'white'} />
+          </IconButton>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>

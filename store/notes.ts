@@ -343,8 +343,11 @@ type RemoveNoteParams = {
 function sortFolders(folder: Folder): Folder {
   return {
     ...folder,
-    folders: sortBy(folder.folders.map(subFolder => sortFolders(subFolder)), 'name'),
-    notes: sortBy(folder.notes, 'createdAt').reverse()
+    folders: sortBy(
+      folder.folders.map((subFolder) => sortFolders(subFolder)),
+      'name'
+    ),
+    notes: sortBy(folder.notes, 'createdAt').reverse(),
   }
 }
 

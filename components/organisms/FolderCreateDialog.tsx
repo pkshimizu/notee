@@ -1,6 +1,6 @@
 import FormDialog from '../molecules/feedback/FormDialog'
 import { useCallback } from 'react'
-import { Folder, updateFolder } from '../../store/notes'
+import { createFolder, Folder, updateFolder } from '../../store/notes'
 import TextField from '../atoms/inputs/TextField'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
@@ -13,7 +13,7 @@ type FolderSettingDialogProps = {
   onClose: () => void
 }
 
-export default function FolderSettingsDialog({ open, folder, onClose }: FolderSettingDialogProps) {
+export default function FolderCreateDialog({ open, folder, onClose }: FolderSettingDialogProps) {
   const schema = yup.object().shape({
     name: yup.string().max(30).required(),
   })
@@ -25,9 +25,6 @@ export default function FolderSettingsDialog({ open, folder, onClose }: FolderSe
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
-    defaultValues: {
-      name: folder.name,
-    },
   })
   const dispatch = useDispatch()
   const handleClose = useCallback(() => {
@@ -36,7 +33,7 @@ export default function FolderSettingsDialog({ open, folder, onClose }: FolderSe
   }, [onClose, reset])
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      await dispatch(updateFolder({ folder: folder, name: data.name }))
+      await dispatch(createFolder({ name: data.name, parentFolder: folder }))
       onClose()
     },
     [dispatch, folder, onClose]

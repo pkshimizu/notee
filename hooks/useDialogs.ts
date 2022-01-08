@@ -4,21 +4,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import dialogsSlice, {
   dialogsFolderDeleteSelector,
   dialogsNoteDeleteSelector,
-  dialogsFolderSettingsSelector,
+  dialogsFolderCreateSelector,
   dialogsNoteLogSelector,
 } from '../store/dialogs'
 
-export function useFolderSettingsDialog() {
-  const folder = useSelector(dialogsFolderSettingsSelector)
+export function useFolderCreateDialog() {
+  const folder = useSelector(dialogsFolderCreateSelector)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
-      dispatch(dialogsSlice.actions.openFolderSettingsDialog({ folder: folder }))
+      dispatch(dialogsSlice.actions.openFolderCreateDialog({ folder: folder }))
     },
     [dispatch]
   )
   const close = useCallback(() => {
-    dispatch(dialogsSlice.actions.closeFolderSettingsDialog())
+    dispatch(dialogsSlice.actions.closeFolderCreateDialog())
   }, [])
   return {
     state: folder !== undefined,

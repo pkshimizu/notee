@@ -3,14 +3,14 @@ import { StoreState } from './index'
 import { Folder, Note, NoteLog } from './notes'
 
 export type DialogsState = {
-  folderSettings?: Folder
+  folderCreate?: Folder
   folderDelete?: Folder
   noteDelete?: Note
   noteLog?: { note: Note; log: NoteLog }
 }
 
 export const dialogsInitialState: DialogsState = {
-  folderSettings: undefined,
+  folderCreate: undefined,
   folderDelete: undefined,
   noteDelete: undefined,
   noteLog: undefined,
@@ -18,7 +18,7 @@ export const dialogsInitialState: DialogsState = {
 
 // selector
 const dialogsSelector = (state: StoreState) => state.dialogs
-export const dialogsFolderSettingsSelector = createSelector([dialogsSelector], (state) => state.folderSettings)
+export const dialogsFolderCreateSelector = createSelector([dialogsSelector], (state) => state.folderCreate)
 export const dialogsFolderDeleteSelector = createSelector([dialogsSelector], (state) => state.folderDelete)
 export const dialogsNoteDeleteSelector = createSelector([dialogsSelector], (state) => state.noteDelete)
 export const dialogsNoteLogSelector = createSelector([dialogsSelector], (state) => state.noteLog)
@@ -44,13 +44,13 @@ const dialogsSlice = createSlice({
   name: 'system',
   initialState: dialogsInitialState,
   reducers: {
-    openFolderSettingsDialog: (state: DialogsState, action: PayloadAction<OpenFolderSettingsDialogParams>) => ({
+    openFolderCreateDialog: (state: DialogsState, action: PayloadAction<OpenFolderSettingsDialogParams>) => ({
       ...state,
-      folderSettings: action.payload.folder,
+      folderCreate: action.payload.folder,
     }),
-    closeFolderSettingsDialog: (state: DialogsState) => ({
+    closeFolderCreateDialog: (state: DialogsState) => ({
       ...state,
-      folderSettings: undefined,
+      folderCreate: undefined,
     }),
     openFolderDeleteDialog: (state: DialogsState, action: PayloadAction<OpenFolderDeleteDialogParams>) => ({
       ...state,

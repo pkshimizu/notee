@@ -8,26 +8,29 @@ import Label from '../atoms/display/Label'
 import Margin from '../atoms/layout/Margin'
 import RelativeBox from '../atoms/layout/RelativeBox'
 import AbsoluteBox from '../atoms/layout/AbsoluteBox'
-import { useFolderDeleteDialog, useFolderSettingsDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useFolderDeleteDialog, useFolderCreateDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
 import { useNotesPage } from '../../hooks/usePages'
+import { useState } from 'react'
+import FolderPropertiesPanel from './FolderPropertiesPanel'
 
 type FolderTabPanelProps = {
   folder: Folder
 }
 
 export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
+  const [propertiesPanel, setPropertiesPanel] = useState(false)
   const folderDeleteDialog = useFolderDeleteDialog()
-  const folderSettingsDialog = useFolderSettingsDialog()
+  const folderSettingsDialog = useFolderCreateDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const openNotePage = useNotesPage()
 
   return (
     <TabPanel value={folder.id}>
       <FlexColumn space={0} height={'100%'}>
-        <FolderMenu folder={folder} />
+        <FolderMenu folder={folder} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />
         <FlexRow>
           <RelativeBox width={'100%'} height={'100%'}>
-            <AbsoluteBox top={0} bottom={0} left={0} right={0}>
+            <AbsoluteBox top={0} bottom={0} left={0} right={propertiesPanel ? 256 : 0}>
               <Margin left={2} right={2} bottom={4}>
                 {folder.folders.length > 0 && (
                   <>
@@ -65,6 +68,9 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                   </>
                 )}
               </Margin>
+            </AbsoluteBox>
+            <AbsoluteBox top={0} bottom={0} left={propertiesPanel ? 'calc(100% - 256px)' : '100%'} right={0}>
+              <FolderPropertiesPanel folder={folder} />
             </AbsoluteBox>
           </RelativeBox>
         </FlexRow>
