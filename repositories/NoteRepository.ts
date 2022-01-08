@@ -14,7 +14,6 @@ import { User } from '../store/session'
 import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
-import sortBy from 'lodash/sortBy'
 
 function makeTitle(content: string): string {
   if (content.length > 0) {
@@ -59,10 +58,6 @@ const noteToDoc = (note: Note): NoteDoc => {
   }
 }
 
-function sortFolders(folders: Folder[]) {
-  return sortBy(folders, 'name')
-}
-
 export default class NoteRepository {
   async loadRootFolder(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
@@ -74,7 +69,7 @@ export default class NoteRepository {
     foldersDocs.forEach((doc) => {
       folders[doc.id] = docToFolder(doc)
     })
-    sortFolders(Object.values(folders)).map((folder) => {
+    Object.values(folders).map((folder) => {
       if (folder.folderId) {
         const parent = folders[folder.folderId]
         if (parent) {

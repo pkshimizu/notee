@@ -3,6 +3,7 @@ import { StoreState } from './index'
 import { createAsyncAction } from './actions'
 import workspaceSlice from './workspace'
 import systemSlice from './system'
+import sortBy from 'lodash/sortBy'
 
 type Item = {
   id: string
@@ -339,17 +340,32 @@ type RemoveNoteParams = {
   note: Note
 }
 
+function sortFolders(folder: Folder): Folder {
+  return {
+    ...folder,
+    folders: sortBy(folder.folders.map(subFolder => sortFolders(subFolder)), 'name'),
+    notes: sortBy(folder.notes, 'createdAt').reverse()
+  }
+}
+
+function sortNotes(folder: Folder) {
+  return {
+    ...folder,
+    notes: sortBy(folder.notes, 'createdAt').reverse(),
+  }
+}
+
 const notesSlice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
   reducers: {
     addFolder: (state, action: PayloadAction<AddFolderParams>) => ({
       ...state,
-      root: state.root ? addFolder(state.root, action.payload.folder) : undefined,
+      root: state.root ? sortFolders(addFolder(state.root, action.payload.folder)) : undefined,
     }),
     modifyFolder: (state, action: PayloadAction<ModifyFolderParams>) => ({
       ...state,
-      root: state.root ? modifyFolder(state.root, action.payload.folder) : undefined,
+      root: state.root ? sortFolders(modifyFolder(state.root, action.payload.folder)) : undefined,
     }),
     removeFolder: (state, action: PayloadAction<RemoveFolderParams>) => ({
       ...state,
@@ -357,7 +373,7 @@ const notesSlice = createSlice({
     }),
     addNote: (state, action: PayloadAction<AddNoteParams>) => ({
       ...state,
-      root: state.root ? addNote(state.root, action.payload.note) : undefined,
+      root: state.root ? sortNotes(addNote(state.root, action.payload.note)) : undefined,
     }),
     modifyNote: (state, action: PayloadAction<ModifyNoteParams>) => ({
       ...state,
@@ -371,7 +387,7 @@ const notesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchRoot.fulfilled, (state, action) => ({
       ...state,
-      root: action.payload.root,
+      root: action.payload.root ? sortFolders(action.payload.root) : undefined,
     }))
     builder.addCase(fetchNotes.fulfilled, (state, action) => ({
       ...state,
