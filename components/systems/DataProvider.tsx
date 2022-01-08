@@ -17,7 +17,7 @@ export default function DataProvider({ children }: DataProviderProps) {
       dispatch(fetchNotes())
     }
     window.addEventListener('focus', onFocus)
-    
+
     return () => {
       window.removeEventListener('focus', onFocus)
     }
