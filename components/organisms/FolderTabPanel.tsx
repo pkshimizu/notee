@@ -1,4 +1,4 @@
-import { Folder } from '../../store/notes'
+import { Folder, foldersSelector } from '../../store/notes'
 import TabPanel from '../atoms/navigation/TabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
@@ -12,6 +12,8 @@ import { useFolderDeleteDialog, useFolderCreateDialog, useNoteDeleteDialog } fro
 import { useNotesPage } from '../../hooks/usePages'
 import { useState } from 'react'
 import FolderPropertiesPanel from './FolderPropertiesPanel'
+import { useSelector } from 'react-redux'
+import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 
 type FolderTabPanelProps = {
   folder: Folder
@@ -23,6 +25,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const folderSettingsDialog = useFolderCreateDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const openNotePage = useNotesPage()
+  const folders = useSelector(foldersSelector)
 
   return (
     <TabPanel value={folder.id}>
@@ -32,6 +35,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
           <RelativeBox width={'100%'} height={'100%'}>
             <AbsoluteBox top={0} bottom={0} left={0} right={propertiesPanel ? 256 : 0}>
               <Margin left={2} right={2} bottom={4}>
+                <FolderBreadcrumbs folders={folders} folder={folder} />
                 {folder.folders.length > 0 && (
                   <>
                     <Margin top={3} bottom={3}>
