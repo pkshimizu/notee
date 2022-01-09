@@ -4,15 +4,17 @@ import { ReactNode } from 'react'
 type ButtonProps = {
   icon?: ReactNode
   variant?: 'text' | 'contained' | 'outlined'
+  disabled?: boolean
   children: ReactNode
   onClick: (target: EventTarget) => void
 }
 
-export default function Button({ icon, variant = 'contained', children, onClick }: ButtonProps) {
+export default function Button({ icon, variant = 'contained', disabled = false, children, onClick }: ButtonProps) {
   return (
     <MuiButton
       startIcon={icon}
       variant={variant}
+      disabled={disabled}
       disableElevation
       sx={{
         textTransform: 'none',

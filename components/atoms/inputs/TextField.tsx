@@ -9,6 +9,7 @@ type TextFieldProps = {
   value?: string
   size?: TextSize
   focused?: boolean
+  readonly?: boolean
   register: UseFormRegisterReturn
   error?: any
 }
@@ -24,7 +25,7 @@ const width = (size: TextSize) => {
   }
 }
 
-export default function TextField({ label, value, size = 'md', focused, register, error }: TextFieldProps) {
+export default function TextField({ label, value, size = 'md', focused, readonly, register, error }: TextFieldProps) {
   return (
     <MuiTextField
       label={label}
@@ -32,10 +33,12 @@ export default function TextField({ label, value, size = 'md', focused, register
       variant={'filled'}
       autoFocus={focused}
       focused={focused}
+      disabled={readonly}
       sx={{ width: width(size) }}
       {...register}
       error={error}
       helperText={error}
+      size={'small'}
     />
   )
 }

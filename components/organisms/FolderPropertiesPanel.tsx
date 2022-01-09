@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import TextField from '../atoms/inputs/TextField'
 import IconButton from '../atoms/inputs/IconButton'
 import Form from '../atoms/inputs/Form'
+import Button from '../atoms/inputs/Button'
 
 type FolderPropertiesPanel = {
   folder: Folder
@@ -54,10 +55,16 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanel)
           <FlexColumn>
             <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
               <FlexRow justify={'flex-end'}>
-                <TextField label={'フォルダ名'} register={register('name')} error={errors.name?.message} size={'sm'} />
-                <IconButton onClick={handleSubmit(handleSaveFolderSettings)}>
-                  <ApplyIcon />
-                </IconButton>
+                <TextField
+                  label={'フォルダ名'}
+                  readonly={folder.folderId === undefined}
+                  register={register('name')}
+                  error={errors.name?.message}
+                  size={'sm'}
+                />
+                <Button icon={<ApplyIcon />} variant={'text'} onClick={() => handleSubmit(handleSaveFolderSettings)()}>
+                  変更
+                </Button>
               </FlexRow>
             </Form>
           </FlexColumn>
