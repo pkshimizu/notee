@@ -121,6 +121,7 @@ export default function TextEditor({
       }}
       debounceChangePeriod={1000}
       readOnly={readOnly}
+      focus
       onLoad={onLoad}
       onChange={onChangeContent}
     />
