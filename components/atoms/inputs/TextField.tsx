@@ -8,6 +8,7 @@ type TextFieldProps = {
   label?: string
   value?: string
   size?: TextSize
+  focused?: boolean
   register: UseFormRegisterReturn
   error?: any
 }
@@ -23,7 +24,7 @@ const width = (size: TextSize) => {
   }
 }
 
-export default function TextField({ label, value, size = 'md', register, error }: TextFieldProps) {
+export default function TextField({ label, value, size = 'md', focused, register, error }: TextFieldProps) {
   const handlePress = useCallback((e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -35,6 +36,8 @@ export default function TextField({ label, value, size = 'md', register, error }
       label={label}
       value={value}
       variant={'filled'}
+      autoFocus={focused}
+      focused={focused}
       onKeyPress={handlePress}
       sx={{ width: width(size) }}
       {...register}
