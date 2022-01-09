@@ -2,14 +2,12 @@ import TreeView from '../atoms/navigation/TreeView'
 import TreeItem from '../atoms/navigation/TreeItem'
 import { FolderIcon, NoteIcon } from '../atoms/display/Icons'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
-import { useCallback } from 'react'
 import { Folder, Note } from '../../store/notes'
-import { useSelector } from 'react-redux'
-import { activeTabSelector } from '../../store/workspace'
-import { useNotesPage } from '../../hooks/usePages'
 
 type NoteTreeProps = {
   folder?: Folder
+  activeId?: string
+  onSelect: (id: string) => void
 }
 
 function NoteTreeNoteItem({ note }: { note: Note }) {
@@ -29,18 +27,9 @@ function NoteTreeFolderItem({ folder }: { folder: Folder }) {
   )
 }
 
-export default function NoteTree({ folder }: NoteTreeProps) {
-  const notesPage = useNotesPage()
-  const activeTab = useSelector(activeTabSelector)
-  const handleSelectTab = useCallback(
-    (value: string) => {
-      notesPage(value)
-    },
-    [notesPage]
-  )
-
+export default function NoteTree({ folder, activeId, onSelect }: NoteTreeProps) {
   return (
-    <TreeView selectedId={activeTab?.value} onSelect={handleSelectTab}>
+    <TreeView selectedId={activeId} onSelect={onSelect}>
       {folder && <NoteTreeFolderItem folder={folder} />}
     </TreeView>
   )

@@ -48,11 +48,14 @@ const Workspace: NextPage = () => {
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
+  const handleSelectItem = useCallback((id) => {
+    notesPage(id)
+  }, [notesPage])
 
   return (
     <WorkspaceLayout
       appbar={<WorkspaceAppBar />}
-      sidebar={<NoteTree folder={root} />}
+      sidebar={<NoteTree folder={root} activeId={activeTab?.value} onSelect={handleSelectItem} />}
       openSideBar={openSideBar}
       onCloseSideBar={handleToggleSideBar}
     >
