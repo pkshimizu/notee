@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import Dialog from '../../atoms/feedback/Dialog'
-import Form from '../../atoms/display/Form'
+import Form from '../../atoms/inputs/Form'
 import Button from '../../atoms/inputs/Button'
 
 type FormDialogProps = {
@@ -38,7 +38,7 @@ export default function FormDialog({
       }
       onClose={onClose}
     >
-      <Form>{children}</Form>
+      <Form onSubmit={onSubmit}>{children}</Form>
     </Dialog>
   )
 }

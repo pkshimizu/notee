@@ -25,12 +25,6 @@ const width = (size: TextSize) => {
 }
 
 export default function TextField({ label, value, size = 'md', focused, register, error }: TextFieldProps) {
-  const handlePress = useCallback((e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-    }
-  }, [])
-
   return (
     <MuiTextField
       label={label}
@@ -38,7 +32,6 @@ export default function TextField({ label, value, size = 'md', focused, register
       variant={'filled'}
       autoFocus={focused}
       focused={focused}
-      onKeyPress={handlePress}
       sx={{ width: width(size) }}
       {...register}
       error={error}

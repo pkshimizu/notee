@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux'
 import TextField from '../atoms/inputs/TextField'
 import IconButton from '../atoms/inputs/IconButton'
-import Form from '../atoms/display/Form'
+import Form from '../atoms/inputs/Form'
 
 type FolderPropertiesPanel = {
   folder: Folder
@@ -52,7 +52,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanel)
       <TabPanel value={'info'}>
         <Margin top={2} bottom={2} left={1} right={1}>
           <FlexColumn>
-            <Form>
+            <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
               <FlexRow justify={'flex-end'}>
                 <TextField label={'フォルダ名'} register={register('name')} error={errors.name?.message} size={'sm'} />
                 <IconButton onClick={handleSubmit(handleSaveFolderSettings)}>
