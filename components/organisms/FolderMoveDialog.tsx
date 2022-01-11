@@ -1,5 +1,5 @@
 import { Folder, rootFolderSelector, updateFolder } from '../../store/notes'
-import FolderSelectDialog from './FolderSelectDialog'
+import FolderSelectDialog from '../molecules/feedback/FolderSelectDialog'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
 
@@ -21,6 +21,6 @@ export default function FolderMoveDialog({ open, folder, onClose }: FolderMoveDi
   if (root) {
     return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
   }
-  
+
   return <></>
 }
