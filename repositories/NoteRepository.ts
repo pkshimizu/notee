@@ -59,6 +59,18 @@ const noteToDoc = (note: Note): NoteDoc => {
 }
 
 export default class NoteRepository {
+  async loadFolders(user: User) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const foldersDocs = await getDocs(collection(userDoc, 'folders'))
+    if (foldersDocs.empty) {
+      return undefined
+    }
+    const folders: { [key: string]: Folder } = {}
+    foldersDocs.forEach((doc) => {
+      folders[doc.id] = docToFolder(doc)
+    })
+    return folders
+  }
   async loadRootFolder(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersDocs = await getDocs(collection(userDoc, 'folders'))
@@ -82,9 +94,9 @@ export default class NoteRepository {
   async loadNotes(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesDocs = await getDocs(collection(userDoc, 'notes'))
-    const notes: Note[] = []
+    const notes: {[key: string]: Note} = {}
     notesDocs.forEach((doc) => {
-      notes.push(docToNote(doc))
+      notes[doc.id] = docToNote(doc)
     })
     return notes
   }
@@ -159,15 +171,17 @@ export default class NoteRepository {
     const notes = collection(userDoc, 'notes')
     return addDoc(notes, note)
   }
-  async updateFolder(user: User, folder: Folder, name: string): Promise<Folder> {
+  async updateFolder(user: User, folder: Folder, name?: string, folderId?: string): Promise<Folder> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const folderDoc = doc(userDoc, 'folders', folder.id)
     await updateDoc(folderDoc, {
       name: name,
+      folderId: folderId
     })
     return {
       ...folder,
-      name: name,
+      name: name ?? folder.name,
+      folderId: folderId
     }
   }
   async updateNote(user: User, note: Note, content: string): Promise<Note> {

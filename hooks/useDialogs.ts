@@ -5,7 +5,7 @@ import dialogsSlice, {
   dialogsFolderDeleteSelector,
   dialogsNoteDeleteSelector,
   dialogsFolderCreateSelector,
-  dialogsNoteLogSelector,
+  dialogsNoteLogSelector, dialogsFolderMoveSelector,
 } from '../store/dialogs'
 
 export function useFolderCreateDialog() {
@@ -38,6 +38,26 @@ export const useFolderDeleteDialog = () => {
   )
   const close = useCallback(() => {
     dispatch(dialogsSlice.actions.closeFolderDeleteDialog())
+  }, [])
+  return {
+    state: folder !== undefined,
+    folder,
+    open,
+    close,
+  }
+}
+
+export const useFolderMoveDialog = () => {
+  const folder = useSelector(dialogsFolderMoveSelector)
+  const dispatch = useDispatch()
+  const open = useCallback(
+    (folder: Folder) => {
+      dispatch(dialogsSlice.actions.openFolderMoveDialog({ folder: folder }))
+    },
+    [dispatch]
+  )
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeFolderMoveDialog())
   }, [])
   return {
     state: folder !== undefined,

@@ -1,5 +1,4 @@
 import MuiTextField from '@mui/material/TextField'
-import { useCallback } from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
 type TextSize = 'sm' | 'md' | 'lg'
@@ -14,7 +13,7 @@ type TextFieldProps = {
   error?: any
 }
 
-const width = (size: TextSize) => {
+const width = (size?: TextSize) => {
   switch (size) {
   case 'sm':
     return 240
@@ -22,10 +21,12 @@ const width = (size: TextSize) => {
     return 360
   case 'lg':
     return 480
+  default:
+    return '100%'
   }
 }
 
-export default function TextField({ label, value, size = 'md', focused, readonly, register, error }: TextFieldProps) {
+export default function TextField({ label, value, size, focused, readonly, register, error }: TextFieldProps) {
   return (
     <MuiTextField
       label={label}

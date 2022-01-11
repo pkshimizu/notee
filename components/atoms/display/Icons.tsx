@@ -2,7 +2,7 @@ import {
   Check,
   Close,
   CreateNewFolder,
-  Delete,
+  Delete, DriveFileMove,
   Folder,
   GitHub,
   Google,
@@ -81,6 +81,10 @@ export function LogoutIcon(props: IconProps) {
 
 export function MenuIcon(props: IconProps) {
   return <Icon {...props} icon={MuiMenuIcon} />
+}
+
+export function MoveIcon(props: IconProps) {
+  return <Icon {...props} icon={DriveFileMove} />
 }
 
 export function NextIcon(props: IconProps) {

@@ -5,8 +5,8 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
-import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, CloseIcon, SidebarIcon } from '../atoms/display/Icons'
-import { useFolderDeleteDialog, useFolderCreateDialog } from '../../hooks/useDialogs'
+import {CreateFolderIcon, CreateNoteIcon, DeleteIcon, CloseIcon, SidebarIcon, MoveIcon} from '../atoms/display/Icons'
+import {useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog} from '../../hooks/useDialogs'
 
 type FolderMenuProps = {
   folder: Folder
@@ -16,6 +16,7 @@ type FolderMenuProps = {
 export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps) {
   const folderCreateDialog = useFolderCreateDialog()
   const folderDeleteDialog = useFolderDeleteDialog()
+  const folderMoveDialog = useFolderMoveDialog()
   const dispatch = useDispatch()
   const handleCreateNote = useCallback(() => {
     dispatch(createNote({ parentFolder: folder }))
@@ -35,9 +36,14 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
             <CreateNoteIcon color={'white'} />
           </IconButton>
           {folder.folderId && (
-            <IconButton onClick={() => folderDeleteDialog.open(folder)}>
-              <DeleteIcon color={'white'} />
-            </IconButton>
+            <>
+              <IconButton onClick={() => folderMoveDialog.open(folder)}>
+                <MoveIcon color={'white'} />
+              </IconButton>
+              <IconButton onClick={() => folderDeleteDialog.open(folder)}>
+                <DeleteIcon color={'white'} />
+              </IconButton>
+            </>
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>
