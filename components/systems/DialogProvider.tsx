@@ -5,10 +5,11 @@ import {
   useFolderDeleteDialog,
   useFolderCreateDialog,
   useNoteDeleteDialog,
-  useNoteLogDialog, useFolderMoveDialog,
+  useNoteLogDialog,
+  useFolderMoveDialog,
 } from '../../hooks/useDialogs'
 import NoteLogDialog from '../organisms/NoteLogDialog'
-import FolderMoveDialog from "../organisms/FolderMoveDialog";
+import FolderMoveDialog from '../organisms/FolderMoveDialog'
 
 export default function DialogProvider() {
   const folderSettingsDialog = useFolderCreateDialog()

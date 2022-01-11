@@ -40,8 +40,8 @@ export type Folder = {
   FolderDoc
 
 export type NotesState = {
-  folders: {[key: string]: Folder}
-  notes: {[key: string]: Note}
+  folders: { [key: string]: Folder }
+  notes: { [key: string]: Note }
 }
 
 export const notesInitialState: NotesState = {
@@ -51,8 +51,8 @@ export const notesInitialState: NotesState = {
 
 // actions
 type FetchRootResults = {
-  folders: {[key: string]: Folder}
-  notes: {[key: string]: Note}
+  folders: { [key: string]: Folder }
+  notes: { [key: string]: Note }
 }
 export const fetchRoot = createAsyncAction<void, FetchRootResults>(
   'fetchRoot',
@@ -62,9 +62,9 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
       const folders = await noteRepository.loadFolders(currentUser)
       if (folders === undefined) {
         const newRoot = await noteRepository.createFolder(currentUser, 'マイノート')
-        const newFolders: {[key: string]: Folder} = {}
+        const newFolders: { [key: string]: Folder } = {}
         newFolders[newRoot.id] = newRoot
-        return {folders: newFolders, notes: {}}
+        return { folders: newFolders, notes: {} }
       }
       const notes = await noteRepository.loadNotes(currentUser)
       noteRepository.onSnapshotFolders(
@@ -97,7 +97,7 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
   }
 )
 type FetchNotesResults = {
-  notes: {[key: string]: Note}
+  notes: { [key: string]: Note }
 }
 export const fetchNotes = createAsyncAction<void, FetchNotesResults>(
   'fetchNotes',
@@ -155,12 +155,7 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
       const folder = params.folder
-      await noteRepository.updateFolder(
-        state.session.currentUser,
-        folder,
-        params.name,
-        params.folderId
-      )
+      await noteRepository.updateFolder(state.session.currentUser, folder, params.name, params.folderId)
     }
   }
 )
@@ -220,10 +215,10 @@ function sortNotes(notes: Note[]): Note[] {
 }
 
 function buildFolders(folders: Folder[], notes: Note[]) {
-  const itemsInFolders: Folder[] = folders.map(folder => ({...folder, folders: [], notes: []}))
-  itemsInFolders.forEach(folder => {
-    folder.folders = sortFolders(itemsInFolders.filter(subFolder => subFolder.folderId === folder.id))
-    folder.notes = sortNotes(notes.filter(note => note.folderId === folder.id))
+  const itemsInFolders: Folder[] = folders.map((folder) => ({ ...folder, folders: [], notes: [] }))
+  itemsInFolders.forEach((folder) => {
+    folder.folders = sortFolders(itemsInFolders.filter((subFolder) => subFolder.folderId === folder.id))
+    folder.notes = sortNotes(notes.filter((note) => note.folderId === folder.id))
   })
   return itemsInFolders
 }
@@ -264,56 +259,56 @@ const notesSlice = createSlice({
   reducers: {
     addFolder: (state, action: PayloadAction<AddFolderParams>) => {
       const folder = action.payload.folder
-      const folders = {...state.folders}
+      const folders = { ...state.folders }
       folders[folder.id] = folder
       return {
         ...state,
-        folders: folders
+        folders: folders,
       }
     },
     modifyFolder: (state, action: PayloadAction<ModifyFolderParams>) => {
       const folder = action.payload.folder
-      const folders = {...state.folders}
+      const folders = { ...state.folders }
       folders[folder.id] = folder
       return {
         ...state,
-        folders: folders
+        folders: folders,
       }
     },
     removeFolder: (state, action: PayloadAction<RemoveFolderParams>) => {
       const folder = action.payload.folder
-      const folders = {...state.folders}
+      const folders = { ...state.folders }
       delete folders[folder.id]
       return {
         ...state,
-        folders: folders
+        folders: folders,
       }
     },
     addNote: (state, action: PayloadAction<AddNoteParams>) => {
       const note = action.payload.note
-      const notes = {...state.notes}
+      const notes = { ...state.notes }
       notes[note.id] = note
       return {
         ...state,
-        notes: notes
+        notes: notes,
       }
     },
     modifyNote: (state, action: PayloadAction<ModifyNoteParams>) => {
       const note = action.payload.note
-      const notes = {...state.notes}
+      const notes = { ...state.notes }
       notes[note.id] = note
       return {
         ...state,
-        notes: notes
+        notes: notes,
       }
     },
     removeNote: (state, action: PayloadAction<RemoveNoteParams>) => {
       const note = action.payload.note
-      const notes = {...state.notes}
+      const notes = { ...state.notes }
       delete notes[note.id]
       return {
         ...state,
-        notes: notes
+        notes: notes,
       }
     },
   },
@@ -321,11 +316,11 @@ const notesSlice = createSlice({
     builder.addCase(fetchRoot.fulfilled, (state, action) => ({
       ...state,
       folders: action.payload.folders,
-      notes: action.payload.notes
+      notes: action.payload.notes,
     }))
     builder.addCase(fetchNotes.fulfilled, (state, action) => ({
       ...state,
-      notes: action.payload.notes
+      notes: action.payload.notes,
     }))
   },
 })

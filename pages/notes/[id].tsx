@@ -48,9 +48,12 @@ const Workspace: NextPage = () => {
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
-  const handleSelectItem = useCallback((id) => {
-    notesPage(id)
-  }, [notesPage])
+  const handleSelectItem = useCallback(
+    (id) => {
+      notesPage(id)
+    },
+    [notesPage]
+  )
 
   return (
     <WorkspaceLayout

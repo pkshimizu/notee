@@ -1,7 +1,7 @@
-import {Folder} from "../../store/notes";
-import ConfirmDialog from "../molecules/feedback/ConfirmDialog";
-import {useCallback, useState} from "react";
-import NoteTree from "./NoteTree";
+import { Folder } from '../../store/notes'
+import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
+import { useCallback, useState } from 'react'
+import NoteTree from './NoteTree'
 
 type FolderSelectDialog = {
   open: boolean
@@ -10,7 +10,7 @@ type FolderSelectDialog = {
   onSelect: (folderId: string) => void
 }
 
-export default function FolderSelectDialog({open, root, onClose, onSelect}: FolderSelectDialog) {
+export default function FolderSelectDialog({ open, root, onClose, onSelect }: FolderSelectDialog) {
   const [folderId, setFolderId] = useState<string | undefined>(undefined)
   const handleOk = useCallback(() => {
     if (folderId) {
@@ -18,13 +18,10 @@ export default function FolderSelectDialog({open, root, onClose, onSelect}: Fold
     }
     onClose()
   }, [folderId, onSelect, onClose])
+  
   return (
     <ConfirmDialog open={open} onOk={handleOk} onCancel={onClose}>
-      <NoteTree
-        folder={root}
-        folderOnly
-        onSelect={selectedFolderId => setFolderId(selectedFolderId)}
-      />
+      <NoteTree folder={root} folderOnly onSelect={(selectedFolderId) => setFolderId(selectedFolderId)} />
     </ConfirmDialog>
   )
 }

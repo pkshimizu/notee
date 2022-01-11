@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Dialog, {DialogWidth} from '../../atoms/feedback/Dialog'
+import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Form from '../../atoms/inputs/Form'
 import Button from '../../atoms/inputs/Button'
 

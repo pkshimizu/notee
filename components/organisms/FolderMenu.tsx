@@ -5,8 +5,8 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
-import {CreateFolderIcon, CreateNoteIcon, DeleteIcon, CloseIcon, SidebarIcon, MoveIcon} from '../atoms/display/Icons'
-import {useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog} from '../../hooks/useDialogs'
+import { CreateFolderIcon, CreateNoteIcon, DeleteIcon, CloseIcon, SidebarIcon, MoveIcon } from '../atoms/display/Icons'
+import { useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
 
 type FolderMenuProps = {
   folder: Folder

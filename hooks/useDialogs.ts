@@ -5,7 +5,8 @@ import dialogsSlice, {
   dialogsFolderDeleteSelector,
   dialogsNoteDeleteSelector,
   dialogsFolderCreateSelector,
-  dialogsNoteLogSelector, dialogsFolderMoveSelector,
+  dialogsNoteLogSelector,
+  dialogsFolderMoveSelector,
 } from '../store/dialogs'
 
 export function useFolderCreateDialog() {

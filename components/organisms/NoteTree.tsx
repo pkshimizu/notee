@@ -15,15 +15,13 @@ function NoteTreeNoteItem({ note }: { note: Note }) {
   return <TreeItem id={note.id} label={<NoteTitleLabel note={note} />} icon={<NoteIcon />} />
 }
 
-function NoteTreeFolderItem({ folder, folderOnly }: { folder: Folder, folderOnly: boolean }) {
+function NoteTreeFolderItem({ folder, folderOnly }: { folder: Folder; folderOnly: boolean }) {
   return (
     <TreeItem id={folder.id} label={folder.name} icon={<FolderIcon />}>
       {folder.folders.map((subFolder) => (
         <NoteTreeFolderItem key={subFolder.id} folder={subFolder} folderOnly={folderOnly} />
       ))}
-      {!folderOnly && folder.notes.map((note) => (
-        <NoteTreeNoteItem key={note.id} note={note} />
-      ))}
+      {!folderOnly && folder.notes.map((note) => <NoteTreeNoteItem key={note.id} note={note} />)}
     </TreeItem>
   )
 }
