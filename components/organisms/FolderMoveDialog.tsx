@@ -16,7 +16,7 @@ export default function FolderMoveDialog({ open, folder, onClose }: FolderMoveDi
     (id: string) => {
       dispatch(updateFolder({ folder, folderId: id }))
     },
-    [dispatch]
+    [dispatch, folder]
   )
   if (root) {
     return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
