@@ -163,7 +163,7 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
 type UpdateNoteParams = {
   note: Note
   content?: string
-  folderId: string
+  folderId?: string
 }
 
 export const updateNote = createAsyncAction<UpdateNoteParams, void>(
