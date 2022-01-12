@@ -7,6 +7,7 @@ export type DialogsState = {
   folderDelete?: Folder
   folderMove?: Folder
   noteDelete?: Note
+  noteMove?: Note
   noteLog?: { note: Note; log: NoteLog }
 }
 
@@ -15,6 +16,7 @@ export const dialogsInitialState: DialogsState = {
   folderDelete: undefined,
   folderMove: undefined,
   noteDelete: undefined,
+  noteMove: undefined,
   noteLog: undefined,
 }
 
@@ -24,6 +26,7 @@ export const dialogsFolderCreateSelector = createSelector([dialogsSelector], (st
 export const dialogsFolderDeleteSelector = createSelector([dialogsSelector], (state) => state.folderDelete)
 export const dialogsFolderMoveSelector = createSelector([dialogsSelector], (state) => state.folderMove)
 export const dialogsNoteDeleteSelector = createSelector([dialogsSelector], (state) => state.noteDelete)
+export const dialogsNoteMoveSelector = createSelector([dialogsSelector], (state) => state.noteMove)
 export const dialogsNoteLogSelector = createSelector([dialogsSelector], (state) => state.noteLog)
 
 type OpenFolderSettingsDialogParams = {
@@ -39,6 +42,10 @@ type OpenFolderMoveDialogParams = {
 }
 
 type OpenNoteDeleteDialogParams = {
+  note: Note
+}
+
+type OpenNoteMoveDialogParams = {
   note: Note
 }
 
@@ -82,6 +89,14 @@ const dialogsSlice = createSlice({
     closeNoteDeleteDialog: (state: DialogsState) => ({
       ...state,
       noteDelete: undefined,
+    }),
+    openNoteMoveDialog: (state: DialogsState, action: PayloadAction<OpenNoteMoveDialogParams>) => ({
+      ...state,
+      noteMove: action.payload.note,
+    }),
+    closeNoteMoveDialog: (state: DialogsState) => ({
+      ...state,
+      noteMove: undefined,
     }),
     openNoteLogDialog: (state: DialogsState, action: PayloadAction<OpenNoteLogDialogParams>) => ({
       ...state,

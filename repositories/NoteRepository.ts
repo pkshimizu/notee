@@ -184,25 +184,31 @@ export default class NoteRepository {
       folderId: folderId,
     }
   }
-  async updateNote(user: User, note: Note, content: string): Promise<Note> {
+  async updateNote(user: User, note: Note, content?: string, folderId?: string): Promise<Note> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const noteDoc = doc(userDoc, 'notes', note.id)
     const updatedAt = dayjs().toISOString()
+    const logs = content
+      ? note.logs
+          .concat({
+            id: uuidv4(),
+            content: note.content,
+            updatedAt: note.updatedAt,
+          })
+          .slice(-100)
+      : note.logs
     await updateDoc(noteDoc, {
       content: content,
-      logs: note.logs
-        .concat({
-          id: uuidv4(),
-          content: note.content,
-          updatedAt: note.updatedAt,
-        })
-        .slice(-100),
+      folderId: folderId,
+      logs: logs,
       updatedAt: updatedAt,
     })
     return {
       ...note,
-      content: content,
+      content: content ?? note.content,
+      folderId: folderId ?? note.folderId,
       updatedAt: updatedAt,
+      logs: logs,
     }
   }
   deleteFolder(user: User, folder: Folder) {

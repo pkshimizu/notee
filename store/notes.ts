@@ -162,14 +162,15 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
 
 type UpdateNoteParams = {
   note: Note
-  content: string
+  content?: string
+  folderId: string
 }
 
 export const updateNote = createAsyncAction<UpdateNoteParams, void>(
   'UpdateNote',
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
-      await noteRepository.updateNote(state.session.currentUser, params.note, params.content)
+      await noteRepository.updateNote(state.session.currentUser, params.note, params.content, params.folderId)
     }
   }
 )

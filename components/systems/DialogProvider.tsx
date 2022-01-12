@@ -7,15 +7,18 @@ import {
   useNoteDeleteDialog,
   useNoteLogDialog,
   useFolderMoveDialog,
+  useNoteMoveDialog,
 } from '../../hooks/useDialogs'
 import NoteLogDialog from '../organisms/NoteLogDialog'
 import FolderMoveDialog from '../organisms/FolderMoveDialog'
+import NoteMoveDialog from '../organisms/NoteMoveDialog'
 
 export default function DialogProvider() {
   const folderSettingsDialog = useFolderCreateDialog()
   const folderDeleteDialog = useFolderDeleteDialog()
   const folderMoveDialog = useFolderMoveDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
+  const noteMoveDialog = useNoteMoveDialog()
   const noteLogDialog = useNoteLogDialog()
 
   return (
@@ -43,6 +46,9 @@ export default function DialogProvider() {
       )}
       {noteDeleteDialog.note && (
         <NoteDeleteDialog open={noteDeleteDialog.state} note={noteDeleteDialog.note} onClose={noteDeleteDialog.close} />
+      )}
+      {noteMoveDialog.note && (
+        <NoteMoveDialog open={noteMoveDialog.state} note={noteMoveDialog.note} onClose={noteMoveDialog.close} />
       )}
       {noteLogDialog.note && noteLogDialog.log && (
         <NoteLogDialog

@@ -1,28 +1,28 @@
-import { Folder, rootFolderSelector, updateFolder } from '../../store/notes'
-import FolderSelectDialog from '../molecules/feedback/FolderSelectDialog'
+import { Note, rootFolderSelector, updateNote } from '../../store/notes'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
+import FolderSelectDialog from '../molecules/feedback/FolderSelectDialog'
 
-type FolderMoveDialogProps = {
+type NoteMoveDialogProps = {
   open: boolean
-  folder: Folder
+  note: Note
   onClose: () => void
 }
 
-export default function FolderMoveDialog({ open, folder, onClose }: FolderMoveDialogProps) {
+export default function NoteMoveDialog({ open, note, onClose }: NoteMoveDialogProps) {
   const root = useSelector(rootFolderSelector)
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (id: string) => {
-      if (folder.id !== id) {
-        dispatch(updateFolder({ folder, folderId: id }))
+      if (note.id !== id) {
+        dispatch(updateNote({ note, folderId: id }))
       }
     },
-    [dispatch, folder]
+    [dispatch, note]
   )
   if (root) {
     return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
   }
-
+  
   return <></>
 }
