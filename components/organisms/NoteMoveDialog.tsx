@@ -23,6 +23,6 @@ export default function NoteMoveDialog({ open, note, onClose }: NoteMoveDialogPr
   if (root) {
     return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
   }
-  
+
   return <></>
 }
