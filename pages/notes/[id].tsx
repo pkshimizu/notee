@@ -10,6 +10,7 @@ import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import WorkspaceAppBar from '../../components/organisms/WorkspaceAppBar'
 import { FlexColumn } from '../../components/atoms/layout/Flex'
 import { useNotesPage } from '../../hooks/usePages'
+import SearchField from '../../components/molecules/inputs/SearchField'
 
 const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)
@@ -58,7 +59,12 @@ const Workspace: NextPage = () => {
   return (
     <WorkspaceLayout
       appbar={<WorkspaceAppBar />}
-      sidebar={<NoteTree folder={root} activeId={activeTab?.value} onSelect={handleSelectItem} />}
+      sidebar={
+        <FlexColumn space={0}>
+          <SearchField />
+          <NoteTree folder={root} activeId={activeTab?.value} onSelect={handleSelectItem} />
+        </FlexColumn>
+      }
       openSideBar={openSideBar}
       onCloseSideBar={handleToggleSideBar}
     >

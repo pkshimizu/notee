@@ -21,7 +21,7 @@ export default function WorkspaceLayout({
   return (
     <>
       <Drawer open={openSideBar} onClose={onCloseSideBar}>
-        <FlexColumn height={'100%'} width={256} noWrap>
+        <FlexColumn space={0} height={'100%'} width={256} noWrap>
           {appbar}
           {sidebar}
         </FlexColumn>

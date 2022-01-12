@@ -1,5 +1,7 @@
 import MuiTextField from '@mui/material/TextField'
 import { UseFormRegisterReturn } from 'react-hook-form'
+import { ReactNode } from 'react'
+import { InputAdornment } from '@mui/material'
 
 type TextSize = 'sm' | 'md' | 'lg'
 
@@ -9,6 +11,7 @@ type TextFieldProps = {
   size?: TextSize
   focused?: boolean
   readonly?: boolean
+  icon?: ReactNode
   register: UseFormRegisterReturn
   error?: any
 }
@@ -26,7 +29,7 @@ const width = (size?: TextSize) => {
   }
 }
 
-export default function TextField({ label, value, size, focused, readonly, register, error }: TextFieldProps) {
+export default function TextField({ label, value, size, focused, readonly, icon, register, error }: TextFieldProps) {
   return (
     <MuiTextField
       label={label}
@@ -36,6 +39,9 @@ export default function TextField({ label, value, size, focused, readonly, regis
       focused={focused}
       disabled={readonly}
       sx={{ width: width(size) }}
+      InputProps={{
+        startAdornment: icon && <InputAdornment position={'start'}>{icon}</InputAdornment>,
+      }}
       {...register}
       error={error}
       helperText={error}
