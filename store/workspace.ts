@@ -81,6 +81,19 @@ const workspaceSlice = createSlice({
       ...state,
       openSideBar: !state.openSideBar,
     }),
+    openSearchResults: (state: WorkspaceState) => {
+      if (state.tabs.map((tab) => tab.value).includes('search')) {
+        return {
+          ...state,
+          activeTabValue: 'search',
+        }
+      }
+      return {
+        ...state,
+        tabs: state.tabs.concat({ label: '検索結果', value: 'search' }),
+        activeTabValue: 'search',
+      }
+    },
   },
 })
 

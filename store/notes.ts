@@ -42,11 +42,13 @@ export type Folder = {
 export type NotesState = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
+  searchResults?: { notes: string[] }
 }
 
 export const notesInitialState: NotesState = {
   folders: {},
   notes: {},
+  searchResults: undefined,
 }
 
 // actions
@@ -233,6 +235,7 @@ export const foldersSelector = createSelector([noteSelector], (state) => {
   return buildFolders(Object.values(state.folders), Object.values(state.notes))
 })
 export const notesSelector = createSelector([noteSelector], (state) => Object.values(state.notes))
+export const searchResultsSelector = createSelector([noteSelector], (state) => state.searchResults)
 
 // slice
 type AddFolderParams = {
@@ -252,6 +255,9 @@ type ModifyNoteParams = {
 }
 type RemoveNoteParams = {
   note: Note
+}
+type SearchNotesParams = {
+  keyword: string
 }
 
 const notesSlice = createSlice({
@@ -310,6 +316,16 @@ const notesSlice = createSlice({
       return {
         ...state,
         notes: notes,
+      }
+    },
+    searchNotes: (state, action: PayloadAction<SearchNotesParams>) => {
+      return {
+        ...state,
+        searchResults: {
+          notes: Object.values(state.notes)
+            .filter((note) => note.content.includes(action.payload.keyword))
+            .map((note) => note.id),
+        },
       }
     },
   },

@@ -23,6 +23,11 @@ const Workspace: NextPage = () => {
   const { id } = router.query
   const dispatch = useDispatch()
   useEffect(() => {
+    if (id === 'search') {
+      dispatch(workspaceSlice.actions.openSearchResults())
+
+      return
+    }
     const folder = folders.find((folder) => folder.id === id)
     if (folder) {
       dispatch(workspaceSlice.actions.open({ tab: { value: folder.id, label: folder.name } }))
