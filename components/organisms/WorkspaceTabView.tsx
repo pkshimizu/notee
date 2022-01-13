@@ -8,7 +8,7 @@ import IconButton from '../atoms/inputs/IconButton'
 import FolderTabPanel from './FolderTabPanel'
 import NoteTabPanel from './NoteTabPanel'
 import { useNotesPage } from '../../hooks/usePages'
-import SearchResultsTabPanel from '../molecules/navigation/SearchResultsTabPanel'
+import SearchResultsTabPanel from './SearchResultsTabPanel'
 
 type WorkspaceTabViewProps = {}
 
