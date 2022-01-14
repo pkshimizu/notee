@@ -6,7 +6,7 @@ type NoteTitleLabelProps = {
 }
 
 function truncate(text: string): string {
-  return text.length <= 10 ? text : text.substr(0, 8) + '...'
+  return text.length <= 30 ? text : text.substr(0, 8) + '...'
 }
 
 export default function NoteTitleLabel({ note }: NoteTitleLabelProps) {
