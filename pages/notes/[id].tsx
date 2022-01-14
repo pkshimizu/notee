@@ -65,7 +65,7 @@ const Workspace: NextPage = () => {
     <WorkspaceLayout
       appbar={<WorkspaceAppBar />}
       sidebar={
-        <FlexColumn space={0}>
+        <FlexColumn space={0} noWrap>
           <SearchField />
           <NoteTree folder={root} activeId={activeTab?.value} onSelect={handleSelectItem} />
         </FlexColumn>
