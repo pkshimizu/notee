@@ -28,3 +28,10 @@ export const useLoginPage = () => {
     router.push(`/login`)
   }, [])
 }
+
+export const useSearchPage = () => {
+  const router = useRouter()
+  return useCallback(() => {
+    router.push(`/notes/search`)
+  }, [])
+}

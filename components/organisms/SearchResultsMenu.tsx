@@ -13,7 +13,7 @@ export default function SearchResultsMenu({}: SearchResultsMenuProps) {
   const handleClose = useCallback(() => {
     dispatch(workspaceSlice.actions.close({ id: 'search' }))
   }, [dispatch])
-  
+
   return (
     <AppBar>
       <FlexRow justify={'flex-end'}>

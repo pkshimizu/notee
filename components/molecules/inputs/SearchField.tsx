@@ -7,7 +7,7 @@ import Form from '../../atoms/inputs/Form'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import notesSlice from '../../../store/notes'
-import workspaceSlice from '../../../store/workspace'
+import { useSearchPage } from '../../../hooks/usePages'
 
 type SearchFieldProps = {}
 
@@ -16,13 +16,14 @@ export default function SearchField({}: SearchFieldProps) {
     keyword: yup.string(),
   })
   const { handleSubmit, register } = useForm({ resolver: yupResolver(schema) })
+  const searchPage = useSearchPage()
   const dispatch = useDispatch()
   const handleSearch = useCallback(
     (data) => {
       dispatch(notesSlice.actions.searchNotes({ keyword: data.keyword }))
-      dispatch(workspaceSlice.actions.openSearchResults())
+      searchPage()
     },
-    [dispatch]
+    [dispatch, searchPage]
   )
 
   return (
