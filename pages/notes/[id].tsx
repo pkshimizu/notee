@@ -3,8 +3,8 @@ import WorkspaceLayout from '../../components/templates/WorkspaceLayout'
 import NoteTree from '../../components/organisms/NoteTree'
 import { useDispatch, useSelector } from 'react-redux'
 import { foldersSelector, notesSelector, rootFolderSelector } from '../../store/notes'
-import workspaceSlice, { activeTabSelector, openSideBarSelector, tabsSelector } from '../../store/workspace'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import workspaceSlice, { activeItemIdSelector, openSideBarSelector } from '../../store/workspace'
+import { useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import WorkspaceAppBar from '../../components/organisms/WorkspaceAppBar'
@@ -16,7 +16,7 @@ const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
-  const activeTab = useSelector(activeTabSelector)
+  const activeItemId = useSelector(activeItemIdSelector)
   const openSideBar = useSelector(openSideBarSelector)
   const notesPage = useNotesPage()
   const router = useRouter()
@@ -30,27 +30,27 @@ const Workspace: NextPage = () => {
     }
     const folder = folders.find((folder) => folder.id === id)
     if (folder) {
-      dispatch(workspaceSlice.actions.open({ tab: { value: folder.id, label: folder.name } }))
+      dispatch(workspaceSlice.actions.open({ id: folder.id }))
 
       return
     }
     const note = notes.find((note) => note.id === id)
     if (note) {
-      dispatch(workspaceSlice.actions.open({ tab: { value: note.id, label: note.title } }))
+      dispatch(workspaceSlice.actions.open({ id: note.id }))
 
       return
     }
     if (root) {
-      dispatch(workspaceSlice.actions.open({ tab: { value: root.id, label: root.name } }))
+      dispatch(workspaceSlice.actions.open({ id: root.id }))
 
       return
     }
   }, [dispatch, id, folders, notes, root])
   useEffect(() => {
-    if (activeTab) {
-      notesPage(activeTab.value)
+    if (activeItemId) {
+      notesPage(activeItemId)
     }
-  }, [notesPage, activeTab])
+  }, [notesPage, activeItemId])
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
@@ -67,7 +67,7 @@ const Workspace: NextPage = () => {
       sidebar={
         <FlexColumn space={0} noWrap>
           <SearchField />
-          <NoteTree folder={root} activeId={activeTab?.value} onSelect={handleSelectItem} />
+          <NoteTree folder={root} activeId={activeItemId} onSelect={handleSelectItem} />
         </FlexColumn>
       }
       openSideBar={openSideBar}

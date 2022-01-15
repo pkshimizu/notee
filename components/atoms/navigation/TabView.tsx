@@ -57,6 +57,7 @@ export default function TabView({ value, tabs, leftItem, variant = 'scrollable',
         {tabs.map((tab) => (
           <MuiBox
             sx={{ visibility: tab.value === value ? 'visible' : 'hidden', height: tab.value === value ? '100%' : 0 }}
+            key={tab.value}
           >
             {tab.panel}
           </MuiBox>

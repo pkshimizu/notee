@@ -1,7 +1,7 @@
 import TabView, { Tab } from '../atoms/navigation/TabView'
 import { FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import workspaceSlice, { activeTabSelector, openSideBarSelector, tabsSelector } from '../../store/workspace'
+import workspaceSlice, { activeItemIdSelector, openSideBarSelector, openItemIdsSelector } from '../../store/workspace'
 import { useCallback } from 'react'
 import { Folder, foldersSelector, Note, notesSelector, searchResultsSelector } from '../../store/notes'
 import IconButton from '../atoms/inputs/IconButton'
@@ -12,34 +12,37 @@ import SearchResultsTabPanel from './SearchResultsTabPanel'
 
 type WorkspaceTabViewProps = {}
 
-function icon(tab: Tab, folder?: Folder, note?: Note) {
+function icon(itemId: string, folder?: Folder, note?: Note) {
   if (folder) {
-    return <FolderIcon key={tab.value} />
+    return <FolderIcon key={itemId} />
   }
   if (note) {
-    return <NoteIcon key={tab.value} />
+    return <NoteIcon key={itemId} />
   }
-  if (tab.value === 'search') {
-    return <SearchIcon key={tab.value} />
+  if (itemId === 'search') {
+    return <SearchIcon key={itemId} />
   }
 
   return undefined
 }
 
-function label(tab: Tab, folder?: Folder, note?: Note) {
+function label(itemId: string, folder?: Folder, note?: Note) {
   if (folder) {
     return folder.name
   }
   if (note) {
     return note.title ?? '名前無し'
   }
+  if (itemId === 'search') {
+    return '検索結果'
+  }
 
-  return tab.label
+  return itemId
 }
 
-function panel(tab: Tab, notes: Note[], folder?: Folder, note?: Note, searchResultNotes?: string[]) {
-  if (tab.value === 'search' && searchResultNotes) {
-    return <SearchResultsTabPanel key={tab.value} value={tab.value} notes={notes} noteIds={searchResultNotes} />
+function panel(itemId: string, notes: Note[], folder?: Folder, note?: Note, searchResultNotes?: string[]) {
+  if (itemId === 'search' && searchResultNotes) {
+    return <SearchResultsTabPanel key={itemId} value={itemId} notes={notes} noteIds={searchResultNotes} />
   }
   if (folder) {
     return <FolderTabPanel folder={folder} key={folder.id} />
@@ -51,16 +54,16 @@ function panel(tab: Tab, notes: Note[], folder?: Folder, note?: Note, searchResu
   return <></>
 }
 
-function makeTabs(tabs: Tab[], folders: Folder[], notes: Note[], searchResultNotes?: string[]) {
-  return tabs.map((tab) => {
-    const folder = folders.find((folder) => folder.id === tab.value)
-    const note = notes.find((note) => note.id === tab.value)
+function makeTabs(itemIds: string[], folders: Folder[], notes: Note[], searchResultNotes?: string[]) {
+  return itemIds.map((itemId) => {
+    const folder = folders.find((folder) => folder.id === itemId)
+    const note = notes.find((note) => note.id === itemId)
 
     return {
-      ...tab,
-      label: label(tab, folder, note),
-      icon: icon(tab, folder, note),
-      panel: panel(tab, notes, folder, note, searchResultNotes),
+      value: itemId,
+      label: label(itemId, folder, note),
+      icon: icon(itemId, folder, note),
+      panel: panel(itemId, notes, folder, note, searchResultNotes),
     }
   })
 }
@@ -69,8 +72,8 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
   const searchResults = useSelector(searchResultsSelector)
-  const activeTab = useSelector(activeTabSelector)
-  const tabs = useSelector(tabsSelector)
+  const activeItemId = useSelector(activeItemIdSelector)
+  const itemIds = useSelector(openItemIdsSelector)
   const openSideBar = useSelector(openSideBarSelector)
   const notesPage = useNotesPage()
   const dispatch = useDispatch()
@@ -83,7 +86,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
-  if (!activeTab) {
+  if (!activeItemId) {
     return <></>
   }
 
@@ -96,8 +99,8 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
           </IconButton>
         )
       }
-      value={activeTab.value}
-      tabs={makeTabs(tabs, folders, notes, searchResults?.notes)}
+      value={activeItemId}
+      tabs={makeTabs(itemIds, folders, notes, searchResults?.notes)}
       onChange={handleChangeTab}
     />
   )
