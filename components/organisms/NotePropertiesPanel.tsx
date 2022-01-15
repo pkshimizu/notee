@@ -29,37 +29,46 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
     <TabView
       value={tab}
       tabs={[
-        { value: 'info', icon: <InfoIcon /> },
-        { value: 'log', icon: <LogIcon /> },
+        {
+          value: 'info',
+          icon: <InfoIcon />,
+          panel: (
+            <TabPanel value={'info'}>
+              <Margin top={2} bottom={2} left={1} right={1}>
+                <FlexColumn>
+                  <FlexColumn space={0}>
+                    <Label variant={'caption'}>作成日時</Label>
+                    <DateTimeLabel datetime={note.createdAt} />
+                  </FlexColumn>
+                  <FlexColumn space={0}>
+                    <Label variant={'caption'}>最終更新日時</Label>
+                    <DateTimeLabel datetime={note.updatedAt} />
+                  </FlexColumn>
+                </FlexColumn>
+              </Margin>
+            </TabPanel>
+          ),
+        },
+        {
+          value: 'log',
+          icon: <LogIcon />,
+          panel: (
+            <TabPanel value={'log'}>
+              <List>
+                {[...note.logs].reverse().map((log) => (
+                  <ListItem
+                    key={log.id}
+                    label={<DateTimeLabel datetime={log.updatedAt} />}
+                    onClick={() => handleSelectLog(log)}
+                  />
+                ))}
+              </List>
+            </TabPanel>
+          ),
+        },
       ]}
       variant={'fullWidth'}
       onChange={(value) => setTab(value)}
-    >
-      <TabPanel value={'info'}>
-        <Margin top={2} bottom={2} left={1} right={1}>
-          <FlexColumn>
-            <FlexColumn space={0}>
-              <Label variant={'caption'}>作成日時</Label>
-              <DateTimeLabel datetime={note.createdAt} />
-            </FlexColumn>
-            <FlexColumn space={0}>
-              <Label variant={'caption'}>最終更新日時</Label>
-              <DateTimeLabel datetime={note.updatedAt} />
-            </FlexColumn>
-          </FlexColumn>
-        </Margin>
-      </TabPanel>
-      <TabPanel value={'log'}>
-        <List>
-          {[...note.logs].reverse().map((log) => (
-            <ListItem
-              key={log.id}
-              label={<DateTimeLabel datetime={log.updatedAt} />}
-              onClick={() => handleSelectLog(log)}
-            />
-          ))}
-        </List>
-      </TabPanel>
-    </TabView>
+    />
   )
 }

@@ -1,15 +1,11 @@
 import { ReactNode } from 'react'
-import MuiTabPanel from '@mui/lab/TabPanel'
+import MuiBox from '@mui/material/Box'
 
 type TabPanelProps = {
   value: string
   children: ReactNode
 }
 
-export default function TabPanel({ value, children }: TabPanelProps) {
-  return (
-    <MuiTabPanel value={value} sx={{ p: 0, height: '100%' }}>
-      {children}
-    </MuiTabPanel>
-  )
+export default function TabPanel({ children }: TabPanelProps) {
+  return <MuiBox sx={{ height: '100%' }}>{children}</MuiBox>
 }

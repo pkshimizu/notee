@@ -1,15 +1,14 @@
 import { ReactElement, ReactNode } from 'react'
 import MuiTab from '@mui/material/Tab'
 import MuiTabs from '@mui/material/Tabs'
-import MuiTabContext from '@mui/lab/TabContext'
 import MuiBox from '@mui/material/Box'
 import MuiTypography from '@mui/material/Typography'
-import { FlexColumn } from '../layout/Flex'
 
 export type Tab = {
   value: string
   icon?: ReactElement
   label?: string
+  panel: ReactNode
 }
 
 type TabViewProps = {
@@ -17,7 +16,6 @@ type TabViewProps = {
   tabs: Tab[]
   leftItem?: ReactNode
   variant?: 'scrollable' | 'fullWidth'
-  children: ReactNode
   onChange?: (value: string) => void
 }
 
@@ -29,9 +27,9 @@ const tabLabel = (label: string) => {
   return label
 }
 
-export default function TabView({ value, tabs, leftItem, variant = 'scrollable', children, onChange }: TabViewProps) {
+export default function TabView({ value, tabs, leftItem, variant = 'scrollable', onChange }: TabViewProps) {
   return (
-    <MuiTabContext value={value}>
+    <MuiBox sx={{ height: '100%' }}>
       <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
         {leftItem}
         <MuiTabs
@@ -55,9 +53,15 @@ export default function TabView({ value, tabs, leftItem, variant = 'scrollable',
           ))}
         </MuiTabs>
       </MuiBox>
-      <FlexColumn space={0} height={'calc(100% - 52.5px)'}>
-        {children}
-      </FlexColumn>
-    </MuiTabContext>
+      <MuiBox sx={{ height: 'calc(100% - 52.5px)' }}>
+        {tabs.map((tab) => (
+          <MuiBox
+            sx={{ visibility: tab.value === value ? 'visible' : 'hidden', height: tab.value === value ? '100%' : 0 }}
+          >
+            {tab.panel}
+          </MuiBox>
+        ))}
+      </MuiBox>
+    </MuiBox>
   )
 }

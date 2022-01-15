@@ -37,7 +37,21 @@ function label(tab: Tab, folder?: Folder, note?: Note) {
   return tab.label
 }
 
-function makeTabs(tabs: Tab[], folders: Folder[], notes: Note[]) {
+function panel(tab: Tab, notes: Note[], folder?: Folder, note?: Note, searchResultNotes?: string[]) {
+  if (tab.value === 'search' && searchResultNotes) {
+    return <SearchResultsTabPanel key={tab.value} value={tab.value} notes={notes} noteIds={searchResultNotes} />
+  }
+  if (folder) {
+    return <FolderTabPanel folder={folder} key={folder.id} />
+  }
+  if (note) {
+    return <NoteTabPanel note={note} key={note.id} />
+  }
+
+  return <></>
+}
+
+function makeTabs(tabs: Tab[], folders: Folder[], notes: Note[], searchResultNotes?: string[]) {
   return tabs.map((tab) => {
     const folder = folders.find((folder) => folder.id === tab.value)
     const note = notes.find((note) => note.id === tab.value)
@@ -46,6 +60,7 @@ function makeTabs(tabs: Tab[], folders: Folder[], notes: Note[]) {
       ...tab,
       label: label(tab, folder, note),
       icon: icon(tab, folder, note),
+      panel: panel(tab, notes, folder, note, searchResultNotes),
     }
   })
 }
@@ -82,24 +97,8 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
         )
       }
       value={activeTab.value}
-      tabs={makeTabs(tabs, folders, notes)}
+      tabs={makeTabs(tabs, folders, notes, searchResults?.notes)}
       onChange={handleChangeTab}
-    >
-      {tabs.map((tab) => {
-        const folder = folders.find((folder) => folder.id === tab.value)
-        const note = notes.find((note) => note.id === tab.value)
-        if (tab.value === 'search' && searchResults) {
-          return <SearchResultsTabPanel key={tab.value} value={tab.value} notes={notes} noteIds={searchResults.notes} />
-        }
-        if (folder) {
-          return <FolderTabPanel folder={folder} key={folder.id} />
-        }
-        if (note) {
-          return <NoteTabPanel note={note} key={note.id} />
-        }
-
-        return <></>
-      })}
-    </TabView>
+    />
   )
 }

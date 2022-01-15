@@ -46,30 +46,40 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanel)
   return (
     <TabView
       value={tab}
-      tabs={[{ value: 'info', icon: <InfoIcon /> }]}
+      tabs={[
+        {
+          value: 'info',
+          icon: <InfoIcon />,
+          panel: (
+            <TabPanel value={'info'}>
+              <Margin top={2} bottom={2} left={1} right={1}>
+                <FlexColumn>
+                  <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
+                    <FlexRow justify={'flex-end'}>
+                      <TextField
+                        label={'フォルダ名'}
+                        readonly={folder.folderId === undefined}
+                        register={register('name')}
+                        error={errors.name?.message}
+                        size={'sm'}
+                      />
+                      <Button
+                        icon={<ApplyIcon />}
+                        variant={'text'}
+                        onClick={() => handleSubmit(handleSaveFolderSettings)()}
+                      >
+                        変更
+                      </Button>
+                    </FlexRow>
+                  </Form>
+                </FlexColumn>
+              </Margin>
+            </TabPanel>
+          ),
+        },
+      ]}
       variant={'fullWidth'}
       onChange={(value) => setTab(value)}
-    >
-      <TabPanel value={'info'}>
-        <Margin top={2} bottom={2} left={1} right={1}>
-          <FlexColumn>
-            <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
-              <FlexRow justify={'flex-end'}>
-                <TextField
-                  label={'フォルダ名'}
-                  readonly={folder.folderId === undefined}
-                  register={register('name')}
-                  error={errors.name?.message}
-                  size={'sm'}
-                />
-                <Button icon={<ApplyIcon />} variant={'text'} onClick={() => handleSubmit(handleSaveFolderSettings)()}>
-                  変更
-                </Button>
-              </FlexRow>
-            </Form>
-          </FlexColumn>
-        </Margin>
-      </TabPanel>
-    </TabView>
+    />
   )
 }
