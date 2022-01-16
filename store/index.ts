@@ -9,6 +9,8 @@ import workspaceSlice, { workspaceInitialState } from './workspace'
 import UserRepository from '../repositories/UserRepository'
 import systemSlice, { systemInitialState } from './system'
 import dialogsSlice, { dialogsInitialState } from './dialogs'
+import storage from 'redux-persist/lib/storage/session'
+import { persistReducer, persistStore } from 'redux-persist'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
@@ -48,8 +50,16 @@ const thunkExtra: ThunkExtra = {
   },
 }
 
+const persistConfig = {
+  key: 'workspace',
+  storage,
+  whitelist: ['workspace'],
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: { extraArgument: thunkExtra },
@@ -63,4 +73,5 @@ const store = configureStore({
   preloadedState: preloadedState(),
 })
 
+export const persistor = persistStore(store)
 export default store
