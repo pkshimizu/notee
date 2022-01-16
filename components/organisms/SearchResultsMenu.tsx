@@ -11,7 +11,7 @@ type SearchResultsMenuProps = {}
 export default function SearchResultsMenu({}: SearchResultsMenuProps) {
   const dispatch = useDispatch()
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close({ id: 'search' }))
+    dispatch(workspaceSlice.actions.closeSearchResults())
   }, [dispatch])
 
   return (

@@ -31,42 +31,49 @@ type CloseParams = {
 type ActiveParams = {
   id: string
 }
+function openItem(state: WorkspaceState, itemId: string) {
+  if (state.itemIds.includes(itemId)) {
+    return {
+      ...state,
+      activeItemId: itemId,
+    }
+  }
+  const itemIds = state.itemIds.concat(itemId)
+  return {
+    ...state,
+    itemIds: itemIds,
+    activeItemId: itemId,
+  }
+}
+function closeItem(state: WorkspaceState, itemId: string) {
+  if (state.itemIds.length === 1) {
+    return {
+      ...state,
+      itemIds: [],
+      activeItemId: undefined,
+    }
+  }
+  const index = state.itemIds.indexOf(itemId)
+  if (index < 0) {
+    return state
+  }
+  const nextItemId = index === 0 ? state.itemIds[1] : state.itemIds[index - 1]
+  const itemIds = state.itemIds.filter((id) => id !== itemId)
+  return {
+    ...state,
+    itemIds: itemIds,
+    activeItemId: nextItemId,
+  }
+}
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
   reducers: {
     open: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
-      if (state.itemIds.includes(action.payload.id)) {
-        return {
-          ...state,
-          activeItemId: action.payload.id,
-        }
-      }
-      return {
-        ...state,
-        itemIds: state.itemIds.concat(action.payload.id),
-        activeItemId: action.payload.id,
-      }
+      return openItem(state, action.payload.id)
     },
     close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => {
-      if (state.itemIds.length === 1) {
-        return {
-          ...state,
-          itemIds: [],
-          activeItemId: undefined,
-        }
-      }
-      const index = state.itemIds.indexOf(action.payload.id)
-      if (index < 0) {
-        return state
-      }
-      const nextItemId = index === 0 ? state.itemIds[1] : state.itemIds[index - 1]
-      const itemIds = state.itemIds.filter((id) => id !== action.payload.id)
-      return {
-        ...state,
-        itemIds: itemIds,
-        activeItemId: nextItemId,
-      }
+      return closeItem(state, action.payload.id)
     },
     active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => ({
       ...state,
@@ -77,17 +84,10 @@ const workspaceSlice = createSlice({
       openSideBar: !state.openSideBar,
     }),
     openSearchResults: (state: WorkspaceState) => {
-      if (state.itemIds.includes('search')) {
-        return {
-          ...state,
-          activeItemId: 'search',
-        }
-      }
-      return {
-        ...state,
-        itemIds: state.itemIds.concat('search'),
-        activeItemId: 'search',
-      }
+      return openItem(state, 'search')
+    },
+    closeSearchResults: (state: WorkspaceState) => {
+      return closeItem(state, 'search')
     },
   },
 })
