@@ -6,7 +6,7 @@ type ButtonProps = {
   variant?: 'text' | 'contained' | 'outlined'
   disabled?: boolean
   children: ReactNode
-  onClick: (target: EventTarget) => void
+  onClick: (_target: EventTarget) => void
 }
 
 export default function Button({ icon, variant = 'contained', disabled = false, children, onClick }: ButtonProps) {

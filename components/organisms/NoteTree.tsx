@@ -8,7 +8,7 @@ type NoteTreeProps = {
   folder?: Folder
   activeId?: string
   folderOnly?: boolean
-  onSelect: (id: string) => void
+  onSelect: (_id: string) => void
 }
 
 function NoteTreeNoteItem({ note }: { note: Note }) {

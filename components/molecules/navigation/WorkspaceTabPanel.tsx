@@ -9,7 +9,7 @@ type WorkspaceTabPanelProps = {
   menu: ReactNode
   propertiesPanel?: ReactNode
   children: ReactNode
-  onResize?: (width: number, height: number) => void
+  onResize?: (_width: number, _height: number) => void
 }
 
 export default function WorkspaceTabPanel({

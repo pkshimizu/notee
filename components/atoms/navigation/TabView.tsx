@@ -16,7 +16,7 @@ type TabViewProps = {
   tabs: Tab[]
   leftItem?: ReactNode
   variant?: 'scrollable' | 'fullWidth'
-  onChange?: (value: string) => void
+  onChange?: (_value: string) => void
 }
 
 const tabLabel = (label: string) => {

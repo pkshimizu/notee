@@ -6,7 +6,7 @@ type TreeViewProps = {
   width?: string
   selectedId?: string
   children: ReactNode
-  onSelect: (value: string) => void
+  onSelect: (_value: string) => void
 }
 
 export default function TreeView({ width, selectedId = '', children, onSelect }: TreeViewProps) {

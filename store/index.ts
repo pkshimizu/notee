@@ -11,6 +11,7 @@ import systemSlice, { systemInitialState } from './system'
 import dialogsSlice, { dialogsInitialState } from './dialogs'
 import storage from 'redux-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist'
+import favoritesSlice, { favoritesInitialState } from './favorites'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   session: sessionSlice.reducer,
   workspace: workspaceSlice.reducer,
   notes: notesSlice.reducer,
+  favorites: favoritesSlice.reducer,
 })
 
 const preloadedState = () => ({
@@ -26,6 +28,7 @@ const preloadedState = () => ({
   session: sessionInitialState,
   workspace: workspaceInitialState,
   notes: notesInitialState,
+  favorites: favoritesInitialState,
 })
 
 export type StoreState = ReturnType<typeof preloadedState>

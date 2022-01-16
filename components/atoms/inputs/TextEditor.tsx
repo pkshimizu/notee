@@ -81,8 +81,8 @@ type TextEditorProps = {
   keyBinding?: KeyBinding
   tabSize?: number
   readOnly?: boolean
-  onLoad?: (editor: Ace.Editor) => void
-  onChangeContent?: (content: string) => void
+  onLoad?: (_editor: Ace.Editor) => void
+  onChangeContent?: (_content: string) => void
 }
 
 export default function TextEditor({

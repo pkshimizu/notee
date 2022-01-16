@@ -4,7 +4,7 @@ import NoteTree from '../../organisms/NoteTree'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Button from '../../atoms/inputs/Button'
 
-type FolderSelectDialog = {
+type FolderSelectDialogProps = {
   open: boolean
   root: Folder
   title?: string
@@ -12,7 +12,7 @@ type FolderSelectDialog = {
   closeLabel?: string
   width?: DialogWidth
   onClose: () => void
-  onSelect: (folderId: string) => void
+  onSelect: (_folderId: string) => void
 }
 
 export default function FolderSelectDialog({
@@ -24,7 +24,7 @@ export default function FolderSelectDialog({
   width,
   onClose,
   onSelect,
-}: FolderSelectDialog) {
+}: FolderSelectDialogProps) {
   const [folderId, setFolderId] = useState<string | undefined>(undefined)
   const handleOk = useCallback(() => {
     if (folderId) {

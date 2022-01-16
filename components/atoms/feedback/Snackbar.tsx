@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import MuiSnackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertColor } from '@mui/material/Alert'
 

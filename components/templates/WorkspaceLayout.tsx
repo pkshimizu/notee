@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
-import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
+import { FlexColumn } from '../atoms/layout/Flex'
 import Margin from '../atoms/layout/Margin'
 
 type WorkspaceLayoutProps = {

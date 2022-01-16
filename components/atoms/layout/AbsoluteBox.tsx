@@ -6,7 +6,7 @@ type AbsoluteBoxProps = {
   left?: string | number
   right?: string | number
   bottom?: string | number
-  onResize?: (width: number, height: number) => void
+  onResize?: (_width: number, _height: number) => void
   children: ReactNode
 }
 

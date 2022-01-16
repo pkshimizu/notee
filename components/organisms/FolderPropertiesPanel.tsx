@@ -10,15 +10,14 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux'
 import TextField from '../atoms/inputs/TextField'
-import IconButton from '../atoms/inputs/IconButton'
 import Form from '../atoms/inputs/Form'
 import Button from '../atoms/inputs/Button'
 
-type FolderPropertiesPanel = {
+type FolderPropertiesPanelProps = {
   folder: Folder
 }
 
-export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanel) {
+export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelProps) {
   const schema = yup.object().shape({
     name: yup.string().max(30).required(),
   })

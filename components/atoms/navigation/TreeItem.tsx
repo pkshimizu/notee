@@ -1,4 +1,4 @@
-import MuiTreeItem, { TreeItemContentProps, useTreeItem, TreeItemProps as MuiTreeItemProps } from '@mui/lab/TreeItem'
+import MuiTreeItem from '@mui/lab/TreeItem'
 import React, { ReactNode } from 'react'
 import MuiBox from '@mui/material/Box'
 

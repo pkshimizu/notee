@@ -1,4 +1,4 @@
-import TabView, { Tab } from '../atoms/navigation/TabView'
+import TabView from '../atoms/navigation/TabView'
 import { FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import workspaceSlice, { activeItemIdSelector, openSideBarSelector, openItemIdsSelector } from '../../store/workspace'
