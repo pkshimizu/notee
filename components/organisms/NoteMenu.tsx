@@ -1,10 +1,17 @@
-import {favorite, Note, unFavorite} from '../../store/notes'
+import { favorite, Note, unFavorite } from '../../store/notes'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
-import {CloseIcon, DeleteIcon, FavoriteIcon, FavoriteOutlinedIcon, MoveIcon, SidebarIcon} from '../atoms/display/Icons'
+import {
+  CloseIcon,
+  DeleteIcon,
+  FavoriteIcon,
+  FavoriteOutlinedIcon,
+  MoveIcon,
+  SidebarIcon,
+} from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteDeleteDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
 
@@ -33,13 +40,7 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
       <FlexRow justify={'space-around'}>
         <FlexRow>
           <IconButton onClick={handleFavorite}>
-            {
-              note.favorite ? (
-                <FavoriteIcon color={'white'} />
-              ) : (
-                <FavoriteOutlinedIcon color={'white'} />
-              )
-            }
+            {note.favorite ? <FavoriteIcon color={'white'} /> : <FavoriteOutlinedIcon color={'white'} />}
           </IconButton>
           <IconButton onClick={() => noteMoveDialog.open(note)}>
             <MoveIcon color={'white'} />

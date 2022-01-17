@@ -11,6 +11,7 @@ import systemSlice, { systemInitialState } from './system'
 import dialogsSlice, { dialogsInitialState } from './dialogs'
 import storage from 'redux-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist'
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
@@ -63,6 +64,9 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: { extraArgument: thunkExtra },
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     }).concat(
       createLogger({
         diff: true,
