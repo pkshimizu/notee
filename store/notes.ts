@@ -18,6 +18,7 @@ export type NoteLog = {
 export type NoteDoc = {
   folderId: string
   content: string
+  favorite: boolean
   logs: NoteLog[]
   createdAt: string
   updatedAt: string
@@ -31,6 +32,7 @@ export type Note = {
 export type FolderDoc = {
   folderId?: string
   name: string
+  favorite: boolean
 }
 
 export type Folder = {
@@ -157,7 +159,10 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
       const folder = params.folder
-      await noteRepository.updateFolder(state.session.currentUser, folder, params.name, params.folderId)
+      await noteRepository.updateFolder(state.session.currentUser, folder, {
+        name: params.name,
+        folderId: params.folderId,
+      })
     }
   }
 )
@@ -172,7 +177,10 @@ export const updateNote = createAsyncAction<UpdateNoteParams, void>(
   'UpdateNote',
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
-      await noteRepository.updateNote(state.session.currentUser, params.note, params.content, params.folderId)
+      await noteRepository.updateNote(state.session.currentUser, params.note, {
+        content: params.content,
+        folderId: params.folderId,
+      })
     }
   }
 )
@@ -204,6 +212,48 @@ export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
       await noteRepository.deleteNote(state.session.currentUser, params.note)
       await dispatch(workspaceSlice.actions.close({ id: params.note.id }))
       dispatch(systemSlice.actions.message({ message: 'ノートを削除しました' }))
+    }
+  }
+)
+
+type FavoriteParams = {
+  folder?: Folder
+  note?: Note
+}
+
+export const favorite = createAsyncAction<FavoriteParams, void>(
+  'FavoriteFolder',
+  async (params, { noteRepository }, state, dispatch) => {
+    if (state.session.currentUser) {
+      if (params.folder) {
+        await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: true })
+        dispatch(systemSlice.actions.message({ message: `${params.folder.name}をお気に入りにしました` }))
+      }
+      if (params.note) {
+        await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: true })
+        dispatch(systemSlice.actions.message({ message: `ノートをお気に入りにしました` }))
+      }
+    }
+  }
+)
+
+type UnFavoriteParams = {
+  folder?: Folder
+  note?: Note
+}
+
+export const unFavorite = createAsyncAction<FavoriteParams, void>(
+  'UnFavorite',
+  async (params, { noteRepository }, state, dispatch) => {
+    if (state.session.currentUser) {
+      if (params.folder) {
+        await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: false })
+        dispatch(systemSlice.actions.message({ message: `${params.folder.name}をお気に入りから外しました` }))
+      }
+      if (params.note) {
+        await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: false })
+        dispatch(systemSlice.actions.message({ message: `ノートをお気に入りから外しました` }))
+      }
     }
   }
 )

@@ -16,6 +16,8 @@ import {
   OpenInNew,
   Search,
   Settings,
+  Star,
+  StarOutline,
   TextSnippet,
   ViewSidebar,
 } from '@mui/icons-material'
@@ -55,6 +57,14 @@ export function CreateNoteIcon(props: IconProps) {
 
 export function DeleteIcon(props: IconProps) {
   return <Icon {...props} icon={Delete} />
+}
+
+export function FavoriteIcon(props: IconProps) {
+  return <Icon {...props} icon={Star} />
+}
+
+export function FavoriteOutlinedIcon(props: IconProps) {
+  return <Icon {...props} icon={StarOutline} />
 }
 
 export function FolderIcon(props: IconProps) {

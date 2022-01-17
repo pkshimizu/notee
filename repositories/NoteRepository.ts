@@ -30,6 +30,7 @@ const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
     id: doc.id,
     folderId: doc.data().folderId,
     name: doc.data().name,
+    favorite: doc.data().favorite,
     folders: [],
     notes: [],
   }
@@ -42,6 +43,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
     title: makeTitle(content),
     folderId: data.folderId,
     content: content,
+    favorite: doc.data().favorite,
     logs: data.logs ?? [],
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
@@ -52,10 +54,23 @@ const noteToDoc = (note: Note): NoteDoc => {
   return {
     folderId: note.folderId,
     content: note.content,
+    favorite: note.favorite,
     logs: note.logs,
     createdAt: note.createdAt,
     updatedAt: note.updatedAt,
   }
+}
+
+type UpdateFolderParams = {
+  name?: string
+  folderId?: string
+  favorite?: boolean
+}
+
+type UpdateNoteParams = {
+  content?: string
+  folderId?: string
+  favorite?: boolean
 }
 
 export default class NoteRepository {
@@ -149,6 +164,7 @@ export default class NoteRepository {
     const folder: FolderDoc = {
       folderId: parent?.id,
       name: name,
+      favorite: false,
     }
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const folderRef = await addDoc(collection(userDoc, 'folders'), folder)
@@ -163,6 +179,7 @@ export default class NoteRepository {
     const note: NoteDoc = {
       folderId: folder.id,
       content: '',
+      favorite: false,
       logs: [],
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
@@ -171,20 +188,23 @@ export default class NoteRepository {
     const notes = collection(userDoc, 'notes')
     return addDoc(notes, note)
   }
-  async updateFolder(user: User, folder: Folder, name?: string, folderId?: string): Promise<Folder> {
+
+  async updateFolder(user: User, folder: Folder, { name, folderId, favorite }: UpdateFolderParams): Promise<Folder> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const folderDoc = doc(userDoc, 'folders', folder.id)
     await updateDoc(folderDoc, {
       name: name,
       folderId: folderId,
+      favorite: favorite,
     })
     return {
       ...folder,
       name: name ?? folder.name,
-      folderId: folderId,
+      folderId: folderId ?? folder.folderId,
+      favorite: favorite ?? folder.favorite,
     }
   }
-  async updateNote(user: User, note: Note, content?: string, folderId?: string): Promise<Note> {
+  async updateNote(user: User, note: Note, { content, folderId, favorite }: UpdateNoteParams): Promise<Note> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const noteDoc = doc(userDoc, 'notes', note.id)
     const updatedAt = dayjs().toISOString()
@@ -200,6 +220,7 @@ export default class NoteRepository {
     await updateDoc(noteDoc, {
       content: content,
       folderId: folderId,
+      favorite: favorite,
       logs: logs,
       updatedAt: updatedAt,
     })
@@ -207,6 +228,7 @@ export default class NoteRepository {
       ...note,
       content: content ?? note.content,
       folderId: folderId ?? note.folderId,
+      favorite: favorite ?? note.favorite,
       updatedAt: updatedAt,
       logs: logs,
     }
