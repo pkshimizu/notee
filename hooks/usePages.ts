@@ -35,3 +35,10 @@ export const useSearchPage = () => {
     router.push(`/notes/search`)
   }, [])
 }
+
+export const useFavoritesPage = () => {
+  const router = useRouter()
+  return useCallback(() => {
+    router.push(`/notes/favorites`)
+  }, [])
+}

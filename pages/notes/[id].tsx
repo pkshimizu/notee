@@ -8,9 +8,11 @@ import { useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import WorkspaceAppBar from '../../components/organisms/WorkspaceAppBar'
-import { FlexColumn } from '../../components/atoms/layout/Flex'
-import { useNotesPage } from '../../hooks/usePages'
+import { FlexColumn, FlexRow } from '../../components/atoms/layout/Flex'
+import { useFavoritesPage, useNotesPage } from '../../hooks/usePages'
 import SearchField from '../../components/molecules/inputs/SearchField'
+import { FavoriteIcon } from '../../components/atoms/display/Icons'
+import Button from '../../components/atoms/inputs/Button'
 
 const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)
@@ -19,13 +21,19 @@ const Workspace: NextPage = () => {
   const activeItemId = useSelector(activeItemIdSelector)
   const openSideBar = useSelector(openSideBarSelector)
   const notesPage = useNotesPage()
+  const favoritesPage = useFavoritesPage()
   const router = useRouter()
   const { id } = router.query
   const dispatch = useDispatch()
   useEffect(() => {
     if (id === 'search') {
       dispatch(workspaceSlice.actions.openSearchResults())
-
+      
+      return
+    }
+    if (id === 'favorites') {
+      dispatch(workspaceSlice.actions.openFavorites())
+      
       return
     }
     const folder = folders.find((folder) => folder.id === id)
@@ -67,6 +75,11 @@ const Workspace: NextPage = () => {
       sidebar={
         <FlexColumn space={0} noWrap>
           <SearchField />
+          <FlexRow space={0} noGrow>
+            <Button onClick={favoritesPage} icon={<FavoriteIcon />} variant={'text'}>
+              Favorite
+            </Button>
+          </FlexRow>
           <NoteTree folder={root} activeId={activeItemId} onSelect={handleSelectItem} />
         </FlexColumn>
       }

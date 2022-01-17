@@ -286,6 +286,15 @@ export const foldersSelector = createSelector([noteSelector], (state) => {
 })
 export const notesSelector = createSelector([noteSelector], (state) => Object.values(state.notes))
 export const searchResultsSelector = createSelector([noteSelector], (state) => state.searchResults)
+export const searchResultNotesSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.notes).filter((note) => state.searchResults?.notes?.includes(note.id))
+)
+export const favoriteFoldersSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.folders).filter((folder) => folder.favorite)
+)
+export const favoriteNotesSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.notes).filter((note) => note.favorite)
+)
 
 // slice
 type AddFolderParams = {

@@ -11,6 +11,7 @@ type FlexProps = {
   height?: number | string
   space?: number
   noWrap?: boolean
+  noGrow?: boolean
   children: ReactNode
 }
 
@@ -34,7 +35,17 @@ type BaseFlexProps = {
   direction: 'row' | 'column'
 } & FlexProps
 
-function Flex({ direction, align, justify, width, height, space = 1, noWrap = false, children }: BaseFlexProps) {
+function Flex({
+  direction,
+  align,
+  justify,
+  width,
+  height,
+  space = 1,
+  noWrap = false,
+  noGrow = false,
+  children,
+}: BaseFlexProps) {
   return (
     <MuiBox
       sx={{
@@ -44,7 +55,7 @@ function Flex({ direction, align, justify, width, height, space = 1, noWrap = fa
         justifyContent: justify,
         width,
         height,
-        flexGrow: 1,
+        flexGrow: noGrow ? 0 : 1,
         overflowY: 'auto',
         flexWrap: noWrap ? 'nowrap' : 'wrap',
         gap: space,

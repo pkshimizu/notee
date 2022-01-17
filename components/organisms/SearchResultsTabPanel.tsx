@@ -1,27 +1,22 @@
-import { Note } from '../../store/notes'
+import { searchResultNotesSelector } from '../../store/notes'
 import { FlexRow } from '../atoms/layout/Flex'
 import Margin from '../atoms/layout/Margin'
 import Label from '../atoms/display/Label'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useNotesPage } from '../../hooks/usePages'
-import { useEffect, useState } from 'react'
 import { useNoteDeleteDialog } from '../../hooks/useDialogs'
 import SearchResultsMenu from './SearchResultsMenu'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
+import { useSelector } from 'react-redux'
 
 type SearchResultsTabPanelProps = {
   value: string
-  notes: Note[]
-  noteIds: string[]
 }
 
-export default function SearchResultsTabPanel({ value, notes, noteIds }: SearchResultsTabPanelProps) {
+export default function SearchResultsTabPanel({ value }: SearchResultsTabPanelProps) {
+  const notes = useSelector(searchResultNotesSelector)
   const openNotePage = useNotesPage()
   const noteDeleteDialog = useNoteDeleteDialog()
-  const [searchedNotes, setSearchedNotes] = useState<Note[]>([])
-  useEffect(() => {
-    setSearchedNotes(notes.filter((note) => noteIds.includes(note.id)))
-  }, [notes, noteIds])
 
   return (
     <WorkspaceTabPanel value={value} menu={<SearchResultsMenu />}>
@@ -30,7 +25,7 @@ export default function SearchResultsTabPanel({ value, notes, noteIds }: SearchR
           <Label variant={'caption'}>ノート</Label>
         </Margin>
         <FlexRow>
-          {searchedNotes.map((note) => (
+          {notes.map((note) => (
             <NoteCard
               note={note}
               key={note.id}

@@ -89,6 +89,12 @@ const workspaceSlice = createSlice({
     closeSearchResults: (state: WorkspaceState) => {
       return closeItem(state, 'search')
     },
+    openFavorites: (state: WorkspaceState) => {
+      return openItem(state, 'favorites')
+    },
+    closeFavorites: (state: WorkspaceState) => {
+      return closeItem(state, 'favorites')
+    },
   },
 })
 
