@@ -7,10 +7,14 @@ import DataProvider from '../components/systems/DataProvider'
 import { EmotionCache } from '@emotion/react'
 import System from '../components/systems/System'
 import DialogProvider from '../components/systems/DialogProvider'
+import { ComponentType } from 'react'
 
-interface AppProps extends NextAppProps {
+type AppProps = {
+  Component: NextAppProps['Component'] & {
+    layout?: ComponentType
+  }
   emotionCache?: EmotionCache
-}
+} & NextAppProps
 
 export default function App({ emotionCache, Component, pageProps }: AppProps) {
   return (
@@ -19,7 +23,13 @@ export default function App({ emotionCache, Component, pageProps }: AppProps) {
         <System>
           <Auth>
             <DataProvider>
-              <Component {...pageProps} />
+              {Component.layout ? (
+                <Component.layout>
+                  <Component {...pageProps} />
+                </Component.layout>
+              ) : (
+                <Component {...pageProps} />
+              )}
               <DialogProvider />
             </DataProvider>
           </Auth>

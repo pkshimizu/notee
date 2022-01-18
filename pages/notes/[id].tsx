@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import WorkspaceLayout from '../../components/templates/WorkspaceLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -9,7 +8,7 @@ import { foldersSelector, notesSelector, rootFolderSelector } from '../../store/
 import { activeItemIdSelector } from '../../store/workspace/selectors'
 import workspaceSlice from '../../store/workspace'
 
-const Workspace: NextPage = () => {
+export default function Workspace() {
   const root = useSelector(rootFolderSelector)
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
@@ -53,11 +52,7 @@ const Workspace: NextPage = () => {
     }
   }, [notesPage, activeItemId])
 
-  return (
-    <WorkspaceLayout>
-      <WorkspaceTabView />
-    </WorkspaceLayout>
-  )
+  return <WorkspaceTabView />
 }
 
-export default Workspace
+Workspace.layout = WorkspaceLayout
