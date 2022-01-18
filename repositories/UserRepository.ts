@@ -1,6 +1,6 @@
 import { firestore } from './firebase'
 import { doc, getDoc, setDoc } from '@firebase/firestore'
-import { User } from '../store/session'
+import { User } from '../store/session/models'
 
 export default class UserRepository {
   async loadUser(user: User) {

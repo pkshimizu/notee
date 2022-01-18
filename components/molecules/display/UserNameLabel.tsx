@@ -1,5 +1,5 @@
 import Text from '../../atoms/display/Text'
-import { User } from '../../../store/session'
+import { User } from '../../../store/session/models'
 
 type UserNameLabelProps = {
   user: User

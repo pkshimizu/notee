@@ -1,6 +1,5 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { StoreState } from './index'
-import { Folder, Note, NoteLog } from './notes'
+import { Folder, Note, NoteLog } from '../notes/models'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type DialogsState = {
   folderCreate?: Folder
@@ -19,15 +18,6 @@ export const dialogsInitialState: DialogsState = {
   noteMove: undefined,
   noteLog: undefined,
 }
-
-// selector
-const dialogsSelector = (state: StoreState) => state.dialogs
-export const dialogsFolderCreateSelector = createSelector([dialogsSelector], (state) => state.folderCreate)
-export const dialogsFolderDeleteSelector = createSelector([dialogsSelector], (state) => state.folderDelete)
-export const dialogsFolderMoveSelector = createSelector([dialogsSelector], (state) => state.folderMove)
-export const dialogsNoteDeleteSelector = createSelector([dialogsSelector], (state) => state.noteDelete)
-export const dialogsNoteMoveSelector = createSelector([dialogsSelector], (state) => state.noteMove)
-export const dialogsNoteLogSelector = createSelector([dialogsSelector], (state) => state.noteLog)
 
 type OpenFolderSettingsDialogParams = {
   folder: Folder

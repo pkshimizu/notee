@@ -5,8 +5,8 @@ import { FavoriteIcon } from '../atoms/display/Icons'
 import NoteTree from './NoteTree'
 import { useFavoritesPage, useNotesPage } from '../../hooks/usePages'
 import { useSelector } from 'react-redux'
-import { rootFolderSelector } from '../../store/notes'
-import { activeItemIdSelector } from '../../store/workspace'
+import { rootFolderSelector } from '../../store/notes/selectors'
+import { activeItemIdSelector } from '../../store/workspace/selectors'
 import { useCallback } from 'react'
 
 type WorkspaceSideBarProps = {}
@@ -22,7 +22,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
     },
     [notesPage]
   )
-  
+
   return (
     <FlexColumn space={0} noWrap>
       <SearchField />

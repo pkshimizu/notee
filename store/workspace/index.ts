@@ -1,5 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { StoreState } from './index'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type WorkspaceState = {
   itemIds: string[]
@@ -13,15 +12,6 @@ export const workspaceInitialState: WorkspaceState = {
   openSideBar: true,
 }
 
-// actions
-
-// selectors
-const workspaceSelector = (state: StoreState) => state.workspace
-export const openItemIdsSelector = createSelector([workspaceSelector], (state) => state.itemIds)
-export const activeItemIdSelector = createSelector([workspaceSelector], (state) => state.activeItemId)
-export const openSideBarSelector = createSelector([workspaceSelector], (state) => state.openSideBar)
-
-// slice
 type OpenParams = {
   id: string
 }

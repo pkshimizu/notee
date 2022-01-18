@@ -10,8 +10,8 @@ import {
   QueryDocumentSnapshot,
   updateDoc,
 } from '@firebase/firestore'
-import { User } from '../store/session'
-import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes'
+import { User } from '../store/session/models'
+import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 

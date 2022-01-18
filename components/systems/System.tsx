@@ -1,7 +1,8 @@
 import { ReactNode, useCallback } from 'react'
 import Snackbar from '../atoms/feedback/Snackbar'
 import { useDispatch, useSelector } from 'react-redux'
-import systemSlice, { errorSelector, systemMessageSelector } from '../../store/system'
+import systemSlice from '../../store/system'
+import { errorSelector, systemMessageSelector } from '../../store/system/selectors'
 
 type SystemProps = {
   children: ReactNode

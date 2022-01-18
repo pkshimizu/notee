@@ -1,4 +1,4 @@
-import { Folder, updateFolder } from '../../store/notes'
+import { Folder } from '../../store/notes/models'
 import TabView from '../atoms/navigation/TabView'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, InfoIcon } from '../atoms/display/Icons'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import TextField from '../atoms/inputs/TextField'
 import Form from '../atoms/inputs/Form'
 import Button from '../atoms/inputs/Button'
+import { updateFolder } from '../../store/notes/actions'
 
 type FolderPropertiesPanelProps = {
   folder: Folder

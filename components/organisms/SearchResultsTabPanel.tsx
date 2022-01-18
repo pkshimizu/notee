@@ -1,4 +1,4 @@
-import { searchResultNotesSelector } from '../../store/notes'
+import { searchResultNotesSelector } from '../../store/notes/selectors'
 import { FlexRow } from '../atoms/layout/Flex'
 import Margin from '../atoms/layout/Margin'
 import Label from '../atoms/display/Label'

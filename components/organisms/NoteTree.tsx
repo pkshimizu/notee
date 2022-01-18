@@ -2,7 +2,7 @@ import TreeView from '../atoms/navigation/TreeView'
 import TreeItem from '../atoms/navigation/TreeItem'
 import { FolderIcon, NoteIcon } from '../atoms/display/Icons'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
-import { Folder, Note } from '../../store/notes'
+import { Folder, Note } from '../../store/notes/models'
 
 type NoteTreeProps = {
   folder?: Folder

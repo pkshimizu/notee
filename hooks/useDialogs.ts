@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react'
-import { Folder, Note, NoteLog } from '../store/notes'
+import { Folder, Note, NoteLog } from '../store/notes/models'
 import { useDispatch, useSelector } from 'react-redux'
-import dialogsSlice, {
+import {
   dialogsFolderDeleteSelector,
   dialogsNoteDeleteSelector,
   dialogsFolderCreateSelector,
   dialogsNoteLogSelector,
   dialogsFolderMoveSelector,
   dialogsNoteMoveSelector,
-} from '../store/dialogs'
+} from '../store/dialogs/selectors'
+import dialogsSlice from '../store/dialogs'
 
 export function useFolderCreateDialog() {
   const folder = useSelector(dialogsFolderCreateSelector)

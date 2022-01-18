@@ -1,4 +1,4 @@
-import { favorite, Note, unFavorite } from '../../store/notes'
+import { Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
@@ -14,6 +14,7 @@ import {
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteDeleteDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
+import { favorite, unFavorite } from '../../store/notes/actions'
 
 type NoteMenuProps = {
   note: Note

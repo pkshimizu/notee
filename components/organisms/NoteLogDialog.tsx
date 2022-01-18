@@ -1,4 +1,4 @@
-import { Note, NoteLog, updateNote } from '../../store/notes'
+import { Note, NoteLog } from '../../store/notes/models'
 import TextEditor from '../atoms/inputs/TextEditor'
 import Dialog from '../atoms/feedback/Dialog'
 import IconButton from '../atoms/inputs/IconButton'
@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
 import { useDispatch } from 'react-redux'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
+import { updateNote } from '../../store/notes/actions'
 
 type NoteLogDialogProps = {
   open: boolean

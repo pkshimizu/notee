@@ -1,5 +1,5 @@
 import Label from '../../atoms/display/Label'
-import { Note } from '../../../store/notes'
+import { Note } from '../../../store/notes/models'
 
 type NoteTitleLabelProps = {
   note: Note

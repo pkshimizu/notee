@@ -1,4 +1,4 @@
-import { Note } from '../../../store/notes'
+import { Note } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import IconButton from '../../atoms/inputs/IconButton'
 import { DeleteIcon, OpenIcon } from '../../atoms/display/Icons'

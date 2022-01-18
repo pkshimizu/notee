@@ -1,4 +1,4 @@
-import { Folder } from '../../../store/notes'
+import { Folder } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import Label from '../../atoms/display/Label'
 import IconButton from '../../atoms/inputs/IconButton'

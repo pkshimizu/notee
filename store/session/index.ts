@@ -1,15 +1,8 @@
-import { AnyAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { createAsyncAction } from './actions'
-import { StoreState } from './index'
+import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { User } from './models'
+import UserRepository from '../../repositories/UserRepository'
 import { Dispatch } from 'react'
-import UserRepository from '../repositories/UserRepository'
-
-export type User = {
-  uid: string
-  name: string | undefined
-  email: string | undefined
-  imageUrl: string | undefined
-}
+import { createAsyncAction } from '../actions'
 
 export type SessionState = {
   initialized: boolean
@@ -21,7 +14,6 @@ export const sessionInitialState: SessionState = {
   currentUser: undefined,
 }
 
-// actions
 const initializeUser = async (
   user: User | undefined,
   userRepository: UserRepository,
@@ -50,24 +42,6 @@ export const initializeSession = createAsyncAction<void, void>(
   }
 )
 
-export const loginWithGoogle = createAsyncAction<void, void>('loginWithGoogle', async (params, repositories) => {
-  repositories.authRepository.loginWithGoogle()
-})
-
-export const loginWithGitHub = createAsyncAction<void, void>('loginWithGitHub', async (params, repositories) => {
-  repositories.authRepository.loginWithGitHub()
-})
-
-export const logout = createAsyncAction<void, void>('logout', async (params, repositories) => {
-  repositories.authRepository.logout()
-})
-
-// selectors
-const sessionSelector = (state: StoreState) => state.session
-export const currentUserSelector = createSelector([sessionSelector], (state) => state.currentUser)
-export const initializedSelector = createSelector([sessionSelector], (state) => state.initialized)
-
-// slice
 type ChangeCurrentUserParams = {
   user?: User
 }

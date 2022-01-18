@@ -1,7 +1,8 @@
 import { ReactNode, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentUserSelector, initializedSelector, initializeSession } from '../../store/session'
 import { useLoginPage } from '../../hooks/usePages'
+import { currentUserSelector, initializedSelector } from '../../store/session/selectors'
+import { initializeSession } from '../../store/session'
 
 type AuthProps = {
   children: ReactNode

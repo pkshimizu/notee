@@ -1,12 +1,13 @@
 import type { NextPage } from 'next'
 import WorkspaceLayout from '../../components/templates/WorkspaceLayout'
 import { useDispatch, useSelector } from 'react-redux'
-import { foldersSelector, notesSelector, rootFolderSelector } from '../../store/notes'
-import workspaceSlice, { activeItemIdSelector } from '../../store/workspace'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import WorkspaceTabView from '../../components/organisms/WorkspaceTabView'
 import { useNotesPage } from '../../hooks/usePages'
+import { foldersSelector, notesSelector, rootFolderSelector } from '../../store/notes/selectors'
+import { activeItemIdSelector } from '../../store/workspace/selectors'
+import workspaceSlice from '../../store/workspace'
 
 const Workspace: NextPage = () => {
   const root = useSelector(rootFolderSelector)

@@ -1,15 +1,17 @@
 import TabView from '../atoms/navigation/TabView'
 import { FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import workspaceSlice, { activeItemIdSelector, openSideBarSelector, openItemIdsSelector } from '../../store/workspace'
+import { activeItemIdSelector, openSideBarSelector, openItemIdsSelector } from '../../store/workspace/selectors'
 import { useCallback } from 'react'
-import { Folder, foldersSelector, Note, notesSelector } from '../../store/notes'
+import { Folder, Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
 import FolderTabPanel from './FolderTabPanel'
 import NoteTabPanel from './NoteTabPanel'
 import { useNotesPage } from '../../hooks/usePages'
 import SearchResultsTabPanel from './SearchResultsTabPanel'
 import FavoritesTabPanel from './FavoritesTabPanel'
+import { foldersSelector, notesSelector } from '../../store/notes/selectors'
+import workspaceSlice from '../../store/workspace'
 
 type WorkspaceTabViewProps = {}
 

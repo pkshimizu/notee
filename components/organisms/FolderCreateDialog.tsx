@@ -1,11 +1,12 @@
 import FormDialog from '../molecules/feedback/FormDialog'
 import { useCallback } from 'react'
-import { createFolder, Folder } from '../../store/notes'
+import { Folder } from '../../store/notes/models'
 import TextField from '../atoms/inputs/TextField'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { createFolder } from '../../store/notes/actions'
 
 type FolderSettingDialogProps = {
   open: boolean

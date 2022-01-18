@@ -4,8 +4,9 @@ import Button from '../components/atoms/inputs/Button'
 import { GitHubIcon, GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentUserSelector, loginWithGitHub, loginWithGoogle } from '../store/session'
 import { useRootPage } from '../hooks/usePages'
+import { currentUserSelector } from '../store/session/selectors'
+import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
 
 const Login: NextPage = () => {
   const currentUser = useSelector(currentUserSelector)

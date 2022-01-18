@@ -1,4 +1,4 @@
-import { Folder } from '../../../store/notes'
+import { Folder } from '../../../store/notes/models'
 import { useCallback, useState } from 'react'
 import NoteTree from '../../organisms/NoteTree'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'

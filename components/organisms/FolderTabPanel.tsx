@@ -1,4 +1,4 @@
-import { Folder, foldersSelector } from '../../store/notes'
+import { Folder } from '../../store/notes/models'
 import { FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
@@ -12,6 +12,7 @@ import FolderPropertiesPanel from './FolderPropertiesPanel'
 import { useSelector } from 'react-redux'
 import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
+import { foldersSelector } from '../../store/notes/selectors'
 
 type FolderTabPanelProps = {
   folder: Folder

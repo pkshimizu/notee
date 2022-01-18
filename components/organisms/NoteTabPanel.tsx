@@ -1,4 +1,4 @@
-import { Note, updateNote } from '../../store/notes'
+import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
 import TextEditor from '../atoms/inputs/TextEditor'
 import { useCallback, useState } from 'react'
@@ -6,6 +6,7 @@ import { Ace } from 'ace-builds'
 import { useDispatch } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
+import { updateNote } from '../../store/notes/actions'
 
 type NoteTabPanelProps = {
   note: Note

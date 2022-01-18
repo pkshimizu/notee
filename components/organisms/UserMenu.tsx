@@ -3,7 +3,7 @@ import MenuItem from '../atoms/navigation/MenuItem'
 import { LogoutIcon } from '../atoms/display/Icons'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../store/session'
+import { logout } from '../../store/session/actions'
 
 type UserMenuProps = {
   target?: Element

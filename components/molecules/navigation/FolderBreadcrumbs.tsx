@@ -1,4 +1,4 @@
-import { Folder } from '../../../store/notes'
+import { Folder } from '../../../store/notes/models'
 import Breadcrumbs from '../../atoms/navigation/Breadcrumbs'
 import Link from '../../atoms/navigation/Link'
 

@@ -5,7 +5,8 @@ import Margin from '../atoms/layout/Margin'
 import WorkspaceAppBar from '../organisms/WorkspaceAppBar'
 import WorkspaceSideBar from '../organisms/WorkspaceSideBar'
 import { useDispatch, useSelector } from 'react-redux'
-import workspaceSlice, { openSideBarSelector } from '../../store/workspace'
+import workspaceSlice from '../../store/workspace'
+import { openSideBarSelector } from '../../store/workspace/selectors'
 
 type WorkspaceLayoutProps = {
   children: ReactNode
@@ -17,7 +18,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
-  
+
   return (
     <>
       <Drawer open={openSideBar} onClose={handleToggleSideBar}>

@@ -7,7 +7,7 @@ import {
   signOut,
 } from '@firebase/auth'
 import { auth } from './firebase'
-import { User } from '../store/session'
+import { User } from '../store/session/models'
 
 export default class AuthRepository {
   loginWithGoogle() {

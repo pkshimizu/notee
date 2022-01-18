@@ -1,5 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { StoreState } from './index'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type SystemState = {
   message?: string
@@ -10,11 +9,6 @@ export const systemInitialState: SystemState = {
   message: undefined,
   error: undefined,
 }
-
-// selector
-const systemSelector = (state: StoreState) => state.system
-export const errorSelector = createSelector([systemSelector], (state) => state.error)
-export const systemMessageSelector = createSelector([systemSelector], (state) => state.message)
 
 type MessageParams = {
   message: string

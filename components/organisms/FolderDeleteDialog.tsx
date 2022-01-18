@@ -1,10 +1,11 @@
-import { deleteFolder, deleteNote, Folder } from '../../store/notes'
+import { Folder } from '../../store/notes/models'
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
 import { Dispatch, useCallback } from 'react'
 import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
+import { deleteFolder, deleteNote } from '../../store/notes/actions'
 
 type FolderDeleteDialogProps = {
   open: boolean

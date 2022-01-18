@@ -1,4 +1,4 @@
-import { createNote, favorite, Folder, unFavorite } from '../../store/notes'
+import { Folder } from '../../store/notes/models'
 import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
@@ -16,6 +16,7 @@ import {
   FavoriteOutlinedIcon,
 } from '../atoms/display/Icons'
 import { useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
+import { createNote, favorite, unFavorite } from '../../store/notes/actions'
 
 type FolderMenuProps = {
   folder: Folder
