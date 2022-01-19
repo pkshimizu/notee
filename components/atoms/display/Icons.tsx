@@ -1,4 +1,5 @@
 import {
+  ArrowBackIosNew,
   Check,
   Close,
   CreateNewFolder,
@@ -41,6 +42,10 @@ export function Icon({ color, icon }: BaseIconProps) {
 
 export function ApplyIcon(props: IconProps) {
   return <Icon {...props} icon={Check} />
+}
+
+export function BackIcon(props: IconProps) {
+  return <Icon {...props} icon={ArrowBackIosNew} />
 }
 
 export function CloseIcon(props: IconProps) {

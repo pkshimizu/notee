@@ -7,7 +7,7 @@ export default function Profile() {
   useEffect(() => {
     setTitle('Profile settings')
   }, [setTitle])
-  
+
   return <></>
 }
 

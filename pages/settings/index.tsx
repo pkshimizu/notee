@@ -7,7 +7,7 @@ export default function Settings() {
   useEffect(() => {
     profileSettingsPage()
   }, [profileSettingsPage])
-  
+
   return <></>
 }
 

@@ -7,7 +7,7 @@ export default function Editor() {
   useEffect(() => {
     setTitle('Editor settings')
   }, [setTitle])
-  
+
   return <></>
 }
 

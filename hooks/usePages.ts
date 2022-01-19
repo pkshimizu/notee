@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
+import { useSelector } from 'react-redux'
+import { activeItemIdSelector } from '../store/workspace/selectors'
 
 export const useRootPage = () => {
   const router = useRouter()
@@ -20,6 +22,14 @@ export const useNotesPage = (defaultId?: string) => {
     },
     [defaultId]
   )
+}
+
+export const useActiveNotesPage = () => {
+  const router = useRouter()
+  const activeId = useSelector(activeItemIdSelector)
+  return useCallback(() => {
+    router.push(`/notes/${activeId}`)
+  }, [activeId])
 }
 
 export const useLoginPage = () => {
