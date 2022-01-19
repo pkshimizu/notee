@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRootPage } from '../hooks/usePages'
 import { currentUserSelector } from '../store/session/selectors'
 import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
+import { useTitle } from '../hooks/useTitle'
 
 const Login: NextPage = () => {
   const currentUser = useSelector(currentUserSelector)
+  const { setTitle } = useTitle()
   const rootPage = useRootPage()
   const dispatch = useDispatch()
 
@@ -17,7 +19,8 @@ const Login: NextPage = () => {
     if (currentUser) {
       rootPage()
     }
-  }, [currentUser, rootPage])
+    setTitle('Login')
+  }, [currentUser, rootPage, setTitle])
 
   const handleLogInWithGoogle = useCallback(() => {
     dispatch(loginWithGoogle())
