@@ -42,3 +42,16 @@ export const useFavoritesPage = () => {
     router.push(`/notes/favorites`)
   }, [])
 }
+
+export const useProfileSettingsPage = () => {
+  const router = useRouter()
+  return useCallback(() => {
+    router.push(`/settings/profile`)
+  }, [])
+}
+export const useEditorSettingsPage = () => {
+  const router = useRouter()
+  return useCallback(() => {
+    router.push(`/settings/editor`)
+  }, [])
+}
