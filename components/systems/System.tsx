@@ -3,12 +3,15 @@ import Snackbar from '../atoms/feedback/Snackbar'
 import { useDispatch, useSelector } from 'react-redux'
 import systemSlice from '../../store/system'
 import { errorSelector, systemMessageSelector } from '../../store/system/selectors'
+import Head from 'next/head'
+import { useTitle } from '../../hooks/useTitle'
 
 type SystemProps = {
   children: ReactNode
 }
 
 export default function System({ children }: SystemProps) {
+  const { title } = useTitle()
   const message = useSelector(systemMessageSelector)
   const error = useSelector(errorSelector)
   const dispatch = useDispatch()
@@ -21,6 +24,9 @@ export default function System({ children }: SystemProps) {
 
   return (
     <>
+      <Head>
+        <title>notee{title && ` | ${title}`}</title>
+      </Head>
       {children}
       {error && (
         <Snackbar
