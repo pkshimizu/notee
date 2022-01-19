@@ -12,7 +12,7 @@ type MenuItemProps = {
 export default function MenuItem({ icon, children, onClick }: MenuItemProps) {
   return (
     <MuiMenuItem onClick={onClick}>
-      <MuiListItemIcon>{icon}</MuiListItemIcon>
+      {icon && <MuiListItemIcon>{icon}</MuiListItemIcon>}
       <MuiListItemText>{children}</MuiListItemText>
     </MuiMenuItem>
   )

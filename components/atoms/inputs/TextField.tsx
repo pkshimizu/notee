@@ -12,7 +12,7 @@ type TextFieldProps = {
   focused?: boolean
   readonly?: boolean
   icon?: ReactNode
-  register: UseFormRegisterReturn
+  register?: UseFormRegisterReturn
   error?: any
 }
 

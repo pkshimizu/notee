@@ -17,7 +17,7 @@ export default function SettingsAppBar() {
   const handleClickMenu = useCallback((target) => {
     setMenuTarget(target)
   }, [])
-  
+
   return (
     <AppBar>
       <FlexRow justify={'space-between'} align={'center'}>

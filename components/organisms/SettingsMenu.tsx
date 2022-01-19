@@ -7,7 +7,7 @@ export default function SettingsMenu() {
   const editorSettingsPage = useEditorSettingsPage()
 
   return (
-    <MenuList>
+    <MenuList width={200}>
       <MenuItem onClick={profileSettingsPage}>Profile</MenuItem>
       <MenuItem onClick={editorSettingsPage}>Editor</MenuItem>
     </MenuList>

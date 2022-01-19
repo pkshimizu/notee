@@ -14,8 +14,10 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       <FlexColumn>
         <SettingsAppBar />
         <FlexRow>
-          <SettingsMenu />
-          {children}
+          <FlexColumn noGrow>
+            <SettingsMenu />
+          </FlexColumn>
+          <FlexColumn>{children}</FlexColumn>
         </FlexRow>
       </FlexColumn>
     </Container>
