@@ -1,17 +1,25 @@
 import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from './models'
+import { Settings, User } from './models'
 import UserRepository from '../../repositories/UserRepository'
 import { Dispatch } from 'react'
 import { createAsyncAction } from '../actions'
+import { updateKeyBinding, updateTheme } from './actions'
 
 export type SessionState = {
   initialized: boolean
   currentUser?: User
+  settings: Settings
 }
 
 export const sessionInitialState: SessionState = {
   initialized: false,
   currentUser: undefined,
+  settings: {
+    editor: {
+      keyBinding: 'vscode',
+      theme: 'monokai',
+    },
+  },
 }
 
 const initializeUser = async (
@@ -45,6 +53,10 @@ export const initializeSession = createAsyncAction<void, void>(
 type ChangeCurrentUserParams = {
   user?: User
 }
+
+type ModifySettingsParams = {
+  settings: Settings
+}
 const sessionSlice = createSlice({
   name: 'session',
   initialState: sessionInitialState,
@@ -54,11 +66,35 @@ const sessionSlice = createSlice({
       currentUser: action.payload.user,
       initialized: true,
     }),
+    modifySettings: (state: SessionState, action: PayloadAction<ModifySettingsParams>) => ({
+      ...state,
+      settings: action.payload.settings,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(initializeSession.rejected, (state) => ({
       ...state,
       initialized: true,
+    }))
+    builder.addCase(updateKeyBinding.fulfilled, (state, action) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        editor: {
+          ...state.settings.editor,
+          keyBinding: action.payload.keyBinding,
+        },
+      },
+    }))
+    builder.addCase(updateTheme.fulfilled, (state, action) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        editor: {
+          ...state.settings.editor,
+          theme: action.payload.theme,
+        },
+      },
     }))
   },
 })

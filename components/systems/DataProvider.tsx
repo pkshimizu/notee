@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/session/selectors'
 import { rootFolderSelector } from '../../store/notes/selectors'
 import { fetchNotes, fetchRoot } from '../../store/notes/actions'
+import { fetchUserSettings } from '../../store/session/actions'
 
 type DataProviderProps = {
   children: ReactNode
@@ -14,6 +15,7 @@ export default function DataProvider({ children }: DataProviderProps) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchRoot())
+    dispatch(fetchUserSettings())
     const onFocus = () => {
       dispatch(fetchNotes())
     }

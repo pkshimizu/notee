@@ -1,29 +1,33 @@
 import SettingsLayout from '../../components/templates/SettingsLayout'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTitle } from '../../hooks/useTitle'
 import { FlexColumn } from '../../components/atoms/layout/Flex'
 import Label from '../../components/atoms/display/Label'
 import Divider from '../../components/atoms/display/Divider'
 import ToggleButton from '../../components/atoms/inputs/ToggleButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { editorSettingsSelector } from '../../store/session/selectors'
+import { updateKeyBinding, updateTheme } from '../../store/session/actions'
+import { EditorTheme, KeyBinding } from '../../components/atoms/inputs/TextEditor'
 
 export default function Editor() {
   const { setTitle } = useTitle()
-  const [keybinding, setKeybinding] = useState('vscode')
-  const [theme, setTheme] = useState('monokai')
+  const editorSettings = useSelector(editorSettingsSelector)
   useEffect(() => {
     setTitle('Editor settings')
   }, [setTitle])
+  const dispatch = useDispatch()
   const handleKeybinding = useCallback(
     (value: string) => {
-      setKeybinding(value)
+      dispatch(updateKeyBinding({ keyBinding: value as KeyBinding }))
     },
-    [setKeybinding]
+    [dispatch]
   )
   const handleTheme = useCallback(
     (value: string) => {
-      setTheme(value)
+      dispatch(updateTheme({ theme: value as EditorTheme }))
     },
-    [setTheme]
+    [dispatch]
   )
 
   return (
@@ -32,7 +36,7 @@ export default function Editor() {
       <Divider />
       <Label variant={'subtitle'}>Keybinding</Label>
       <ToggleButton
-        value={keybinding}
+        value={editorSettings.keyBinding}
         items={[
           {
             value: 'vscode',
@@ -56,7 +60,7 @@ export default function Editor() {
       />
       <Label variant={'subtitle'}>Theme</Label>
       <ToggleButton
-        value={theme}
+        value={editorSettings.theme}
         items={[
           {
             value: 'monokai',
