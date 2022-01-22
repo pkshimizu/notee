@@ -17,7 +17,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           <FlexColumn noGrow>
             <SettingsMenu />
           </FlexColumn>
-          <FlexColumn>{children}</FlexColumn>
+          <FlexColumn width={'calc(100% - 208px)'}>{children}</FlexColumn>
         </FlexRow>
       </FlexColumn>
     </Container>
