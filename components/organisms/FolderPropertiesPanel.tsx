@@ -3,7 +3,6 @@ import TabView from '../atoms/navigation/TabView'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, InfoIcon } from '../atoms/display/Icons'
 import TabPanel from '../atoms/navigation/TabPanel'
-import Margin from '../atoms/layout/Margin'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
@@ -52,28 +51,25 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
           icon: <InfoIcon />,
           panel: (
             <TabPanel value={'info'}>
-              <Margin top={2} bottom={2} left={1} right={1}>
-                <FlexColumn>
-                  <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
-                    <FlexRow justify={'flex-end'}>
-                      <TextField
-                        label={'フォルダ名'}
-                        readonly={folder.folderId === undefined}
-                        register={register('name')}
-                        error={errors.name?.message}
-                        size={'sm'}
-                      />
-                      <Button
-                        icon={<ApplyIcon />}
-                        variant={'text'}
-                        onClick={() => handleSubmit(handleSaveFolderSettings)()}
-                      >
-                        変更
-                      </Button>
-                    </FlexRow>
-                  </Form>
-                </FlexColumn>
-              </Margin>
+              <FlexColumn>
+                <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
+                  <FlexRow justify={'flex-end'} space={0}>
+                    <TextField
+                      label={'フォルダ名'}
+                      readonly={folder.folderId === undefined}
+                      register={register('name')}
+                      error={errors.name?.message}
+                    />
+                    <Button
+                      icon={<ApplyIcon />}
+                      variant={'text'}
+                      onClick={() => handleSubmit(handleSaveFolderSettings)()}
+                    >
+                      変更
+                    </Button>
+                  </FlexRow>
+                </Form>
+              </FlexColumn>
             </TabPanel>
           ),
         },

@@ -5,7 +5,6 @@ import { FlexColumn } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
 import { Note, NoteLog } from '../../store/notes/models'
-import Margin from '../atoms/layout/Margin'
 import { useCallback, useState } from 'react'
 import List from '../atoms/display/List'
 import ListItem from '../atoms/display/ListItem'
@@ -34,18 +33,16 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
           icon: <InfoIcon />,
           panel: (
             <TabPanel value={'info'}>
-              <Margin top={2} bottom={2} left={1} right={1}>
-                <FlexColumn>
-                  <FlexColumn space={0}>
-                    <Label variant={'caption'}>作成日時</Label>
-                    <DateTimeLabel datetime={note.createdAt} />
-                  </FlexColumn>
-                  <FlexColumn space={0}>
-                    <Label variant={'caption'}>最終更新日時</Label>
-                    <DateTimeLabel datetime={note.updatedAt} />
-                  </FlexColumn>
+              <FlexColumn>
+                <FlexColumn space={0}>
+                  <Label variant={'caption'}>作成日時</Label>
+                  <DateTimeLabel datetime={note.createdAt} />
                 </FlexColumn>
-              </Margin>
+                <FlexColumn space={0}>
+                  <Label variant={'caption'}>最終更新日時</Label>
+                  <DateTimeLabel datetime={note.updatedAt} />
+                </FlexColumn>
+              </FlexColumn>
             </TabPanel>
           ),
         },
