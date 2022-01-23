@@ -2,7 +2,6 @@ import { Folder } from '../../store/notes/models'
 import TabView from '../atoms/navigation/TabView'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, InfoIcon } from '../atoms/display/Icons'
-import TabPanel from '../atoms/navigation/TabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
@@ -50,27 +49,25 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
           value: 'info',
           icon: <InfoIcon />,
           panel: (
-            <TabPanel value={'info'}>
-              <FlexColumn>
-                <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
-                  <FlexRow justify={'flex-end'} space={0}>
-                    <TextField
-                      label={'フォルダ名'}
-                      readonly={folder.folderId === undefined}
-                      register={register('name')}
-                      error={errors.name?.message}
-                    />
-                    <Button
-                      icon={<ApplyIcon />}
-                      variant={'text'}
-                      onClick={() => handleSubmit(handleSaveFolderSettings)()}
-                    >
-                      変更
-                    </Button>
-                  </FlexRow>
-                </Form>
-              </FlexColumn>
-            </TabPanel>
+            <FlexColumn>
+              <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
+                <FlexRow justify={'flex-end'} space={0}>
+                  <TextField
+                    label={'フォルダ名'}
+                    readonly={folder.folderId === undefined}
+                    register={register('name')}
+                    error={errors.name?.message}
+                  />
+                  <Button
+                    icon={<ApplyIcon />}
+                    variant={'text'}
+                    onClick={() => handleSubmit(handleSaveFolderSettings)()}
+                  >
+                    変更
+                  </Button>
+                </FlexRow>
+              </Form>
+            </FlexColumn>
           ),
         },
       ]}

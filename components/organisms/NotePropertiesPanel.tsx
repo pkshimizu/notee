@@ -1,6 +1,5 @@
 import TabView from '../atoms/navigation/TabView'
 import { InfoIcon, LogIcon } from '../atoms/display/Icons'
-import TabPanel from '../atoms/navigation/TabPanel'
 import { FlexColumn } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
@@ -32,35 +31,31 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
           value: 'info',
           icon: <InfoIcon />,
           panel: (
-            <TabPanel value={'info'}>
-              <FlexColumn>
-                <FlexColumn space={0}>
-                  <Label variant={'caption'}>作成日時</Label>
-                  <DateTimeLabel datetime={note.createdAt} />
-                </FlexColumn>
-                <FlexColumn space={0}>
-                  <Label variant={'caption'}>最終更新日時</Label>
-                  <DateTimeLabel datetime={note.updatedAt} />
-                </FlexColumn>
+            <FlexColumn>
+              <FlexColumn space={0}>
+                <Label variant={'caption'}>作成日時</Label>
+                <DateTimeLabel datetime={note.createdAt} />
               </FlexColumn>
-            </TabPanel>
+              <FlexColumn space={0}>
+                <Label variant={'caption'}>最終更新日時</Label>
+                <DateTimeLabel datetime={note.updatedAt} />
+              </FlexColumn>
+            </FlexColumn>
           ),
         },
         {
           value: 'log',
           icon: <LogIcon />,
           panel: (
-            <TabPanel value={'log'}>
-              <List>
-                {[...note.logs].reverse().map((log) => (
-                  <ListItem
-                    key={log.id}
-                    label={<DateTimeLabel datetime={log.updatedAt} />}
-                    onClick={() => handleSelectLog(log)}
-                  />
-                ))}
-              </List>
-            </TabPanel>
+            <List>
+              {[...note.logs].reverse().map((log) => (
+                <ListItem
+                  key={log.id}
+                  label={<DateTimeLabel datetime={log.updatedAt} />}
+                  onClick={() => handleSelectLog(log)}
+                />
+              ))}
+            </List>
           ),
         },
       ]}
