@@ -4,6 +4,7 @@ import { currentUserSelector } from '../../store/session/selectors'
 import { rootFolderSelector } from '../../store/notes/selectors'
 import { fetchNotes, fetchRoot } from '../../store/notes/actions'
 import { fetchUserSettings } from '../../store/session/actions'
+import { useDeviceType } from '../../hooks/useDeviceType'
 
 type DataProviderProps = {
   children: ReactNode
@@ -12,10 +13,11 @@ type DataProviderProps = {
 export default function DataProvider({ children }: DataProviderProps) {
   const currentUser = useSelector(currentUserSelector)
   const root = useSelector(rootFolderSelector)
+  const deviceType = useDeviceType()
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchRoot())
-    dispatch(fetchUserSettings())
+    dispatch(fetchUserSettings({ mobile: deviceType === 'Mobile' }))
     const onFocus = () => {
       dispatch(fetchNotes())
     }
@@ -24,7 +26,7 @@ export default function DataProvider({ children }: DataProviderProps) {
     return () => {
       window.removeEventListener('focus', onFocus)
     }
-  }, [dispatch])
+  }, [dispatch, deviceType])
 
   if (currentUser === undefined || root) {
     return <>{children}</>

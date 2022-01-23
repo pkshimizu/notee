@@ -14,13 +14,31 @@ export const logout = createAsyncAction<void, void>('logout', async (params, rep
   repositories.authRepository.logout()
 })
 
-export const fetchUserSettings = createAsyncAction<void, void>(
+type FetchUserSettingsParams = {
+  mobile: boolean
+}
+
+export const fetchUserSettings = createAsyncAction<FetchUserSettingsParams, void>(
   'fetchUserSettings',
   async (params, repositories, state, dispatch) => {
     const currentUser = state.session.currentUser
     if (currentUser) {
       repositories.userRepository.onSnapshotUser(currentUser, (settings) => {
-        dispatch(sessionSlice.actions.modifySettings({ settings }))
+        if (params.mobile) {
+          dispatch(
+            sessionSlice.actions.modifySettings({
+              settings: {
+                ...settings,
+                editor: {
+                  ...settings.editor,
+                  keyBinding: 'vscode',
+                },
+              },
+            })
+          )
+        } else {
+          dispatch(sessionSlice.actions.modifySettings({ settings }))
+        }
       })
     }
   }

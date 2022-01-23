@@ -15,7 +15,7 @@ const variant = (settingValue: string, value: string) => {
   if (settingValue === value) {
     return 'contained'
   }
-  
+
   return 'outlined'
 }
 
