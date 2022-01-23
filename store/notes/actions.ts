@@ -1,6 +1,5 @@
 import { createAsyncAction } from '../actions'
 import systemSlice from '../system'
-import workspaceSlice from '../workspace'
 import { Folder, Note } from '../notes/models'
 import notesSlice from '.'
 
@@ -145,7 +144,6 @@ export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
     const folder = params.folder
     if (state.session.currentUser) {
       await noteRepository.deleteFolder(state.session.currentUser, folder)
-      await dispatch(workspaceSlice.actions.close({ id: params.folder.id }))
       dispatch(systemSlice.actions.message({ message: 'フォルダを削除しました' }))
     }
   }
@@ -160,7 +158,6 @@ export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.deleteNote(state.session.currentUser, params.note)
-      await dispatch(workspaceSlice.actions.close({ id: params.note.id }))
       dispatch(systemSlice.actions.message({ message: 'ノートを削除しました' }))
     }
   }

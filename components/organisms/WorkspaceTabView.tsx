@@ -2,7 +2,7 @@ import TabView from '../atoms/navigation/TabView'
 import { FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { activeItemIdSelector, openItemIdsSelector } from '../../store/workspace/selectors'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Folder, Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
 import FolderTabPanel from './FolderTabPanel'
@@ -46,7 +46,7 @@ function label(itemId: string, folder?: Folder, note?: Note) {
     return 'お気に入り'
   }
 
-  return itemId
+  return undefined
 }
 
 function panel(itemId: string, notes: Note[], folder?: Folder, note?: Note) {
@@ -63,7 +63,7 @@ function panel(itemId: string, notes: Note[], folder?: Folder, note?: Note) {
     return <NoteTabPanel note={note} key={note.id} />
   }
 
-  return <></>
+  return undefined
 }
 
 function makeTabs(itemIds: string[], folders: Folder[], notes: Note[]) {
@@ -87,6 +87,16 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const itemIds = useSelector(openItemIdsSelector)
   const notesPage = useNotesPage()
   const dispatch = useDispatch()
+  useEffect(() => {
+    itemIds.forEach((itemId) => {
+      const folder = folders.find((folder) => folder.id === itemId)
+      const note = notes.find((note) => note.id === itemId)
+      if (label(itemId, folder, note) === undefined) {
+        // 存在しないitemを閉じる
+        dispatch(workspaceSlice.actions.close({ id: itemId }))
+      }
+    })
+  }, [itemIds, folders, notes, dispatch])
   const handleChangeTab = useCallback(
     (value: string) => {
       notesPage(value)
