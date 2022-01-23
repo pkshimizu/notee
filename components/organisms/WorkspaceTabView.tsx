@@ -1,7 +1,7 @@
 import TabView from '../atoms/navigation/TabView'
 import { FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { activeItemIdSelector, openSideBarSelector, openItemIdsSelector } from '../../store/workspace/selectors'
+import { activeItemIdSelector, openItemIdsSelector } from '../../store/workspace/selectors'
 import { useCallback } from 'react'
 import { Folder, Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
@@ -85,7 +85,6 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const notes = useSelector(notesSelector)
   const activeItemId = useSelector(activeItemIdSelector)
   const itemIds = useSelector(openItemIdsSelector)
-  const openSideBar = useSelector(openSideBarSelector)
   const notesPage = useNotesPage()
   const dispatch = useDispatch()
   const handleChangeTab = useCallback(
@@ -104,11 +103,9 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   return (
     <TabView
       leftItem={
-        !openSideBar && (
-          <IconButton onClick={handleToggleSideBar}>
-            <MenuIcon />
-          </IconButton>
-        )
+        <IconButton onClick={handleToggleSideBar}>
+          <MenuIcon />
+        </IconButton>
       }
       value={activeItemId}
       tabs={makeTabs(itemIds, folders, notes)}
