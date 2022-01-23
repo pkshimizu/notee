@@ -29,7 +29,7 @@ const tabLabel = (label: string) => {
 
 export default function TabView({ value, tabs, leftItem, variant = 'scrollable', onChange }: TabViewProps) {
   return (
-    <MuiBox sx={{ height: '100%' }}>
+    <MuiBox sx={{ height: '100%', width: '100%' }}>
       <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
         {leftItem}
         <MuiTabs
