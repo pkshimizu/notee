@@ -9,17 +9,15 @@ import SearchResultsMenu from './SearchResultsMenu'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { useSelector } from 'react-redux'
 
-type SearchResultsTabPanelProps = {
-  value: string
-}
+type SearchResultsTabPanelProps = {}
 
-export default function SearchResultsTabPanel({ value }: SearchResultsTabPanelProps) {
+export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
   const notes = useSelector(searchResultNotesSelector)
   const openNotePage = useNotesPage()
   const noteDeleteDialog = useNoteDeleteDialog()
 
   return (
-    <WorkspaceTabPanel value={value} menu={<SearchResultsMenu />}>
+    <WorkspaceTabPanel menu={<SearchResultsMenu />}>
       <Margin left={2} right={2} bottom={4}>
         <Margin top={3} bottom={3}>
           <Label variant={'caption'}>ノート</Label>

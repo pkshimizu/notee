@@ -4,20 +4,13 @@ import RelativeBox from '../../atoms/layout/RelativeBox'
 import AbsoluteBox from '../../atoms/layout/AbsoluteBox'
 
 type WorkspaceTabPanelProps = {
-  value: string
   menu: ReactNode
   propertiesPanel?: ReactNode
   children: ReactNode
   onResize?: (_width: number, _height: number) => void
 }
 
-export default function WorkspaceTabPanel({
-  value,
-  menu,
-  propertiesPanel,
-  children,
-  onResize,
-}: WorkspaceTabPanelProps) {
+export default function WorkspaceTabPanel({ menu, propertiesPanel, children, onResize }: WorkspaceTabPanelProps) {
   return (
     <FlexColumn space={0} height={'100%'}>
       {menu}

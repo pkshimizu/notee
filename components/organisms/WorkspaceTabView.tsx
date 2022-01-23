@@ -51,10 +51,10 @@ function label(itemId: string, folder?: Folder, note?: Note) {
 
 function panel(itemId: string, notes: Note[], folder?: Folder, note?: Note) {
   if (itemId === 'search') {
-    return <SearchResultsTabPanel key={itemId} value={itemId} />
+    return <SearchResultsTabPanel key={itemId} />
   }
   if (itemId === 'favorites') {
-    return <FavoritesTabPanel key={itemId} value={itemId} />
+    return <FavoritesTabPanel key={itemId} />
   }
   if (folder) {
     return <FolderTabPanel folder={folder} key={folder.id} />

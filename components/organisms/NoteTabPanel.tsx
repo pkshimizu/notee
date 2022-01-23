@@ -35,7 +35,6 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
 
   return (
     <WorkspaceTabPanel
-      value={note.id}
       menu={<NoteMenu note={note} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />}
       propertiesPanel={propertiesPanel ? <NotePropertiesPanel note={note} /> : undefined}
       onResize={handleResize}

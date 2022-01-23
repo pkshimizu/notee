@@ -10,11 +10,9 @@ import { useFolderCreateDialog, useFolderDeleteDialog, useNoteDeleteDialog } fro
 import { useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
 
-type FavoritesTabPanelProps = {
-  value: string
-}
+type FavoritesTabPanelProps = {}
 
-export default function FavoritesTabPanel({ value }: FavoritesTabPanelProps) {
+export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
   const folders = useSelector(favoriteFoldersSelector)
   const notes = useSelector(favoriteNotesSelector)
   const folderDeleteDialog = useFolderDeleteDialog()
@@ -23,7 +21,7 @@ export default function FavoritesTabPanel({ value }: FavoritesTabPanelProps) {
   const openNotePage = useNotesPage()
 
   return (
-    <WorkspaceTabPanel value={value} menu={<FavoritesMenu />}>
+    <WorkspaceTabPanel menu={<FavoritesMenu />}>
       <Margin left={2} right={2} bottom={4}>
         {folders.length > 0 && (
           <>

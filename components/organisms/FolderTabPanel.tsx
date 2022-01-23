@@ -28,7 +28,6 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
 
   return (
     <WorkspaceTabPanel
-      value={folder.id}
       menu={<FolderMenu folder={folder} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />}
       propertiesPanel={propertiesPanel ? <FolderPropertiesPanel folder={folder} /> : undefined}
     >
