@@ -1,3 +1,5 @@
+import { ContentType } from '../../components/atoms/inputs/TextEditor'
+
 type Item = {
   id: string
 }
@@ -13,6 +15,7 @@ export type NoteDoc = {
   content: string
   favorite: boolean
   logs: NoteLog[]
+  contentType: ContentType
   createdAt: string
   updatedAt: string
 }

@@ -14,6 +14,7 @@ import { User } from '../store/session/models'
 import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
+import { ContentType } from '../components/atoms/inputs/TextEditor'
 
 function makeTitle(content: string): string {
   if (content.length > 0) {
@@ -45,6 +46,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
     content: content,
     favorite: doc.data().favorite,
     logs: data.logs ?? [],
+    contentType: data.contentType ?? 'markdown',
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
   }
@@ -56,6 +58,7 @@ const noteToDoc = (note: Note): NoteDoc => {
     content: note.content,
     favorite: note.favorite,
     logs: note.logs,
+    contentType: note.contentType,
     createdAt: note.createdAt,
     updatedAt: note.updatedAt,
   }
@@ -71,6 +74,7 @@ type UpdateNoteParams = {
   content?: string
   folderId?: string
   favorite?: boolean
+  contentType?: ContentType
 }
 
 export default class NoteRepository {
@@ -181,6 +185,7 @@ export default class NoteRepository {
       content: '',
       favorite: false,
       logs: [],
+      contentType: 'markdown',
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
     }
@@ -204,7 +209,11 @@ export default class NoteRepository {
       favorite: favorite ?? folder.favorite,
     }
   }
-  async updateNote(user: User, note: Note, { content, folderId, favorite }: UpdateNoteParams): Promise<Note> {
+  async updateNote(
+    user: User,
+    note: Note,
+    { content, folderId, favorite, contentType }: UpdateNoteParams
+  ): Promise<Note> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const noteDoc = doc(userDoc, 'notes', note.id)
     const updatedAt = dayjs().toISOString()
@@ -221,6 +230,7 @@ export default class NoteRepository {
       content: content,
       folderId: folderId,
       favorite: favorite,
+      contentType: contentType,
       logs: logs,
       updatedAt: updatedAt,
     })

@@ -8,6 +8,10 @@ import { useCallback, useState } from 'react'
 import List from '../atoms/display/List'
 import ListItem from '../atoms/display/ListItem'
 import { useNoteLogDialog } from '../../hooks/useDialogs'
+import ContentTypeSelect from '../molecules/inputs/ContentTypeSelect'
+import { ContentType } from '../atoms/inputs/TextEditor'
+import { useDispatch } from 'react-redux'
+import { updateNote } from '../../store/notes/actions'
 
 type NotePropertiesPanelProps = {
   note: Note
@@ -16,11 +20,18 @@ type NotePropertiesPanelProps = {
 export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) {
   const [tab, setTab] = useState('info')
   const noteLogDialog = useNoteLogDialog()
+  const dispatch = useDispatch()
   const handleSelectLog = useCallback(
     (log: NoteLog) => {
       noteLogDialog.open(note, log)
     },
     [noteLogDialog, note]
+  )
+  const handleChangeContentType = useCallback(
+    (value: ContentType) => {
+      dispatch(updateNote({ note: note, contentType: value }))
+    },
+    [dispatch, note]
   )
 
   return (
@@ -40,6 +51,7 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
                 <Label variant={'caption'}>最終更新日時</Label>
                 <DateTimeLabel datetime={note.updatedAt} />
               </FlexColumn>
+              <ContentTypeSelect value={note.contentType} onChange={handleChangeContentType} />
             </FlexColumn>
           ),
         },

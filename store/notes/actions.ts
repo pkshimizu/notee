@@ -2,6 +2,7 @@ import { createAsyncAction } from '../actions'
 import systemSlice from '../system'
 import { Folder, Note } from '../notes/models'
 import notesSlice from '.'
+import { ContentType } from '../../components/atoms/inputs/TextEditor'
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }
@@ -120,6 +121,7 @@ type UpdateNoteParams = {
   note: Note
   content?: string
   folderId?: string
+  contentType?: ContentType
 }
 
 export const updateNote = createAsyncAction<UpdateNoteParams, void>(
@@ -129,6 +131,7 @@ export const updateNote = createAsyncAction<UpdateNoteParams, void>(
       await noteRepository.updateNote(state.session.currentUser, params.note, {
         content: params.content,
         folderId: params.folderId,
+        contentType: params.contentType,
       })
     }
   }

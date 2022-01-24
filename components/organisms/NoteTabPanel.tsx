@@ -43,6 +43,7 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
         content={note.content}
         keyBinding={editorSettings.keyBinding}
         theme={editorSettings.theme}
+        mode={note.contentType}
         onLoad={handleLoad}
         onChangeContent={handleChangeContent}
       />
