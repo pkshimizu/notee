@@ -42,7 +42,7 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
           value: 'info',
           icon: <InfoIcon />,
           panel: (
-            <FlexColumn>
+            <FlexColumn space={2} pt={2} pl={1} pr={1} pb={2}>
               <FlexColumn space={0}>
                 <Label variant={'caption'}>作成日時</Label>
                 <DateTimeLabel datetime={note.createdAt} />

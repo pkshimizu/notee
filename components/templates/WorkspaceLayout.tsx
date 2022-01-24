@@ -1,7 +1,6 @@
 import { ReactNode, useCallback } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
 import { FlexColumn } from '../atoms/layout/Flex'
-import Margin from '../atoms/layout/Margin'
 import WorkspaceAppBar from '../organisms/WorkspaceAppBar'
 import WorkspaceSideBar from '../organisms/WorkspaceSideBar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,11 +26,9 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
           <WorkspaceSideBar />
         </FlexColumn>
       </Drawer>
-      <Margin left={openSideBar ? 32 : 0}>
-        <FlexColumn height={'100vh'} space={0}>
-          {children}
-        </FlexColumn>
-      </Margin>
+      <FlexColumn height={'100vh'} space={0} ml={openSideBar ? 32 : 0}>
+        {children}
+      </FlexColumn>
     </>
   )
 }

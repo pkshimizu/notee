@@ -1,7 +1,6 @@
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
-import Margin from '../atoms/layout/Margin'
 import Label from '../atoms/display/Label'
-import { FlexRow } from '../atoms/layout/Flex'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useSelector } from 'react-redux'
@@ -22,12 +21,12 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
 
   return (
     <WorkspaceTabPanel menu={<FavoritesMenu />}>
-      <Margin left={2} right={2} bottom={4}>
+      <FlexColumn pl={2} pr={2} pb={4}>
         {folders.length > 0 && (
           <>
-            <Margin top={3} bottom={3}>
+            <FlexRow pt={2} pb={2}>
               <Label variant={'caption'}>フォルダ</Label>
-            </Margin>
+            </FlexRow>
             <FlexRow>
               {folders.map((folder) => (
                 <FolderCard
@@ -43,9 +42,9 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
         )}
         {notes.length > 0 && (
           <>
-            <Margin top={3} bottom={3}>
+            <FlexRow pt={2} pb={2}>
               <Label variant={'caption'}>ノート</Label>
-            </Margin>
+            </FlexRow>
             <FlexRow>
               {notes.map((note) => (
                 <NoteCard
@@ -58,7 +57,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
             </FlexRow>
           </>
         )}
-      </Margin>
+      </FlexColumn>
     </WorkspaceTabPanel>
   )
 }

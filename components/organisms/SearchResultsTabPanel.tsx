@@ -1,6 +1,5 @@
 import { searchResultNotesSelector } from '../../store/notes/selectors'
-import { FlexRow } from '../atoms/layout/Flex'
-import Margin from '../atoms/layout/Margin'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useNotesPage } from '../../hooks/usePages'
@@ -18,10 +17,10 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
 
   return (
     <WorkspaceTabPanel menu={<SearchResultsMenu />}>
-      <Margin left={2} right={2} bottom={4}>
-        <Margin top={3} bottom={3}>
+      <FlexColumn pl={2} pr={2} pb={4}>
+        <FlexRow pt={2} pb={2}>
           <Label variant={'caption'}>ノート</Label>
-        </Margin>
+        </FlexRow>
         <FlexRow>
           {notes.map((note) => (
             <NoteCard
@@ -32,7 +31,7 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
             />
           ))}
         </FlexRow>
-      </Margin>
+      </FlexColumn>
     </WorkspaceTabPanel>
   )
 }

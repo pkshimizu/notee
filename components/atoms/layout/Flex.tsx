@@ -3,15 +3,26 @@ import MuiBox from '@mui/material/Box'
 
 export type FlexAlign = 'flex-start' | 'center' | 'flex-end' | 'baseline'
 export type FlexJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
+type SpaceSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
+type MarginSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
+type PaddingSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
 
 type FlexProps = {
   align?: FlexAlign
   justify?: FlexJustify
   width?: number | string
   height?: number | string
-  space?: number
+  space?: SpaceSize
   noWrap?: boolean
   noGrow?: boolean
+  ml?: MarginSize
+  mr?: MarginSize
+  mt?: MarginSize
+  mb?: MarginSize
+  pl?: PaddingSize
+  pr?: PaddingSize
+  pt?: PaddingSize
+  pb?: PaddingSize
   children: ReactNode
 }
 
@@ -44,6 +55,14 @@ function Flex({
   space = 1,
   noWrap = false,
   noGrow = false,
+  mt,
+  mb,
+  ml,
+  mr,
+  pt,
+  pb,
+  pl,
+  pr,
   children,
 }: BaseFlexProps) {
   return (
@@ -59,6 +78,14 @@ function Flex({
         overflowY: 'auto',
         flexWrap: noWrap ? 'nowrap' : 'wrap',
         gap: space,
+        mt: mt,
+        mb: mb,
+        ml: ml,
+        mr: mr,
+        pt: pt,
+        pb: pb,
+        pl: pl,
+        pr: pr,
       }}
     >
       {children}

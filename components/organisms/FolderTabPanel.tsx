@@ -1,10 +1,9 @@
 import { Folder } from '../../store/notes/models'
-import { FlexRow } from '../atoms/layout/Flex'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
-import Margin from '../atoms/layout/Margin'
 import { useFolderDeleteDialog, useFolderCreateDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
 import { useNotesPage } from '../../hooks/usePages'
 import { useState } from 'react'
@@ -31,13 +30,13 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
       menu={<FolderMenu folder={folder} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />}
       propertiesPanel={propertiesPanel ? <FolderPropertiesPanel folder={folder} /> : undefined}
     >
-      <Margin left={2} right={2} bottom={4}>
+      <FlexColumn pl={2} pr={2} pb={4}>
         <FolderBreadcrumbs folders={folders} folder={folder} />
         {folder.folders.length > 0 && (
           <>
-            <Margin top={3} bottom={3}>
+            <FlexRow pt={2} pb={2}>
               <Label variant={'caption'}>フォルダ</Label>
-            </Margin>
+            </FlexRow>
             <FlexRow>
               {folder.folders.map((folder) => (
                 <FolderCard
@@ -53,9 +52,9 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
         )}
         {folder.notes.length > 0 && (
           <>
-            <Margin top={3} bottom={3}>
+            <FlexRow pt={2} pb={2}>
               <Label variant={'caption'}>ノート</Label>
-            </Margin>
+            </FlexRow>
             <FlexRow>
               {folder.notes.map((note) => (
                 <NoteCard
@@ -68,7 +67,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
             </FlexRow>
           </>
         )}
-      </Margin>
+      </FlexColumn>
     </WorkspaceTabPanel>
   )
 }

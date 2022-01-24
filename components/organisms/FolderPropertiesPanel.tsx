@@ -49,7 +49,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
           value: 'info',
           icon: <InfoIcon />,
           panel: (
-            <FlexColumn>
+            <FlexColumn pt={2} pl={1} pr={1} pb={2}>
               <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
                 <FlexRow justify={'flex-end'} space={0}>
                   <TextField

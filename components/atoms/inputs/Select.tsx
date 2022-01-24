@@ -17,7 +17,7 @@ type SelectProps = {
 
 export default function Select({ value, items, label, onChange }: SelectProps) {
   return (
-    <MuiFormControl>
+    <MuiFormControl variant={'standard'}>
       <InputLabel>{label}</InputLabel>
       <MuiSelect value={value} label={label} onChange={(e) => onChange(e.target.value)}>
         {items.map((item) => (
