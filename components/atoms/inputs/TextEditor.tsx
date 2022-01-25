@@ -71,11 +71,13 @@ export type EditorTheme =
 
 export type KeyBinding = 'emacs' | 'sublime' | 'vim' | 'vscode'
 
+export type FontSize = 8 | 9 | 10 | 11 | 12 | 14 | 16 | 18 | 20 | 24 | 28 | 32
+
 type TextEditorProps = {
   content: string
   width?: string
   height?: string
-  fontSize?: number
+  fontSize?: FontSize
   mode?: ContentType
   theme?: EditorTheme
   keyBinding?: KeyBinding

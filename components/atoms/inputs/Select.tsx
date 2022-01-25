@@ -4,15 +4,15 @@ import MuiFormControl from '@mui/material/FormControl'
 import { InputLabel } from '@mui/material'
 
 type SelectItem = {
-  value: string
-  label: string
+  value: string | number
+  label: string | number
 }
 
 type SelectProps = {
-  value: string
+  value: string | number
   items: SelectItem[]
   label: string
-  onChange: (_value: string) => void
+  onChange: (_value: string | number) => void
 }
 
 export default function Select({ value, items, label, onChange }: SelectProps) {
