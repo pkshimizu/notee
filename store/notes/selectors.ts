@@ -29,12 +29,11 @@ const noteListSelector = createSelector([noteSelector], (state) =>
 )
 const searchResultsSelector = createSelector([noteSelector], (state) => state.searchResults)
 
-export const rootFolderSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
-  const itemInFolders = buildFolders(folders, notes)
-  return itemInFolders.find((folder) => folder.folderId === undefined)
-})
 export const foldersSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
   return buildFolders(folders, notes)
+})
+export const rootFolderSelector = createSelector([foldersSelector], (folders) => {
+  return folders.find((folder) => folder.folderId === undefined)
 })
 export const notesSelector = createSelector([noteListSelector], (notes) => notes)
 export const searchResultNotesSelector = createSelector(
