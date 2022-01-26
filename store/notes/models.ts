@@ -18,6 +18,7 @@ export type NoteDoc = {
   contentType: ContentType
   createdAt: string
   updatedAt: string
+  deletedAt?: string
 }
 
 export type Note = {
@@ -29,6 +30,7 @@ export type FolderDoc = {
   folderId?: string
   name: string
   favorite: boolean
+  deletedAt?: string
 }
 
 export type Folder = {

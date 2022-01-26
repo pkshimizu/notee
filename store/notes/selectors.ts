@@ -21,21 +21,29 @@ function buildFolders(folders: Folder[], notes: Note[]) {
 }
 
 const noteSelector = (state: StoreState) => state.notes
-export const rootFolderSelector = createSelector([noteSelector], (state) => {
-  const folders = buildFolders(Object.values(state.folders), Object.values(state.notes))
-  return folders.find((folder) => folder.folderId === undefined)
-})
-export const foldersSelector = createSelector([noteSelector], (state) => {
-  return buildFolders(Object.values(state.folders), Object.values(state.notes))
-})
-export const notesSelector = createSelector([noteSelector], (state) => Object.values(state.notes))
-export const searchResultsSelector = createSelector([noteSelector], (state) => state.searchResults)
-export const searchResultNotesSelector = createSelector([noteSelector], (state) =>
-  Object.values(state.notes).filter((note) => state.searchResults?.notes?.includes(note.id))
+const folderListSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.folders).filter((folder) => folder.deletedAt === undefined)
 )
-export const favoriteFoldersSelector = createSelector([noteSelector], (state) =>
-  Object.values(state.folders).filter((folder) => folder.favorite)
+const noteListSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.notes).filter((note) => note.deletedAt === undefined)
 )
-export const favoriteNotesSelector = createSelector([noteSelector], (state) =>
-  Object.values(state.notes).filter((note) => note.favorite)
+const searchResultsSelector = createSelector([noteSelector], (state) => state.searchResults)
+
+export const rootFolderSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
+  const itemInFolders = buildFolders(folders, notes)
+  return itemInFolders.find((folder) => folder.folderId === undefined)
+})
+export const foldersSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
+  return buildFolders(folders, notes)
+})
+export const notesSelector = createSelector([noteListSelector], (notes) => notes)
+export const searchResultNotesSelector = createSelector(
+  [noteListSelector, searchResultsSelector],
+  (notes, searchResults) => notes.filter((note) => searchResults?.notes?.includes(note.id))
+)
+export const favoriteFoldersSelector = createSelector([folderListSelector], (folders) =>
+  folders.filter((folder) => folder.favorite)
+)
+export const favoriteNotesSelector = createSelector([noteListSelector], (notes) =>
+  notes.filter((note) => note.favorite)
 )

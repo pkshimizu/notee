@@ -2,7 +2,6 @@ import { firestore } from './firebase'
 import {
   addDoc,
   collection,
-  deleteDoc,
   doc,
   DocumentData,
   getDocs,
@@ -34,6 +33,7 @@ const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
     favorite: doc.data().favorite,
     folders: [],
     notes: [],
+    deletedAt: doc.data().deletedAt,
   }
 }
 const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
@@ -49,18 +49,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
     contentType: data.contentType ?? 'markdown',
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
-  }
-}
-
-const noteToDoc = (note: Note): NoteDoc => {
-  return {
-    folderId: note.folderId,
-    content: note.content,
-    favorite: note.favorite,
-    logs: note.logs,
-    contentType: note.contentType,
-    createdAt: note.createdAt,
-    updatedAt: note.updatedAt,
+    deletedAt: data.deletedAt,
   }
 }
 
@@ -246,11 +235,15 @@ export default class NoteRepository {
   deleteFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersCollection = collection(userDoc, 'folders')
-    return deleteDoc(doc(foldersCollection, folder.id))
+    return updateDoc(doc(foldersCollection, folder.id), {
+      deletedAt: dayjs().toISOString(),
+    })
   }
   async deleteNote(user: User, note: Note) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
-    await deleteDoc(doc(notesCollection, note.id))
+    await updateDoc(doc(notesCollection, note.id), {
+      deletedAt: dayjs().toISOString(),
+    })
   }
 }
