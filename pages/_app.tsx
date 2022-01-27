@@ -8,6 +8,7 @@ import { EmotionCache } from '@emotion/react'
 import System from '../components/systems/System'
 import DialogProvider from '../components/systems/DialogProvider'
 import { ComponentType } from 'react'
+import EditorProvider from '../components/systems/EditorProvider'
 
 type AppProps = {
   Component: NextAppProps['Component'] & {
@@ -23,14 +24,16 @@ export default function App({ emotionCache, Component, pageProps }: AppProps) {
         <System>
           <Auth>
             <DataProvider>
-              {Component.layout ? (
-                <Component.layout>
+              <EditorProvider>
+                {Component.layout ? (
+                  <Component.layout>
+                    <Component {...pageProps} />
+                  </Component.layout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.layout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-              <DialogProvider />
+                )}
+                <DialogProvider />
+              </EditorProvider>
             </DataProvider>
           </Auth>
         </System>
