@@ -28,6 +28,8 @@ const tabLabel = (label: string) => {
 }
 
 export default function TabView({ value, tabs, leftItem, variant = 'scrollable', onChange }: TabViewProps) {
+  const activeTab = tabs.find((tab) => tab.value === value)
+  
   return (
     <MuiBox sx={{ height: '100%', width: '100%' }}>
       <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
@@ -54,14 +56,7 @@ export default function TabView({ value, tabs, leftItem, variant = 'scrollable',
         </MuiTabs>
       </MuiBox>
       <MuiBox sx={{ height: 'calc(100% - 52.5px)', overflowY: 'auto' }}>
-        {tabs.map((tab) => (
-          <MuiBox
-            sx={{ display: tab.value === value ? 'inherit' : 'none', height: tab.value === value ? '100%' : 0 }}
-            key={tab.value}
-          >
-            {tab.panel}
-          </MuiBox>
-        ))}
+        {activeTab && <MuiBox sx={{ height: '100%' }}>{activeTab.panel}</MuiBox>}
       </MuiBox>
     </MuiBox>
   )

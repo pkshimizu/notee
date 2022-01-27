@@ -32,7 +32,6 @@ export function useEditor() {
               return {
                 ...state,
                 editor: editor,
-                undoManager: undoManager,
               }
             }
             return state
