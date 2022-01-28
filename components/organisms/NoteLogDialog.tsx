@@ -4,9 +4,10 @@ import Dialog from '../atoms/feedback/Dialog'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
 import { updateNote } from '../../store/notes/actions'
+import { editorSettingsSelector } from '../../store/session/selectors'
 
 type NoteLogDialogProps = {
   open: boolean
@@ -17,6 +18,7 @@ type NoteLogDialogProps = {
 
 export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialogProps) {
   const [selectedIndex, setSelectedIndex] = useState(note.logs.map((log) => log.id).indexOf(log.id))
+  const editorSettings = useSelector(editorSettingsSelector)
   const dispatch = useDispatch()
   const handleNextLog = useCallback(() => {
     if (selectedIndex < note.logs.length - 1) {
@@ -55,7 +57,15 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
         </>
       }
     >
-      <TextEditor content={note.logs[selectedIndex].content} width={'800px'} height={'80vh'} readOnly />
+      <TextEditor
+        content={note.logs[selectedIndex].content}
+        width={'100%'}
+        height={'80vh'}
+        keyBinding={editorSettings.keyBinding}
+        theme={editorSettings.theme}
+        mode={note.contentType}
+        readOnly
+      />
     </Dialog>
   )
 }
