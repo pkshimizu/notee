@@ -34,7 +34,6 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                   folder={folder}
                   key={folder.id}
                   onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickSettings={() => folderSettingsDialog.open(folder)}
                   onClickDelete={() => folderDeleteDialog.open(folder)}
                 />
               ))}
