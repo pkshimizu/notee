@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+type WorkspaceItemType = 'folder' | 'note' | 'search' | 'favorites' | 'trash'
+
+export type WorkspaceItem = {
+  id: string
+  type: WorkspaceItemType
+}
+
 export type WorkspaceState = {
-  itemIds: string[]
+  items: WorkspaceItem[]
   activeItemId?: string
   openSideBar: boolean
 }
 
 export const workspaceInitialState: WorkspaceState = {
-  itemIds: [],
+  items: [],
   activeItemId: undefined,
   openSideBar: true,
 }
@@ -21,50 +28,40 @@ type CloseParams = {
 type ActiveParams = {
   id: string
 }
-function openItem(state: WorkspaceState, itemId: string) {
-  if (state.itemIds.includes(itemId)) {
+function openItem(state: WorkspaceState, itemId: string, type: WorkspaceItemType) {
+  if (state.items.some((item) => item.id === itemId)) {
     return {
       ...state,
       activeItemId: itemId,
     }
   }
-  const itemIds = state.itemIds.concat(itemId)
+  const items = state.items.concat({ id: itemId, type: type })
   return {
     ...state,
-    itemIds: itemIds,
+    items: items,
     activeItemId: itemId,
   }
 }
 function closeItem(state: WorkspaceState, itemId: string) {
-  if (state.itemIds.length === 1) {
-    return {
-      ...state,
-      itemIds: [],
-      activeItemId: undefined,
-    }
-  }
-  const index = state.itemIds.indexOf(itemId)
-  if (index < 0) {
-    return state
-  }
-  const nextItemId = index === 0 ? state.itemIds[1] : state.itemIds[index - 1]
-  const itemIds = state.itemIds.filter((id) => id !== itemId)
   return {
     ...state,
-    itemIds: itemIds,
-    activeItemId: nextItemId,
+    items: state.items.filter((item) => item.id !== itemId),
   }
 }
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
   reducers: {
-    open: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
-      return openItem(state, action.payload.id)
+    openNote: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
+      return openItem(state, action.payload.id, 'note')
     },
-    close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => {
-      return closeItem(state, action.payload.id)
+    openFolder: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
+      return openItem(state, action.payload.id, 'folder')
     },
+    close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => ({
+      ...state,
+      items: state.items.filter((item) => item.id !== action.payload.id),
+    }),
     active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => ({
       ...state,
       activeItemId: action.payload.id,
@@ -74,13 +71,13 @@ const workspaceSlice = createSlice({
       openSideBar: !state.openSideBar,
     }),
     openSearchResults: (state: WorkspaceState) => {
-      return openItem(state, 'search')
+      return openItem(state, 'search', 'search')
     },
     closeSearchResults: (state: WorkspaceState) => {
       return closeItem(state, 'search')
     },
     openFavorites: (state: WorkspaceState) => {
-      return openItem(state, 'favorites')
+      return openItem(state, 'favorites', 'favorites')
     },
     closeFavorites: (state: WorkspaceState) => {
       return closeItem(state, 'favorites')

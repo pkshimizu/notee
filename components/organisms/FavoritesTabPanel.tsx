@@ -6,7 +6,7 @@ import NoteCard from '../molecules/surfaces/NoteCard'
 import { useSelector } from 'react-redux'
 import { favoriteFoldersSelector, favoriteNotesSelector } from '../../store/notes/selectors'
 import { useFolderCreateDialog, useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
-import { useNotesPage } from '../../hooks/usePages'
+import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
 
 type FavoritesTabPanelProps = {}
@@ -18,6 +18,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
   const folderSettingsDialog = useFolderCreateDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const openNotePage = useNotesPage()
+  const openFolderPage = useFoldersPage()
 
   return (
     <WorkspaceTabPanel menu={<FavoritesMenu />}>
@@ -32,7 +33,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                 <FolderCard
                   folder={folder}
                   key={folder.id}
-                  onClickFolderLink={() => openNotePage(folder.id)}
+                  onClickFolderLink={() => openFolderPage(folder.id)}
                   onClickSettings={() => folderSettingsDialog.open(folder)}
                   onClickDelete={() => folderDeleteDialog.open(folder)}
                 />

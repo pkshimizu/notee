@@ -3,16 +3,15 @@ import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { CloseIcon } from '../atoms/display/Icons'
 import { useCallback } from 'react'
-import workspaceSlice from '../../store/workspace'
-import { useDispatch } from 'react-redux'
+import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type FavoritesMenuProps = {}
 
 export default function FavoritesMenu({}: FavoritesMenuProps) {
-  const dispatch = useDispatch()
+  const { closeFavorites } = useWorkspaceTab()
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.closeFavorites())
-  }, [dispatch])
+    closeFavorites()
+  }, [closeFavorites])
 
   return (
     <AppBar>

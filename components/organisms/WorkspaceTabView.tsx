@@ -1,81 +1,53 @@
 import TabView from '../atoms/navigation/TabView'
 import { FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { activeItemIdSelector, openItemIdsSelector } from '../../store/workspace/selectors'
+import { activeItemIdSelector, openItemsSelector } from '../../store/workspace/selectors'
 import { useCallback, useEffect } from 'react'
 import { Folder, Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
-import FolderTabPanel from './FolderTabPanel'
-import NoteTabPanel from './NoteTabPanel'
-import { useNotesPage } from '../../hooks/usePages'
-import SearchResultsTabPanel from './SearchResultsTabPanel'
-import FavoritesTabPanel from './FavoritesTabPanel'
+import { useItemsPage } from '../../hooks/usePages'
 import { foldersSelector, notesSelector } from '../../store/notes/selectors'
-import workspaceSlice from '../../store/workspace'
+import workspaceSlice, { WorkspaceItem } from '../../store/workspace'
+import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type WorkspaceTabViewProps = {}
 
-function icon(itemId: string, folder?: Folder, note?: Note) {
-  if (folder) {
-    return <FolderIcon key={itemId} />
-  }
-  if (note) {
-    return <NoteIcon key={itemId} />
-  }
-  if (itemId === 'search') {
-    return <SearchIcon key={itemId} />
-  }
-  if (itemId === 'favorites') {
-    return <FavoriteIcon key={itemId} />
-  }
+function makeTabs(items: WorkspaceItem[], folders: Folder[], notes: Note[]) {
+  return items.map((item) => {
+    switch (item.type) {
+    case 'folder':
+      const folder = folders.find((folder) => folder.id === item.id)
 
-  return undefined
-}
+      return {
+        value: item.id,
+        label: folder?.name ?? '名前無し',
+        icon: <FolderIcon key={item.id} />,
+      }
+    case 'note':
+      const note = notes.find((note) => note.id === item.id)
 
-function label(itemId: string, folder?: Folder, note?: Note) {
-  if (folder) {
-    return folder.name
-  }
-  if (note) {
-    return note.title ?? '名前無し'
-  }
-  if (itemId === 'search') {
-    return '検索結果'
-  }
-  if (itemId === 'favorites') {
-    return 'お気に入り'
-  }
-
-  return undefined
-}
-
-function panel(itemId: string, notes: Note[], folder?: Folder, note?: Note) {
-  if (itemId === 'search') {
-    return <SearchResultsTabPanel key={itemId} />
-  }
-  if (itemId === 'favorites') {
-    return <FavoritesTabPanel key={itemId} />
-  }
-  if (folder) {
-    return <FolderTabPanel folder={folder} key={folder.id} />
-  }
-  if (note) {
-    return <NoteTabPanel note={note} key={note.id} />
-  }
-
-  return undefined
-}
-
-function makeTabs(itemIds: string[], folders: Folder[], notes: Note[]) {
-  return itemIds.map((itemId) => {
-    const folder = folders.find((folder) => folder.id === itemId)
-    const note = notes.find((note) => note.id === itemId)
-
-    return {
-      value: itemId,
-      label: label(itemId, folder, note),
-      icon: icon(itemId, folder, note),
-      panel: panel(itemId, notes, folder, note),
+      return {
+        value: item.id,
+        label: note?.title ?? '名前無し',
+        icon: <NoteIcon key={item.id} />,
+      }
+    case 'search':
+      return {
+        value: item.id,
+        label: 'Search Results',
+        icon: <SearchIcon key={item.id} />,
+      }
+    case 'favorites':
+      return {
+        value: item.id,
+        label: 'Favorites',
+        icon: <FavoriteIcon key={item.id} />,
+      }
+    default:
+      return {
+        value: item.id,
+        label: 'UnKnown',
+      }
     }
   })
 }
@@ -84,28 +56,38 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const folders = useSelector(foldersSelector)
   const notes = useSelector(notesSelector)
   const activeItemId = useSelector(activeItemIdSelector)
-  const itemIds = useSelector(openItemIdsSelector)
-  const notesPage = useNotesPage()
+  const items = useSelector(openItemsSelector)
+  const itemsPage = useItemsPage()
+  const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   useEffect(() => {
-    itemIds.forEach((itemId) => {
-      const folder = folders.find((folder) => folder.id === itemId)
-      const note = notes.find((note) => note.id === itemId)
-      if (label(itemId, folder, note) === undefined) {
-        // 存在しないitemを閉じる
-        dispatch(workspaceSlice.actions.close({ id: itemId }))
+    items.forEach((item) => {
+      if (item.type === 'folder') {
+        const folder = folders.find((folder) => folder.id === item.id)
+        if (folder === undefined) {
+          // 存在しないitemを閉じる
+          close(item.id)
+        }
+      }
+      if (item.type === 'note') {
+        const note = notes.find((note) => note.id === item.id)
+        if (note === undefined) {
+          // 存在しないitemを閉じる
+          close(item.id)
+        }
       }
     })
-  }, [itemIds, folders, notes, dispatch])
+  }, [items, folders, notes, close])
   const handleChangeTab = useCallback(
     (value: string) => {
-      notesPage(value)
+      itemsPage(value)
     },
-    [notesPage]
+    [itemsPage]
   )
   const handleToggleSideBar = useCallback(() => {
     dispatch(workspaceSlice.actions.toggleSideBar())
   }, [dispatch])
+
   if (!activeItemId) {
     return <></>
   }
@@ -118,7 +100,8 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
         </IconButton>
       }
       value={activeItemId}
-      tabs={makeTabs(itemIds, folders, notes)}
+      tabs={makeTabs(items, folders, notes)}
+      tabsOnly
       onChange={handleChangeTab}
     />
   )

@@ -8,7 +8,7 @@ export type Tab = {
   value: string
   icon?: ReactElement
   label?: string
-  panel: ReactNode
+  panel?: ReactNode
 }
 
 type TabViewProps = {
@@ -16,6 +16,7 @@ type TabViewProps = {
   tabs: Tab[]
   leftItem?: ReactNode
   variant?: 'scrollable' | 'fullWidth'
+  tabsOnly?: boolean
   onChange?: (_value: string) => void
 }
 
@@ -27,11 +28,18 @@ const tabLabel = (label: string) => {
   return label
 }
 
-export default function TabView({ value, tabs, leftItem, variant = 'scrollable', onChange }: TabViewProps) {
+export default function TabView({
+  value,
+  tabs,
+  leftItem,
+  variant = 'scrollable',
+  tabsOnly = false,
+  onChange,
+}: TabViewProps) {
   const activeTab = tabs.find((tab) => tab.value === value)
-  
+
   return (
-    <MuiBox sx={{ height: '100%', width: '100%' }}>
+    <MuiBox sx={{ width: '100%', height: tabsOnly ? undefined : '100%' }}>
       <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1, width: '100%' }}>
         {leftItem}
         <MuiTabs
@@ -55,9 +63,9 @@ export default function TabView({ value, tabs, leftItem, variant = 'scrollable',
           ))}
         </MuiTabs>
       </MuiBox>
-      <MuiBox sx={{ height: 'calc(100% - 52.5px)', overflowY: 'auto' }}>
-        {activeTab && <MuiBox sx={{ height: '100%' }}>{activeTab.panel}</MuiBox>}
-      </MuiBox>
+      {!tabsOnly && activeTab && activeTab.panel && (
+        <MuiBox sx={{ height: 'calc(100% - 52.5px)', overflowY: 'auto' }}>{activeTab.panel}</MuiBox>
+      )}
     </MuiBox>
   )
 }

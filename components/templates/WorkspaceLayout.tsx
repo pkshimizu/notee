@@ -6,6 +6,7 @@ import WorkspaceSideBar from '../organisms/WorkspaceSideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
 import { openSideBarSelector } from '../../store/workspace/selectors'
+import WorkspaceTabView from '../organisms/WorkspaceTabView'
 
 type WorkspaceLayoutProps = {
   children: ReactNode
@@ -27,6 +28,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         </FlexColumn>
       </Drawer>
       <FlexColumn height={'100vh'} space={0} ml={openSideBar ? 32 : 0}>
+        <WorkspaceTabView />
         {children}
       </FlexColumn>
     </>

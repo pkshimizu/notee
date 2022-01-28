@@ -5,7 +5,7 @@ import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
 import { useFolderDeleteDialog, useFolderCreateDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
-import { useNotesPage } from '../../hooks/usePages'
+import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import { useState } from 'react'
 import FolderPropertiesPanel from './FolderPropertiesPanel'
 import { useSelector } from 'react-redux'
@@ -23,6 +23,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const folderSettingsDialog = useFolderCreateDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const openNotePage = useNotesPage()
+  const openFolderPage = useFoldersPage()
   const folders = useSelector(foldersSelector)
 
   return (
@@ -42,7 +43,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                 <FolderCard
                   folder={folder}
                   key={folder.id}
-                  onClickFolderLink={() => openNotePage(folder.id)}
+                  onClickFolderLink={() => openFolderPage(folder.id)}
                   onClickSettings={() => folderSettingsDialog.open(folder)}
                   onClickDelete={() => folderDeleteDialog.open(folder)}
                 />

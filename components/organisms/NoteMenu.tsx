@@ -2,7 +2,6 @@ import { Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
 import {
   CloseIcon,
@@ -15,6 +14,7 @@ import {
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteDeleteDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
 import { favorite, unFavorite } from '../../store/notes/actions'
+import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type NoteMenuProps = {
   note: Note
@@ -24,6 +24,7 @@ type NoteMenuProps = {
 export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const noteDeleteDialog = useNoteDeleteDialog()
   const noteMoveDialog = useNoteMoveDialog()
+  const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (note.favorite) {
@@ -33,8 +34,8 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
     }
   }, [dispatch, note])
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close({ id: note.id }))
-  }, [dispatch, note])
+    close(note.id)
+  }, [close, note])
 
   return (
     <AppBar>

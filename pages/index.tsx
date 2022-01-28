@@ -2,16 +2,16 @@ import type { NextPage } from 'next'
 import { useSelector } from 'react-redux'
 import { rootFolderSelector } from '../store/notes/selectors'
 import { useEffect } from 'react'
-import { useNotesPage } from '../hooks/usePages'
+import { useFoldersPage } from '../hooks/usePages'
 
 const Home: NextPage = () => {
   const root = useSelector(rootFolderSelector)
-  const notesPage = useNotesPage()
+  const foldersPage = useFoldersPage()
   useEffect(() => {
     if (root) {
-      notesPage(root.id)
+      foldersPage(root.id)
     }
-  }, [root, notesPage])
+  }, [root, foldersPage])
 
   return <></>
 }

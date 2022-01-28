@@ -3,16 +3,15 @@ import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { CloseIcon } from '../atoms/display/Icons'
 import { useCallback } from 'react'
-import workspaceSlice from '../../store/workspace'
-import { useDispatch } from 'react-redux'
+import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type SearchResultsMenuProps = {}
 
 export default function SearchResultsMenu({}: SearchResultsMenuProps) {
-  const dispatch = useDispatch()
+  const { closeSearch } = useWorkspaceTab()
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.closeSearchResults())
-  }, [dispatch])
+    closeSearch()
+  }, [closeSearch])
 
   return (
     <AppBar>

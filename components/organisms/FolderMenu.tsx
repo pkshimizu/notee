@@ -3,7 +3,6 @@ import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import workspaceSlice from '../../store/workspace'
 import AppBar from '../atoms/surfaces/AppBar'
 import {
   CreateFolderIcon,
@@ -17,6 +16,7 @@ import {
 } from '../atoms/display/Icons'
 import { useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
 import { createNote, favorite, unFavorite } from '../../store/notes/actions'
+import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type FolderMenuProps = {
   folder: Folder
@@ -27,6 +27,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
   const folderCreateDialog = useFolderCreateDialog()
   const folderDeleteDialog = useFolderDeleteDialog()
   const folderMoveDialog = useFolderMoveDialog()
+  const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (folder.favorite) {
@@ -39,8 +40,8 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
     dispatch(createNote({ parentFolder: folder }))
   }, [dispatch, folder])
   const handleClose = useCallback(() => {
-    dispatch(workspaceSlice.actions.close({ id: folder.id }))
-  }, [dispatch, folder])
+    close(folder.id)
+  }, [close, folder])
 
   return (
     <AppBar>

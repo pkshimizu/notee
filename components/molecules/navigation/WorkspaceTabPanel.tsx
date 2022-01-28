@@ -12,7 +12,7 @@ type WorkspaceTabPanelProps = {
 
 export default function WorkspaceTabPanel({ menu, propertiesPanel, children, onResize }: WorkspaceTabPanelProps) {
   return (
-    <FlexColumn space={0} height={'100%'}>
+    <FlexColumn space={0}>
       {menu}
       <FlexRow>
         <RelativeBox width={'100%'} height={'100%'}>
