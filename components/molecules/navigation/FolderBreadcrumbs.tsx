@@ -21,7 +21,7 @@ export default function FolderBreadcrumbs({ folders, folder }: FolderBreadcrumbs
   return (
     <Breadcrumbs>
       {parentFolders(folders, folder).map((folder) => (
-        <Link key={folder.id} href={`/notes/${folder.id}`}>
+        <Link key={folder.id} href={`/folders/${folder.id}`}>
           {folder.name}
         </Link>
       ))}
