@@ -42,12 +42,6 @@ function openItem(state: WorkspaceState, itemId: string, type: WorkspaceItemType
     activeItemId: itemId,
   }
 }
-function closeItem(state: WorkspaceState, itemId: string) {
-  return {
-    ...state,
-    items: state.items.filter((item) => item.id !== itemId),
-  }
-}
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
@@ -73,14 +67,11 @@ const workspaceSlice = createSlice({
     openSearchResults: (state: WorkspaceState) => {
       return openItem(state, 'search', 'search')
     },
-    closeSearchResults: (state: WorkspaceState) => {
-      return closeItem(state, 'search')
-    },
     openFavorites: (state: WorkspaceState) => {
       return openItem(state, 'favorites', 'favorites')
     },
-    closeFavorites: (state: WorkspaceState) => {
-      return closeItem(state, 'favorites')
+    openTrash: (state: WorkspaceState) => {
+      return openItem(state, 'trash', 'trash')
     },
   },
 })

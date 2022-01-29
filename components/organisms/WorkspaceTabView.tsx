@@ -1,5 +1,5 @@
 import TabView from '../atoms/navigation/TabView'
-import { FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
+import { DeleteIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { activeItemIdSelector, openItemsSelector } from '../../store/workspace/selectors'
 import { useCallback, useEffect } from 'react'
@@ -42,6 +42,12 @@ function makeTabs(items: WorkspaceItem[], folders: Folder[], notes: Note[]) {
         value: item.id,
         label: 'Favorites',
         icon: <FavoriteIcon key={item.id} />,
+      }
+    case 'trash':
+      return {
+        value: item.id,
+        label: 'Trash',
+        icon: <DeleteIcon key={item.id} />,
       }
     default:
       return {

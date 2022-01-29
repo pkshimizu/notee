@@ -5,7 +5,7 @@ import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useSelector } from 'react-redux'
 import { favoriteFoldersSelector, favoriteNotesSelector } from '../../store/notes/selectors'
-import { useFolderCreateDialog, useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
 
@@ -15,7 +15,6 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
   const folders = useSelector(favoriteFoldersSelector)
   const notes = useSelector(favoriteNotesSelector)
   const folderDeleteDialog = useFolderDeleteDialog()
-  const folderSettingsDialog = useFolderCreateDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()

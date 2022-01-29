@@ -9,7 +9,7 @@ import Label from '../../atoms/display/Label'
 
 type NoteCardProps = {
   note: Note
-  onClickNoteLink: () => void
+  onClickNoteLink?: () => void
   onClickDelete: () => void
 }
 
@@ -19,9 +19,11 @@ export default function NoteCard({ note, onClickNoteLink, onClickDelete }: NoteC
       header={<NoteTitleLabel note={note} />}
       actions={
         <>
-          <IconButton onClick={onClickNoteLink}>
-            <OpenIcon />
-          </IconButton>
+          {onClickNoteLink && (
+            <IconButton onClick={onClickNoteLink}>
+              <OpenIcon />
+            </IconButton>
+          )}
           <IconButton onClick={onClickDelete}>
             <DeleteIcon />
           </IconButton>

@@ -33,9 +33,13 @@ export const useWorkspaceTab = () => {
   const closeFavorites = useCallback(() => {
     close('favorites')
   }, [close])
+  const closeTrash = useCallback(() => {
+    close('trash')
+  }, [close])
   return {
     close,
     closeSearch,
     closeFavorites,
+    closeTrash,
   }
 }

@@ -7,7 +7,7 @@ import { FlexRow } from '../../atoms/layout/Flex'
 
 type FolderCardProps = {
   folder: Folder
-  onClickFolderLink: () => void
+  onClickFolderLink?: () => void
   onClickDelete: () => void
 }
 
@@ -17,9 +17,11 @@ export default function FolderCard({ folder, onClickFolderLink, onClickDelete }:
       header={<Label>{folder.name}</Label>}
       actions={
         <>
-          <IconButton onClick={onClickFolderLink}>
-            <OpenIcon />
-          </IconButton>
+          {onClickFolderLink && (
+            <IconButton onClick={onClickFolderLink}>
+              <OpenIcon />
+            </IconButton>
+          )}
           <IconButton onClick={onClickDelete}>
             <DeleteIcon />
           </IconButton>

@@ -49,6 +49,6 @@ export const favoriteNotesSelector = createSelector([noteListSelector], (notes) 
 export const deletedFoldersSelector = createSelector([noteSelector], (state) =>
   Object.values(state.folders).filter((folder) => folder.deletedAt !== undefined)
 )
-const deletedNotesSelector = createSelector([noteSelector], (state) =>
+export const deletedNotesSelector = createSelector([noteSelector], (state) =>
   Object.values(state.notes).filter((note) => note.deletedAt !== undefined)
 )
