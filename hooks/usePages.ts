@@ -18,6 +18,7 @@ export const useItemsPage = () => {
   const notesPage = useNotesPage()
   const searchPage = useSearchPage()
   const favoritesPage = useFavoritesPage()
+  const trashPage = useTrashPage()
 
   return useCallback(
     (id: string) => {
@@ -25,6 +26,8 @@ export const useItemsPage = () => {
         searchPage()
       } else if (id === 'favorites') {
         favoritesPage()
+      } else if (id === 'trash') {
+        trashPage()
       } else if (folders.find((folder) => folder.id === id)) {
         foldersPage(id)
       } else if (notes.find((note) => note.id === id)) {
@@ -77,6 +80,13 @@ export const useFavoritesPage = () => {
   const router = useRouter()
   return useCallback(() => {
     router.push(`/favorites`)
+  }, [])
+}
+
+export const useTrashPage = () => {
+  const router = useRouter()
+  return useCallback(() => {
+    router.push(`/trash`)
   }, [])
 }
 

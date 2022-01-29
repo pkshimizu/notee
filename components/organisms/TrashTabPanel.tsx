@@ -15,7 +15,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
   const notes = useSelector(deletedNotesSelector)
   const folderDeleteDialog = useFolderDeleteDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
-  
+
   return (
     <WorkspaceTabPanel menu={<TrashMenu />}>
       <FlexColumn pl={2} pr={2} pb={4}>
