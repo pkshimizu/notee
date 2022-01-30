@@ -137,31 +137,31 @@ export const updateNote = createAsyncAction<UpdateNoteParams, void>(
   }
 )
 
-type DeleteFolderParams = {
+type MoveFolderToTrashParams = {
   folder: Folder
 }
 
-export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
+export const moveFolderToTrash = createAsyncAction<MoveFolderToTrashParams, void>(
   'DeleteFolder',
   async (params, { noteRepository }, state, dispatch) => {
     const folder = params.folder
     if (state.session.currentUser) {
-      await noteRepository.deleteFolder(state.session.currentUser, folder)
-      dispatch(systemSlice.actions.message({ message: 'フォルダを削除しました' }))
+      await noteRepository.updateDeletedAtFolder(state.session.currentUser, folder)
+      dispatch(systemSlice.actions.message({ message: 'Moved folder to trash' }))
     }
   }
 )
 
-type DeleteNoteParams = {
+type MoveNoteToTrashParams = {
   note: Note
 }
 
-export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
-  'DeleteNote',
+export const moveNoteToTrash = createAsyncAction<MoveNoteToTrashParams, void>(
+  'MoveNoteToTrash',
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
-      await noteRepository.deleteNote(state.session.currentUser, params.note)
-      dispatch(systemSlice.actions.message({ message: 'ノートを削除しました' }))
+      await noteRepository.updateDeletedAtNote(state.session.currentUser, params.note)
+      dispatch(systemSlice.actions.message({ message: 'Moved note to trash' }))
     }
   }
 )

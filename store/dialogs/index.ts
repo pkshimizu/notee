@@ -3,18 +3,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type DialogsState = {
   folderCreate?: Folder
-  folderDelete?: Folder
+  folderMoveToTrash?: Folder
   folderMove?: Folder
-  noteDelete?: Note
+  noteMoveToTrash?: Note
   noteMove?: Note
   noteLog?: { note: Note; log: NoteLog }
 }
 
 export const dialogsInitialState: DialogsState = {
   folderCreate: undefined,
-  folderDelete: undefined,
+  folderMoveToTrash: undefined,
   folderMove: undefined,
-  noteDelete: undefined,
+  noteMoveToTrash: undefined,
   noteMove: undefined,
   noteLog: undefined,
 }
@@ -23,7 +23,7 @@ type OpenFolderSettingsDialogParams = {
   folder: Folder
 }
 
-type OpenFolderDeleteDialogParams = {
+type OpenFolderMoveToTrashDialogParams = {
   folder: Folder
 }
 
@@ -31,7 +31,7 @@ type OpenFolderMoveDialogParams = {
   folder: Folder
 }
 
-type OpenNoteDeleteDialogParams = {
+type OpenNoteMoveToTrashDialogParams = {
   note: Note
 }
 
@@ -56,13 +56,13 @@ const dialogsSlice = createSlice({
       ...state,
       folderCreate: undefined,
     }),
-    openFolderDeleteDialog: (state: DialogsState, action: PayloadAction<OpenFolderDeleteDialogParams>) => ({
+    openFolderMoveToTrashDialog: (state: DialogsState, action: PayloadAction<OpenFolderMoveToTrashDialogParams>) => ({
       ...state,
-      folderDelete: action.payload.folder,
+      folderMoveToTrash: action.payload.folder,
     }),
-    closeFolderDeleteDialog: (state: DialogsState) => ({
+    closeFolderMoveToTrashDialog: (state: DialogsState) => ({
       ...state,
-      folderDelete: undefined,
+      folderMoveToTrash: undefined,
     }),
     openFolderMoveDialog: (state: DialogsState, action: PayloadAction<OpenFolderMoveDialogParams>) => ({
       ...state,
@@ -72,13 +72,13 @@ const dialogsSlice = createSlice({
       ...state,
       folderMove: undefined,
     }),
-    openNoteDeleteDialog: (state: DialogsState, action: PayloadAction<OpenNoteDeleteDialogParams>) => ({
+    openNoteMoveToTrashDialog: (state: DialogsState, action: PayloadAction<OpenNoteMoveToTrashDialogParams>) => ({
       ...state,
-      noteDelete: action.payload.note,
+      noteMoveToTrash: action.payload.note,
     }),
-    closeNoteDeleteDialog: (state: DialogsState) => ({
+    closeNoteMoveToTrashDialog: (state: DialogsState) => ({
       ...state,
-      noteDelete: undefined,
+      noteMoveToTrash: undefined,
     }),
     openNoteMoveDialog: (state: DialogsState, action: PayloadAction<OpenNoteMoveDialogParams>) => ({
       ...state,

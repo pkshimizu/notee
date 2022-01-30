@@ -5,28 +5,28 @@ import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { deleteFolder, deleteNote } from '../../store/notes/actions'
+import { moveFolderToTrash, moveNoteToTrash } from '../../store/notes/actions'
 
-type FolderDeleteDialogProps = {
+type FolderMoveToTrashDialogProps = {
   open: boolean
   folder: Folder
   onClose: () => void
 }
 
-const deleteFolderItems = async (dispatch: Dispatch<any>, folder: Folder) => {
+const moveFolderItemsToTrash = async (dispatch: Dispatch<any>, folder: Folder) => {
   for (const subFolder of folder.folders) {
-    await deleteFolderItems(dispatch, subFolder)
+    await moveFolderItemsToTrash(dispatch, subFolder)
   }
   for (const note of folder.notes) {
-    await dispatch(deleteNote({ note: note }))
+    await dispatch(moveNoteToTrash({ note: note }))
   }
-  await dispatch(deleteFolder({ folder: folder }))
+  await dispatch(moveFolderToTrash({ folder: folder }))
 }
 
-export default function FolderDeleteDialog({ open, folder, onClose }: FolderDeleteDialogProps) {
+export default function FolderMoveToTrashDialog({ open, folder, onClose }: FolderMoveToTrashDialogProps) {
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await deleteFolderItems(dispatch, folder)
+    await moveFolderItemsToTrash(dispatch, folder)
     onClose()
   }, [dispatch, folder, onClose])
 

@@ -4,7 +4,7 @@ import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
-import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import { useState } from 'react'
 import FolderPropertiesPanel from './FolderPropertiesPanel'
@@ -19,8 +19,8 @@ type FolderTabPanelProps = {
 
 export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const [propertiesPanel, setPropertiesPanel] = useState(false)
-  const folderDeleteDialog = useFolderDeleteDialog()
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
   const folders = useSelector(foldersSelector)
@@ -43,7 +43,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                   folder={folder}
                   key={folder.id}
                   onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickDelete={() => folderDeleteDialog.open(folder)}
+                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
                 />
               ))}
             </FlexRow>
@@ -60,7 +60,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                   note={note}
                   key={note.id}
                   onClickNoteLink={() => openNotePage(note.id)}
-                  onClickDelete={() => noteDeleteDialog.open(note)}
+                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
                 />
               ))}
             </FlexRow>

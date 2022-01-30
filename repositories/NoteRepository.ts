@@ -232,17 +232,17 @@ export default class NoteRepository {
       logs: logs,
     }
   }
-  deleteFolder(user: User, folder: Folder) {
+  updateDeletedAtFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersCollection = collection(userDoc, 'folders')
     return updateDoc(doc(foldersCollection, folder.id), {
       deletedAt: dayjs().toISOString(),
     })
   }
-  async deleteNote(user: User, note: Note) {
+  updateDeletedAtNote(user: User, note: Note) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
-    await updateDoc(doc(notesCollection, note.id), {
+    return updateDoc(doc(notesCollection, note.id), {
       deletedAt: dayjs().toISOString(),
     })
   }

@@ -1,20 +1,20 @@
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import { useSelector } from 'react-redux'
-import { deletedFoldersSelector, deletedNotesSelector } from '../../store/notes/selectors'
+import { trashFoldersSelector, trashNotesSelector } from '../../store/notes/selectors'
 import Label from '../atoms/display/Label'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import TrashMenu from './TrashMenu'
-import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 
 type TrashTabPanelProps = {}
 
 export default function TrashTabPanel({}: TrashTabPanelProps) {
-  const folders = useSelector(deletedFoldersSelector)
-  const notes = useSelector(deletedNotesSelector)
-  const folderDeleteDialog = useFolderDeleteDialog()
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const folders = useSelector(trashFoldersSelector)
+  const notes = useSelector(trashNotesSelector)
+  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
 
   return (
     <WorkspaceTabPanel menu={<TrashMenu />}>
@@ -26,7 +26,11 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
             </FlexRow>
             <FlexRow>
               {folders.map((folder) => (
-                <FolderCard folder={folder} key={folder.id} onClickDelete={() => folderDeleteDialog.open(folder)} />
+                <FolderCard
+                  folder={folder}
+                  key={folder.id}
+                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
+                />
               ))}
             </FlexRow>
           </>
@@ -38,7 +42,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
             </FlexRow>
             <FlexRow>
               {notes.map((note) => (
-                <NoteCard note={note} key={note.id} onClickDelete={() => noteDeleteDialog.open(note)} />
+                <NoteCard note={note} key={note.id} onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)} />
               ))}
             </FlexRow>
           </>

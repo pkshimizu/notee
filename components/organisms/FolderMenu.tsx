@@ -14,7 +14,7 @@ import {
   FavoriteIcon,
   FavoriteOutlinedIcon,
 } from '../atoms/display/Icons'
-import { useFolderDeleteDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
+import { useFolderMoveToTrashDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
 import { createNote, favorite, unFavorite } from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
@@ -25,7 +25,7 @@ type FolderMenuProps = {
 
 export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps) {
   const folderCreateDialog = useFolderCreateDialog()
-  const folderDeleteDialog = useFolderDeleteDialog()
+  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const folderMoveDialog = useFolderMoveDialog()
   const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
@@ -61,7 +61,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
               <IconButton onClick={() => folderMoveDialog.open(folder)}>
                 <MoveIcon color={'white'} />
               </IconButton>
-              <IconButton onClick={() => folderDeleteDialog.open(folder)}>
+              <IconButton onClick={() => folderMoveToTrashDialog.open(folder)}>
                 <DeleteIcon color={'white'} />
               </IconButton>
             </>

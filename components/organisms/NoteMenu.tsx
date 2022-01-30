@@ -12,7 +12,7 @@ import {
   SidebarIcon,
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
-import { useNoteDeleteDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
+import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
 import { favorite, unFavorite } from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
@@ -22,7 +22,7 @@ type NoteMenuProps = {
 }
 
 export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
   const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
@@ -47,7 +47,7 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
           <IconButton onClick={() => noteMoveDialog.open(note)}>
             <MoveIcon color={'white'} />
           </IconButton>
-          <IconButton onClick={() => noteDeleteDialog.open(note)}>
+          <IconButton onClick={() => noteMoveToTrashDialog.open(note)}>
             <DeleteIcon color={'white'} />
           </IconButton>
         </FlexRow>

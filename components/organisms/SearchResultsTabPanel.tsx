@@ -3,7 +3,7 @@ import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useNotesPage } from '../../hooks/usePages'
-import { useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import SearchResultsMenu from './SearchResultsMenu'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { useSelector } from 'react-redux'
@@ -13,7 +13,7 @@ type SearchResultsTabPanelProps = {}
 export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
   const notes = useSelector(searchResultNotesSelector)
   const openNotePage = useNotesPage()
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
 
   return (
     <WorkspaceTabPanel menu={<SearchResultsMenu />}>
@@ -27,7 +27,7 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
               note={note}
               key={note.id}
               onClickNoteLink={() => openNotePage(note.id)}
-              onClickDelete={() => noteDeleteDialog.open(note)}
+              onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
             />
           ))}
         </FlexRow>

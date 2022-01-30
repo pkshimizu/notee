@@ -1,10 +1,10 @@
 import FolderCreateDialog from '../organisms/FolderCreateDialog'
-import FolderDeleteDialog from '../organisms/FolderDeleteDialog'
-import NoteDeleteDialog from '../organisms/NoteDeleteDialog'
+import FolderMoveToTrashDialog from '../organisms/FolderMoveToTrashDialog'
+import NoteMoveToTrashDialog from '../organisms/NoteMoveToTrashDialog'
 import {
-  useFolderDeleteDialog,
+  useFolderMoveToTrashDialog,
   useFolderCreateDialog,
-  useNoteDeleteDialog,
+  useNoteMoveToTrashDialog,
   useNoteLogDialog,
   useFolderMoveDialog,
   useNoteMoveDialog,
@@ -15,9 +15,9 @@ import NoteMoveDialog from '../organisms/NoteMoveDialog'
 
 export default function DialogProvider() {
   const folderSettingsDialog = useFolderCreateDialog()
-  const folderDeleteDialog = useFolderDeleteDialog()
+  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const folderMoveDialog = useFolderMoveDialog()
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
   const noteLogDialog = useNoteLogDialog()
 
@@ -30,11 +30,11 @@ export default function DialogProvider() {
           onClose={folderSettingsDialog.close}
         />
       )}
-      {folderDeleteDialog.folder && (
-        <FolderDeleteDialog
-          open={folderDeleteDialog.state}
-          folder={folderDeleteDialog.folder}
-          onClose={folderDeleteDialog.close}
+      {folderMoveToTrashDialog.folder && (
+        <FolderMoveToTrashDialog
+          open={folderMoveToTrashDialog.state}
+          folder={folderMoveToTrashDialog.folder}
+          onClose={folderMoveToTrashDialog.close}
         />
       )}
       {folderMoveDialog.folder && (
@@ -44,8 +44,12 @@ export default function DialogProvider() {
           onClose={folderMoveDialog.close}
         />
       )}
-      {noteDeleteDialog.note && (
-        <NoteDeleteDialog open={noteDeleteDialog.state} note={noteDeleteDialog.note} onClose={noteDeleteDialog.close} />
+      {noteMoveToTrashDialog.note && (
+        <NoteMoveToTrashDialog
+          open={noteMoveToTrashDialog.state}
+          note={noteMoveToTrashDialog.note}
+          onClose={noteMoveToTrashDialog.close}
+        />
       )}
       {noteMoveDialog.note && (
         <NoteMoveDialog open={noteMoveDialog.state} note={noteMoveDialog.note} onClose={noteMoveDialog.close} />

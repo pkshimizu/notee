@@ -5,7 +5,7 @@ import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useSelector } from 'react-redux'
 import { favoriteFoldersSelector, favoriteNotesSelector } from '../../store/notes/selectors'
-import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
 
@@ -14,8 +14,8 @@ type FavoritesTabPanelProps = {}
 export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
   const folders = useSelector(favoriteFoldersSelector)
   const notes = useSelector(favoriteNotesSelector)
-  const folderDeleteDialog = useFolderDeleteDialog()
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
 
@@ -33,7 +33,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                   folder={folder}
                   key={folder.id}
                   onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickDelete={() => folderDeleteDialog.open(folder)}
+                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
                 />
               ))}
             </FlexRow>
@@ -50,7 +50,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                   note={note}
                   key={note.id}
                   onClickNoteLink={() => openNotePage(note.id)}
-                  onClickDelete={() => noteDeleteDialog.open(note)}
+                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
                 />
               ))}
             </FlexRow>
