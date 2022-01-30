@@ -21,13 +21,13 @@ export default function NoteDeleteDialog({ open, note, onClose }: NoteDeleteDial
   }, [dispatch, note, onClose])
 
   return (
-    <ConfirmDialog open={open} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={'Move To Trash'} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
           <Label>{note.title}</Label>
         </FlexRow>
-        <Label>このノートを削除しますか？</Label>
+        <Label>Do you want to move this note to Trash?</Label>
       </FlexColumn>
     </ConfirmDialog>
   )

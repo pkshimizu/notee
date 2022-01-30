@@ -31,13 +31,14 @@ export default function FolderDeleteDialog({ open, folder, onClose }: FolderDele
   }, [dispatch, folder, onClose])
 
   return (
-    <ConfirmDialog open={open} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={'Move To Trash'} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
           <Label>{folder.name}</Label>
         </FlexRow>
-        <Label>このフォルダーを削除しますか？</Label>
+        <Label>Do you want to move this folder to Trash?</Label>
+        <Label>Items in folder will also be moved to Trash.</Label>
       </FlexColumn>
     </ConfirmDialog>
   )
