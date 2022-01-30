@@ -2,16 +2,17 @@ import { Folder } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import Label from '../../atoms/display/Label'
 import IconButton from '../../atoms/inputs/IconButton'
-import { DeleteIcon, OpenIcon } from '../../atoms/display/Icons'
+import { DeleteIcon, OpenIcon, RestoreIcon } from '../../atoms/display/Icons'
 import { FlexRow } from '../../atoms/layout/Flex'
 
 type FolderCardProps = {
   folder: Folder
   onClickFolderLink?: () => void
   onClickMoveToTrash: () => void
+  onClickRestore?: () => void
 }
 
-export default function FolderCard({ folder, onClickFolderLink, onClickMoveToTrash }: FolderCardProps) {
+export default function FolderCard({ folder, onClickFolderLink, onClickMoveToTrash, onClickRestore }: FolderCardProps) {
   return (
     <Card
       header={<Label>{folder.name}</Label>}
@@ -25,6 +26,11 @@ export default function FolderCard({ folder, onClickFolderLink, onClickMoveToTra
           <IconButton onClick={onClickMoveToTrash}>
             <DeleteIcon />
           </IconButton>
+          {onClickRestore && (
+            <IconButton onClick={onClickRestore}>
+              <RestoreIcon />
+            </IconButton>
+          )}
         </>
       }
     >

@@ -15,6 +15,7 @@ import {
   NavigateNext,
   NoteAdd,
   OpenInNew,
+  RestoreFromTrash,
   Search,
   Settings,
   Star,
@@ -118,6 +119,10 @@ export function OpenIcon(props: IconProps) {
 
 export function PrevIcon(props: IconProps) {
   return <Icon {...props} icon={NavigateBefore} />
+}
+
+export function RestoreIcon(props: IconProps) {
+  return <Icon {...props} icon={RestoreFromTrash} />
 }
 
 export function SettingsIcon(props: IconProps) {

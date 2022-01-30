@@ -1,7 +1,7 @@
 import { Note } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import IconButton from '../../atoms/inputs/IconButton'
-import { DeleteIcon, OpenIcon } from '../../atoms/display/Icons'
+import { DeleteIcon, OpenIcon, RestoreIcon } from '../../atoms/display/Icons'
 import NoteTitleLabel from '../display/NoteTitleLabel'
 import DateTimeLabel from '../display/DateTimeLabel'
 import { FlexColumn, FlexRow } from '../../atoms/layout/Flex'
@@ -11,9 +11,10 @@ type NoteCardProps = {
   note: Note
   onClickNoteLink?: () => void
   onClickMoveToTrash: () => void
+  onClickRestore?: () => void
 }
 
-export default function NoteCard({ note, onClickNoteLink, onClickMoveToTrash }: NoteCardProps) {
+export default function NoteCard({ note, onClickNoteLink, onClickMoveToTrash, onClickRestore }: NoteCardProps) {
   return (
     <Card
       header={<NoteTitleLabel note={note} />}
@@ -27,6 +28,11 @@ export default function NoteCard({ note, onClickNoteLink, onClickMoveToTrash }: 
           <IconButton onClick={onClickMoveToTrash}>
             <DeleteIcon />
           </IconButton>
+          {onClickRestore && (
+            <IconButton onClick={onClickRestore}>
+              <RestoreIcon />
+            </IconButton>
+          )}
         </>
       }
     >

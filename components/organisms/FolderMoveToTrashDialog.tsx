@@ -13,14 +13,16 @@ type FolderMoveToTrashDialogProps = {
   onClose: () => void
 }
 
-const moveFolderItemsToTrash = async (dispatch: Dispatch<any>, folder: Folder) => {
-  for (const subFolder of folder.folders) {
-    await moveFolderItemsToTrash(dispatch, subFolder)
-  }
-  for (const note of folder.notes) {
-    await dispatch(moveNoteToTrash({ note: note }))
-  }
-  await dispatch(moveFolderToTrash({ folder: folder }))
+const moveFolderItemsToTrash = (dispatch: Dispatch<any>, folder: Folder) => {
+  folder.folders.forEach((subFolder) => moveFolderItemsToTrash(dispatch, subFolder))
+  folder.notes.forEach((note) => dispatch(moveNoteToTrash({ note: note })))
+  // for (const subFolder of folder.folders) {
+  //   await moveFolderItemsToTrash(dispatch, subFolder)
+  // }
+  // for (const note of folder.notes) {
+  //   await dispatch(moveNoteToTrash({ note: note }))
+  // }
+  dispatch(moveFolderToTrash({ folder: folder }))
 }
 
 export default function FolderMoveToTrashDialog({ open, folder, onClose }: FolderMoveToTrashDialogProps) {

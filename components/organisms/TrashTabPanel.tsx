@@ -1,20 +1,42 @@
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { trashFoldersSelector, trashNotesSelector } from '../../store/notes/selectors'
 import Label from '../atoms/display/Label'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import TrashMenu from './TrashMenu'
 import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
+import { Dispatch, useCallback } from 'react'
+import { restore } from '../../store/notes/actions'
+import { Folder, Note } from '../../store/notes/models'
 
 type TrashTabPanelProps = {}
+
+const restoreFolder = (dispatch: Dispatch<any>, folder: Folder) => {
+  folder.folders.forEach((subFolder) => restoreFolder(dispatch, subFolder))
+  folder.notes.forEach((note) => dispatch(restore({ note: note })))
+  dispatch(restore({ folder: folder }))
+}
 
 export default function TrashTabPanel({}: TrashTabPanelProps) {
   const folders = useSelector(trashFoldersSelector)
   const notes = useSelector(trashNotesSelector)
   const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
+  const dispatch = useDispatch()
+  const handleRestoreFolder = useCallback(
+    (folder: Folder) => {
+      restoreFolder(dispatch, folder)
+    },
+    [dispatch]
+  )
+  const handleRestoreNote = useCallback(
+    (note: Note) => {
+      dispatch(restore({ note: note }))
+    },
+    [dispatch]
+  )
 
   return (
     <WorkspaceTabPanel menu={<TrashMenu />}>
@@ -30,6 +52,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
                   folder={folder}
                   key={folder.id}
                   onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
+                  onClickRestore={() => handleRestoreFolder(folder)}
                 />
               ))}
             </FlexRow>
@@ -42,7 +65,12 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
             </FlexRow>
             <FlexRow>
               {notes.map((note) => (
-                <NoteCard note={note} key={note.id} onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)} />
+                <NoteCard
+                  note={note}
+                  key={note.id}
+                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
+                  onClickRestore={() => handleRestoreNote(note)}
+                />
               ))}
             </FlexRow>
           </>

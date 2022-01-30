@@ -33,7 +33,7 @@ const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
     favorite: doc.data().favorite,
     folders: [],
     notes: [],
-    deletedAt: doc.data().deletedAt,
+    deletedAt: doc.data().deletedAt ?? undefined,
   }
 }
 const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
@@ -49,7 +49,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
     contentType: data.contentType ?? 'markdown',
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
-    deletedAt: data.deletedAt,
+    deletedAt: data.deletedAt ?? undefined,
   }
 }
 
@@ -244,6 +244,20 @@ export default class NoteRepository {
     const notesCollection = collection(userDoc, 'notes')
     return updateDoc(doc(notesCollection, note.id), {
       deletedAt: dayjs().toISOString(),
+    })
+  }
+  resetDeletedAtFolder(user: User, folder: Folder) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const foldersCollection = collection(userDoc, 'folders')
+    return updateDoc(doc(foldersCollection, folder.id), {
+      deletedAt: null,
+    })
+  }
+  resetDeletedAtNote(user: User, note: Note) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const notesCollection = collection(userDoc, 'notes')
+    return updateDoc(doc(notesCollection, note.id), {
+      deletedAt: null,
     })
   }
 }

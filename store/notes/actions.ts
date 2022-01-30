@@ -192,7 +192,7 @@ type UnFavoriteParams = {
   note?: Note
 }
 
-export const unFavorite = createAsyncAction<FavoriteParams, void>(
+export const unFavorite = createAsyncAction<UnFavoriteParams, void>(
   'UnFavorite',
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
@@ -203,6 +203,27 @@ export const unFavorite = createAsyncAction<FavoriteParams, void>(
       if (params.note) {
         await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: false })
         dispatch(systemSlice.actions.message({ message: `ノートをお気に入りから外しました` }))
+      }
+    }
+  }
+)
+
+type RestoreParams = {
+  folder?: Folder
+  note?: Note
+}
+
+export const restore = createAsyncAction<RestoreParams, void>(
+  'restore',
+  async (params, { noteRepository }, state, dispatch) => {
+    if (state.session.currentUser) {
+      if (params.folder) {
+        await noteRepository.resetDeletedAtFolder(state.session.currentUser, params.folder)
+        dispatch(systemSlice.actions.message({ message: `${params.folder.name} has been restored` }))
+      }
+      if (params.note) {
+        await noteRepository.resetDeletedAtNote(state.session.currentUser, params.note)
+        dispatch(systemSlice.actions.message({ message: `${params.note.title} has been restored` }))
       }
     }
   }

@@ -1,7 +1,7 @@
 import sortBy from 'lodash/sortBy'
 import { StoreState } from '../index'
 import { createSelector } from '@reduxjs/toolkit'
-import { Folder, Note } from '../notes/models'
+import { Folder, Note } from './models'
 
 function sortFolders(folders: Folder[]): Folder[] {
   return sortBy(folders, 'name')
@@ -46,9 +46,17 @@ export const favoriteFoldersSelector = createSelector([folderListSelector], (fol
 export const favoriteNotesSelector = createSelector([noteListSelector], (notes) =>
   notes.filter((note) => note.favorite)
 )
-export const trashFoldersSelector = createSelector([noteSelector], (state) =>
+const deletedFoldersSelector = createSelector([noteSelector], (state) =>
   Object.values(state.folders).filter((folder) => folder.deletedAt !== undefined)
 )
-export const trashNotesSelector = createSelector([noteSelector], (state) =>
+const deletedNotesSelector = createSelector([noteSelector], (state) =>
   Object.values(state.notes).filter((note) => note.deletedAt !== undefined)
 )
+export const trashFoldersSelector = createSelector([deletedFoldersSelector, deletedNotesSelector], (folders, notes) => {
+  const folderIds = folders.map((folder) => folder.id)
+  return buildFolders(folders, notes).filter((folder) => !folderIds.includes(folder.folderId ?? ''))
+})
+export const trashNotesSelector = createSelector([deletedFoldersSelector, deletedNotesSelector], (folders, notes) => {
+  const folderIds = folders.map((folder) => folder.id)
+  return notes.filter((note) => !folderIds.includes(note.folderId))
+})
