@@ -16,14 +16,21 @@ export default function FolderMoveDialog({ open, folder, onClose }: FolderMoveDi
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (id: string) => {
-      if (folder.id !== id) {
-        dispatch(updateFolder({ folder, folderId: id }))
-      }
+      dispatch(updateFolder({ folder, folderId: id }))
     },
     [dispatch, folder]
   )
   if (root) {
-    return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
+    return (
+      <FolderSelectDialog
+        title={'Move To'}
+        open={open}
+        root={root}
+        targetFolder={folder}
+        onClose={onClose}
+        onSelect={handleSelect}
+      />
+    )
   }
 
   return <></>

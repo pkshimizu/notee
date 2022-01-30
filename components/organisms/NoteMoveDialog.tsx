@@ -16,14 +16,12 @@ export default function NoteMoveDialog({ open, note, onClose }: NoteMoveDialogPr
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (id: string) => {
-      if (note.id !== id) {
-        dispatch(updateNote({ note, folderId: id }))
-      }
+      dispatch(updateNote({ note, folderId: id }))
     },
     [dispatch, note]
   )
   if (root) {
-    return <FolderSelectDialog open={open} root={root} onClose={onClose} onSelect={handleSelect} />
+    return <FolderSelectDialog title={'Move To'} open={open} root={root} onClose={onClose} onSelect={handleSelect} />
   }
 
   return <></>
