@@ -9,10 +9,10 @@ import Label from '../../atoms/display/Label'
 
 type NoteCardProps = {
   note: Note
-  onClickNoteLink?: (note: Note) => void
-  onClickMoveToTrash?: (note: Note) => void
-  onClickRestore?: (note: Note) => void
-  onClickDelete?: (note: Note) => void
+  onClickNoteLink?: (_note: Note) => void
+  onClickMoveToTrash?: (_note: Note) => void
+  onClickRestore?: (_note: Note) => void
+  onClickDelete?: (_note: Note) => void
 }
 
 export default function NoteCard({

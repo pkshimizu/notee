@@ -7,10 +7,10 @@ import { FlexRow } from '../../atoms/layout/Flex'
 
 type FolderCardProps = {
   folder: Folder
-  onClickFolderLink?: (folder: Folder) => void
-  onClickMoveToTrash?: (folder: Folder) => void
-  onClickRestore?: (folder: Folder) => void
-  onClickDelete?: (folder: Folder) => void
+  onClickFolderLink?: (_folder: Folder) => void
+  onClickMoveToTrash?: (_folder: Folder) => void
+  onClickRestore?: (_folder: Folder) => void
+  onClickDelete?: (_folder: Folder) => void
 }
 
 export default function FolderCard({
