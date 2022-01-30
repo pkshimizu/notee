@@ -8,6 +8,8 @@ export type DialogsState = {
   noteMoveToTrash?: Note
   noteMove?: Note
   noteLog?: { note: Note; log: NoteLog }
+  folderDelete?: Folder
+  noteDelete?: Note
 }
 
 export const dialogsInitialState: DialogsState = {
@@ -42,6 +44,14 @@ type OpenNoteMoveDialogParams = {
 type OpenNoteLogDialogParams = {
   note: Note
   log: NoteLog
+}
+
+type OpenFolderDeleteDialogParams = {
+  folder: Folder
+}
+
+type OpenNoteDeleteDialogParams = {
+  note: Note
 }
 
 const dialogsSlice = createSlice({
@@ -95,6 +105,22 @@ const dialogsSlice = createSlice({
     closeNoteLogDialog: (state: DialogsState) => ({
       ...state,
       noteLog: undefined,
+    }),
+    openFolderDeleteDialog: (state: DialogsState, action: PayloadAction<OpenFolderDeleteDialogParams>) => ({
+      ...state,
+      folderDelete: action.payload.folder,
+    }),
+    closeFolderDeleteDialog: (state: DialogsState) => ({
+      ...state,
+      folderDelete: undefined,
+    }),
+    openNoteDeleteDialog: (state: DialogsState, action: PayloadAction<OpenNoteDeleteDialogParams>) => ({
+      ...state,
+      noteDelete: action.payload.note,
+    }),
+    closeNoteDeleteDialog: (state: DialogsState) => ({
+      ...state,
+      noteDelete: undefined,
     }),
   },
 })

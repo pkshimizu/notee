@@ -1,6 +1,6 @@
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import SearchField from '../molecules/inputs/SearchField'
-import { DeleteIcon, FavoriteIcon } from '../atoms/display/Icons'
+import { TrashIcon, FavoriteIcon } from '../atoms/display/Icons'
 import NoteTree from './NoteTree'
 import { useItemsPage } from '../../hooks/usePages'
 import { useSelector } from 'react-redux'
@@ -33,7 +33,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
       </Link>
       <Link href={`/trash`}>
         <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
-          <DeleteIcon />
+          <TrashIcon />
           Trash
         </FlexRow>
       </Link>

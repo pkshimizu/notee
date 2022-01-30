@@ -6,10 +6,10 @@ import Label from '../atoms/display/Label'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import TrashMenu from './TrashMenu'
-import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { Dispatch, useCallback } from 'react'
 import { restore } from '../../store/notes/actions'
 import { Folder, Note } from '../../store/notes/models'
+import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
 
 type TrashTabPanelProps = {}
 
@@ -22,8 +22,8 @@ const restoreFolder = (dispatch: Dispatch<any>, folder: Folder) => {
 export default function TrashTabPanel({}: TrashTabPanelProps) {
   const folders = useSelector(trashFoldersSelector)
   const notes = useSelector(trashNotesSelector)
-  const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
-  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
+  const folderDeleteDialog = useFolderDeleteDialog()
+  const noteDeleteDialog = useNoteDeleteDialog()
   const dispatch = useDispatch()
   const handleRestoreFolder = useCallback(
     (folder: Folder) => {
@@ -51,8 +51,8 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
                 <FolderCard
                   folder={folder}
                   key={folder.id}
-                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
-                  onClickRestore={() => handleRestoreFolder(folder)}
+                  onClickRestore={handleRestoreFolder}
+                  onClickDelete={folderDeleteDialog.open}
                 />
               ))}
             </FlexRow>
@@ -68,8 +68,8 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
                 <NoteCard
                   note={note}
                   key={note.id}
-                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
-                  onClickRestore={() => handleRestoreNote(note)}
+                  onClickRestore={handleRestoreNote}
+                  onClickDelete={noteDeleteDialog.open}
                 />
               ))}
             </FlexRow>

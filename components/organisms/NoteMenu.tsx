@@ -3,14 +3,7 @@ import IconButton from '../atoms/inputs/IconButton'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import AppBar from '../atoms/surfaces/AppBar'
-import {
-  CloseIcon,
-  DeleteIcon,
-  FavoriteIcon,
-  FavoriteOutlinedIcon,
-  MoveIcon,
-  SidebarIcon,
-} from '../atoms/display/Icons'
+import { CloseIcon, TrashIcon, FavoriteIcon, FavoriteOutlinedIcon, MoveIcon, SidebarIcon } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
 import { favorite, unFavorite } from '../../store/notes/actions'
@@ -48,7 +41,7 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
             <MoveIcon color={'white'} />
           </IconButton>
           <IconButton onClick={() => noteMoveToTrashDialog.open(note)}>
-            <DeleteIcon color={'white'} />
+            <TrashIcon color={'white'} />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>

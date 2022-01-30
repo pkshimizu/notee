@@ -4,6 +4,7 @@ import {
   Close,
   CreateNewFolder,
   Delete,
+  DeleteForever,
   DriveFileMove,
   Folder,
   GitHub,
@@ -62,7 +63,7 @@ export function CreateNoteIcon(props: IconProps) {
 }
 
 export function DeleteIcon(props: IconProps) {
-  return <Icon {...props} icon={Delete} />
+  return <Icon {...props} icon={DeleteForever} />
 }
 
 export function FavoriteIcon(props: IconProps) {
@@ -135,4 +136,8 @@ export function SidebarIcon(props: IconProps) {
 
 export function SearchIcon(props: IconProps) {
   return <Icon {...props} icon={Search} />
+}
+
+export function TrashIcon(props: IconProps) {
+  return <Icon {...props} icon={Delete} />
 }

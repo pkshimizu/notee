@@ -32,8 +32,8 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                 <FolderCard
                   folder={folder}
                   key={folder.id}
-                  onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
+                  onClickFolderLink={(folder) => openFolderPage(folder.id)}
+                  onClickMoveToTrash={folderMoveToTrashDialog.open}
                 />
               ))}
             </FlexRow>
@@ -50,7 +50,7 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
                   note={note}
                   key={note.id}
                   onClickNoteLink={() => openNotePage(note.id)}
-                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
+                  onClickMoveToTrash={noteMoveToTrashDialog.open}
                 />
               ))}
             </FlexRow>

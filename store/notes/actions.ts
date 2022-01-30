@@ -142,7 +142,7 @@ type MoveFolderToTrashParams = {
 }
 
 export const moveFolderToTrash = createAsyncAction<MoveFolderToTrashParams, void>(
-  'DeleteFolder',
+  'moveFolderToTrash',
   async (params, { noteRepository }, state, dispatch) => {
     const folder = params.folder
     if (state.session.currentUser) {
@@ -225,6 +225,35 @@ export const restore = createAsyncAction<RestoreParams, void>(
         await noteRepository.resetDeletedAtNote(state.session.currentUser, params.note)
         dispatch(systemSlice.actions.message({ message: `${params.note.title} has been restored` }))
       }
+    }
+  }
+)
+
+type DeleteFolderParams = {
+  folder: Folder
+}
+
+export const deleteFolder = createAsyncAction<DeleteFolderParams, void>(
+  'deleteFolder',
+  async (params, { noteRepository }, state, dispatch) => {
+    const folder = params.folder
+    if (state.session.currentUser) {
+      await noteRepository.deleteFolder(state.session.currentUser, folder)
+      dispatch(systemSlice.actions.message({ message: 'Deleted folder' }))
+    }
+  }
+)
+
+type DeleteNoteParams = {
+  note: Note
+}
+
+export const deleteNote = createAsyncAction<DeleteNoteParams, void>(
+  'DeleteNote',
+  async (params, { noteRepository }, state, dispatch) => {
+    if (state.session.currentUser) {
+      await noteRepository.deleteNote(state.session.currentUser, params.note)
+      dispatch(systemSlice.actions.message({ message: 'Deleted note' }))
     }
   }
 )

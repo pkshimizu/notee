@@ -1,7 +1,7 @@
 import { Note } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import IconButton from '../../atoms/inputs/IconButton'
-import { DeleteIcon, OpenIcon, RestoreIcon } from '../../atoms/display/Icons'
+import { TrashIcon, OpenIcon, RestoreIcon, DeleteIcon } from '../../atoms/display/Icons'
 import NoteTitleLabel from '../display/NoteTitleLabel'
 import DateTimeLabel from '../display/DateTimeLabel'
 import { FlexColumn, FlexRow } from '../../atoms/layout/Flex'
@@ -9,28 +9,42 @@ import Label from '../../atoms/display/Label'
 
 type NoteCardProps = {
   note: Note
-  onClickNoteLink?: () => void
-  onClickMoveToTrash: () => void
-  onClickRestore?: () => void
+  onClickNoteLink?: (note: Note) => void
+  onClickMoveToTrash?: (note: Note) => void
+  onClickRestore?: (note: Note) => void
+  onClickDelete?: (note: Note) => void
 }
 
-export default function NoteCard({ note, onClickNoteLink, onClickMoveToTrash, onClickRestore }: NoteCardProps) {
+export default function NoteCard({
+  note,
+  onClickNoteLink,
+  onClickMoveToTrash,
+  onClickRestore,
+  onClickDelete,
+}: NoteCardProps) {
   return (
     <Card
       header={<NoteTitleLabel note={note} />}
       actions={
         <>
           {onClickNoteLink && (
-            <IconButton onClick={onClickNoteLink}>
+            <IconButton onClick={() => onClickNoteLink(note)}>
               <OpenIcon />
             </IconButton>
           )}
-          <IconButton onClick={onClickMoveToTrash}>
-            <DeleteIcon />
-          </IconButton>
+          {onClickMoveToTrash && (
+            <IconButton onClick={() => onClickMoveToTrash(note)}>
+              <TrashIcon />
+            </IconButton>
+          )}
           {onClickRestore && (
-            <IconButton onClick={onClickRestore}>
+            <IconButton onClick={() => onClickRestore(note)}>
               <RestoreIcon />
+            </IconButton>
+          )}
+          {onClickDelete && (
+            <IconButton onClick={() => onClickDelete(note)}>
+              <DeleteIcon />
             </IconButton>
           )}
         </>

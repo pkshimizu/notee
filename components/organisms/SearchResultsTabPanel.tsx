@@ -27,7 +27,7 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
               note={note}
               key={note.id}
               onClickNoteLink={() => openNotePage(note.id)}
-              onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
+              onClickMoveToTrash={noteMoveToTrashDialog.open}
             />
           ))}
         </FlexRow>

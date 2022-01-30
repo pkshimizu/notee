@@ -43,7 +43,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                   folder={folder}
                   key={folder.id}
                   onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickMoveToTrash={() => folderMoveToTrashDialog.open(folder)}
+                  onClickMoveToTrash={folderMoveToTrashDialog.open}
                 />
               ))}
             </FlexRow>
@@ -60,7 +60,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
                   note={note}
                   key={note.id}
                   onClickNoteLink={() => openNotePage(note.id)}
-                  onClickMoveToTrash={() => noteMoveToTrashDialog.open(note)}
+                  onClickMoveToTrash={noteMoveToTrashDialog.open}
                 />
               ))}
             </FlexRow>

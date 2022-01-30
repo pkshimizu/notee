@@ -2,6 +2,7 @@ import { firestore } from './firebase'
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   getDocs,
@@ -259,5 +260,15 @@ export default class NoteRepository {
     return updateDoc(doc(notesCollection, note.id), {
       deletedAt: null,
     })
+  }
+  deleteFolder(user: User, folder: Folder) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const foldersCollection = collection(userDoc, 'folders')
+    return deleteDoc(doc(foldersCollection, folder.id))
+  }
+  deleteNote(user: User, note: Note) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const notesCollection = collection(userDoc, 'notes')
+    return deleteDoc(doc(notesCollection, note.id))
   }
 }

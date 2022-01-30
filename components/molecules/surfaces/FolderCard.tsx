@@ -2,33 +2,47 @@ import { Folder } from '../../../store/notes/models'
 import Card from '../../atoms/surfaces/Card'
 import Label from '../../atoms/display/Label'
 import IconButton from '../../atoms/inputs/IconButton'
-import { DeleteIcon, OpenIcon, RestoreIcon } from '../../atoms/display/Icons'
+import { TrashIcon, OpenIcon, RestoreIcon, DeleteIcon } from '../../atoms/display/Icons'
 import { FlexRow } from '../../atoms/layout/Flex'
 
 type FolderCardProps = {
   folder: Folder
-  onClickFolderLink?: () => void
-  onClickMoveToTrash: () => void
-  onClickRestore?: () => void
+  onClickFolderLink?: (folder: Folder) => void
+  onClickMoveToTrash?: (folder: Folder) => void
+  onClickRestore?: (folder: Folder) => void
+  onClickDelete?: (folder: Folder) => void
 }
 
-export default function FolderCard({ folder, onClickFolderLink, onClickMoveToTrash, onClickRestore }: FolderCardProps) {
+export default function FolderCard({
+  folder,
+  onClickFolderLink,
+  onClickMoveToTrash,
+  onClickRestore,
+  onClickDelete,
+}: FolderCardProps) {
   return (
     <Card
       header={<Label>{folder.name}</Label>}
       actions={
         <>
           {onClickFolderLink && (
-            <IconButton onClick={onClickFolderLink}>
+            <IconButton onClick={() => onClickFolderLink(folder)}>
               <OpenIcon />
             </IconButton>
           )}
-          <IconButton onClick={onClickMoveToTrash}>
-            <DeleteIcon />
-          </IconButton>
+          {onClickMoveToTrash && (
+            <IconButton onClick={() => onClickMoveToTrash(folder)}>
+              <TrashIcon />
+            </IconButton>
+          )}
           {onClickRestore && (
-            <IconButton onClick={onClickRestore}>
+            <IconButton onClick={() => onClickRestore(folder)}>
               <RestoreIcon />
+            </IconButton>
+          )}
+          {onClickDelete && (
+            <IconButton onClick={() => onClickDelete(folder)}>
+              <DeleteIcon />
             </IconButton>
           )}
         </>

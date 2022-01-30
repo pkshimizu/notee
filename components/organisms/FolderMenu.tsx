@@ -7,7 +7,7 @@ import AppBar from '../atoms/surfaces/AppBar'
 import {
   CreateFolderIcon,
   CreateNoteIcon,
-  DeleteIcon,
+  TrashIcon,
   CloseIcon,
   SidebarIcon,
   MoveIcon,
@@ -62,7 +62,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
                 <MoveIcon color={'white'} />
               </IconButton>
               <IconButton onClick={() => folderMoveToTrashDialog.open(folder)}>
-                <DeleteIcon color={'white'} />
+                <TrashIcon color={'white'} />
               </IconButton>
             </>
           )}
