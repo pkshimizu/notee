@@ -10,6 +10,7 @@ import {
   dialogsNoteMoveSelector,
   dialogsFolderDeleteSelector,
   dialogsNoteDeleteSelector,
+  dialogsTrashEmptySelector,
 } from '../store/dialogs/selectors'
 import dialogsSlice from '../store/dialogs'
 
@@ -168,6 +169,22 @@ export const useNoteDeleteDialog = () => {
   return {
     state: note !== undefined,
     note,
+    open,
+    close,
+  }
+}
+
+export const useTrashEmptyDialog = () => {
+  const state = useSelector(dialogsTrashEmptySelector)
+  const dispatch = useDispatch()
+  const open = useCallback(() => {
+    dispatch(dialogsSlice.actions.openTrashEmptyDialog())
+  }, [dispatch])
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeTrashEmptyDialog())
+  }, [])
+  return {
+    state,
     open,
     close,
   }

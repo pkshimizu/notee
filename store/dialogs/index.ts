@@ -10,6 +10,7 @@ export type DialogsState = {
   noteLog?: { note: Note; log: NoteLog }
   folderDelete?: Folder
   noteDelete?: Note
+  trashEmpty?: boolean
 }
 
 export const dialogsInitialState: DialogsState = {
@@ -19,6 +20,7 @@ export const dialogsInitialState: DialogsState = {
   noteMoveToTrash: undefined,
   noteMove: undefined,
   noteLog: undefined,
+  trashEmpty: false,
 }
 
 type OpenFolderSettingsDialogParams = {
@@ -121,6 +123,14 @@ const dialogsSlice = createSlice({
     closeNoteDeleteDialog: (state: DialogsState) => ({
       ...state,
       noteDelete: undefined,
+    }),
+    openTrashEmptyDialog: (state: DialogsState) => ({
+      ...state,
+      trashEmpty: true,
+    }),
+    closeTrashEmptyDialog: (state: DialogsState) => ({
+      ...state,
+      trashEmpty: false,
     }),
   },
 })
