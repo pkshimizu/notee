@@ -72,7 +72,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
             <SidebarIcon color={'white'} />
           </IconButton>
           <IconButton label={'close tab'} onClick={handleClose} disabled={folder.folderId === undefined}>
-            <CloseIcon />
+            <CloseIcon color={'white'} />
           </IconButton>
         </FlexRow>
       </FlexRow>

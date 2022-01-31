@@ -55,10 +55,12 @@ export const useFoldersPage = () => {
 }
 
 export const useActiveNotesPage = () => {
-  const router = useRouter()
   const activeId = useSelector(activeItemIdSelector)
+  const itemsPage = useItemsPage()
   return useCallback(() => {
-    router.push(`/notes/${activeId}`)
+    if (activeId) {
+      itemsPage(activeId)
+    }
   }, [activeId])
 }
 

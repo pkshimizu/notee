@@ -49,7 +49,7 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
             <SidebarIcon color={'white'} />
           </IconButton>
           <IconButton label={'close tab'} onClick={handleClose}>
-            <CloseIcon />
+            <CloseIcon color={'white'} />
           </IconButton>
         </FlexRow>
       </FlexRow>

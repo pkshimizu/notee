@@ -27,10 +27,10 @@ export default function TrashMenu({}: TrashMenuProps) {
           onClick={trashEmptyDialog.open}
           disabled={folders.length === 0 && notes.length === 0}
         >
-          <DeleteIcon />
+          <DeleteIcon color={'white'} />
         </IconButton>
         <IconButton label={'close tab'} onClick={handleClose}>
-          <CloseIcon />
+          <CloseIcon color={'white'} />
         </IconButton>
       </FlexRow>
     </AppBar>
