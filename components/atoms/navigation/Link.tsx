@@ -11,7 +11,7 @@ export default function Link({ href, children }: LinkProps) {
   const external = href.startsWith('http')
   if (external) {
     return (
-      <MuiLink href={href} sx={{ textDecoration: 'none' }}>
+      <MuiLink href={href} rel={'noopener'} sx={{ textDecoration: 'none' }}>
         {children}
       </MuiLink>
     )
