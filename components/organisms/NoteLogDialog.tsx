@@ -42,16 +42,16 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
       onClose={onClose}
       actions={
         <>
-          <IconButton disabled={selectedIndex <= 0} onClick={handlePrevLog}>
+          <IconButton label={'prev log'} disabled={selectedIndex <= 0} onClick={handlePrevLog}>
             <PrevIcon />
           </IconButton>
-          <IconButton disabled={selectedIndex >= note.logs.length - 1} onClick={handleNextLog}>
+          <IconButton label={'next log'} disabled={selectedIndex >= note.logs.length - 1} onClick={handleNextLog}>
             <NextIcon />
           </IconButton>
-          <IconButton onClick={onClose}>
+          <IconButton label={'close dialog'} onClick={onClose}>
             <CloseIcon />
           </IconButton>
-          <IconButton onClick={handleApplyLog}>
+          <IconButton label={'apply log'} onClick={handleApplyLog}>
             <ApplyIcon />
           </IconButton>
         </>

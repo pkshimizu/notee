@@ -26,22 +26,22 @@ export default function FolderCard({
       actions={
         <>
           {onClickFolderLink && (
-            <IconButton onClick={() => onClickFolderLink(folder)}>
+            <IconButton label={'open folder'} onClick={() => onClickFolderLink(folder)}>
               <OpenIcon />
             </IconButton>
           )}
           {onClickMoveToTrash && (
-            <IconButton onClick={() => onClickMoveToTrash(folder)}>
+            <IconButton label={'move folder to trash'} onClick={() => onClickMoveToTrash(folder)}>
               <TrashIcon />
             </IconButton>
           )}
           {onClickRestore && (
-            <IconButton onClick={() => onClickRestore(folder)}>
+            <IconButton label={'restore folder'} onClick={() => onClickRestore(folder)}>
               <RestoreIcon />
             </IconButton>
           )}
           {onClickDelete && (
-            <IconButton onClick={() => onClickDelete(folder)}>
+            <IconButton label={'delete folder'} onClick={() => onClickDelete(folder)}>
               <DeleteIcon />
             </IconButton>
           )}

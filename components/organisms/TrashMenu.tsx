@@ -22,10 +22,14 @@ export default function TrashMenu({}: TrashMenuProps) {
   return (
     <AppBar>
       <FlexRow justify={'space-between'}>
-        <IconButton onClick={trashEmptyDialog.open} disabled={folders.length === 0 && notes.length === 0}>
+        <IconButton
+          label={'trash empty'}
+          onClick={trashEmptyDialog.open}
+          disabled={folders.length === 0 && notes.length === 0}
+        >
           <DeleteIcon />
         </IconButton>
-        <IconButton onClick={handleClose}>
+        <IconButton label={'close tab'} onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </FlexRow>

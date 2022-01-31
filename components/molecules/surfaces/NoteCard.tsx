@@ -28,22 +28,22 @@ export default function NoteCard({
       actions={
         <>
           {onClickNoteLink && (
-            <IconButton onClick={() => onClickNoteLink(note)}>
+            <IconButton label={'open note'} onClick={() => onClickNoteLink(note)}>
               <OpenIcon />
             </IconButton>
           )}
           {onClickMoveToTrash && (
-            <IconButton onClick={() => onClickMoveToTrash(note)}>
+            <IconButton label={'move note to trash'} onClick={() => onClickMoveToTrash(note)}>
               <TrashIcon />
             </IconButton>
           )}
           {onClickRestore && (
-            <IconButton onClick={() => onClickRestore(note)}>
+            <IconButton label={'restore note'} onClick={() => onClickRestore(note)}>
               <RestoreIcon />
             </IconButton>
           )}
           {onClickDelete && (
-            <IconButton onClick={() => onClickDelete(note)}>
+            <IconButton label={'delete note'} onClick={() => onClickDelete(note)}>
               <DeleteIcon />
             </IconButton>
           )}

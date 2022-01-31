@@ -21,7 +21,7 @@ export default function SettingsAppBar() {
   return (
     <AppBar>
       <FlexRow justify={'space-between'} align={'center'}>
-        <IconButton onClick={activeNotePage}>
+        <IconButton label={'back'} onClick={activeNotePage}>
           <BackIcon color={'white'} />
         </IconButton>
         {currentUser && (

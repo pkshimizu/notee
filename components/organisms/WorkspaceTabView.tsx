@@ -101,7 +101,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   return (
     <TabView
       leftItem={
-        <IconButton onClick={handleToggleSideBar}>
+        <IconButton label={'open side bar'} onClick={handleToggleSideBar}>
           <MenuIcon />
         </IconButton>
       }
