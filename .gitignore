@@ -38,3 +38,6 @@ yarn-error.log*
 
 # IntelliJ Idea
 .idea
+
+# Sentry
+.sentryclirc
