@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { FlexColumn } from '../components/atoms/layout/Flex'
+import { FlexColumn, FlexRow } from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
 import { GitHubIcon, GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useEffect } from 'react'
@@ -8,6 +8,8 @@ import { useRootPage } from '../hooks/usePages'
 import { currentUserSelector } from '../store/session/selectors'
 import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
 import { useTitle } from '../hooks/useTitle'
+import Image from '../components/atoms/display/Image'
+import Label from '../components/atoms/display/Label'
 
 const Login: NextPage = () => {
   const currentUser = useSelector(currentUserSelector)
@@ -30,13 +32,24 @@ const Login: NextPage = () => {
   }, [dispatch])
 
   return (
-    <FlexColumn align={'center'}>
-      <Button icon={<GoogleIcon />} onClick={handleLogInWithGoogle}>
-        Login with Google
-      </Button>
-      <Button icon={<GitHubIcon />} onClick={handleLogInWithGitHub}>
-        Login with Github
-      </Button>
+    <FlexColumn align={'center'} height={'100vh'} width={'100%'}>
+      <FlexRow align={'center'}>
+        <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
+        <FlexColumn space={2}>
+          <FlexColumn space={0}>
+            <Label variant={'title'}>notee</Label>
+            <Label variant={'caption'}>Simple Personal Note</Label>
+          </FlexColumn>
+          <FlexColumn>
+            <Button icon={<GoogleIcon />} color={'google'} onClick={handleLogInWithGoogle}>
+              Login with Google
+            </Button>
+            <Button icon={<GitHubIcon />} color={'github'} onClick={handleLogInWithGitHub}>
+              Login with Github
+            </Button>
+          </FlexColumn>
+        </FlexColumn>
+      </FlexRow>
     </FlexColumn>
   )
 }

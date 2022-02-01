@@ -11,6 +11,24 @@ export function createEmotionCache() {
 
 const clientSideEmotionCache = createEmotionCache()
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    google: Palette['primary']
+    github: Palette['primary']
+  }
+  interface PaletteOptions {
+    google: PaletteOptions['primary']
+    github: PaletteOptions['primary']
+  }
+}
+
+declare module '@mui/material/Button' {
+  export interface ButtonPropsColorOverrides {
+    google: true
+    github: true
+  }
+}
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -48,6 +66,14 @@ const theme = createTheme({
       main: '#43A047',
       dark: '#1B5E20',
       contrastText: '#000',
+    },
+    google: {
+      main: '#4285F4',
+      contrastText: '#fff',
+    },
+    github: {
+      main: '#333',
+      contrastText: '#fff',
     },
   },
 })
