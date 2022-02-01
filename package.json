@@ -20,6 +20,7 @@
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.1.0",
     "@reduxjs/toolkit": "^1.6.2",
+    "@sentry/nextjs": "^6.17.3",
     "ace-builds": "^1.4.13",
     "dayjs": "^1.10.7",
     "firebase": "^9.5.0",
