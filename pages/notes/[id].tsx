@@ -28,3 +28,4 @@ export default function Workspace() {
 }
 
 Workspace.layout = WorkspaceLayout
+Workspace.login = 'required'

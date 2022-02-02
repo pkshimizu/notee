@@ -32,3 +32,4 @@ export default function Profile() {
 }
 
 Profile.layout = SettingsLayout
+Profile.login = 'required'

@@ -109,3 +109,4 @@ export default function Editor() {
 }
 
 Editor.layout = SettingsLayout
+Editor.login = 'required'

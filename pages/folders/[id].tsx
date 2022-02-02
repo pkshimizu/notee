@@ -28,3 +28,4 @@ export default function Folder() {
 }
 
 Folder.layout = WorkspaceLayout
+Folder.login = 'required'

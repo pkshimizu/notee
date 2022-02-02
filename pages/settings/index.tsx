@@ -12,3 +12,4 @@ export default function Settings() {
 }
 
 Settings.layout = SettingsLayout
+Settings.login = 'required'

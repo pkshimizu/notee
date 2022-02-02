@@ -17,3 +17,4 @@ export default function Favorites() {
 }
 
 Favorites.layout = WorkspaceLayout
+Favorites.login = 'required'

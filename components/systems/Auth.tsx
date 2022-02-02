@@ -1,17 +1,21 @@
 import { ReactNode, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLoginPage } from '../../hooks/usePages'
+import { useLoginPage, useRootPage } from '../../hooks/usePages'
 import { currentUserSelector, initializedSelector } from '../../store/session/selectors'
 import { initializeSession } from '../../store/session'
 
+export type LoginType = 'required' | 'any' | 'notAllowed'
+
 type AuthProps = {
+  login?: LoginType
   children: ReactNode
 }
 
-export default function Auth({ children }: AuthProps) {
+export default function Auth({ login = 'any', children }: AuthProps) {
   const currentUser = useSelector(currentUserSelector)
   const initialized = useSelector(initializedSelector)
   const loginPage = useLoginPage()
+  const rootPage = useRootPage()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -19,14 +23,29 @@ export default function Auth({ children }: AuthProps) {
   }, [dispatch])
 
   useEffect(() => {
-    if (initialized && currentUser === undefined) {
+    if (!initialized) {
+      return
+    }
+    if (login === 'required' && currentUser === undefined) {
       loginPage()
     }
-  }, [initialized, currentUser, loginPage])
+    if (login === 'notAllowed' && currentUser) {
+      rootPage()
+    }
+  }, [login, initialized, currentUser, loginPage, rootPage])
 
-  if (initialized) {
-    return <>{children}</>
-  } else {
+  if (!initialized) {
     return <></>
   }
+  if (login === 'any') {
+    return <>{children}</>
+  }
+  if (login === 'required' && currentUser) {
+    return <>{children}</>
+  }
+  if (login === 'notAllowed' && currentUser === undefined) {
+    return <>{children}</>
+  }
+  
+  return <></>
 }

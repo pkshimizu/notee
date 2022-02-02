@@ -17,3 +17,4 @@ export default function Trash() {
 }
 
 Trash.layout = WorkspaceLayout
+Trash.login = 'required'

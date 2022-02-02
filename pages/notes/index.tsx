@@ -14,3 +14,5 @@ export default function Notes() {
 
   return <></>
 }
+
+Notes.login = 'required'

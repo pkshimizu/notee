@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps as NextAppProps } from 'next/app'
 import Style from '../components/systems/Style'
-import Auth from '../components/systems/Auth'
+import Auth, { LoginType } from '../components/systems/Auth'
 import Store from '../components/systems/Store'
 import DataProvider from '../components/systems/DataProvider'
 import { EmotionCache } from '@emotion/react'
@@ -13,6 +13,7 @@ import EditorProvider from '../components/systems/EditorProvider'
 type AppProps = {
   Component: NextAppProps['Component'] & {
     layout?: ComponentType
+    login?: LoginType
   }
   emotionCache?: EmotionCache
 } & NextAppProps
@@ -22,7 +23,7 @@ export default function App({ emotionCache, Component, pageProps }: AppProps) {
     <Store>
       <Style cache={emotionCache}>
         <System>
-          <Auth>
+          <Auth login={Component.login}>
             <DataProvider>
               <EditorProvider>
                 {Component.layout ? (

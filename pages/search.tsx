@@ -17,3 +17,4 @@ export default function Search() {
 }
 
 Search.layout = WorkspaceLayout
+Search.login = 'required'

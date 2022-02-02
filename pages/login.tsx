@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { FlexColumn, FlexRow } from '../components/atoms/layout/Flex'
 import Button from '../components/atoms/inputs/Button'
 import { GitHubIcon, GoogleIcon } from '../components/atoms/display/Icons'
@@ -11,7 +10,7 @@ import { useTitle } from '../hooks/useTitle'
 import Image from '../components/atoms/display/Image'
 import Label from '../components/atoms/display/Label'
 
-const Login: NextPage = () => {
+export default function Login() {
   const currentUser = useSelector(currentUserSelector)
   const { setTitle } = useTitle()
   const rootPage = useRootPage()
@@ -54,4 +53,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+Login.login = 'notAllowed'
