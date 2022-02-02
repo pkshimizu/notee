@@ -17,11 +17,16 @@ export default function UserMenu({ target, onClose }: UserMenuProps) {
   const dispatch = useDispatch()
   const handleLogout = useCallback(() => {
     dispatch(logout())
-  }, [dispatch])
+    onClose()
+  }, [dispatch, onClose])
+  const handleSettings = useCallback(() => {
+    profileSettingsPage()
+    onClose()
+  }, [profileSettingsPage, onClose])
 
   return (
     <Menu target={target} onClose={onClose}>
-      <MenuItem icon={<SettingsIcon />} onClick={profileSettingsPage}>
+      <MenuItem icon={<SettingsIcon />} onClick={handleSettings}>
         Settings
       </MenuItem>
       <Divider />
