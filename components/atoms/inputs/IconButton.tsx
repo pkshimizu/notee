@@ -12,9 +12,11 @@ type IconButtonProps = {
 export default function IconButton({ label, disabled = false, children, onClick }: IconButtonProps) {
   return (
     <MuiTooltip title={label}>
-      <MuiIconButton aria-label={label} disabled={disabled} onClick={onClick}>
-        {children}
-      </MuiIconButton>
+      <span>
+        <MuiIconButton aria-label={label} disabled={disabled} onClick={onClick}>
+          {children}
+        </MuiIconButton>
+      </span>
     </MuiTooltip>
   )
 }

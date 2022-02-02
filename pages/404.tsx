@@ -9,8 +9,10 @@ export default function Error404() {
       <FlexRow align={'center'}>
         <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
         <FlexColumn>
-          <Label variant={'title'}>404</Label>
-          <Label variant={'title'}>Not Found Page</Label>
+          <FlexColumn space={0}>
+            <Label variant={'title'}>404</Label>
+            <Label variant={'caption'}>Not Found Page</Label>
+          </FlexColumn>
           <Link href={'/'}>Back to Home</Link>
         </FlexColumn>
       </FlexRow>
