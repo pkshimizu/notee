@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLoginPage, useRootPage } from '../../hooks/usePages'
 import { currentUserSelector, initializedSelector } from '../../store/session/selectors'
 import { initializeSession } from '../../store/session'
+import systemSlice from '../../store/system'
 
 export type LoginType = 'required' | 'any' | 'notAllowed'
 
@@ -24,15 +25,18 @@ export default function Auth({ login = 'any', children }: AuthProps) {
 
   useEffect(() => {
     if (!initialized) {
+      dispatch(systemSlice.actions.loading({ loading: true }))
+      
       return
     }
+    dispatch(systemSlice.actions.loading({ loading: false }))
     if (login === 'required' && currentUser === undefined) {
       loginPage()
     }
     if (login === 'notAllowed' && currentUser) {
       rootPage()
     }
-  }, [login, initialized, currentUser, loginPage, rootPage])
+  }, [dispatch, login, initialized, currentUser, loginPage, rootPage])
 
   if (!initialized) {
     return <></>
@@ -46,6 +50,6 @@ export default function Auth({ login = 'any', children }: AuthProps) {
   if (login === 'notAllowed' && currentUser === undefined) {
     return <>{children}</>
   }
-  
+
   return <></>
 }

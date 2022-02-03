@@ -2,9 +2,10 @@ import { ReactNode, useCallback } from 'react'
 import Snackbar from '../atoms/feedback/Snackbar'
 import { useDispatch, useSelector } from 'react-redux'
 import systemSlice from '../../store/system'
-import { errorSelector, systemMessageSelector } from '../../store/system/selectors'
+import { errorSelector, loadingSelector, systemMessageSelector } from '../../store/system/selectors'
 import Head from 'next/head'
 import { useTitle } from '../../hooks/useTitle'
+import LoadingLayer from '../molecules/feedback/LoadingLayer'
 
 type SystemProps = {
   children: ReactNode
@@ -14,6 +15,7 @@ export default function System({ children }: SystemProps) {
   const { title } = useTitle()
   const message = useSelector(systemMessageSelector)
   const error = useSelector(errorSelector)
+  const loading = useSelector(loadingSelector)
   const dispatch = useDispatch()
   const handleCloseMessage = useCallback(() => {
     dispatch(systemSlice.actions.clearMessage())
@@ -37,6 +39,7 @@ export default function System({ children }: SystemProps) {
         />
       )}
       {message && <Snackbar open={true} message={message} severity={'success'} onClose={handleCloseMessage} />}
+      <LoadingLayer open={loading} />
     </>
   )
 }

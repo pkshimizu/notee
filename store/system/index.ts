@@ -4,12 +4,14 @@ export type SystemState = {
   title?: string
   message?: string
   error?: { code: string; message: string }
+  loading: boolean
 }
 
 export const systemInitialState: SystemState = {
   title: undefined,
   message: undefined,
   error: undefined,
+  loading: true,
 }
 
 type TitleParams = {
@@ -23,6 +25,10 @@ type MessageParams = {
 type FirebaseErrorParams = {
   code: string
   message: string
+}
+
+type LoadingParams = {
+  loading: boolean
 }
 
 const systemSlice = createSlice({
@@ -51,6 +57,10 @@ const systemSlice = createSlice({
     clearError: (state: SystemState) => ({
       ...state,
       error: undefined,
+    }),
+    loading: (state: SystemState, action: PayloadAction<LoadingParams>) => ({
+      ...state,
+      loading: action.payload.loading,
     }),
   },
 })
