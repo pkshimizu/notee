@@ -9,7 +9,9 @@ type NoteTreeProps = {
   folder?: Folder
   activeId?: string
   folderOnly?: boolean
+  expandedIds?: string[]
   onSelect: (_id: string) => void
+  onChangeExpanded?: (_expanded: string[]) => void
 }
 
 function NoteTreeNoteItem({ note }: { note: Note }) {
@@ -27,8 +29,15 @@ function NoteTreeFolderItem({ folder, folderOnly }: { folder: Folder; folderOnly
   )
 }
 
-export default function NoteTree({ folder, activeId, folderOnly = false, onSelect }: NoteTreeProps) {
-  const [expanded, setExpanded] = useState<string[]>([])
+export default function NoteTree({
+  folder,
+  activeId,
+  folderOnly = false,
+  expandedIds = [],
+  onSelect,
+  onChangeExpanded,
+}: NoteTreeProps) {
+  const [expanded, setExpanded] = useState(expandedIds)
   const handleSelect = useCallback(
     (id) => {
       onSelect(id)
@@ -38,11 +47,14 @@ export default function NoteTree({ folder, activeId, folderOnly = false, onSelec
         } else {
           setExpanded(expanded.concat(id))
         }
+        if (onChangeExpanded) {
+          onChangeExpanded(expanded)
+        }
       }
     },
-    [onSelect, activeId, expanded, setExpanded]
+    [onSelect, activeId, expanded, setExpanded, onChangeExpanded]
   )
-  
+
   return (
     <TreeView selectedId={activeId} expanded={expanded} onSelect={handleSelect}>
       {folder && <NoteTreeFolderItem folder={folder} folderOnly={folderOnly} />}

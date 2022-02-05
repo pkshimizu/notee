@@ -3,11 +3,12 @@ import SearchField from '../molecules/inputs/SearchField'
 import { TrashIcon, FavoriteIcon } from '../atoms/display/Icons'
 import NoteTree from './NoteTree'
 import { useItemsPage } from '../../hooks/usePages'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { rootFolderSelector } from '../../store/notes/selectors'
-import { activeItemIdSelector } from '../../store/workspace/selectors'
+import { activeItemIdSelector, expandedNoteTreeIdsSelector } from '../../store/workspace/selectors'
 import { useCallback } from 'react'
 import Link from '../atoms/navigation/Link'
+import workspaceSlice from '../../store/workspace'
 
 type WorkspaceSideBarProps = {}
 
@@ -15,11 +16,19 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const root = useSelector(rootFolderSelector)
   const activeItemId = useSelector(activeItemIdSelector)
   const itemsPage = useItemsPage()
+  const expandedNoteTreeIds = useSelector(expandedNoteTreeIdsSelector)
+  const dispatch = useDispatch()
   const handleSelectItem = useCallback(
     (id) => {
       itemsPage(id)
     },
     [itemsPage]
+  )
+  const handleChangeExpanded = useCallback(
+    (expanded: string[]) => {
+      dispatch(workspaceSlice.actions.updateNoteTreeExpanded({ ids: expanded }))
+    },
+    [dispatch]
   )
 
   return (
@@ -37,7 +46,13 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
           Trash
         </FlexRow>
       </Link>
-      <NoteTree folder={root} activeId={activeItemId} onSelect={handleSelectItem} />
+      <NoteTree
+        folder={root}
+        activeId={activeItemId}
+        expandedIds={expandedNoteTreeIds}
+        onSelect={handleSelectItem}
+        onChangeExpanded={handleChangeExpanded}
+      />
     </FlexColumn>
   )
 }

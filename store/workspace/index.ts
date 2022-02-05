@@ -11,12 +11,14 @@ export type WorkspaceState = {
   items: WorkspaceItem[]
   activeItemId?: string
   openSideBar: boolean
+  expandedNoteTreeIds: string[]
 }
 
 export const workspaceInitialState: WorkspaceState = {
   items: [],
   activeItemId: undefined,
   openSideBar: true,
+  expandedNoteTreeIds: [],
 }
 
 type OpenParams = {
@@ -42,6 +44,10 @@ function openItem(state: WorkspaceState, itemId: string, type: WorkspaceItemType
     activeItemId: itemId,
   }
 }
+type UpdateNoteTreeExpandedParams = {
+  ids: string[]
+}
+
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: workspaceInitialState,
@@ -73,6 +79,10 @@ const workspaceSlice = createSlice({
     openTrash: (state: WorkspaceState) => {
       return openItem(state, 'trash', 'trash')
     },
+    updateNoteTreeExpanded: (state: WorkspaceState, action: PayloadAction<UpdateNoteTreeExpandedParams>) => ({
+      ...state,
+      expandedNoteTreeIds: action.payload.ids,
+    }),
   },
 })
 
