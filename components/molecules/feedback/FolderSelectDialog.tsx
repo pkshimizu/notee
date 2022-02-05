@@ -70,7 +70,7 @@ export default function FolderSelectDialog({
       }
       onClose={onClose}
     >
-      <NoteTree folder={root} folderOnly onSelect={handleSelect} />
+      <NoteTree folder={root} activeId={folderId} folderOnly onSelect={handleSelect} />
     </Dialog>
   )
 }

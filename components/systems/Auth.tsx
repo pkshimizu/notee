@@ -26,7 +26,7 @@ export default function Auth({ login = 'any', children }: AuthProps) {
   useEffect(() => {
     if (!initialized) {
       dispatch(systemSlice.actions.loading({ loading: true }))
-      
+
       return
     }
     dispatch(systemSlice.actions.loading({ loading: false }))
