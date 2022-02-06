@@ -34,22 +34,22 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton label={'favorite'} onClick={handleFavorite}>
-            {note.favorite ? <FavoriteIcon color={'white'} /> : <FavoriteOutlinedIcon color={'white'} />}
+          <IconButton label={'favorite'} color={'white'} onClick={handleFavorite}>
+            {note.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
-          <IconButton label={'move note'} onClick={() => noteMoveDialog.open(note)}>
-            <MoveIcon color={'white'} />
+          <IconButton label={'move note'} color={'white'} onClick={() => noteMoveDialog.open(note)}>
+            <MoveIcon />
           </IconButton>
-          <IconButton label={'move note to trash'} onClick={() => noteMoveToTrashDialog.open(note)}>
-            <TrashIcon color={'white'} />
+          <IconButton label={'move note to trash'} color={'white'} onClick={() => noteMoveToTrashDialog.open(note)}>
+            <TrashIcon />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>
-          <IconButton label={'open properties'} onClick={onOpenProperties}>
-            <SidebarIcon color={'white'} />
+          <IconButton label={'open properties'} color={'white'} onClick={onOpenProperties}>
+            <SidebarIcon />
           </IconButton>
-          <IconButton label={'close tab'} onClick={handleClose}>
-            <CloseIcon color={'white'} />
+          <IconButton label={'close tab'} color={'white'} onClick={handleClose}>
+            <CloseIcon />
           </IconButton>
         </FlexRow>
       </FlexRow>

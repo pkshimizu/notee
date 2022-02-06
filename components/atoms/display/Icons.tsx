@@ -28,7 +28,7 @@ import { ElementType } from 'react'
 import { SvgIcon } from '@mui/material'
 import MuiMenuIcon from '@mui/icons-material/Menu'
 
-type IconColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'white' | 'black'
+export type IconColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'white' | 'black'
 
 type IconProps = {
   color?: IconColor
