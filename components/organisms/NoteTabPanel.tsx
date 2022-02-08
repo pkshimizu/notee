@@ -47,6 +47,7 @@ export default function NoteTabPanel({ note }: NoteTabPanelProps) {
         ) : undefined
       }
       onResize={handleResize}
+      onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       <TextEditor
         content={note.content}

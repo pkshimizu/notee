@@ -29,6 +29,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
     <WorkspaceTabPanel
       menu={<FolderMenu folder={folder} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />}
       propertiesPanel={propertiesPanel ? <FolderPropertiesPanel folder={folder} /> : undefined}
+      onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       <FlexColumn pl={2} pr={2} pb={4}>
         <FolderBreadcrumbs folders={folders} folder={folder} />
