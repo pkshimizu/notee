@@ -40,6 +40,10 @@ export const searchResultNotesSelector = createSelector(
   [noteListSelector, searchResultsSelector],
   (notes, searchResults) => notes.filter((note) => searchResults?.notes?.includes(note.id))
 )
+export const searchResultFoldersSelector = createSelector(
+  [folderListSelector, searchResultsSelector],
+  (folders, searchResults) => folders.filter((folder) => searchResults?.folders?.includes(folder.id))
+)
 export const favoriteFoldersSelector = createSelector([folderListSelector], (folders) =>
   folders.filter((folder) => folder.favorite)
 )

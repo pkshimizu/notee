@@ -21,7 +21,7 @@ export default function WorkspaceTabPanel({
   onClosePropertiesPanel,
 }: WorkspaceTabPanelProps) {
   const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
-  
+
   return (
     <FlexColumn space={0} width={propertiesPanel && upSm ? 'calc(100% - 256px)' : '100%'}>
       {menu}

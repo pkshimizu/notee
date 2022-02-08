@@ -35,33 +35,27 @@ const systemSlice = createSlice({
   name: 'system',
   initialState: systemInitialState,
   reducers: {
-    title: (state: SystemState, action: PayloadAction<TitleParams>) => ({
-      ...state,
-      title: action.payload.title,
-    }),
-    message: (state: SystemState, action: PayloadAction<MessageParams>) => ({
-      ...state,
-      message: action.payload.message,
-    }),
-    clearMessage: (state: SystemState) => ({
-      ...state,
-      message: undefined,
-    }),
-    firebaseError: (state: SystemState, action: PayloadAction<FirebaseErrorParams>) => ({
-      ...state,
-      error: {
+    title: (state: SystemState, action: PayloadAction<TitleParams>) => {
+      state.title = action.payload.title
+    },
+    message: (state: SystemState, action: PayloadAction<MessageParams>) => {
+      state.message = action.payload.message
+    },
+    clearMessage: (state: SystemState) => {
+      state.message = undefined
+    },
+    firebaseError: (state: SystemState, action: PayloadAction<FirebaseErrorParams>) => {
+      state.error = {
         code: action.payload.code,
         message: action.payload.message,
-      },
-    }),
-    clearError: (state: SystemState) => ({
-      ...state,
-      error: undefined,
-    }),
-    loading: (state: SystemState, action: PayloadAction<LoadingParams>) => ({
-      ...state,
-      loading: action.payload.loading,
-    }),
+      }
+    },
+    clearError: (state: SystemState) => {
+      state.error = undefined
+    },
+    loading: (state: SystemState, action: PayloadAction<LoadingParams>) => {
+      state.loading = action.payload.loading
+    },
   },
 })
 

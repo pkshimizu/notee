@@ -31,18 +31,10 @@ type ActiveParams = {
   id: string
 }
 function openItem(state: WorkspaceState, itemId: string, type: WorkspaceItemType) {
-  if (state.items.some((item) => item.id === itemId)) {
-    return {
-      ...state,
-      activeItemId: itemId,
-    }
+  if (!state.items.some((item) => item.id === itemId)) {
+    state.items.push({ id: itemId, type: type })
   }
-  const items = state.items.concat({ id: itemId, type: type })
-  return {
-    ...state,
-    items: items,
-    activeItemId: itemId,
-  }
+  state.activeItemId = itemId
 }
 type UpdateNoteTreeExpandedParams = {
   ids: string[]
@@ -53,36 +45,32 @@ const workspaceSlice = createSlice({
   initialState: workspaceInitialState,
   reducers: {
     openNote: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
-      return openItem(state, action.payload.id, 'note')
+      openItem(state, action.payload.id, 'note')
     },
     openFolder: (state: WorkspaceState, action: PayloadAction<OpenParams>) => {
-      return openItem(state, action.payload.id, 'folder')
+      openItem(state, action.payload.id, 'folder')
     },
-    close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => ({
-      ...state,
-      items: state.items.filter((item) => item.id !== action.payload.id),
-    }),
-    active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => ({
-      ...state,
-      activeItemId: action.payload.id,
-    }),
-    toggleSideBar: (state: WorkspaceState) => ({
-      ...state,
-      openSideBar: !state.openSideBar,
-    }),
+    close: (state: WorkspaceState, action: PayloadAction<CloseParams>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id)
+    },
+    active: (state: WorkspaceState, action: PayloadAction<ActiveParams>) => {
+      state.activeItemId = action.payload.id
+    },
+    toggleSideBar: (state: WorkspaceState) => {
+      state.openSideBar = !state.openSideBar
+    },
     openSearchResults: (state: WorkspaceState) => {
-      return openItem(state, 'search', 'search')
+      openItem(state, 'search', 'search')
     },
     openFavorites: (state: WorkspaceState) => {
-      return openItem(state, 'favorites', 'favorites')
+      openItem(state, 'favorites', 'favorites')
     },
     openTrash: (state: WorkspaceState) => {
-      return openItem(state, 'trash', 'trash')
+      openItem(state, 'trash', 'trash')
     },
-    updateNoteTreeExpanded: (state: WorkspaceState, action: PayloadAction<UpdateNoteTreeExpandedParams>) => ({
-      ...state,
-      expandedNoteTreeIds: action.payload.ids,
-    }),
+    updateNoteTreeExpanded: (state: WorkspaceState, action: PayloadAction<UpdateNoteTreeExpandedParams>) => {
+      state.expandedNoteTreeIds = action.payload.ids
+    },
   },
 })
 

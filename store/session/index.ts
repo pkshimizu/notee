@@ -61,41 +61,24 @@ const sessionSlice = createSlice({
   name: 'session',
   initialState: sessionInitialState,
   reducers: {
-    changeCurrentUser: (state: SessionState, action: PayloadAction<ChangeCurrentUserParams>) => ({
-      ...state,
-      currentUser: action.payload.user,
-      initialized: true,
-    }),
-    modifySettings: (state: SessionState, action: PayloadAction<ModifySettingsParams>) => ({
-      ...state,
-      settings: action.payload.settings,
-    }),
+    changeCurrentUser: (state: SessionState, action: PayloadAction<ChangeCurrentUserParams>) => {
+      state.currentUser = action.payload.user
+      state.initialized = true
+    },
+    modifySettings: (state: SessionState, action: PayloadAction<ModifySettingsParams>) => {
+      state.settings = action.payload.settings
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(initializeSession.rejected, (state) => ({
-      ...state,
-      initialized: true,
-    }))
-    builder.addCase(updateKeyBinding.fulfilled, (state, action) => ({
-      ...state,
-      settings: {
-        ...state.settings,
-        editor: {
-          ...state.settings.editor,
-          keyBinding: action.payload.keyBinding,
-        },
-      },
-    }))
-    builder.addCase(updateTheme.fulfilled, (state, action) => ({
-      ...state,
-      settings: {
-        ...state.settings,
-        editor: {
-          ...state.settings.editor,
-          theme: action.payload.theme,
-        },
-      },
-    }))
+    builder.addCase(initializeSession.rejected, (state) => {
+      state.initialized = true
+    })
+    builder.addCase(updateKeyBinding.fulfilled, (state, action) => {
+      state.settings.editor.keyBinding = action.payload.keyBinding
+    })
+    builder.addCase(updateTheme.fulfilled, (state, action) => {
+      state.settings.editor.theme = action.payload.theme
+    })
   },
 })
 
