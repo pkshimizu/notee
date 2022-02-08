@@ -6,11 +6,12 @@ type DrawerAnchor = 'left' | 'right' | 'top' | 'bottom'
 type DrawerProps = {
   anchor?: DrawerAnchor
   open: boolean
+  variant: 'permanent' | 'persistent' | 'temporary'
   children: ReactNode
   onClose?: () => void
 }
 
-export default function Drawer({ anchor = 'left', open, children, onClose }: DrawerProps) {
+export default function Drawer({ anchor = 'left', open, variant, children, onClose }: DrawerProps) {
   const handleClose = useCallback(() => {
     if (onClose) {
       onClose()
@@ -18,7 +19,7 @@ export default function Drawer({ anchor = 'left', open, children, onClose }: Dra
   }, [onClose])
 
   return (
-    <MuiDrawer anchor={anchor} open={open} variant={'persistent'} onClose={handleClose}>
+    <MuiDrawer anchor={anchor} open={open} variant={variant} onClose={handleClose}>
       {children}
     </MuiDrawer>
   )
