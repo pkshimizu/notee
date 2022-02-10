@@ -20,7 +20,7 @@ function parentFolders(folders: Folder[], folder?: Folder): Folder[] {
 
 export default function FolderBreadcrumbs({ folders, folder }: FolderBreadcrumbsProps) {
   const { folders: foldersPath } = usePath()
-  
+
   return (
     <Breadcrumbs>
       {parentFolders(folders, folder).map((folder) => (

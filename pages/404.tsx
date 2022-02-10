@@ -6,7 +6,7 @@ import { usePath } from '../hooks/usePath'
 
 export default function Error404() {
   const { root } = usePath()
-  
+
   return (
     <FlexColumn align={'center'} height={'100vh'} width={'100%'}>
       <FlexRow align={'center'}>

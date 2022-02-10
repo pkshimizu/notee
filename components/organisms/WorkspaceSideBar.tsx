@@ -36,25 +36,27 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   return (
     <FlexColumn space={0} noWrap>
       <SearchField />
-      <Link href={favorites()}>
-        <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
-          <FavoriteIcon />
-          Favorite
-        </FlexRow>
-      </Link>
-      <Link href={trash()}>
-        <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
-          <TrashIcon />
-          Trash
-        </FlexRow>
-      </Link>
-      <NoteTree
-        folder={root}
-        activeId={activeItemId}
-        expandedIds={expandedNoteTreeIds}
-        onSelect={handleSelectItem}
-        onChangeExpanded={handleChangeExpanded}
-      />
+      <FlexColumn space={0} noWrap>
+        <Link href={favorites()}>
+          <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
+            <FavoriteIcon />
+            Favorite
+          </FlexRow>
+        </Link>
+        <Link href={trash()}>
+          <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
+            <TrashIcon />
+            Trash
+          </FlexRow>
+        </Link>
+        <NoteTree
+          folder={root}
+          activeId={activeItemId}
+          expandedIds={expandedNoteTreeIds}
+          onSelect={handleSelectItem}
+          onChangeExpanded={handleChangeExpanded}
+        />
+      </FlexColumn>
     </FlexColumn>
   )
 }
