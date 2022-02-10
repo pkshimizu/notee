@@ -1,6 +1,7 @@
 import { Folder } from '../../../store/notes/models'
 import Breadcrumbs from '../../atoms/navigation/Breadcrumbs'
 import Link from '../../atoms/navigation/Link'
+import { usePath } from '../../../hooks/usePath'
 
 type FolderBreadcrumbsProps = {
   folders: Folder[]
@@ -18,10 +19,12 @@ function parentFolders(folders: Folder[], folder?: Folder): Folder[] {
 }
 
 export default function FolderBreadcrumbs({ folders, folder }: FolderBreadcrumbsProps) {
+  const { folders: foldersPath } = usePath()
+  
   return (
     <Breadcrumbs>
       {parentFolders(folders, folder).map((folder) => (
-        <Link key={folder.id} href={`/folders/${folder.id}`}>
+        <Link key={folder.id} href={foldersPath(folder.id)}>
           {folder.name}
         </Link>
       ))}

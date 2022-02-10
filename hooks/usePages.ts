@@ -3,11 +3,13 @@ import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { activeItemIdSelector } from '../store/workspace/selectors'
 import { foldersSelector, notesSelector } from '../store/notes/selectors'
+import { usePath } from './usePath'
 
 export const useRootPage = () => {
   const router = useRouter()
+  const { root } = usePath()
   return useCallback(() => {
-    router.push(`/`)
+    router.push(root())
   }, [])
 }
 
@@ -40,16 +42,18 @@ export const useItemsPage = () => {
 
 export const useNotesPage = () => {
   const router = useRouter()
+  const { notes } = usePath()
   return useCallback((id: string) => {
-    router.push(`/notes/${id}`)
+    router.push(notes(id))
     return
   }, [])
 }
 
 export const useFoldersPage = () => {
   const router = useRouter()
+  const { folders } = usePath()
   return useCallback((id: string) => {
-    router.push(`/folders/${id}`)
+    router.push(folders(id))
     return
   }, [])
 }
@@ -66,41 +70,47 @@ export const useActiveNotesPage = () => {
 
 export const useLoginPage = () => {
   const router = useRouter()
+  const { login } = usePath()
   return useCallback(() => {
-    router.push(`/login`)
+    router.push(login())
   }, [])
 }
 
 export const useSearchPage = () => {
   const router = useRouter()
+  const { search } = usePath()
   return useCallback(() => {
-    router.push(`/search`)
+    router.push(search())
   }, [])
 }
 
 export const useFavoritesPage = () => {
   const router = useRouter()
+  const { favorites } = usePath()
   return useCallback(() => {
-    router.push(`/favorites`)
+    router.push(favorites())
   }, [])
 }
 
 export const useTrashPage = () => {
   const router = useRouter()
+  const { trash } = usePath()
   return useCallback(() => {
-    router.push(`/trash`)
+    router.push(trash())
   }, [])
 }
 
 export const useProfileSettingsPage = () => {
   const router = useRouter()
+  const { settingsProfile } = usePath()
   return useCallback(() => {
-    router.push(`/settings/profile`)
+    router.push(settingsProfile())
   }, [])
 }
 export const useEditorSettingsPage = () => {
   const router = useRouter()
+  const { settingsEditor } = usePath()
   return useCallback(() => {
-    router.push(`/settings/editor`)
+    router.push(settingsEditor())
   }, [])
 }

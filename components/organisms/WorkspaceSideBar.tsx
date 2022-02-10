@@ -9,6 +9,7 @@ import { activeItemIdSelector, expandedNoteTreeIdsSelector } from '../../store/w
 import { useCallback } from 'react'
 import Link from '../atoms/navigation/Link'
 import workspaceSlice from '../../store/workspace'
+import { usePath } from '../../hooks/usePath'
 
 type WorkspaceSideBarProps = {}
 
@@ -17,6 +18,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const activeItemId = useSelector(activeItemIdSelector)
   const itemsPage = useItemsPage()
   const expandedNoteTreeIds = useSelector(expandedNoteTreeIdsSelector)
+  const { favorites, trash } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
     (id) => {
@@ -34,13 +36,13 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   return (
     <FlexColumn space={0} noWrap>
       <SearchField />
-      <Link href={`/favorites`}>
+      <Link href={favorites()}>
         <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
           <FavoriteIcon />
           Favorite
         </FlexRow>
       </Link>
-      <Link href={`/trash`}>
+      <Link href={trash()}>
         <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
           <TrashIcon />
           Trash
