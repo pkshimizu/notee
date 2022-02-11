@@ -1,7 +1,7 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react'
 import { Ace } from 'ace-builds'
-import UndoManager = Ace.UndoManager
 import Editor = Ace.Editor
+import EditSession = Ace.EditSession
 
 type EditorProviderProps = {
   children: ReactNode
@@ -9,19 +9,25 @@ type EditorProviderProps = {
 
 type EditorState = {
   id: string
-  editor: Editor
-  undoManager: UndoManager
+  session: EditSession
 }
 
 type EditorContextParams = {
-  editors: EditorState[]
-  setEditors: Dispatch<SetStateAction<EditorState[]>>
+  editorStates: EditorState[]
+  setEditorStates: Dispatch<SetStateAction<EditorState[]>>
+  editor?: Editor
+  setEditor: Dispatch<SetStateAction<Editor | undefined>>
 }
 
 export const EditorContext = createContext<EditorContextParams | undefined>(undefined)
 
 export default function EditorProvider({ children }: EditorProviderProps) {
-  const [editors, setEditors] = useState<EditorState[]>([])
+  const [editorStates, setEditorStates] = useState<EditorState[]>([])
+  const [editor, setEditor] = useState<Editor | undefined>(undefined)
 
-  return <EditorContext.Provider value={{ editors, setEditors }}>{children}</EditorContext.Provider>
+  return (
+    <EditorContext.Provider value={{ editorStates, setEditorStates, editor, setEditor }}>
+      {children}
+    </EditorContext.Provider>
+  )
 }

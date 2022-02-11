@@ -1,7 +1,7 @@
 import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
 import TextEditor, { FontSize } from '../atoms/inputs/TextEditor'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
@@ -14,23 +14,30 @@ type NoteTabPanelProps = {
 }
 
 export default function NoteTabPanel({ note }: NoteTabPanelProps) {
-  const { getEditor, setEditor } = useEditor()
+  const { getEditor, setEditor, resetEditor } = useEditor()
   const [propertiesPanel, setPropertiesPanel] = useState(false)
   const editorSettings = useSelector(editorSettingsSelector)
   const [fontSize, setFontSize] = useState<FontSize>(14)
   const dispatch = useDispatch()
+  useEffect(() => {
+    resetEditor(note)
+
+    return () => {
+      resetEditor()
+    }
+  }, [note, resetEditor])
   const handleLoad = useCallback(
     (editor) => {
-      setEditor(note.id, editor)
+      setEditor(editor)
     },
-    [note, setEditor]
+    [setEditor]
   )
   const handleResize = useCallback(() => {
-    const editor = getEditor(note.id)
+    const editor = getEditor()
     if (editor) {
       editor.resize()
     }
-  }, [note, getEditor])
+  }, [getEditor])
   const handleChangeContent = useCallback(
     (content: string) => {
       dispatch(updateNote({ note, content }))
