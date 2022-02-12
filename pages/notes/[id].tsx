@@ -21,7 +21,7 @@ export default function Workspace() {
     }
   }, [dispatch, note, setTitle])
   if (note) {
-    return <NoteTabPanel note={note} />
+    return <NoteTabPanel notes={notes} activeNote={note} />
   }
 
   return <></>
