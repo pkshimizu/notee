@@ -23,15 +23,14 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const dispatch = useDispatch()
   const handleLoad = useCallback(
     (editor) => {
+      editor.resize()
       setEditor(editor)
     },
     [setEditor]
   )
   const handleResize = useCallback(() => {
     const editor = getEditor()
-    if (editor) {
-      editor.resize()
-    }
+    editor?.resize()
   }, [getEditor])
   const handleChangeContent = useCallback(
     (content: string) => {
