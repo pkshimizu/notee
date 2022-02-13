@@ -16,12 +16,14 @@ import {
   NavigateNext,
   NoteAdd,
   OpenInNew,
+  Redo,
   RestoreFromTrash,
   Search,
   Settings,
   Star,
   StarOutline,
   TextSnippet,
+  Undo,
   ViewSidebar,
 } from '@mui/icons-material'
 import { ElementType } from 'react'
@@ -122,6 +124,10 @@ export function PrevIcon(props: IconProps) {
   return <Icon {...props} icon={NavigateBefore} />
 }
 
+export function RedoIcon(props: IconProps) {
+  return <Icon {...props} icon={Redo} />
+}
+
 export function RestoreIcon(props: IconProps) {
   return <Icon {...props} icon={RestoreFromTrash} />
 }
@@ -140,4 +146,8 @@ export function SearchIcon(props: IconProps) {
 
 export function TrashIcon(props: IconProps) {
   return <Icon {...props} icon={Delete} />
+}
+
+export function UndoIcon(props: IconProps) {
+  return <Icon {...props} icon={Undo} />
 }

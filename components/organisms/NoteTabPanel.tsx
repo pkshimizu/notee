@@ -8,7 +8,6 @@ import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { updateNote } from '../../store/notes/actions'
 import { editorSettingsSelector } from '../../store/session/selectors'
 import { useEditor } from '../../hooks/useEditor'
-import { FlexRow } from '../atoms/layout/Flex'
 
 type NoteTabPanelProps = {
   notes: Note[]
@@ -51,17 +50,17 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       {notes.map((note) => (
-        <FlexRow key={note.id} height={note.id === activeNote.id ? '100%' : 0}>
-          <TextEditor
-            content={note.content}
-            keyBinding={editorSettings.keyBinding}
-            theme={editorSettings.theme}
-            mode={note.contentType}
-            fontSize={fontSize}
-            onLoad={handleLoad}
-            onChangeContent={handleChangeContent}
-          />
-        </FlexRow>
+        <TextEditor
+          key={note.id}
+          content={note.content}
+          keyBinding={editorSettings.keyBinding}
+          theme={editorSettings.theme}
+          mode={note.contentType}
+          fontSize={fontSize}
+          height={note.id === activeNote.id ? '100%' : '0'}
+          onLoad={handleLoad}
+          onChangeContent={handleChangeContent}
+        />
       ))}
     </WorkspaceTabPanel>
   )

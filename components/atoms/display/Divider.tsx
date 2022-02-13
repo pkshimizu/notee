@@ -1,5 +1,9 @@
 import MuiDivider from '@mui/material/Divider'
 
-export default function Divider() {
-  return <MuiDivider />
+type DividerProps = {
+  vertical?: boolean
+}
+
+export default function Divider({ vertical }: DividerProps) {
+  return <MuiDivider orientation={vertical ? 'vertical' : 'horizontal'} />
 }
