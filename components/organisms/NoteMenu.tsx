@@ -1,6 +1,6 @@
 import { Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import AppBar from '../atoms/surfaces/AppBar'
 import {
@@ -28,7 +28,9 @@ type NoteMenuProps = {
 export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
-  const { undo, redo } = useEditor()
+  const { undo, redo, canUndo, canRedo } = useEditor()
+  const [undoDisabled, setUndoDisabled] = useState(false)
+  const [redoDisabled, setRedoDisabled] = useState(false)
   const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
@@ -41,6 +43,16 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const handleClose = useCallback(() => {
     close(note.id)
   }, [close, note])
+  useEffect(() => {
+    setUndoDisabled(!canUndo(note.id))
+    setRedoDisabled(!canRedo(note.id))
+  }, [note, canUndo, canRedo])
+  const handleUndo = useCallback(() => {
+    undo(note.id)
+  }, [note, undo])
+  const handleRedo = useCallback(() => {
+    redo(note.id)
+  }, [note, redo])
 
   return (
     <AppBar>
@@ -56,10 +68,10 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
             <TrashIcon />
           </IconButton>
           <Divider vertical />
-          <IconButton label={'undo note content'} color={'white'} onClick={() => undo(note.id)}>
+          <IconButton label={'undo note content'} color={'white'} disabled={undoDisabled} onClick={handleUndo}>
             <UndoIcon />
           </IconButton>
-          <IconButton label={'redo note content'} color={'white'} onClick={() => redo(note.id)}>
+          <IconButton label={'redo note content'} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
             <RedoIcon />
           </IconButton>
         </FlexRow>

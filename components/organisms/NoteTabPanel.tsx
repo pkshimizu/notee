@@ -21,11 +21,11 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const [fontSize, setFontSize] = useState<FontSize>(14)
   const dispatch = useDispatch()
   const handleLoad = useCallback(
-    (editor) => {
+    (id, editor) => {
       editor.resize()
-      setEditor(activeNote.id, editor)
+      setEditor(id, editor)
     },
-    [activeNote, setEditor]
+    [setEditor]
   )
   const handleResize = useCallback(() => {
     const editor = getEditor(activeNote.id)
@@ -58,7 +58,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
           mode={note.contentType}
           fontSize={fontSize}
           height={note.id === activeNote.id ? '100%' : '0'}
-          onLoad={handleLoad}
+          onLoad={(editor) => handleLoad(note.id, editor)}
           onChangeContent={handleChangeContent}
         />
       ))}

@@ -29,10 +29,26 @@ export function useEditor() {
     },
     [context]
   )
+  const canUndo = useCallback(
+    (id: string) => {
+      const editor = context?.getEditor(id)
+      return editor?.getSession().getUndoManager().canUndo()
+    },
+    [context]
+  )
+  const canRedo = useCallback(
+    (id: string) => {
+      const editor = context?.getEditor(id)
+      return editor?.getSession().getUndoManager().canRedo()
+    },
+    [context]
+  )
   return {
     getEditor,
     setEditor,
     undo,
     redo,
+    canUndo,
+    canRedo,
   }
 }
