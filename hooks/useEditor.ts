@@ -5,17 +5,34 @@ import Editor = Ace.Editor
 
 export function useEditor() {
   const context = useContext(EditorContext)
-  const getEditor = useCallback(() => {
-    return context?.editor
-  }, [context])
+  const getEditor = useCallback(
+    (id: string) => {
+      return context?.getEditor(id)
+    },
+    [context]
+  )
   const setEditor = useCallback(
-    (editor: Editor) => {
-      context?.setEditor(editor)
+    (id: string, editor: Editor) => {
+      context?.setEditor(id, editor)
+    },
+    [context]
+  )
+  const undo = useCallback(
+    (id: string) => {
+      context?.getEditor(id)?.undo()
+    },
+    [context]
+  )
+  const redo = useCallback(
+    (id: string) => {
+      context?.getEditor(id)?.redo()
     },
     [context]
   )
   return {
     getEditor,
     setEditor,
+    undo,
+    redo,
   }
 }

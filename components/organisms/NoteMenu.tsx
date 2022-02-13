@@ -18,6 +18,7 @@ import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDial
 import { favorite, unFavorite } from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import Divider from '../atoms/display/Divider'
+import { useEditor } from '../../hooks/useEditor'
 
 type NoteMenuProps = {
   note: Note
@@ -27,6 +28,7 @@ type NoteMenuProps = {
 export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
+  const { undo, redo } = useEditor()
   const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
@@ -54,10 +56,10 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
             <TrashIcon />
           </IconButton>
           <Divider vertical />
-          <IconButton label={'undo note content'} color={'white'} onClick={() => {}}>
+          <IconButton label={'undo note content'} color={'white'} onClick={() => undo(note.id)}>
             <UndoIcon />
           </IconButton>
-          <IconButton label={'redo note content'} color={'white'} onClick={() => {}}>
+          <IconButton label={'redo note content'} color={'white'} onClick={() => redo(note.id)}>
             <RedoIcon />
           </IconButton>
         </FlexRow>
