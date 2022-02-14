@@ -58,7 +58,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   return (
     <TabView
       leftItem={
-        <IconButton label={'open side bar'} onClick={handleToggleSideBar}>
+        <IconButton label={'Open side bar'} onClick={handleToggleSideBar}>
           <MenuIcon />
         </IconButton>
       }
@@ -72,6 +72,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: folder?.name ?? t('No Name'),
             icon: <FolderIcon key={item.id} />,
+            plain: true,
           }
         case 'note':
           const note = notes.find((note) => note.id === item.id)
@@ -80,29 +81,30 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: title(note),
             icon: <NoteIcon key={item.id} />,
+            plain: true,
           }
         case 'search':
           return {
             value: item.id,
-            label: t('Search Results'),
+            label: 'Search Results',
             icon: <SearchIcon key={item.id} />,
           }
         case 'favorites':
           return {
             value: item.id,
-            label: t('Favorites'),
+            label: 'Favorites',
             icon: <FavoriteIcon key={item.id} />,
           }
         case 'trash':
           return {
             value: item.id,
-            label: t('Trash'),
+            label: 'Trash',
             icon: <TrashIcon key={item.id} />,
           }
         default:
           return {
             value: item.id,
-            label: t('UnKnown'),
+            label: 'UnKnown',
           }
         }
       })}

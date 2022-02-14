@@ -72,6 +72,7 @@ export default {
   'Open folder': 'フォルダを開く',
   'Open note': 'ノートを開く',
   'Open properties': 'プロパティを開く',
+  'Open side bar': 'サイドバーを開く',
   // P
   'Prev log': '前のログ',
   Profile: 'プロフィール',
