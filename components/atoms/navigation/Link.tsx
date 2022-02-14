@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import MuiLink from '@mui/material/Link'
 import NextLink from 'next/link'
 
 type LinkProps = {
   href: string
-  children: ReactNode
+  children: ReactElement
 }
 
 export default function Link({ href, children }: LinkProps) {

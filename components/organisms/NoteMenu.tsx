@@ -58,28 +58,28 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton label={'favorite'} color={'white'} onClick={handleFavorite}>
+          <IconButton label={'Favorites'} color={'white'} onClick={handleFavorite}>
             {note.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
-          <IconButton label={'move note'} color={'white'} onClick={() => noteMoveDialog.open(note)}>
+          <IconButton label={'Move note'} color={'white'} onClick={() => noteMoveDialog.open(note)}>
             <MoveIcon />
           </IconButton>
-          <IconButton label={'move note to trash'} color={'white'} onClick={() => noteMoveToTrashDialog.open(note)}>
+          <IconButton label={'Move note to trash'} color={'white'} onClick={() => noteMoveToTrashDialog.open(note)}>
             <TrashIcon />
           </IconButton>
           <Divider vertical />
-          <IconButton label={'undo note content'} color={'white'} disabled={undoDisabled} onClick={handleUndo}>
+          <IconButton label={'Undo'} color={'white'} disabled={undoDisabled} onClick={handleUndo}>
             <UndoIcon />
           </IconButton>
-          <IconButton label={'redo note content'} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
+          <IconButton label={'Redo'} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
             <RedoIcon />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>
-          <IconButton label={'open properties'} color={'white'} onClick={onOpenProperties}>
+          <IconButton label={'Open properties'} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
           </IconButton>
-          <IconButton label={'close tab'} color={'white'} onClick={handleClose}>
+          <IconButton label={'Close tab'} color={'white'} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </FlexRow>

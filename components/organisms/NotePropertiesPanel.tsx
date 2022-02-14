@@ -47,11 +47,11 @@ export default function NotePropertiesPanel({ note, fontSize, onChangeFontSize }
           panel: (
             <FlexColumn space={2} pt={2} pl={1} pr={1} pb={2}>
               <FlexColumn space={0}>
-                <Label variant={'caption'}>作成日時</Label>
+                <Label variant={'caption'} text={'Created Date'} />
                 <DateTimeLabel datetime={note.createdAt} />
               </FlexColumn>
               <FlexColumn space={0}>
-                <Label variant={'caption'}>最終更新日時</Label>
+                <Label variant={'caption'} text={'Last Updated Date'} />
                 <DateTimeLabel datetime={note.updatedAt} />
               </FlexColumn>
               <ContentTypeSelect value={note.contentType} onChange={handleChangeContentType} />

@@ -31,11 +31,11 @@ export default function FolderDeleteDialog({ open, folder, onClose }: FolderDele
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label>{folder.name}</Label>
+          <Label text={folder.name} plain />
         </FlexRow>
-        <Label>Do you want to delete this folder?</Label>
-        <Label>Items in folder will also be delete.</Label>
-        <Label>This operation is irreversible.</Label>
+        <Label text={'Do you want to delete this folder?'} />
+        <Label text={'Items in folder will also be delete.'} />
+        <Label text={'This operation is irreversible.'} />
       </FlexColumn>
     </ConfirmDialog>
   )

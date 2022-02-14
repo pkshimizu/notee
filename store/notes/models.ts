@@ -21,10 +21,7 @@ export type NoteDoc = {
   deletedAt?: string
 }
 
-export type Note = {
-  title: string
-} & Item &
-  NoteDoc
+export type Note = {} & Item & NoteDoc
 
 export type FolderDoc = {
   folderId?: string

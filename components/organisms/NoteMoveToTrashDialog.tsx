@@ -6,6 +6,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import { moveNoteToTrash } from '../../store/notes/actions'
+import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 
 type NoteMoveToTrashDialogProps = {
   open: boolean
@@ -25,9 +26,9 @@ export default function NoteMoveToTrashDialog({ open, note, onClose }: NoteMoveT
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label>{note.title}</Label>
+          <NoteTitleLabel note={note} />
         </FlexRow>
-        <Label>Do you want to move this note to Trash?</Label>
+        <Label text={'Do you want to move this note to Trash?'} />
       </FlexColumn>
     </ConfirmDialog>
   )

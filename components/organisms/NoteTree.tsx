@@ -4,6 +4,7 @@ import { FolderIcon, NoteIcon } from '../atoms/display/Icons'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 import { Folder, Note } from '../../store/notes/models'
 import { useCallback, useState } from 'react'
+import Label from '../atoms/display/Label'
 
 type NoteTreeProps = {
   folder?: Folder
@@ -20,11 +21,13 @@ function NoteTreeNoteItem({ note }: { note: Note }) {
 
 function NoteTreeFolderItem({ folder, folderOnly }: { folder: Folder; folderOnly: boolean }) {
   return (
-    <TreeItem id={folder.id} label={folder.name} icon={<FolderIcon />}>
-      {folder.folders.map((subFolder) => (
-        <NoteTreeFolderItem key={subFolder.id} folder={subFolder} folderOnly={folderOnly} />
-      ))}
-      {!folderOnly && folder.notes.map((note) => <NoteTreeNoteItem key={note.id} note={note} />)}
+    <TreeItem id={folder.id} label={<Label text={folder.name} plain />} icon={<FolderIcon />}>
+      <>
+        {folder.folders.map((subFolder) => (
+          <NoteTreeFolderItem key={subFolder.id} folder={subFolder} folderOnly={folderOnly} />
+        ))}
+        {!folderOnly && folder.notes.map((note) => <NoteTreeNoteItem key={note.id} note={note} />)}
+      </>
     </TreeItem>
   )
 }
@@ -57,7 +60,7 @@ export default function NoteTree({
 
   return (
     <TreeView selectedId={activeId} expanded={expanded} onSelect={handleSelect}>
-      {folder && <NoteTreeFolderItem folder={folder} folderOnly={folderOnly} />}
+      <>{folder && <NoteTreeFolderItem folder={folder} folderOnly={folderOnly} />}</>
     </TreeView>
   )
 }

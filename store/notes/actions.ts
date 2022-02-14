@@ -3,6 +3,7 @@ import systemSlice from '../system'
 import { Folder, Note } from '../notes/models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
+import { useNote } from '../../hooks/useNote'
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }
@@ -15,7 +16,7 @@ export const fetchRoot = createAsyncAction<void, FetchRootResults>(
     if (currentUser) {
       const folders = await noteRepository.loadFolders(currentUser)
       if (folders === undefined) {
-        const newRoot = await noteRepository.createFolder(currentUser, 'マイノート')
+        const newRoot = await noteRepository.createFolder(currentUser, 'My Notes')
         const newFolders: { [key: string]: Folder } = {}
         newFolders[newRoot.id] = newRoot
         return { folders: newFolders, notes: {} }
@@ -79,7 +80,7 @@ export const createFolder = createAsyncAction<CreateFolderParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createFolder(state.session.currentUser, params.name, params.parentFolder)
-      dispatch(systemSlice.actions.message({ message: '新しいフォルダを作成しました' }))
+      dispatch(systemSlice.actions.message({ message: 'A new folder has been created' }))
     }
   }
 )
@@ -93,7 +94,7 @@ export const createNote = createAsyncAction<CreateNoteParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createNote(state.session.currentUser, params.parentFolder)
-      dispatch(systemSlice.actions.message({ message: '新しいノートを作成しました' }))
+      dispatch(systemSlice.actions.message({ message: 'A new note has been created' }))
     }
   }
 )
@@ -177,11 +178,11 @@ export const favorite = createAsyncAction<FavoriteParams, void>(
     if (state.session.currentUser) {
       if (params.folder) {
         await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: true })
-        dispatch(systemSlice.actions.message({ message: `${params.folder.name}をお気に入りにしました` }))
+        dispatch(systemSlice.actions.message({ message: `${params.folder.name} is now a favorite!` }))
       }
       if (params.note) {
         await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: true })
-        dispatch(systemSlice.actions.message({ message: `ノートをお気に入りにしました` }))
+        dispatch(systemSlice.actions.message({ message: `Note is now a favorite!` }))
       }
     }
   }
@@ -198,11 +199,11 @@ export const unFavorite = createAsyncAction<UnFavoriteParams, void>(
     if (state.session.currentUser) {
       if (params.folder) {
         await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: false })
-        dispatch(systemSlice.actions.message({ message: `${params.folder.name}をお気に入りから外しました` }))
+        dispatch(systemSlice.actions.message({ message: `Removed folder from my favorites.` }))
       }
       if (params.note) {
         await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: false })
-        dispatch(systemSlice.actions.message({ message: `ノートをお気に入りから外しました` }))
+        dispatch(systemSlice.actions.message({ message: `Removed note from my favorites.` }))
       }
     }
   }
@@ -222,8 +223,9 @@ export const restore = createAsyncAction<RestoreParams, void>(
         dispatch(systemSlice.actions.message({ message: `${params.folder.name} has been restored` }))
       }
       if (params.note) {
+        const { title } = useNote(params.note)
         await noteRepository.resetDeletedAtNote(state.session.currentUser, params.note)
-        dispatch(systemSlice.actions.message({ message: `${params.note.title} has been restored` }))
+        dispatch(systemSlice.actions.message({ message: `${title()} has been restored` }))
       }
     }
   }

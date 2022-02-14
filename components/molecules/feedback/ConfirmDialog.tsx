@@ -1,6 +1,7 @@
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Button from '../../atoms/inputs/Button'
+import Label from '../../atoms/display/Label'
 
 type ConfirmDialogProps = {
   open: boolean
@@ -8,7 +9,7 @@ type ConfirmDialogProps = {
   okLabel?: string
   cancelLabel?: string
   width?: DialogWidth
-  children: ReactNode
+  children: ReactElement
   onOk: () => void
   onCancel: () => void
 }
@@ -26,15 +27,15 @@ export default function ConfirmDialog({
   return (
     <Dialog
       open={open}
-      title={title}
+      title={<Label text={title} />}
       width={width}
       actions={
         <>
           <Button variant={'text'} onClick={onCancel}>
-            {cancelLabel}
+            <Label text={cancelLabel} />
           </Button>
           <Button variant={'text'} onClick={onOk}>
-            {okLabel}
+            <Label text={okLabel} />
           </Button>
         </>
       }

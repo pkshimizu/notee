@@ -2,6 +2,7 @@ import MuiMenuItem from '@mui/material/MenuItem'
 import MuiListItemIcon from '@mui/material/ListItemIcon'
 import MuiListItemText from '@mui/material/ListItemText'
 import { ReactNode } from 'react'
+import { useLocale } from '../../../hooks/useLocale'
 
 type MenuItemProps = {
   icon?: ReactNode
@@ -10,10 +11,12 @@ type MenuItemProps = {
 }
 
 export default function MenuItem({ icon, children, onClick }: MenuItemProps) {
+  const { t } = useLocale()
+
   return (
     <MuiMenuItem onClick={onClick}>
       {icon && <MuiListItemIcon>{icon}</MuiListItemIcon>}
-      <MuiListItemText>{children}</MuiListItemText>
+      <MuiListItemText>{t(children)}</MuiListItemText>
     </MuiMenuItem>
   )
 }

@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react'
 import NoteTree from '../../organisms/NoteTree'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Button from '../../atoms/inputs/Button'
+import Label from '../../atoms/display/Label'
 
 type FolderSelectDialogProps = {
   open: boolean
@@ -56,15 +57,15 @@ export default function FolderSelectDialog({
   return (
     <Dialog
       open={open}
-      title={title}
+      title={<Label text={title} />}
       width={width}
       actions={
         <>
           <Button variant={'text'} onClick={onClose}>
-            {closeLabel}
+            <Label text={closeLabel} />
           </Button>
           <Button variant={'text'} disabled={folderId === undefined} onClick={handleOk}>
-            {okLabel}
+            <Label text={okLabel} />
           </Button>
         </>
       }

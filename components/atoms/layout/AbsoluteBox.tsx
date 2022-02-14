@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactElement, useEffect, useRef } from 'react'
 import MuiBox from '@mui/material/Box'
 
 type AbsoluteBoxProps = {
@@ -7,7 +7,7 @@ type AbsoluteBoxProps = {
   right?: string | number
   bottom?: string | number
   onResize?: (_width: number, _height: number) => void
-  children: ReactNode
+  children: ReactElement | ReactElement[]
 }
 
 export default function AbsoluteBox({ top, left, right, bottom, onResize, children }: AbsoluteBoxProps) {

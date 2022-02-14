@@ -6,6 +6,7 @@ import { notesSelector } from '../../store/notes/selectors'
 import workspaceSlice from '../../store/workspace'
 import { useTitle } from '../../hooks/useTitle'
 import NoteTabPanel from '../../components/organisms/NoteTabPanel'
+import { useNote } from '../../hooks/useNote'
 
 export default function Workspace() {
   const notes = useSelector(notesSelector)
@@ -14,12 +15,13 @@ export default function Workspace() {
   const dispatch = useDispatch()
   const { id } = router.query
   const note = notes.find((note) => note.id === id)
+  const { title } = useNote(note)
   useEffect(() => {
     if (note) {
       dispatch(workspaceSlice.actions.openNote({ id: note.id }))
-      setTitle(note.title)
+      setTitle(title(), true)
     }
-  }, [dispatch, note, setTitle])
+  }, [dispatch, note, title, setTitle])
   if (note) {
     return <NoteTabPanel notes={notes} activeNote={note} />
   }

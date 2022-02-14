@@ -2,7 +2,7 @@ import MuiCard from '@mui/material/Card'
 import MuiCardHeader from '@mui/material/CardHeader'
 import MuiCardContent from '@mui/material/CardContent'
 import MuiCardActions from '@mui/material/CardActions'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 type CardSize = 'sm' | 'md' | 'lg'
 
@@ -18,9 +18,9 @@ const width = (size: CardSize) => {
 }
 
 type CardProps = {
-  header?: ReactNode
-  children: ReactNode
-  actions?: ReactNode
+  header?: ReactElement
+  children: ReactElement | ReactElement[]
+  actions?: ReactElement | ReactElement[]
   size?: CardSize
 }
 

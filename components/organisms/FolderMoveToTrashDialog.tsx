@@ -31,10 +31,10 @@ export default function FolderMoveToTrashDialog({ open, folder, onClose }: Folde
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label>{folder.name}</Label>
+          <Label text={folder.name} plain />
         </FlexRow>
-        <Label>Do you want to move this folder to Trash?</Label>
-        <Label>Items in folder will also be moved to Trash.</Label>
+        <Label text={'Do you want to move this folder to Trash?'} />
+        <Label text={'Items in folder will also be moved to Trash.'} />
       </FlexColumn>
     </ConfirmDialog>
   )

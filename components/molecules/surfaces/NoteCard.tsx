@@ -28,22 +28,22 @@ export default function NoteCard({
       actions={
         <>
           {onClickNoteLink && (
-            <IconButton label={'open note'} onClick={() => onClickNoteLink(note)}>
+            <IconButton label={'Open note'} onClick={() => onClickNoteLink(note)}>
               <OpenIcon />
             </IconButton>
           )}
           {onClickMoveToTrash && (
-            <IconButton label={'move note to trash'} onClick={() => onClickMoveToTrash(note)}>
+            <IconButton label={'Move note to trash'} onClick={() => onClickMoveToTrash(note)}>
               <TrashIcon />
             </IconButton>
           )}
           {onClickRestore && (
-            <IconButton label={'restore note'} onClick={() => onClickRestore(note)}>
+            <IconButton label={'Restore note'} onClick={() => onClickRestore(note)}>
               <RestoreIcon />
             </IconButton>
           )}
           {onClickDelete && (
-            <IconButton label={'delete note'} onClick={() => onClickDelete(note)}>
+            <IconButton label={'Delete note'} onClick={() => onClickDelete(note)}>
               <DeleteIcon />
             </IconButton>
           )}
@@ -52,11 +52,11 @@ export default function NoteCard({
     >
       <FlexColumn>
         <FlexRow>
-          <Label>作成日時</Label>
+          <Label text={'Created Date'} />
           <DateTimeLabel datetime={note.createdAt} />
         </FlexRow>
         <FlexRow>
-          <Label>更新日時</Label>
+          <Label text={'Updated Date'} />
           <DateTimeLabel datetime={note.updatedAt} />
         </FlexRow>
       </FlexColumn>

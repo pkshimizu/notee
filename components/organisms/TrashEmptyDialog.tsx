@@ -24,8 +24,8 @@ export default function TrashEmptyDialog({ open, onClose }: TrashEmptyDialogProp
   return (
     <ConfirmDialog open={open} title={'Empty trash'} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
-        <Label>Do you want to delete items in trash?</Label>
-        <Label>This operation is irreversible.</Label>
+        <Label text={'Do you want to delete items in trash?'} />
+        <Label text={'This operation is irreversible.'} />
       </FlexColumn>
     </ConfirmDialog>
   )

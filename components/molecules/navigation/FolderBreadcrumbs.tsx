@@ -2,6 +2,7 @@ import { Folder } from '../../../store/notes/models'
 import Breadcrumbs from '../../atoms/navigation/Breadcrumbs'
 import Link from '../../atoms/navigation/Link'
 import { usePath } from '../../../hooks/usePath'
+import Label from '../../atoms/display/Label'
 
 type FolderBreadcrumbsProps = {
   folders: Folder[]
@@ -25,7 +26,7 @@ export default function FolderBreadcrumbs({ folders, folder }: FolderBreadcrumbs
     <Breadcrumbs>
       {parentFolders(folders, folder).map((folder) => (
         <Link key={folder.id} href={foldersPath(folder.id)}>
-          {folder.name}
+          <Label text={folder.name} plain />
         </Link>
       ))}
     </Breadcrumbs>

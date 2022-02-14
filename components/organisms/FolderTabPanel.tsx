@@ -33,40 +33,32 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
     >
       <FlexColumn pl={2} pr={2} pb={4}>
         <FolderBreadcrumbs folders={folders} folder={folder} />
-        {folder.folders.length > 0 && (
-          <>
-            <FlexRow pt={2} pb={2}>
-              <Label variant={'caption'}>フォルダ</Label>
-            </FlexRow>
-            <FlexRow>
-              {folder.folders.map((folder) => (
-                <FolderCard
-                  folder={folder}
-                  key={folder.id}
-                  onClickFolderLink={() => openFolderPage(folder.id)}
-                  onClickMoveToTrash={folderMoveToTrashDialog.open}
-                />
-              ))}
-            </FlexRow>
-          </>
-        )}
-        {folder.notes.length > 0 && (
-          <>
-            <FlexRow pt={2} pb={2}>
-              <Label variant={'caption'}>ノート</Label>
-            </FlexRow>
-            <FlexRow>
-              {folder.notes.map((note) => (
-                <NoteCard
-                  note={note}
-                  key={note.id}
-                  onClickNoteLink={() => openNotePage(note.id)}
-                  onClickMoveToTrash={noteMoveToTrashDialog.open}
-                />
-              ))}
-            </FlexRow>
-          </>
-        )}
+        <FlexRow pt={2} pb={2}>
+          <Label variant={'caption'} text={'Folder'} />
+        </FlexRow>
+        <FlexRow>
+          {folder.folders.map((folder) => (
+            <FolderCard
+              folder={folder}
+              key={folder.id}
+              onClickFolderLink={() => openFolderPage(folder.id)}
+              onClickMoveToTrash={folderMoveToTrashDialog.open}
+            />
+          ))}
+        </FlexRow>
+        <FlexRow pt={2} pb={2}>
+          <Label variant={'caption'} text={'Note'} />
+        </FlexRow>
+        <FlexRow>
+          {folder.notes.map((note) => (
+            <NoteCard
+              note={note}
+              key={note.id}
+              onClickNoteLink={() => openNotePage(note.id)}
+              onClickMoveToTrash={noteMoveToTrashDialog.open}
+            />
+          ))}
+        </FlexRow>
       </FlexColumn>
     </WorkspaceTabPanel>
   )

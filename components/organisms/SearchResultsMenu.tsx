@@ -16,7 +16,7 @@ export default function SearchResultsMenu({}: SearchResultsMenuProps) {
   return (
     <AppBar>
       <FlexRow justify={'flex-end'}>
-        <IconButton label={'close tab'} color={'white'} onClick={handleClose}>
+        <IconButton label={'Close tab'} color={'white'} onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </FlexRow>

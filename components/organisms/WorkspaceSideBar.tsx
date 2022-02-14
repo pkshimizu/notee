@@ -10,6 +10,7 @@ import { useCallback } from 'react'
 import Link from '../atoms/navigation/Link'
 import workspaceSlice from '../../store/workspace'
 import { usePath } from '../../hooks/usePath'
+import Label from '../atoms/display/Label'
 
 type WorkspaceSideBarProps = {}
 
@@ -40,13 +41,13 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
         <Link href={favorites()}>
           <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
             <FavoriteIcon />
-            Favorite
+            <Label text={'Favorites'} />
           </FlexRow>
         </Link>
         <Link href={trash()}>
           <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
             <TrashIcon />
-            Trash
+            <Label text={'Trash'} />
           </FlexRow>
         </Link>
         <NoteTree

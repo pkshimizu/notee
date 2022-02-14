@@ -21,13 +21,15 @@ export default function SettingsAppBar() {
   return (
     <AppBar>
       <FlexRow justify={'space-between'} align={'center'}>
-        <IconButton label={'back'} color={'white'} onClick={activeNotePage}>
+        <IconButton label={'Back'} color={'white'} onClick={activeNotePage}>
           <BackIcon />
         </IconButton>
-        {currentUser && (
+        {currentUser ? (
           <Button onClick={handleClickMenu} variant={'text'}>
             <UserAvatar user={currentUser} />
           </Button>
+        ) : (
+          <></>
         )}
       </FlexRow>
       <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />

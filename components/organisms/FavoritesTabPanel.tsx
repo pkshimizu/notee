@@ -22,40 +22,32 @@ export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
   return (
     <WorkspaceTabPanel menu={<FavoritesMenu />}>
       <FlexColumn pl={2} pr={2} pb={4}>
-        {folders.length > 0 && (
-          <>
-            <FlexRow pt={2} pb={2}>
-              <Label variant={'caption'}>フォルダ</Label>
-            </FlexRow>
-            <FlexRow>
-              {folders.map((folder) => (
-                <FolderCard
-                  folder={folder}
-                  key={folder.id}
-                  onClickFolderLink={(folder) => openFolderPage(folder.id)}
-                  onClickMoveToTrash={folderMoveToTrashDialog.open}
-                />
-              ))}
-            </FlexRow>
-          </>
-        )}
-        {notes.length > 0 && (
-          <>
-            <FlexRow pt={2} pb={2}>
-              <Label variant={'caption'}>ノート</Label>
-            </FlexRow>
-            <FlexRow>
-              {notes.map((note) => (
-                <NoteCard
-                  note={note}
-                  key={note.id}
-                  onClickNoteLink={() => openNotePage(note.id)}
-                  onClickMoveToTrash={noteMoveToTrashDialog.open}
-                />
-              ))}
-            </FlexRow>
-          </>
-        )}
+        <FlexRow pt={2} pb={2}>
+          <Label variant={'caption'} text={'Folder'} />
+        </FlexRow>
+        <FlexRow>
+          {folders.map((folder) => (
+            <FolderCard
+              folder={folder}
+              key={folder.id}
+              onClickFolderLink={(folder) => openFolderPage(folder.id)}
+              onClickMoveToTrash={folderMoveToTrashDialog.open}
+            />
+          ))}
+        </FlexRow>
+        <FlexRow pt={2} pb={2}>
+          <Label variant={'caption'} text={'Note'} />
+        </FlexRow>
+        <FlexRow>
+          {notes.map((note) => (
+            <NoteCard
+              note={note}
+              key={note.id}
+              onClickNoteLink={() => openNotePage(note.id)}
+              onClickMoveToTrash={noteMoveToTrashDialog.open}
+            />
+          ))}
+        </FlexRow>
       </FlexColumn>
     </WorkspaceTabPanel>
   )

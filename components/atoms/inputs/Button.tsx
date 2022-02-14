@@ -1,14 +1,14 @@
 import MuiButton from '@mui/material/Button'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 type ButtonColor = 'primary' | 'google' | 'github'
 
 type ButtonProps = {
-  icon?: ReactNode
+  icon?: ReactElement
   variant?: 'text' | 'contained' | 'outlined'
   disabled?: boolean
   color?: ButtonColor
-  children: ReactNode
+  children: ReactElement
   onClick: (_target: EventTarget) => void
 }
 

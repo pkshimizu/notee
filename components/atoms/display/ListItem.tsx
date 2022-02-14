@@ -1,12 +1,12 @@
-import { ReactNode } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import MuiListItem from '@mui/material/ListItem'
 import MuiListItemIcon from '@mui/material/ListItemIcon'
 import MuiListItemButton from '@mui/material/ListItemButton'
 import MuiListItemText from '@mui/material/ListItemText'
 
 type ListItemProps = {
-  icon?: ReactNode
-  label?: ReactNode
+  icon?: ReactElement
+  label?: ReactElement
   onClick?: () => void
 }
 

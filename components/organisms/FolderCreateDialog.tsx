@@ -42,7 +42,7 @@ export default function FolderCreateDialog({ open, folder, onClose }: FolderSett
 
   return (
     <FormDialog open={open} width={'xs'} onSubmit={handleSubmit(handleSaveFolderSettings)} onClose={handleClose}>
-      <TextField label={'フォルダ名'} focused register={register('name')} error={errors.name?.message} />
+      <TextField label={'Folder Name'} focused register={register('name')} error={errors.name?.message} />
     </FormDialog>
   )
 }

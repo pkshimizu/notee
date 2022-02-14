@@ -1,7 +1,8 @@
 import MuiTextField from '@mui/material/TextField'
 import { UseFormRegisterReturn } from 'react-hook-form'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import { InputAdornment } from '@mui/material'
+import { useLocale } from '../../../hooks/useLocale'
 
 type TextSize = 'sm' | 'md' | 'lg'
 
@@ -11,7 +12,7 @@ type TextFieldProps = {
   size?: TextSize
   focused?: boolean
   readonly?: boolean
-  icon?: ReactNode
+  icon?: ReactElement
   register?: UseFormRegisterReturn
   error?: any
 }
@@ -30,9 +31,11 @@ const width = (size?: TextSize) => {
 }
 
 export default function TextField({ label, value, size, focused, readonly, icon, register, error }: TextFieldProps) {
+  const { t } = useLocale()
+
   return (
     <MuiTextField
-      label={label}
+      label={label && t(label)}
       value={value}
       variant={'filled'}
       autoFocus={focused}

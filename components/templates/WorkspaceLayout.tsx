@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from 'react'
+import { ReactElement, useCallback } from 'react'
 import Drawer from '../atoms/navigation/Drawer'
 import { FlexColumn } from '../atoms/layout/Flex'
 import WorkspaceAppBar from '../organisms/WorkspaceAppBar'
@@ -10,7 +10,7 @@ import WorkspaceTabView from '../organisms/WorkspaceTabView'
 import { Theme, useMediaQuery } from '@mui/material'
 
 type WorkspaceLayoutProps = {
-  children: ReactNode
+  children: ReactElement
 }
 
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {

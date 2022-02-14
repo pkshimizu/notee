@@ -6,6 +6,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import { deleteNote } from '../../store/notes/actions'
+import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 
 type NoteDeleteDialogProps = {
   open: boolean
@@ -25,10 +26,10 @@ export default function NoteDeleteDialog({ open, note, onClose }: NoteDeleteDial
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label>{note.title}</Label>
+          <NoteTitleLabel note={note} />
         </FlexRow>
-        <Label>Do you want to delete this note?</Label>
-        <Label>This operation is irreversible.</Label>
+        <Label text={'Do you want to delete this note?'} />
+        <Label text={'This operation is irreversible.'} />
       </FlexColumn>
     </ConfirmDialog>
   )

@@ -36,15 +36,15 @@ export default function Login() {
         <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
         <FlexColumn space={2}>
           <FlexColumn space={0}>
-            <Label variant={'title'}>notee</Label>
-            <Label variant={'caption'}>Simple Personal Note</Label>
+            <Label variant={'title'} text={'notee'} />
+            <Label variant={'caption'} text={'Simple Personal Note'} />
           </FlexColumn>
           <FlexColumn>
             <Button icon={<GoogleIcon />} color={'google'} onClick={handleLogInWithGoogle}>
-              Login with Google
+              <Label text={'Login with Google'} />
             </Button>
             <Button icon={<GitHubIcon />} color={'github'} onClick={handleLogInWithGitHub}>
-              Login with Github
+              <Label text={'Login with GitHub'} />
             </Button>
           </FlexColumn>
         </FlexColumn>

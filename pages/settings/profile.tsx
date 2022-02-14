@@ -13,19 +13,21 @@ export default function Profile() {
   const user = useSelector(currentUserSelector)
   const { setTitle } = useTitle()
   useEffect(() => {
-    setTitle('Profile settings')
+    setTitle('Profile Settings')
   }, [setTitle])
 
   return (
     <FlexColumn>
-      <Label variant={'title'}>Profile</Label>
+      <Label variant={'title'} text={'Profile'} />
       <Divider />
-      {user && (
+      {user ? (
         <>
           <UserAvatar user={user} size={'xl'} />
           <TextField label={'User Name'} value={user.name} readonly size={'md'} />
           <TextField label={'Email'} value={user.email} readonly size={'md'} />
         </>
+      ) : (
+        <></>
       )}
     </FlexColumn>
   )

@@ -23,7 +23,7 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
     <WorkspaceTabPanel menu={<SearchResultsMenu />}>
       <FlexColumn pl={2} pr={2} pb={4}>
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'}>フォルダ</Label>
+          <Label variant={'caption'} text={'Folder'} />
         </FlexRow>
         <FlexRow>
           {folders.map((folder) => (
@@ -36,7 +36,7 @@ export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
           ))}
         </FlexRow>
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'}>ノート</Label>
+          <Label variant={'caption'} text={'Note'} />
         </FlexRow>
         <FlexRow>
           {notes.map((note) => (

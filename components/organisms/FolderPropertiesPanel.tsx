@@ -11,6 +11,7 @@ import TextField from '../atoms/inputs/TextField'
 import Form from '../atoms/inputs/Form'
 import Button from '../atoms/inputs/Button'
 import { updateFolder } from '../../store/notes/actions'
+import Label from '../atoms/display/Label'
 
 type FolderPropertiesPanelProps = {
   folder: Folder
@@ -53,7 +54,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
               <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
                 <FlexRow justify={'flex-end'} space={0}>
                   <TextField
-                    label={'フォルダ名'}
+                    label={'Folder Name'}
                     readonly={folder.folderId === undefined}
                     register={register('name')}
                     error={errors.name?.message}
@@ -63,7 +64,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
                     variant={'text'}
                     onClick={() => handleSubmit(handleSaveFolderSettings)()}
                   >
-                    変更
+                    <Label text={'Change'} />
                   </Button>
                 </FlexRow>
               </Form>

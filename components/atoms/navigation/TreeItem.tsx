@@ -1,13 +1,13 @@
 import MuiTreeItem from '@mui/lab/TreeItem'
-import React, { ReactNode } from 'react'
+import React, { ReactElement } from 'react'
 import MuiBox from '@mui/material/Box'
 
 type TreeItemProps = {
   id: string
-  icon: ReactNode
-  label: ReactNode
-  end?: ReactNode
-  children?: ReactNode
+  icon: ReactElement
+  label: ReactElement
+  end?: ReactElement
+  children?: ReactElement | ReactElement[]
 }
 
 export default function TreeItem({ id, icon, label, end, children }: TreeItemProps) {

@@ -1,20 +1,22 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement } from 'react'
 import MuiTab from '@mui/material/Tab'
 import MuiTabs from '@mui/material/Tabs'
 import MuiBox from '@mui/material/Box'
 import MuiTypography from '@mui/material/Typography'
+import { useLocale } from '../../../hooks/useLocale'
 
 export type Tab = {
   value: string
   icon?: ReactElement
   label?: string
-  panel?: ReactNode
+  panel?: ReactElement
+  plain?: boolean
 }
 
 type TabViewProps = {
   value: string
   tabs: Tab[]
-  leftItem?: ReactNode
+  leftItem?: ReactElement
   variant?: 'scrollable' | 'fullWidth'
   tabsOnly?: boolean
   onChange?: (_value: string) => void
@@ -37,6 +39,7 @@ export default function TabView({
   onChange,
 }: TabViewProps) {
   const activeTab = tabs.find((tab) => tab.value === value)
+  const { t } = useLocale()
 
   return (
     <MuiBox sx={{ width: '100%', height: tabsOnly ? undefined : '100%' }}>
@@ -53,7 +56,9 @@ export default function TabView({
               label={
                 <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
                   {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
-                  {tab.label && <MuiTypography variant='button'>{tabLabel(tab.label)}</MuiTypography>}
+                  {tab.label && (
+                    <MuiTypography variant='button'>{tabLabel(tab.plain ? tab.label : t(tab.label))}</MuiTypography>
+                  )}
                 </MuiBox>
               }
               value={tab.value}

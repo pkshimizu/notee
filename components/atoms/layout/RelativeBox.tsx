@@ -1,10 +1,10 @@
 import MuiBox from '@mui/material/Box'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 type RelativeBoxProps = {
   width?: string
   height?: string
-  children: ReactNode
+  children: ReactElement | ReactElement[]
 }
 
 export default function RelativeBox({ width = '100%', height = '100%', children }: RelativeBoxProps) {

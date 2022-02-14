@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import MuiBox from '@mui/material/Box'
 
 export type FlexAlign = 'flex-start' | 'center' | 'flex-end' | 'baseline'
@@ -23,7 +23,7 @@ type FlexProps = {
   pr?: PaddingSize
   pt?: PaddingSize
   pb?: PaddingSize
-  children: ReactNode
+  children: ReactElement | ReactElement[]
 }
 
 export function FlexColumn(props: FlexProps) {

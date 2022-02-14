@@ -3,60 +3,15 @@ import { TrashIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } f
 import { useDispatch, useSelector } from 'react-redux'
 import { activeItemIdSelector, openItemsSelector } from '../../store/workspace/selectors'
 import { useCallback, useEffect } from 'react'
-import { Folder, Note } from '../../store/notes/models'
 import IconButton from '../atoms/inputs/IconButton'
 import { useItemsPage } from '../../hooks/usePages'
 import { foldersSelector, notesSelector } from '../../store/notes/selectors'
-import workspaceSlice, { WorkspaceItem } from '../../store/workspace'
+import workspaceSlice from '../../store/workspace'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
+import { useNote } from '../../hooks/useNote'
+import { useLocale } from '../../hooks/useLocale'
 
 type WorkspaceTabViewProps = {}
-
-function makeTabs(items: WorkspaceItem[], folders: Folder[], notes: Note[]) {
-  return items.map((item) => {
-    switch (item.type) {
-    case 'folder':
-      const folder = folders.find((folder) => folder.id === item.id)
-
-      return {
-        value: item.id,
-        label: folder?.name ?? '名前無し',
-        icon: <FolderIcon key={item.id} />,
-      }
-    case 'note':
-      const note = notes.find((note) => note.id === item.id)
-
-      return {
-        value: item.id,
-        label: note?.title ?? '名前無し',
-        icon: <NoteIcon key={item.id} />,
-      }
-    case 'search':
-      return {
-        value: item.id,
-        label: 'Search Results',
-        icon: <SearchIcon key={item.id} />,
-      }
-    case 'favorites':
-      return {
-        value: item.id,
-        label: 'Favorites',
-        icon: <FavoriteIcon key={item.id} />,
-      }
-    case 'trash':
-      return {
-        value: item.id,
-        label: 'Trash',
-        icon: <TrashIcon key={item.id} />,
-      }
-    default:
-      return {
-        value: item.id,
-        label: 'UnKnown',
-      }
-    }
-  })
-}
 
 export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const folders = useSelector(foldersSelector)
@@ -65,6 +20,8 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const items = useSelector(openItemsSelector)
   const itemsPage = useItemsPage()
   const { close } = useWorkspaceTab()
+  const { t } = useLocale()
+  const { title } = useNote()
   const dispatch = useDispatch()
   useEffect(() => {
     items.forEach((item) => {
@@ -106,7 +63,49 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
         </IconButton>
       }
       value={activeItemId}
-      tabs={makeTabs(items, folders, notes)}
+      tabs={items.map((item) => {
+        switch (item.type) {
+        case 'folder':
+          const folder = folders.find((folder) => folder.id === item.id)
+
+          return {
+            value: item.id,
+            label: folder?.name ?? t('No Name'),
+            icon: <FolderIcon key={item.id} />,
+          }
+        case 'note':
+          const note = notes.find((note) => note.id === item.id)
+
+          return {
+            value: item.id,
+            label: title(note),
+            icon: <NoteIcon key={item.id} />,
+          }
+        case 'search':
+          return {
+            value: item.id,
+            label: t('Search Results'),
+            icon: <SearchIcon key={item.id} />,
+          }
+        case 'favorites':
+          return {
+            value: item.id,
+            label: t('Favorites'),
+            icon: <FavoriteIcon key={item.id} />,
+          }
+        case 'trash':
+          return {
+            value: item.id,
+            label: t('Trash'),
+            icon: <TrashIcon key={item.id} />,
+          }
+        default:
+          return {
+            value: item.id,
+            label: t('UnKnown'),
+          }
+        }
+      })}
       tabsOnly
       onChange={handleChangeTab}
     />

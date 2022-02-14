@@ -47,36 +47,38 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton label={'favorite'} color={'white'} onClick={handleFavorite}>
+          <IconButton label={'Favorites'} color={'white'} onClick={handleFavorite}>
             {folder.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
-          <IconButton label={'create folder'} color={'white'} onClick={() => folderCreateDialog.open(folder)}>
+          <IconButton label={'Create folder'} color={'white'} onClick={() => folderCreateDialog.open(folder)}>
             <CreateFolderIcon />
           </IconButton>
-          <IconButton label={'create note'} color={'white'} onClick={handleCreateNote}>
+          <IconButton label={'Create note'} color={'white'} onClick={handleCreateNote}>
             <CreateNoteIcon />
           </IconButton>
-          {folder.folderId && (
+          {folder.folderId ? (
             <>
-              <IconButton label={'move folder'} color={'white'} onClick={() => folderMoveDialog.open(folder)}>
+              <IconButton label={'Move folder'} color={'white'} onClick={() => folderMoveDialog.open(folder)}>
                 <MoveIcon />
               </IconButton>
               <IconButton
-                label={'move folder to trash'}
+                label={'Move folder to trash'}
                 color={'white'}
                 onClick={() => folderMoveToTrashDialog.open(folder)}
               >
                 <TrashIcon />
               </IconButton>
             </>
+          ) : (
+            <></>
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>
-          <IconButton label={'open properties'} color={'white'} onClick={onOpenProperties}>
+          <IconButton label={'Open properties'} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
           </IconButton>
           <IconButton
-            label={'close tab'}
+            label={'Close tab'}
             color={'white'}
             onClick={handleClose}
             disabled={folder.folderId === undefined}

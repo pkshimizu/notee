@@ -2,16 +2,16 @@ import MuiDialog from '@mui/material/Dialog'
 import MuiDialogTitle from '@mui/material/DialogTitle'
 import MuiDialogContent from '@mui/material/DialogContent'
 import MuiDialogActions from '@mui/material/DialogActions'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 export type DialogWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 type DialogProps = {
   open: boolean
-  title?: ReactNode
+  title?: ReactElement
   width?: DialogWidth
-  children: ReactNode
-  actions?: ReactNode
+  children: ReactElement | ReactElement[]
+  actions?: ReactElement | ReactElement[]
   onClose: () => void
 }
 

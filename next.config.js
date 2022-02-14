@@ -15,6 +15,10 @@ const moduleExports = {
   images: {
     domains: ['lh3.googleusercontent.com'],
   },
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'ja',
+  },
 }
 
 const sentryWebpackPluginOptions = {

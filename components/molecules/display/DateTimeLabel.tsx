@@ -6,5 +6,7 @@ type DateTimeLabelProps = {
 }
 
 export default function DateTimeLabel({ datetime }: DateTimeLabelProps) {
-  return <Label>{dayjs(datetime).format('YYYY-MM-DD HH:mm:ss')}</Label>
+  const text = dayjs(datetime).format('YYYY-MM-DD HH:mm:ss')
+
+  return <Label text={text} plain />
 }

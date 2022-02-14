@@ -1,8 +1,8 @@
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 type BreadcrumbsParams = {
-  children: ReactNode
+  children: ReactElement | ReactElement[]
 }
 
 export default function Breadcrumbs({ children }: BreadcrumbsParams) {

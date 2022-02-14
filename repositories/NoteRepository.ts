@@ -16,13 +16,6 @@ import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { ContentType } from '../components/atoms/inputs/TextEditor'
 
-function makeTitle(content: string): string {
-  if (content.length > 0) {
-    return content.split('\n')[0]
-  }
-  return '名前無し'
-}
-
 type FolderEventListener = (folder: Folder) => void
 type NoteEventListener = (note: Note) => void
 
@@ -42,7 +35,6 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
   const content = data.content
   return {
     id: doc.id,
-    title: makeTitle(content),
     folderId: data.folderId,
     content: content,
     favorite: doc.data().favorite,

@@ -1,12 +1,12 @@
 import MuiTreeView from '@mui/lab/TreeView'
-import React, { ReactNode, useCallback } from 'react'
+import React, { ReactElement, useCallback } from 'react'
 import { ChevronRight, ExpandMore } from '@mui/icons-material'
 
 type TreeViewProps = {
   width?: string
   selectedId?: string
   expanded?: string[]
-  children: ReactNode
+  children: ReactElement | ReactElement[]
   onSelect: (_value: string) => void
 }
 

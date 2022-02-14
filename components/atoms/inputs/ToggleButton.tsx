@@ -1,10 +1,10 @@
 import MuiToggleButton from '@mui/material/ToggleButton'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import MuiToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 type ToggleButtonItem = {
   value: string
-  content: ReactNode
+  content: ReactElement
 }
 
 type ToggleButtonProps = {
