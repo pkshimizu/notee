@@ -80,7 +80,7 @@ export const createFolder = createAsyncAction<CreateFolderParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createFolder(state.session.currentUser, params.name, params.parentFolder)
-      dispatch(systemSlice.actions.message({ message: 'A new folder has been created' }))
+      dispatch(systemSlice.actions.message({ message: 'Created new folder.' }))
     }
   }
 )
@@ -94,7 +94,7 @@ export const createNote = createAsyncAction<CreateNoteParams, void>(
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
       await noteRepository.createNote(state.session.currentUser, params.parentFolder)
-      dispatch(systemSlice.actions.message({ message: 'A new note has been created' }))
+      dispatch(systemSlice.actions.message({ message: 'Created new note.' }))
     }
   }
 )
@@ -178,11 +178,11 @@ export const favorite = createAsyncAction<FavoriteParams, void>(
     if (state.session.currentUser) {
       if (params.folder) {
         await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: true })
-        dispatch(systemSlice.actions.message({ message: `${params.folder.name} is now a favorite!` }))
+        dispatch(systemSlice.actions.message({ message: `Added folder to favorites.` }))
       }
       if (params.note) {
         await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: true })
-        dispatch(systemSlice.actions.message({ message: `Note is now a favorite!` }))
+        dispatch(systemSlice.actions.message({ message: `Added note to favorites.` }))
       }
     }
   }
@@ -199,11 +199,11 @@ export const unFavorite = createAsyncAction<UnFavoriteParams, void>(
     if (state.session.currentUser) {
       if (params.folder) {
         await noteRepository.updateFolder(state.session.currentUser, params.folder, { favorite: false })
-        dispatch(systemSlice.actions.message({ message: `Removed folder from my favorites.` }))
+        dispatch(systemSlice.actions.message({ message: `Removed folder from favorites.` }))
       }
       if (params.note) {
         await noteRepository.updateNote(state.session.currentUser, params.note, { favorite: false })
-        dispatch(systemSlice.actions.message({ message: `Removed note from my favorites.` }))
+        dispatch(systemSlice.actions.message({ message: `Removed note from favorites.` }))
       }
     }
   }
@@ -220,12 +220,11 @@ export const restore = createAsyncAction<RestoreParams, void>(
     if (state.session.currentUser) {
       if (params.folder) {
         await noteRepository.resetDeletedAtFolder(state.session.currentUser, params.folder)
-        dispatch(systemSlice.actions.message({ message: `${params.folder.name} has been restored` }))
+        dispatch(systemSlice.actions.message({ message: `Restored folder.` }))
       }
       if (params.note) {
-        const { title } = useNote(params.note)
         await noteRepository.resetDeletedAtNote(state.session.currentUser, params.note)
-        dispatch(systemSlice.actions.message({ message: `${title()} has been restored` }))
+        dispatch(systemSlice.actions.message({ message: `Restored note.` }))
       }
     }
   }

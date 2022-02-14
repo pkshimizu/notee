@@ -7,6 +7,8 @@ export default {
   '${count} Notes': '${count} ノート',
 
   // A
+  'Added folder to favorites.': 'フォルダをお気に入りに追加しました',
+  'Added note to favorites.': 'ノートをお気に入りに追加しました',
   'Apply log': '適用する',
   // B
   Back: '戻る',
@@ -20,6 +22,8 @@ export default {
   'Create folder': 'フォルダを作成する',
   'Create note': 'ノートを作成する',
   'Created Date': '作成日時',
+  'Created new folder.': '新しいフォルダを作成しました',
+  'Created new note.': '新しいノートを作成しました',
   // D
   Delete: '削除',
   'Delete folder': 'フォルダを削除する',
@@ -55,11 +59,14 @@ export default {
   Login: 'ログイン',
   'Login with Google': 'Googleアカウントでログインする',
   'Login with GitHub': 'GitHubアカウントでログインする',
+  Logout: 'ログアウト',
   // M
   'Move folder': 'フォルダを移動する',
   'Move folder to trash': 'ゴミ箱に移動する',
   'Move note': 'ノートを移動する',
   'Move note to trash': 'ゴミ箱に移動する',
+  'Moved folder to trash': 'ゴミ箱に移動しました',
+  'Moved note to trash': 'ゴミ箱に移動しました',
   'Move To': '移動先',
   'Move To Trash': 'ゴミ箱に移動',
   // N
@@ -80,12 +87,17 @@ export default {
   // Q
   // R
   Redo: 'やり直す',
+  'Removed folder from favorites.': 'フォルダをお気に入りから外しました',
+  'Removed note from favorites.': 'ノートをお気に入りから外しました',
   'Restore folder': '元に戻す',
   'Restore note': '元に戻す',
+  'Restored folder.': 'フォルダを元に戻しました',
+  'Restored note.': 'ノートを元に戻しました',
   // S
   Search: '検索',
   'Search Results': '検索結果',
   Select: '選択',
+  Settings: '設定',
   'Simple Personal Note': 'シンプルな個人向けノートサービス',
   Sublime: 'Sublime',
   Submit: '実行',

@@ -41,7 +41,13 @@ export default function FolderCreateDialog({ open, folder, onClose }: FolderSett
   )
 
   return (
-    <FormDialog open={open} width={'xs'} onSubmit={handleSubmit(handleSaveFolderSettings)} onClose={handleClose}>
+    <FormDialog
+      open={open}
+      title={'Create folder'}
+      width={'xs'}
+      onSubmit={handleSubmit(handleSaveFolderSettings)}
+      onClose={handleClose}
+    >
       <TextField label={'Folder Name'} focused register={register('name')} error={errors.name?.message} />
     </FormDialog>
   )

@@ -7,6 +7,7 @@ import { useLocale } from '../../../hooks/useLocale'
 type SelectItem = {
   value: string | number
   label: string | number
+  plain?: boolean
 }
 
 type SelectProps = {
@@ -25,7 +26,7 @@ export default function Select({ value, items, label, onChange }: SelectProps) {
       <MuiSelect value={value} label={label} onChange={(e) => onChange(e.target.value)}>
         {items.map((item) => (
           <MuiMenuItem key={item.value} value={item.value}>
-            {t(String(item.label))}
+            {item.plain ? item.label : t(String(item.label))}
           </MuiMenuItem>
         ))}
       </MuiSelect>

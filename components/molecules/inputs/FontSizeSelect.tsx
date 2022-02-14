@@ -15,6 +15,7 @@ export default function FontSizeSelect({ value, onChange }: FontSizeSelectProps)
       items={sizeList.map((size) => ({
         value: size,
         label: `${size}px`,
+        plain: true,
       }))}
       label={'Font Size'}
       onChange={(value) => onChange(value as FontSize)}

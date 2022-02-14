@@ -3,6 +3,7 @@ import { Note } from '../store/notes/models'
 import { useLocale } from './useLocale'
 
 export const useNote = (note?: Note) => {
+  const { t } = useLocale()
   const title = useCallback(
     (targetNote?: Note) => {
       if (targetNote && targetNote.content.length > 0) {
@@ -17,10 +18,9 @@ export const useNote = (note?: Note) => {
           return line
         }
       }
-      const { t } = useLocale()
       return t('No Name')
     },
-    [note]
+    [note, t]
   )
   return {
     title,
