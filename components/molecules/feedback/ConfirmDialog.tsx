@@ -2,12 +2,13 @@ import { ReactElement } from 'react'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Button from '../../atoms/inputs/Button'
 import Label from '../../atoms/display/Label'
+import { LabelText } from '../../../hooks/useLocale'
 
 type ConfirmDialogProps = {
   open: boolean
-  title?: string
-  okLabel?: string
-  cancelLabel?: string
+  title?: LabelText
+  okLabel?: LabelText
+  cancelLabel?: LabelText
   width?: DialogWidth
   children: ReactElement
   onOk: () => void
@@ -17,8 +18,8 @@ type ConfirmDialogProps = {
 export default function ConfirmDialog({
   open,
   title,
-  okLabel = 'OK',
-  cancelLabel = 'Cancel',
+  okLabel = { value: 'OK' },
+  cancelLabel = { value: 'Cancel' },
   width,
   children,
   onOk,
@@ -27,7 +28,7 @@ export default function ConfirmDialog({
   return (
     <Dialog
       open={open}
-      title={<Label text={title} />}
+      title={title}
       width={width}
       actions={
         <>

@@ -1,5 +1,5 @@
 import MuiTypography from '@mui/material/Typography'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type LabelVariant = 'body' | 'caption' | 'title' | 'subtitle'
 
@@ -18,21 +18,12 @@ const typographyVariant = (variant: LabelVariant) => {
 
 type LabelProps = {
   variant?: LabelVariant
-  text?: string
-  defaultText?: string
-  args?: { [key: string]: string | number }
-  plain?: boolean
+  text: LabelText
 }
 
-export default function Label({ variant = 'body', defaultText = 'undefined', text, args, plain }: LabelProps) {
+export default function Label({ variant = 'body', text }: LabelProps) {
   const { t } = useLocale()
-  if (text) {
-    const translatedText = plain ? text : t(text, args)
+  const translatedText = t(text)
 
-    return <MuiTypography variant={typographyVariant(variant)}>{translatedText}</MuiTypography>
-  } else {
-    const translatedText = t(defaultText, args)
-
-    return <MuiTypography variant={typographyVariant(variant)}>{translatedText}</MuiTypography>
-  }
+  return <MuiTypography variant={typographyVariant(variant)}>{translatedText}</MuiTypography>
 }

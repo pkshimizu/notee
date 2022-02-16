@@ -47,22 +47,30 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton label={'Favorites'} color={'white'} onClick={handleFavorite}>
+          <IconButton label={{ value: 'Favorites' }} color={'white'} onClick={handleFavorite}>
             {folder.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
-          <IconButton label={'Create folder'} color={'white'} onClick={() => folderCreateDialog.open(folder)}>
+          <IconButton
+            label={{ value: 'Create folder' }}
+            color={'white'}
+            onClick={() => folderCreateDialog.open(folder)}
+          >
             <CreateFolderIcon />
           </IconButton>
-          <IconButton label={'Create note'} color={'white'} onClick={handleCreateNote}>
+          <IconButton label={{ value: 'Create note' }} color={'white'} onClick={handleCreateNote}>
             <CreateNoteIcon />
           </IconButton>
           {folder.folderId ? (
             <>
-              <IconButton label={'Move folder'} color={'white'} onClick={() => folderMoveDialog.open(folder)}>
+              <IconButton
+                label={{ value: 'Move folder' }}
+                color={'white'}
+                onClick={() => folderMoveDialog.open(folder)}
+              >
                 <MoveIcon />
               </IconButton>
               <IconButton
-                label={'Move folder to trash'}
+                label={{ value: 'Move folder to trash' }}
                 color={'white'}
                 onClick={() => folderMoveToTrashDialog.open(folder)}
               >
@@ -74,11 +82,11 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>
-          <IconButton label={'Open properties'} color={'white'} onClick={onOpenProperties}>
+          <IconButton label={{ value: 'Open properties' }} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
           </IconButton>
           <IconButton
-            label={'Close tab'}
+            label={{ value: 'Close tab' }}
             color={'white'}
             onClick={handleClose}
             disabled={folder.folderId === undefined}

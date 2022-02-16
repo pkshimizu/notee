@@ -41,13 +41,13 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
         <Link href={favorites()}>
           <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
             <FavoriteIcon />
-            <Label text={'Favorites'} />
+            <Label text={{ value: 'Favorites' }} />
           </FlexRow>
         </Link>
         <Link href={trash()}>
           <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
             <TrashIcon />
-            <Label text={'Trash'} />
+            <Label text={{ value: 'Trash' }} />
           </FlexRow>
         </Link>
         <NoteTree

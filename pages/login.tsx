@@ -20,7 +20,7 @@ export default function Login() {
     if (currentUser) {
       rootPage()
     }
-    setTitle('Login')
+    setTitle({ value: 'Login' })
   }, [currentUser, rootPage, setTitle])
 
   const handleLogInWithGoogle = useCallback(() => {
@@ -36,15 +36,15 @@ export default function Login() {
         <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
         <FlexColumn space={2}>
           <FlexColumn space={0}>
-            <Label variant={'title'} text={'notee'} />
-            <Label variant={'caption'} text={'Simple Personal Note'} />
+            <Label variant={'title'} text={{ value: 'notee' }} />
+            <Label variant={'caption'} text={{ value: 'Simple Personal Note' }} />
           </FlexColumn>
           <FlexColumn>
             <Button icon={<GoogleIcon />} color={'google'} onClick={handleLogInWithGoogle}>
-              <Label text={'Login with Google'} />
+              <Label text={{ value: 'Login with Google' }} />
             </Button>
             <Button icon={<GitHubIcon />} color={'github'} onClick={handleLogInWithGitHub}>
-              <Label text={'Login with GitHub'} />
+              <Label text={{ value: 'Login with GitHub' }} />
             </Button>
           </FlexColumn>
         </FlexColumn>

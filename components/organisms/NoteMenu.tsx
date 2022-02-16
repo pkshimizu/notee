@@ -58,28 +58,32 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
     <AppBar>
       <FlexRow justify={'space-around'}>
         <FlexRow>
-          <IconButton label={'Favorites'} color={'white'} onClick={handleFavorite}>
+          <IconButton label={{ value: 'Favorites' }} color={'white'} onClick={handleFavorite}>
             {note.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
-          <IconButton label={'Move note'} color={'white'} onClick={() => noteMoveDialog.open(note)}>
+          <IconButton label={{ value: 'Move note' }} color={'white'} onClick={() => noteMoveDialog.open(note)}>
             <MoveIcon />
           </IconButton>
-          <IconButton label={'Move note to trash'} color={'white'} onClick={() => noteMoveToTrashDialog.open(note)}>
+          <IconButton
+            label={{ value: 'Move note to trash' }}
+            color={'white'}
+            onClick={() => noteMoveToTrashDialog.open(note)}
+          >
             <TrashIcon />
           </IconButton>
           <Divider vertical />
-          <IconButton label={'Undo'} color={'white'} disabled={undoDisabled} onClick={handleUndo}>
+          <IconButton label={{ value: 'Undo' }} color={'white'} disabled={undoDisabled} onClick={handleUndo}>
             <UndoIcon />
           </IconButton>
-          <IconButton label={'Redo'} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
+          <IconButton label={{ value: 'Redo' }} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
             <RedoIcon />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>
-          <IconButton label={'Open properties'} color={'white'} onClick={onOpenProperties}>
+          <IconButton label={{ value: 'Open properties' }} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
           </IconButton>
-          <IconButton label={'Close tab'} color={'white'} onClick={handleClose}>
+          <IconButton label={{ value: 'Close tab' }} color={'white'} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </FlexRow>

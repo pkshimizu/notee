@@ -42,7 +42,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
     <WorkspaceTabPanel menu={<TrashMenu />}>
       <FlexColumn pl={2} pr={2} pb={4}>
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'} text={'Folder'} />
+          <Label variant={'caption'} text={{ value: 'Folder' }} />
         </FlexRow>
         <FlexRow>
           {folders.map((folder) => (
@@ -55,7 +55,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
           ))}
         </FlexRow>
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'} text={'Note'} />
+          <Label variant={'caption'} text={{ value: 'Note' }} />
         </FlexRow>
         <FlexRow>
           {notes.map((note) => (

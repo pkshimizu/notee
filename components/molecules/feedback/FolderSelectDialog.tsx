@@ -4,14 +4,15 @@ import NoteTree from '../../organisms/NoteTree'
 import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Button from '../../atoms/inputs/Button'
 import Label from '../../atoms/display/Label'
+import { LabelText } from '../../../hooks/useLocale'
 
 type FolderSelectDialogProps = {
   open: boolean
   root: Folder
   targetFolder?: Folder
-  title?: string
-  okLabel?: string
-  closeLabel?: string
+  title?: LabelText
+  okLabel?: LabelText
+  closeLabel?: LabelText
   width?: DialogWidth
   onClose: () => void
   onSelect: (_folderId: string) => void
@@ -30,8 +31,8 @@ export default function FolderSelectDialog({
   root,
   targetFolder,
   title,
-  okLabel = 'Select',
-  closeLabel = 'Close',
+  okLabel = { value: 'Select' },
+  closeLabel = { value: 'Close' },
   width,
   onClose,
   onSelect,
@@ -57,7 +58,7 @@ export default function FolderSelectDialog({
   return (
     <Dialog
       open={open}
-      title={<Label text={title} />}
+      title={title}
       width={width}
       actions={
         <>

@@ -17,7 +17,7 @@ export default function Folder() {
   useEffect(() => {
     if (folder) {
       dispatch(workspaceSlice.actions.openFolder({ id: folder.id }))
-      setTitle(folder.name, true)
+      setTitle({ value: folder.name, plain: true })
     }
   }, [dispatch, folder, setTitle])
   if (folder) {

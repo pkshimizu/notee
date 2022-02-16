@@ -2,18 +2,17 @@ import MuiSelect from '@mui/material/Select'
 import MuiMenuItem from '@mui/material/MenuItem'
 import MuiFormControl from '@mui/material/FormControl'
 import { InputLabel } from '@mui/material'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type SelectItem = {
   value: string | number
-  label: string | number
-  plain?: boolean
+  label: LabelText
 }
 
 type SelectProps = {
   value: string | number
   items: SelectItem[]
-  label: string
+  label: LabelText
   onChange: (_value: string | number) => void
 }
 
@@ -22,11 +21,11 @@ export default function Select({ value, items, label, onChange }: SelectProps) {
 
   return (
     <MuiFormControl variant={'standard'}>
-      <InputLabel>{label}</InputLabel>
-      <MuiSelect value={value} label={label} onChange={(e) => onChange(e.target.value)}>
+      <InputLabel>{t(label)}</InputLabel>
+      <MuiSelect value={value} label={t(label)} onChange={(e) => onChange(e.target.value)}>
         {items.map((item) => (
           <MuiMenuItem key={item.value} value={item.value}>
-            {item.plain ? item.label : t(String(item.label))}
+            {t(item.label)}
           </MuiMenuItem>
         ))}
       </MuiSelect>

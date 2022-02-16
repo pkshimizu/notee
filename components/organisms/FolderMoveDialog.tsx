@@ -23,7 +23,7 @@ export default function FolderMoveDialog({ open, folder, onClose }: FolderMoveDi
   if (root) {
     return (
       <FolderSelectDialog
-        title={'Move To'}
+        title={{ value: 'Move To' }}
         open={open}
         root={root}
         targetFolder={folder}

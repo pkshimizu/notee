@@ -28,22 +28,22 @@ export default function NoteCard({
       actions={
         <>
           {onClickNoteLink && (
-            <IconButton label={'Open note'} onClick={() => onClickNoteLink(note)}>
+            <IconButton label={{ value: 'Open note' }} onClick={() => onClickNoteLink(note)}>
               <OpenIcon />
             </IconButton>
           )}
           {onClickMoveToTrash && (
-            <IconButton label={'Move note to trash'} onClick={() => onClickMoveToTrash(note)}>
+            <IconButton label={{ value: 'Move note to trash' }} onClick={() => onClickMoveToTrash(note)}>
               <TrashIcon />
             </IconButton>
           )}
           {onClickRestore && (
-            <IconButton label={'Restore note'} onClick={() => onClickRestore(note)}>
+            <IconButton label={{ value: 'Restore note' }} onClick={() => onClickRestore(note)}>
               <RestoreIcon />
             </IconButton>
           )}
           {onClickDelete && (
-            <IconButton label={'Delete note'} onClick={() => onClickDelete(note)}>
+            <IconButton label={{ value: 'Delete note' }} onClick={() => onClickDelete(note)}>
               <DeleteIcon />
             </IconButton>
           )}
@@ -52,11 +52,11 @@ export default function NoteCard({
     >
       <FlexColumn>
         <FlexRow>
-          <Label text={'Created Date'} />
+          <Label text={{ value: 'Created Date' }} />
           <DateTimeLabel datetime={note.createdAt} />
         </FlexRow>
         <FlexRow>
-          <Label text={'Updated Date'} />
+          <Label text={{ value: 'Updated Date' }} />
           <DateTimeLabel datetime={note.updatedAt} />
         </FlexRow>
       </FlexColumn>

@@ -54,7 +54,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
               <Form onSubmit={handleSubmit(handleSaveFolderSettings)}>
                 <FlexRow justify={'flex-end'} space={0}>
                   <TextField
-                    label={'Folder Name'}
+                    label={{ value: 'Folder Name' }}
                     readonly={folder.folderId === undefined}
                     register={register('name')}
                     error={errors.name?.message}
@@ -64,7 +64,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
                     variant={'text'}
                     onClick={() => handleSubmit(handleSaveFolderSettings)()}
                   >
-                    <Label text={'Change'} />
+                    <Label text={{ value: 'Change' }} />
                   </Button>
                 </FlexRow>
               </Form>

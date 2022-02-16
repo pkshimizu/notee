@@ -27,14 +27,14 @@ export default function FolderMoveToTrashDialog({ open, folder, onClose }: Folde
   }, [dispatch, folder, onClose])
 
   return (
-    <ConfirmDialog open={open} title={'Move To Trash'} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={folder.name} plain />
+          <Label text={{ value: folder.name, plain: true }} />
         </FlexRow>
-        <Label text={'Do you want to move this folder to Trash?'} />
-        <Label text={'Items in folder will also be moved to Trash.'} />
+        <Label text={{ value: 'Do you want to move this folder to Trash?' }} />
+        <Label text={{ value: 'Items in folder will also be moved to Trash.' }} />
       </FlexColumn>
     </ConfirmDialog>
   )

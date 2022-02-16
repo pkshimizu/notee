@@ -10,7 +10,7 @@ export default function Favorites() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(workspaceSlice.actions.openFavorites())
-    setTitle('Favorites')
+    setTitle({ value: 'Favorites' })
   }, [dispatch, setTitle])
 
   return <FavoritesTabPanel />

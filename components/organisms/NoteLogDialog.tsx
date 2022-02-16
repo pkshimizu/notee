@@ -5,9 +5,9 @@ import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import DateTimeLabel from '../molecules/display/DateTimeLabel'
 import { updateNote } from '../../store/notes/actions'
 import { editorSettingsSelector } from '../../store/session/selectors'
+import { useDay } from '../../hooks/useDay'
 
 type NoteLogDialogProps = {
   open: boolean
@@ -19,6 +19,7 @@ type NoteLogDialogProps = {
 export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialogProps) {
   const [selectedIndex, setSelectedIndex] = useState(note.logs.map((log) => log.id).indexOf(log.id))
   const editorSettings = useSelector(editorSettingsSelector)
+  const { dateTimeFormatter } = useDay()
   const dispatch = useDispatch()
   const handleNextLog = useCallback(() => {
     if (selectedIndex < note.logs.length - 1) {
@@ -38,20 +39,24 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
     <Dialog
       open={open}
       width={'xl'}
-      title={<DateTimeLabel datetime={note.logs[selectedIndex].updatedAt} />}
+      title={dateTimeFormatter(note.logs[selectedIndex].updatedAt)}
       onClose={onClose}
       actions={
         <>
-          <IconButton label={'Prev log'} disabled={selectedIndex <= 0} onClick={handlePrevLog}>
+          <IconButton label={{ value: 'Prev log' }} disabled={selectedIndex <= 0} onClick={handlePrevLog}>
             <PrevIcon />
           </IconButton>
-          <IconButton label={'Next log'} disabled={selectedIndex >= note.logs.length - 1} onClick={handleNextLog}>
+          <IconButton
+            label={{ value: 'Next log' }}
+            disabled={selectedIndex >= note.logs.length - 1}
+            onClick={handleNextLog}
+          >
             <NextIcon />
           </IconButton>
-          <IconButton label={'Close'} onClick={onClose}>
+          <IconButton label={{ value: 'Close' }} onClick={onClose}>
             <CloseIcon />
           </IconButton>
-          <IconButton label={'Apply log'} onClick={handleApplyLog}>
+          <IconButton label={{ value: 'Apply log' }} onClick={handleApplyLog}>
             <ApplyIcon />
           </IconButton>
         </>

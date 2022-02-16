@@ -19,7 +19,7 @@ export default function Workspace() {
   useEffect(() => {
     if (note) {
       dispatch(workspaceSlice.actions.openNote({ id: note.id }))
-      setTitle(title(), true)
+      setTitle(title())
     }
   }, [dispatch, note, title, setTitle])
   if (note) {

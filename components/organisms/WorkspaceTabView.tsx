@@ -9,7 +9,6 @@ import { foldersSelector, notesSelector } from '../../store/notes/selectors'
 import workspaceSlice from '../../store/workspace'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import { useNote } from '../../hooks/useNote'
-import { useLocale } from '../../hooks/useLocale'
 
 type WorkspaceTabViewProps = {}
 
@@ -20,7 +19,6 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const items = useSelector(openItemsSelector)
   const itemsPage = useItemsPage()
   const { close } = useWorkspaceTab()
-  const { t } = useLocale()
   const { title } = useNote()
   const dispatch = useDispatch()
   useEffect(() => {
@@ -58,7 +56,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   return (
     <TabView
       leftItem={
-        <IconButton label={'Open side bar'} onClick={handleToggleSideBar}>
+        <IconButton label={{ value: 'Open side bar' }} onClick={handleToggleSideBar}>
           <MenuIcon />
         </IconButton>
       }
@@ -70,7 +68,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
 
           return {
             value: item.id,
-            label: folder?.name ?? t('No Name'),
+            label: { value: folder?.name, defaultValue: 'No Name' },
             icon: <FolderIcon key={item.id} />,
             plain: true,
           }
@@ -86,25 +84,25 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
         case 'search':
           return {
             value: item.id,
-            label: 'Search Results',
+            label: { value: 'Search Results' },
             icon: <SearchIcon key={item.id} />,
           }
         case 'favorites':
           return {
             value: item.id,
-            label: 'Favorites',
+            label: { value: 'Favorites' },
             icon: <FavoriteIcon key={item.id} />,
           }
         case 'trash':
           return {
             value: item.id,
-            label: 'Trash',
+            label: { value: 'Trash' },
             icon: <TrashIcon key={item.id} />,
           }
         default:
           return {
             value: item.id,
-            label: 'UnKnown',
+            label: { value: 'UnKnown' },
           }
         }
       })}

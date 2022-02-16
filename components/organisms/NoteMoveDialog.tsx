@@ -21,7 +21,15 @@ export default function NoteMoveDialog({ open, note, onClose }: NoteMoveDialogPr
     [dispatch, note]
   )
   if (root) {
-    return <FolderSelectDialog title={'Move To'} open={open} root={root} onClose={onClose} onSelect={handleSelect} />
+    return (
+      <FolderSelectDialog
+        title={{ value: 'Move To' }}
+        open={open}
+        root={root}
+        onClose={onClose}
+        onSelect={handleSelect}
+      />
+    )
   }
 
   return <></>

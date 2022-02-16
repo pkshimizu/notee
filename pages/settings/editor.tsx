@@ -23,7 +23,7 @@ export default function Editor() {
   const { setTitle } = useTitle()
   const editorSettings = useSelector(editorSettingsSelector)
   useEffect(() => {
-    setTitle('Editor Settings')
+    setTitle({ value: 'Editor Settings' })
   }, [setTitle])
   const dispatch = useDispatch()
   const handleKeybinding = useCallback(
@@ -41,34 +41,34 @@ export default function Editor() {
 
   return (
     <FlexColumn>
-      <Label variant={'title'} text={'Editor'} />
+      <Label variant={'title'} text={{ value: 'Editor' }} />
       <Divider />
-      <Label variant={'subtitle'} text={'Keybinding'} />
+      <Label variant={'subtitle'} text={{ value: 'Keybinding' }} />
       <Button variant={variant(editorSettings.keyBinding, 'vscode')} onClick={() => handleKeybinding('vscode')}>
         <FlexRow align={'center'}>
           <Image url={'/images/keybinding/vscode.png'} alt={'vscode'} width={64} height={64} />
-          <Label text={'Visual Studio Code'} />
+          <Label text={{ value: 'Visual Studio Code' }} />
         </FlexRow>
       </Button>
       <Button variant={variant(editorSettings.keyBinding, 'sublime')} onClick={() => handleKeybinding('sublime')}>
         <FlexRow align={'center'}>
           <Image url={'/images/keybinding/sublime.png'} alt={'sublime'} width={64} height={64} />
-          <Label text={'Sublime'} />
+          <Label text={{ value: 'Sublime' }} />
         </FlexRow>
       </Button>
       <Button variant={variant(editorSettings.keyBinding, 'vim')} onClick={() => handleKeybinding('vim')}>
         <FlexRow align={'center'}>
           <Image url={'/images/keybinding/vim.png'} alt={'vim'} width={64} height={64} />
-          <Label text={'Vim'} />
+          <Label text={{ value: 'Vim' }} />
         </FlexRow>
       </Button>
       <Button variant={variant(editorSettings.keyBinding, 'emacs')} onClick={() => handleKeybinding('emacs')}>
         <FlexRow align={'center'}>
           <Image url={'/images/keybinding/emacs.png'} alt={'emacs'} width={64} height={64} />
-          <Label text={'Emacs'} />
+          <Label text={{ value: 'Emacs' }} />
         </FlexRow>
       </Button>
-      <Label variant={'subtitle'} text={'Theme'} />
+      <Label variant={'subtitle'} text={{ value: 'Theme' }} />
       <FlexRow>
         <Button variant={variant(editorSettings.theme, 'monokai')} onClick={() => handleTheme('monokai')}>
           <Image url={'/images/theme/monokai.png'} alt={'monokai'} width={128} height={128} />

@@ -3,14 +3,13 @@ import MuiTab from '@mui/material/Tab'
 import MuiTabs from '@mui/material/Tabs'
 import MuiBox from '@mui/material/Box'
 import MuiTypography from '@mui/material/Typography'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 export type Tab = {
   value: string
   icon?: ReactElement
-  label?: string
+  label?: LabelText
   panel?: ReactElement
-  plain?: boolean
 }
 
 type TabViewProps = {
@@ -20,14 +19,6 @@ type TabViewProps = {
   variant?: 'scrollable' | 'fullWidth'
   tabsOnly?: boolean
   onChange?: (_value: string) => void
-}
-
-const tabLabel = (label: string) => {
-  if (label.length > 20) {
-    return label.substr(0, 18) + '...'
-  }
-
-  return label
 }
 
 export default function TabView({
@@ -56,9 +47,7 @@ export default function TabView({
               label={
                 <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
                   {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
-                  {tab.label && (
-                    <MuiTypography variant='button'>{tabLabel(tab.plain ? tab.label : t(tab.label))}</MuiTypography>
-                  )}
+                  {tab.label && <MuiTypography variant='button'>{t({ ...tab.label, truncate: 20 })}</MuiTypography>}
                 </MuiBox>
               }
               value={tab.value}

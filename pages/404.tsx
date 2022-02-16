@@ -13,11 +13,11 @@ export default function Error404() {
         <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
         <FlexColumn>
           <FlexColumn space={0}>
-            <Label variant={'title'} text={'404'} />
-            <Label variant={'caption'} text={'Not Found Page'} />
+            <Label variant={'title'} text={{ value: '404' }} />
+            <Label variant={'caption'} text={{ value: 'Not Found Page' }} />
           </FlexColumn>
           <Link href={root()}>
-            <Label text={'Back to Home'} />
+            <Label text={{ value: 'Back to Home' }} />
           </Link>
         </FlexColumn>
       </FlexRow>

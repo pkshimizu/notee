@@ -1,12 +1,12 @@
 import Label from '../../atoms/display/Label'
-import dayjs from 'dayjs'
+import { useDay } from '../../../hooks/useDay'
 
 type DateTimeLabelProps = {
   datetime: string
 }
 
 export default function DateTimeLabel({ datetime }: DateTimeLabelProps) {
-  const text = dayjs(datetime).format('YYYY-MM-DD HH:mm:ss')
+  const { dateTimeFormatter } = useDay()
 
-  return <Label text={text} plain />
+  return <Label text={dateTimeFormatter(datetime)} />
 }

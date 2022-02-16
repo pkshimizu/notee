@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { LabelText } from '../../hooks/useLocale'
 
 export type SystemState = {
   title?: string
-  message?: string
+  message?: LabelText
   error?: { code: string; message: string }
   loading: boolean
 }
@@ -19,7 +20,7 @@ type TitleParams = {
 }
 
 type MessageParams = {
-  message: string
+  message: LabelText
 }
 
 type FirebaseErrorParams = {

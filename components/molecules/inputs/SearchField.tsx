@@ -28,7 +28,7 @@ export default function SearchField({}: SearchFieldProps) {
 
   return (
     <Form onSubmit={handleSubmit(handleSearch)}>
-      <TextField label={'Search'} icon={<SearchIcon />} register={register('keyword')} />
+      <TextField label={{ value: 'Search' }} icon={<SearchIcon />} register={register('keyword')} />
     </Form>
   )
 }

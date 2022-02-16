@@ -22,14 +22,14 @@ export default function NoteDeleteDialog({ open, note, onClose }: NoteDeleteDial
   }, [dispatch, note, onClose])
 
   return (
-    <ConfirmDialog open={open} title={'Delete'} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={{ value: 'Delete' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
           <NoteTitleLabel note={note} />
         </FlexRow>
-        <Label text={'Do you want to delete this note?'} />
-        <Label text={'This operation is irreversible.'} />
+        <Label text={{ value: 'Do you want to delete this note?' }} />
+        <Label text={{ value: 'This operation is irreversible.' }} />
       </FlexColumn>
     </ConfirmDialog>
   )

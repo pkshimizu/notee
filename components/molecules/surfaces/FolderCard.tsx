@@ -22,26 +22,26 @@ export default function FolderCard({
 }: FolderCardProps) {
   return (
     <Card
-      header={<Label text={folder.name} plain />}
+      header={<Label text={{ value: folder.name, plain: true }} />}
       actions={
         <>
           {onClickFolderLink && (
-            <IconButton label={'Open folder'} onClick={() => onClickFolderLink(folder)}>
+            <IconButton label={{ value: 'Open folder' }} onClick={() => onClickFolderLink(folder)}>
               <OpenIcon />
             </IconButton>
           )}
           {onClickMoveToTrash && (
-            <IconButton label={'Move folder to trash'} onClick={() => onClickMoveToTrash(folder)}>
+            <IconButton label={{ value: 'Move folder to trash' }} onClick={() => onClickMoveToTrash(folder)}>
               <TrashIcon />
             </IconButton>
           )}
           {onClickRestore && (
-            <IconButton label={'Restore folder'} onClick={() => onClickRestore(folder)}>
+            <IconButton label={{ value: 'Restore folder' }} onClick={() => onClickRestore(folder)}>
               <RestoreIcon />
             </IconButton>
           )}
           {onClickDelete && (
-            <IconButton label={'Delete folder'} onClick={() => onClickDelete(folder)}>
+            <IconButton label={{ value: 'Delete folder' }} onClick={() => onClickDelete(folder)}>
               <DeleteIcon />
             </IconButton>
           )}
@@ -49,8 +49,8 @@ export default function FolderCard({
       }
     >
       <FlexRow>
-        <Label text={'${count} Folders'} args={{ count: folder.folders.length }} />
-        <Label text={'${count} Notes'} args={{ count: folder.notes.length }} />
+        <Label text={{ value: '${count} Folders', args: { count: folder.folders.length } }} />
+        <Label text={{ value: '${count} Notes', args: { count: folder.notes.length } }} />
       </FlexRow>
     </Card>
   )

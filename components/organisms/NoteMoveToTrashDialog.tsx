@@ -22,13 +22,13 @@ export default function NoteMoveToTrashDialog({ open, note, onClose }: NoteMoveT
   }, [dispatch, note, onClose])
 
   return (
-    <ConfirmDialog open={open} title={'Move To Trash'} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
           <NoteTitleLabel note={note} />
         </FlexRow>
-        <Label text={'Do you want to move this note to Trash?'} />
+        <Label text={{ value: 'Do you want to move this note to Trash?' }} />
       </FlexColumn>
     </ConfirmDialog>
   )

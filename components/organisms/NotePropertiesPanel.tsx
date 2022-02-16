@@ -47,11 +47,11 @@ export default function NotePropertiesPanel({ note, fontSize, onChangeFontSize }
           panel: (
             <FlexColumn space={2} pt={2} pl={1} pr={1} pb={2}>
               <FlexColumn space={0}>
-                <Label variant={'caption'} text={'Created Date'} />
+                <Label variant={'caption'} text={{ value: 'Created Date' }} />
                 <DateTimeLabel datetime={note.createdAt} />
               </FlexColumn>
               <FlexColumn space={0}>
-                <Label variant={'caption'} text={'Last Updated Date'} />
+                <Label variant={'caption'} text={{ value: 'Last Updated Date' }} />
                 <DateTimeLabel datetime={note.updatedAt} />
               </FlexColumn>
               <ContentTypeSelect value={note.contentType} onChange={handleChangeContentType} />
@@ -65,11 +65,9 @@ export default function NotePropertiesPanel({ note, fontSize, onChangeFontSize }
           panel: (
             <List>
               {[...note.logs].reverse().map((log) => (
-                <ListItem
-                  key={log.id}
-                  label={<DateTimeLabel datetime={log.updatedAt} />}
-                  onClick={() => handleSelectLog(log)}
-                />
+                <ListItem key={log.id} onClick={() => handleSelectLog(log)}>
+                  <DateTimeLabel datetime={log.updatedAt} />
+                </ListItem>
               ))}
             </List>
           ),

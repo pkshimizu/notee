@@ -10,7 +10,7 @@ export default function Trash() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(workspaceSlice.actions.openTrash())
-    setTitle('Trash')
+    setTitle({ value: 'Trash' })
   }, [dispatch, setTitle])
 
   return <TrashTabPanel />

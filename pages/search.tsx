@@ -10,7 +10,7 @@ export default function Search() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(workspaceSlice.actions.openSearchResults())
-    setTitle('Search')
+    setTitle({ value: 'Search' })
   }, [dispatch, setTitle])
 
   return <SearchResultsTabPanel />

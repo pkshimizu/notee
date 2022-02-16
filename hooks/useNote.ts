@@ -1,24 +1,20 @@
 import { useCallback } from 'react'
 import { Note } from '../store/notes/models'
-import { useLocale } from './useLocale'
+import { LabelText, useLocale } from './useLocale'
 
 export const useNote = (note?: Note) => {
   const { t } = useLocale()
   const title = useCallback(
-    (targetNote?: Note) => {
+    (targetNote?: Note): LabelText => {
       if (targetNote && targetNote.content.length > 0) {
         const line = targetNote.content.split('\n')[0]
-        if (line.length > 0) {
-          return line
-        }
+        return { value: line, truncate: 30, plain: true, defaultValue: 'No Name' }
       }
       if (note && note.content.length > 0) {
         const line = note.content.split('\n')[0]
-        if (line.length > 0) {
-          return line
-        }
+        return { value: line, truncate: 30, plain: true, defaultValue: 'No Name' }
       }
-      return t('No Name')
+      return { truncate: 30, plain: true, defaultValue: 'No Name' }
     },
     [note, t]
   )

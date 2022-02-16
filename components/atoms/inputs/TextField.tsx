@@ -2,12 +2,12 @@ import MuiTextField from '@mui/material/TextField'
 import { UseFormRegisterReturn } from 'react-hook-form'
 import { ReactElement } from 'react'
 import { InputAdornment } from '@mui/material'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type TextSize = 'sm' | 'md' | 'lg'
 
 type TextFieldProps = {
-  label?: string
+  label?: LabelText
   value?: string
   size?: TextSize
   focused?: boolean

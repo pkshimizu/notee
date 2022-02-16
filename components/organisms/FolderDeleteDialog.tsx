@@ -27,15 +27,15 @@ export default function FolderDeleteDialog({ open, folder, onClose }: FolderDele
   }, [dispatch, folder, onClose])
 
   return (
-    <ConfirmDialog open={open} title={'Delete'} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={{ value: 'Delete' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={folder.name} plain />
+          <Label text={{ value: folder.name, plain: true }} />
         </FlexRow>
-        <Label text={'Do you want to delete this folder?'} />
-        <Label text={'Items in folder will also be delete.'} />
-        <Label text={'This operation is irreversible.'} />
+        <Label text={{ value: 'Do you want to delete this folder?' }} />
+        <Label text={{ value: 'Items in folder will also be delete.' }} />
+        <Label text={{ value: 'This operation is irreversible.' }} />
       </FlexColumn>
     </ConfirmDialog>
   )

@@ -3,12 +3,13 @@ import Dialog, { DialogWidth } from '../../atoms/feedback/Dialog'
 import Form from '../../atoms/inputs/Form'
 import Button from '../../atoms/inputs/Button'
 import Label from '../../atoms/display/Label'
+import { LabelText } from '../../../hooks/useLocale'
 
 type FormDialogProps = {
   open: boolean
-  title?: string
-  submitLabel?: string
-  closeLabel?: string
+  title?: LabelText
+  submitLabel?: LabelText
+  closeLabel?: LabelText
   width?: DialogWidth
   children: ReactElement
   onSubmit: () => void
@@ -18,8 +19,8 @@ type FormDialogProps = {
 export default function FormDialog({
   open,
   title,
-  submitLabel = 'Submit',
-  closeLabel = 'Close',
+  submitLabel = { value: 'Submit' },
+  closeLabel = { value: 'Close' },
   width,
   children,
   onSubmit,
@@ -28,7 +29,7 @@ export default function FormDialog({
   return (
     <Dialog
       open={open}
-      title={<Label text={title} />}
+      title={title}
       width={width}
       actions={
         <>

@@ -12,82 +12,67 @@ export default function ContentTypeSelect({ value, onChange }: ContentTypeSelect
       value={value}
       items={[
         {
-          label: 'Markdown',
+          label: { value: 'Markdown', plain: true },
           value: 'markdown',
-          plain: true,
         },
         {
-          label: 'JSON',
+          label: { value: 'JSON', plain: true },
           value: 'json',
-          plain: true,
         },
         {
-          label: 'XML',
+          label: { value: 'XML', plain: true },
           value: 'xml',
-          plain: true,
         },
         {
-          label: 'HTML',
+          label: { value: 'HTML', plain: true },
           value: 'html',
-          plain: true,
         },
         {
-          label: 'JavaScript',
+          label: { value: 'JavaScript', plain: true },
           value: 'javascript',
-          plain: true,
         },
         {
-          label: 'TypeScript',
+          label: { value: 'TypeScript', plain: true },
           value: 'typescript',
-          plain: true,
         },
         {
-          label: 'CSS',
+          label: { value: 'CSS', plain: true },
           value: 'css',
-          plain: true,
         },
         {
-          label: 'Sass',
+          label: { value: 'Sass', plain: true },
           value: 'sass',
-          plain: true,
         },
         {
-          label: 'C#',
+          label: { value: 'C#', plain: true },
           value: 'csharp',
-          plain: true,
         },
         {
-          label: 'Python',
+          label: { value: 'Python', plain: true },
           value: 'python',
-          plain: true,
         },
         {
-          label: 'Ruby',
+          label: { value: 'Ruby', plain: true },
           value: 'ruby',
-          plain: true,
         },
         {
-          label: 'Java',
+          label: { value: 'Java', plain: true },
           value: 'java',
-          plain: true,
         },
         {
-          label: 'Go',
+          label: { value: 'Go', plain: true },
           value: 'golang',
-          plain: true,
         },
         {
-          label: 'Elixir',
+          label: { value: 'Elixir', plain: true },
           value: 'elixir',
-          plain: true,
         },
         {
-          label: 'MySQL',
+          label: { value: 'MySQL', plain: true },
           value: 'mysql',
-          plain: true,
         },
       ]}
-      label={'Content Type'}
+      label={{ value: 'Content Type' }}
       onChange={(value) => onChange(value as ContentType)}
     />
   )

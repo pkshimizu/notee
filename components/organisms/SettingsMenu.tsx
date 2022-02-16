@@ -33,11 +33,11 @@ export default function SettingsMenu() {
         items={[
           {
             value: 'profile',
-            content: <Label text={'Profile'} />,
+            content: <Label text={{ value: 'Profile' }} />,
           },
           {
             value: 'editor',
-            content: <Label text={'Editor'} />,
+            content: <Label text={{ value: 'Editor' }} />,
           },
         ]}
         vertical

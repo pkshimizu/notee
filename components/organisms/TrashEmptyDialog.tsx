@@ -22,10 +22,10 @@ export default function TrashEmptyDialog({ open, onClose }: TrashEmptyDialogProp
   }, [dispatch, folders, notes, onClose])
 
   return (
-    <ConfirmDialog open={open} title={'Empty trash'} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={open} title={{ value: 'Empty trash' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
-        <Label text={'Do you want to delete items in trash?'} />
-        <Label text={'This operation is irreversible.'} />
+        <Label text={{ value: 'Do you want to delete items in trash?' }} />
+        <Label text={{ value: 'This operation is irreversible.' }} />
       </FlexColumn>
     </ConfirmDialog>
   )

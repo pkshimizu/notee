@@ -6,5 +6,5 @@ type UserNameLabelProps = {
 }
 
 export default function UserNameLabel({ user }: UserNameLabelProps) {
-  return <Label text={user.name} defaultText={'No Name'} plain />
+  return <Label text={{ value: user.name, defaultValue: 'No Name', plain: true }} />
 }

@@ -16,7 +16,7 @@ export default function FavoritesMenu({}: FavoritesMenuProps) {
   return (
     <AppBar>
       <FlexRow justify={'flex-end'}>
-        <IconButton label={'Close tab'} color={'white'} onClick={handleClose}>
+        <IconButton label={{ value: 'Close tab' }} color={'white'} onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </FlexRow>

@@ -1,11 +1,11 @@
 import React from 'react'
 import MuiSnackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertColor } from '@mui/material/Alert'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type SnackbarProps = {
   open: boolean
-  message: string
+  message: LabelText
   severity: AlertColor
   onClose: () => void
 }

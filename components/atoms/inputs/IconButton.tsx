@@ -2,10 +2,10 @@ import { ReactElement } from 'react'
 import MuiIconButton from '@mui/material/IconButton'
 import MuiTooltip from '@mui/material/Tooltip'
 import { IconColor } from '../display/Icons'
-import { useLocale } from '../../../hooks/useLocale'
+import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type IconButtonProps = {
-  label: string
+  label: LabelText
   color?: IconColor
   disabled?: boolean
   children: ReactElement

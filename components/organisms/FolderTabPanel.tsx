@@ -34,7 +34,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
       <FlexColumn pl={2} pr={2} pb={4}>
         <FolderBreadcrumbs folders={folders} folder={folder} />
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'} text={'Folder'} />
+          <Label variant={'caption'} text={{ value: 'Folder' }} />
         </FlexRow>
         <FlexRow>
           {folder.folders.map((folder) => (
@@ -47,7 +47,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
           ))}
         </FlexRow>
         <FlexRow pt={2} pb={2}>
-          <Label variant={'caption'} text={'Note'} />
+          <Label variant={'caption'} text={{ value: 'Note' }} />
         </FlexRow>
         <FlexRow>
           {folder.notes.map((note) => (

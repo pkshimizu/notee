@@ -26,13 +26,9 @@ export default function UserMenu({ target, onClose }: UserMenuProps) {
 
   return (
     <Menu target={target} onClose={onClose}>
-      <MenuItem icon={<SettingsIcon />} onClick={handleSettings}>
-        Settings
-      </MenuItem>
+      <MenuItem icon={<SettingsIcon />} label={{ value: 'Settings' }} onClick={handleSettings} />
       <Divider />
-      <MenuItem icon={<LogoutIcon />} onClick={handleLogout}>
-        Logout
-      </MenuItem>
+      <MenuItem icon={<LogoutIcon />} label={{ value: 'Logout' }} onClick={handleLogout} />
     </Menu>
   )
 }
