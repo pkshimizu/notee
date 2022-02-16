@@ -68,7 +68,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
 
           return {
             value: item.id,
-            label: { value: folder?.name, defaultValue: 'No Name' },
+            label: { value: folder?.name, defaultValue: 'No Name', plain: true },
             icon: <FolderIcon key={item.id} />,
             plain: true,
           }
