@@ -18,7 +18,7 @@ type DialogProps = {
 
 export default function Dialog({ open, title, width = 'sm', children, actions, onClose }: DialogProps) {
   const { t } = useLocale()
-  
+
   return (
     <MuiDialog open={open} fullWidth maxWidth={width} onClose={onClose}>
       {title && <MuiDialogTitle>{t(title)}</MuiDialogTitle>}

@@ -40,7 +40,7 @@ export const useLocale = () => {
         return translatedText
       }
       console.warn(`Undefined text "${value}"`)
-      return 'undefined'
+      return value ?? defaultValue
     },
     [dict]
   )

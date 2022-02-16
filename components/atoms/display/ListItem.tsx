@@ -22,7 +22,7 @@ function ListItemWrapper({ onClick, children }: { onClick?: () => void; children
 
 export default function ListItem({ icon, label, children, onClick }: ListItemProps) {
   const { t } = useLocale()
-  
+
   return (
     <MuiListItem disablePadding>
       <ListItemWrapper onClick={onClick}>
