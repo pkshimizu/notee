@@ -41,6 +41,7 @@ export default {
   Emacs: 'Emacs',
   Email: 'メールアドレス',
   'Empty trash': 'ゴミ箱を空にする',
+  English: '英語',
   // F
   Favorites: 'お気に入り',
   Folder: 'フォルダ',
@@ -52,9 +53,11 @@ export default {
   'Items in folder will also be delete.': 'フォルダ内のアイテムも削除します。',
   'Items in folder will also be moved to Trash.': 'フォルダ内のアイテムもゴミ箱に移動します。',
   // J
+  Japanese: '日本語',
   // K
   Keybinding: 'キーバインド',
   // L
+  Language: '言語',
   'Last Updated Date': '最終更新日時',
   Login: 'ログイン',
   'Login with Google': 'Googleアカウントでログインする',

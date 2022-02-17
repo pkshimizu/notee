@@ -4,10 +4,11 @@ import NextLink from 'next/link'
 
 type LinkProps = {
   href: string
+  locale?: 'ja' | 'en'
   children: ReactElement
 }
 
-export default function Link({ href, children }: LinkProps) {
+export default function Link({ href, locale, children }: LinkProps) {
   const external = href.startsWith('http')
   if (external) {
     return (
@@ -18,7 +19,7 @@ export default function Link({ href, children }: LinkProps) {
   }
 
   return (
-    <NextLink href={href} passHref>
+    <NextLink href={href} locale={locale} passHref>
       <MuiLink sx={{ textDecoration: 'none' }}>{children}</MuiLink>
     </NextLink>
   )

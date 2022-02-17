@@ -9,6 +9,7 @@ import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
 import { useTitle } from '../hooks/useTitle'
 import Image from '../components/atoms/display/Image'
 import Label from '../components/atoms/display/Label'
+import LocaleSelectLink from '../components/organisms/LocaleSelectLink'
 
 export default function Login() {
   const currentUser = useSelector(currentUserSelector)
@@ -34,7 +35,7 @@ export default function Login() {
     <FlexColumn align={'center'} height={'100vh'} width={'100%'}>
       <FlexRow align={'center'}>
         <Image url={'/logo.svg'} alt={'logo'} width={128} height={170} />
-        <FlexColumn space={2}>
+        <FlexColumn>
           <FlexColumn space={0}>
             <Label variant={'title'} text={{ value: 'notee' }} />
             <Label variant={'caption'} text={{ value: 'Simple Personal Note' }} />
@@ -47,6 +48,7 @@ export default function Login() {
               <Label text={{ value: 'Login with GitHub' }} />
             </Button>
           </FlexColumn>
+          <LocaleSelectLink path={'login'} />
         </FlexColumn>
       </FlexRow>
     </FlexColumn>

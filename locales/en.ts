@@ -41,6 +41,7 @@ export default {
   Emacs: 'Emacs',
   Email: 'Email',
   'Empty trash': 'Empty trash',
+  English: 'English',
   // F
   Favorites: 'Favorites',
   Folder: 'Folder',
@@ -52,9 +53,11 @@ export default {
   'Items in folder will also be delete.': 'Items in folder will also be delete.',
   'Items in folder will also be moved to Trash.': 'Items in folder will also be moved to Trash.',
   // J
+  Japanese: 'Japanese',
   // K
   Keybinding: 'Keybinding',
   // L
+  Language: 'Language',
   'Last Updated Date': 'Last Updated Date',
   Login: 'Login',
   'Login with Google': 'Login with Google',

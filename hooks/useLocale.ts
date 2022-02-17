@@ -44,6 +44,7 @@ export const useLocale = () => {
     },
     [dict]
   )
+
   return {
     t,
   }

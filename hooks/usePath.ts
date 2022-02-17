@@ -1,7 +1,10 @@
 import { useCallback } from 'react'
+import { useRouter } from 'next/router'
 
 export const usePath = () => {
+  const router = useRouter()
   return {
+    current: useCallback(() => router.asPath, [router]),
     root: useCallback(() => '/', []),
     notes: useCallback((noteId) => `/notes/${noteId}`, []),
     folders: useCallback((folderId) => `/folders/${folderId}`, []),
