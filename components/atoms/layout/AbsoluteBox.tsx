@@ -6,11 +6,12 @@ type AbsoluteBoxProps = {
   left?: string | number
   right?: string | number
   bottom?: string | number
+  hidden?: boolean
   onResize?: (_width: number, _height: number) => void
   children: ReactElement | ReactElement[]
 }
 
-export default function AbsoluteBox({ top, left, right, bottom, onResize, children }: AbsoluteBoxProps) {
+export default function AbsoluteBox({ top, left, right, bottom, hidden, onResize, children }: AbsoluteBoxProps) {
   const ref = useRef<HTMLDivElement>()
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -30,6 +31,7 @@ export default function AbsoluteBox({ top, left, right, bottom, onResize, childr
       bottom={bottom}
       position={'absolute'}
       boxSizing={'border-box'}
+      hidden={hidden}
     >
       {children}
     </MuiBox>

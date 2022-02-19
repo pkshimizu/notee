@@ -12,6 +12,7 @@ import {
   SidebarIcon,
   UndoIcon,
   RedoIcon,
+  VerticalSplitIcon,
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
@@ -23,9 +24,10 @@ import { useEditor } from '../../hooks/useEditor'
 type NoteMenuProps = {
   note: Note
   onOpenProperties: () => void
+  onOpenPreview: () => void
 }
 
-export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
+export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
   const { undo, redo, canUndo, canRedo } = useEditor()
@@ -77,6 +79,10 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
           </IconButton>
           <IconButton label={{ value: 'Redo' }} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
             <RedoIcon />
+          </IconButton>
+          <Divider vertical />
+          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={onOpenPreview}>
+            <VerticalSplitIcon />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>

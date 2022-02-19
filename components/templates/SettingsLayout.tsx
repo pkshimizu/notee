@@ -12,7 +12,7 @@ type SettingsLayoutProps = {
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const { current } = usePath()
-  
+
   return (
     <Container>
       <FlexColumn>

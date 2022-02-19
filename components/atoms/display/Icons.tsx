@@ -24,6 +24,7 @@ import {
   StarOutline,
   TextSnippet,
   Undo,
+  VerticalSplit,
   ViewSidebar,
 } from '@mui/icons-material'
 import { ElementType } from 'react'
@@ -150,4 +151,8 @@ export function TrashIcon(props: IconProps) {
 
 export function UndoIcon(props: IconProps) {
   return <Icon {...props} icon={Undo} />
+}
+
+export function VerticalSplitIcon(props: IconProps) {
+  return <Icon {...props} icon={VerticalSplit} />
 }
