@@ -5,13 +5,22 @@ import remarkEmoji from 'remark-emoji'
 import remarkGemoji from 'remark-gemoji'
 import rehypeStringify from 'rehype-stringify'
 import rehypeSlug from 'rehype-slug'
+import rehypeHighlight from 'rehype-highlight'
+import 'highlight.js/styles/github.css';
+
 const rehypeToc = require('@jsdevtools/rehype-toc')
 
 type MarkdownViewerProps = {
   content: string
+  withToc?: boolean
 }
 
-export default function MarkdownViewer({ content }: MarkdownViewerProps) {
+export default function MarkdownViewer({ content, withToc }: MarkdownViewerProps) {
+  const remarkPlugins = [remarkGfm, remarkEmoji, remarkGemoji]
+  const rehypePlugins = [rehypeStringify, rehypeSlug, rehypeHighlight]
+  if (withToc) {
+    rehypePlugins.push(rehypeToc)
+  }
   return (
     <MuiBox
       sx={{
@@ -21,8 +30,8 @@ export default function MarkdownViewer({ content }: MarkdownViewerProps) {
       p={2}
     >
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkEmoji, remarkGemoji]}
-        rehypePlugins={[rehypeStringify, rehypeSlug, rehypeToc]}
+        remarkPlugins={remarkPlugins}
+        rehypePlugins={rehypePlugins}
       >
         {content}
       </ReactMarkdown>
