@@ -1,9 +1,11 @@
 import ReactMarkdown from 'react-markdown'
 import MuiBox from '@mui/material/Box'
-import remarkToc from 'remark-toc'
 import remarkGfm from 'remark-gfm'
 import remarkEmoji from 'remark-emoji'
-import remarkGemoji from "remark-gemoji";
+import remarkGemoji from 'remark-gemoji'
+import rehypeStringify from 'rehype-stringify'
+import rehypeSlug from 'rehype-slug'
+const rehypeToc = require('@jsdevtools/rehype-toc')
 
 type MarkdownViewerProps = {
   content: string
@@ -18,7 +20,12 @@ export default function MarkdownViewer({ content }: MarkdownViewerProps) {
       }}
       p={2}
     >
-      <ReactMarkdown remarkPlugins={[remarkToc, remarkGfm, remarkEmoji, remarkGemoji]}>{content}</ReactMarkdown>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, remarkEmoji, remarkGemoji]}
+        rehypePlugins={[rehypeStringify, rehypeSlug, rehypeToc]}
+      >
+        {content}
+      </ReactMarkdown>
     </MuiBox>
   )
 }
