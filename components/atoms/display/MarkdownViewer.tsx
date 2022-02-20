@@ -2,6 +2,8 @@ import ReactMarkdown from 'react-markdown'
 import MuiBox from '@mui/material/Box'
 import remarkToc from 'remark-toc'
 import remarkGfm from 'remark-gfm'
+import remarkEmoji from 'remark-emoji'
+import remarkGemoji from "remark-gemoji";
 
 type MarkdownViewerProps = {
   content: string
@@ -16,7 +18,7 @@ export default function MarkdownViewer({ content }: MarkdownViewerProps) {
       }}
       p={2}
     >
-      <ReactMarkdown remarkPlugins={[remarkToc, remarkGfm]}>{content}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkToc, remarkGfm, remarkEmoji, remarkGemoji]}>{content}</ReactMarkdown>
     </MuiBox>
   )
 }
