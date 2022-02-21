@@ -1,5 +1,6 @@
 import {
   ArrowBackIosNew,
+  Article,
   Check,
   Close,
   CreateNewFolder,
@@ -123,6 +124,10 @@ export function OpenIcon(props: IconProps) {
 
 export function PrevIcon(props: IconProps) {
   return <Icon {...props} icon={NavigateBefore} />
+}
+
+export function PreviewIcon(props: IconProps) {
+  return <Icon {...props} icon={Article} />
 }
 
 export function RedoIcon(props: IconProps) {

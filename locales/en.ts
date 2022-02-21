@@ -37,6 +37,7 @@ export default {
   'Do you want to move this note to Trash?': 'Do you want to move this note to Trash?',
   // E
   Editor: 'Editor',
+  'Editor and Preview': 'Editor and Preview',
   'Editor Settings': 'Editor Settings',
   Emacs: 'Emacs',
   Email: 'Email',

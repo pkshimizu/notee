@@ -20,7 +20,8 @@ type NoteTabPanelProps = {
 export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const { getEditor, setEditor } = useEditor()
   const [propertiesPanel, setPropertiesPanel] = useState(false)
-  const [preview, setPreview] = useState(false)
+  const [editorRight, setEditorRight] = useState<string | number>(0)
+  const [previewLeft, setPreviewLeft] = useState<string | number>('100%')
   const editorSettings = useSelector(editorSettingsSelector)
   const [fontSize, setFontSize] = useState<FontSize>(14)
   const dispatch = useDispatch()
@@ -41,9 +42,29 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
     },
     [dispatch, activeNote]
   )
-  const handleOpenPreview = useCallback(() => {
-    setPreview(!preview)
-  }, [preview, setPreview])
+  const handleOpenPreview = useCallback(
+    (size: 'half' | 'full') => {
+      if (size === 'half') {
+        if (editorRight === '50%') {
+          setEditorRight(0)
+          setPreviewLeft('100%')
+        } else {
+          setEditorRight('50%')
+          setPreviewLeft('50%')
+        }
+      }
+      if (size === 'full') {
+        if (editorRight === '100%') {
+          setEditorRight(0)
+          setPreviewLeft('100%')
+        } else {
+          setEditorRight('100%')
+          setPreviewLeft(0)
+        }
+      }
+    },
+    [editorRight, setEditorRight, setPreviewLeft]
+  )
 
   return (
     <WorkspaceTabPanel
@@ -62,7 +83,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       <RelativeBox width={'100%'} height={'100%'}>
-        <AbsoluteBox top={0} bottom={0} left={0} right={preview ? '50%' : 0} onResize={handleResize}>
+        <AbsoluteBox top={0} bottom={0} left={0} right={editorRight} onResize={handleResize}>
           {notes.map((note) => (
             <TextEditor
               key={note.id}
@@ -78,7 +99,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
           ))}
         </AbsoluteBox>
         {activeNote.contentType === 'markdown' ? (
-          <AbsoluteBox top={0} bottom={0} left={'50%'} right={0} hidden={!preview}>
+          <AbsoluteBox top={0} bottom={0} left={previewLeft} right={0} hidden={previewLeft === '100%'}>
             <MarkdownViewer content={activeNote.content} />
           </AbsoluteBox>
         ) : (

@@ -13,6 +13,7 @@ import {
   UndoIcon,
   RedoIcon,
   VerticalSplitIcon,
+  PreviewIcon,
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
@@ -20,11 +21,12 @@ import { favorite, unFavorite } from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import Divider from '../atoms/display/Divider'
 import { useEditor } from '../../hooks/useEditor'
+import { useDeviceType } from '../../hooks/useDeviceType'
 
 type NoteMenuProps = {
   note: Note
   onOpenProperties: () => void
-  onOpenPreview: () => void
+  onOpenPreview: (_size: 'half' | 'full') => void
 }
 
 export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: NoteMenuProps) {
@@ -34,6 +36,7 @@ export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: Note
   const [undoDisabled, setUndoDisabled] = useState(false)
   const [redoDisabled, setRedoDisabled] = useState(false)
   const { close } = useWorkspaceTab()
+  const deviceType = useDeviceType()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (note.favorite) {
@@ -81,8 +84,15 @@ export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: Note
             <RedoIcon />
           </IconButton>
           <Divider vertical />
-          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={onOpenPreview}>
-            <VerticalSplitIcon />
+          {deviceType === 'PC' ? (
+            <IconButton label={{ value: 'Editor and Preview' }} color={'white'} onClick={() => onOpenPreview('half')}>
+              <VerticalSplitIcon />
+            </IconButton>
+          ) : (
+            <></>
+          )}
+          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => onOpenPreview('full')}>
+            <PreviewIcon />
           </IconButton>
         </FlexRow>
         <FlexRow justify={'flex-end'}>
