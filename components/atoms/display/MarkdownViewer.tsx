@@ -17,22 +17,37 @@ type MarkdownViewerProps = {
   row?: number
 }
 
+function findElement(elements: HTMLCollection | undefined, row: number): Element | undefined {
+  if (!elements) {
+    return undefined
+  }
+  const items: Element[] = [].slice.call(elements)
+  for (const item of items) {
+    const namedItem = item.attributes.getNamedItem('data-sourcepos')
+    if (namedItem?.value?.startsWith(`${row}:`)) {
+      return item
+    }
+    if (item.children) {
+      const child = findElement(item.children, row)
+      if (child) {
+        return child
+      }
+    }
+  }
+  
+  return undefined
+}
+
 export default function MarkdownViewer({ content, withToc, row }: MarkdownViewerProps) {
   const ref = useRef<HTMLDivElement>()
   useEffect(() => {
-    const children: Element[] = [].slice.call(ref.current?.children)
-    const target = children.find((item) => {
-      const namedItem = item.attributes.getNamedItem('data-sourcepos')
-      if (namedItem) {
-        return namedItem.value.startsWith(`${row}:`)
-      }
-
-      return false
-    })
-    target?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    })
+    if (row) {
+      const target = findElement(ref.current?.children, row)
+      target?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
   }, [ref, row])
 
   return useMemo(() => {
