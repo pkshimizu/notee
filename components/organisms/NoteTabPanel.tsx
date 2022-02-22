@@ -1,7 +1,7 @@
 import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
 import TextEditor, { FontSize } from '../atoms/inputs/TextEditor'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
@@ -24,6 +24,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const [previewLeft, setPreviewLeft] = useState<string | number>('100%')
   const editorSettings = useSelector(editorSettingsSelector)
   const [fontSize, setFontSize] = useState<FontSize>(14)
+  const [cursorRow, setCursorRow] = useState<number>(0)
   const dispatch = useDispatch()
   const handleLoad = useCallback(
     (id, editor) => {
@@ -32,6 +33,20 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
     },
     [setEditor]
   )
+  const handleChangeCursor = useCallback(() => {
+    const editor = getEditor(activeNote.id)
+    setCursorRow((editor?.getCursorPosition().row ?? 0) + 1)
+  }, [getEditor, activeNote, setCursorRow])
+
+  useEffect(() => {
+    const editor = getEditor(activeNote.id)
+    editor?.getSession().getSelection().on('changeCursor', handleChangeCursor)
+
+    return () => {
+      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
+    }
+  }, [getEditor, activeNote, handleChangeCursor])
+
   const handleResize = useCallback(() => {
     const editor = getEditor(activeNote.id)
     editor?.resize()
@@ -44,24 +59,20 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   )
   const handleOpenPreview = useCallback(
     (size: 'half' | 'full') => {
-      if (size === 'half') {
-        if (editorRight === '50%') {
-          setEditorRight(0)
-          setPreviewLeft('100%')
-        } else {
-          setEditorRight('50%')
-          setPreviewLeft('50%')
-        }
+      if (size === 'half' && editorRight !== '50%') {
+        setEditorRight('50%')
+        setPreviewLeft('50%')
+
+        return
       }
-      if (size === 'full') {
-        if (editorRight === '100%') {
-          setEditorRight(0)
-          setPreviewLeft('100%')
-        } else {
-          setEditorRight('100%')
-          setPreviewLeft(0)
-        }
+      if (size === 'full' && editorRight !== '100%') {
+        setEditorRight('100%')
+        setPreviewLeft(0)
+
+        return
       }
+      setEditorRight(0)
+      setPreviewLeft('100%')
     },
     [editorRight, setEditorRight, setPreviewLeft]
   )
@@ -100,7 +111,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
         </AbsoluteBox>
         {activeNote.contentType === 'markdown' ? (
           <AbsoluteBox top={0} bottom={0} left={previewLeft} right={0} hidden={previewLeft === '100%'}>
-            <MarkdownViewer content={activeNote.content} />
+            <MarkdownViewer content={activeNote.content} row={cursorRow} />
           </AbsoluteBox>
         ) : (
           <></>

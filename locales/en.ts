@@ -86,6 +86,7 @@ export default {
   'Open side bar': 'Open side bar',
   // P
   'Prev log': 'Prev log',
+  Preview: 'Preview',
   Profile: 'Profile',
   'Profile Settings': 'Profile Settings',
   // Q
