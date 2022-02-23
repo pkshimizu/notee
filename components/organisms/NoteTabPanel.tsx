@@ -22,9 +22,10 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const [propertiesPanel, setPropertiesPanel] = useState(false)
   const [editorRight, setEditorRight] = useState<string | number>(0)
   const [previewLeft, setPreviewLeft] = useState<string | number>('100%')
-  const editorSettings = useSelector(editorSettingsSelector)
   const [fontSize, setFontSize] = useState<FontSize>(14)
   const [cursorRow, setCursorRow] = useState<number>(0)
+  const [syncScroll, setSyncScroll] = useState(true)
+  const editorSettings = useSelector(editorSettingsSelector)
   const dispatch = useDispatch()
   const handleLoad = useCallback(
     (id, editor) => {
@@ -40,12 +41,16 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
 
   useEffect(() => {
     const editor = getEditor(activeNote.id)
-    editor?.getSession().getSelection().on('changeCursor', handleChangeCursor)
+    if (syncScroll) {
+      editor?.getSession().getSelection().on('changeCursor', handleChangeCursor)
+    } else {
+      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
+    }
 
     return () => {
       editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
     }
-  }, [getEditor, activeNote, handleChangeCursor])
+  }, [getEditor, activeNote, syncScroll, handleChangeCursor])
 
   const handleResize = useCallback(() => {
     const editor = getEditor(activeNote.id)
@@ -82,8 +87,10 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
       menu={
         <NoteMenu
           note={activeNote}
+          syncScroll={syncScroll}
           onOpenProperties={() => setPropertiesPanel(!propertiesPanel)}
           onOpenPreview={handleOpenPreview}
+          onChangeSyncScroll={setSyncScroll}
         />
       }
       propertiesPanel={

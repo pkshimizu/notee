@@ -14,6 +14,8 @@ import {
   RedoIcon,
   VerticalSplitIcon,
   PreviewIcon,
+  SyncIcon,
+  SyncDisabledIcon,
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
@@ -25,11 +27,19 @@ import { useDeviceType } from '../../hooks/useDeviceType'
 
 type NoteMenuProps = {
   note: Note
+  syncScroll: boolean
   onOpenProperties: () => void
   onOpenPreview: (_size: 'half' | 'full') => void
+  onChangeSyncScroll: (_sync: boolean) => void
 }
 
-export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: NoteMenuProps) {
+export default function NoteMenu({
+  note,
+  syncScroll,
+  onOpenProperties,
+  onOpenPreview,
+  onChangeSyncScroll,
+}: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
   const { undo, redo, canUndo, canRedo } = useEditor()
@@ -94,6 +104,19 @@ export default function NoteMenu({ note, onOpenProperties, onOpenPreview }: Note
           <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => onOpenPreview('full')}>
             <PreviewIcon />
           </IconButton>
+          {syncScroll ? (
+            <IconButton
+              label={{ value: 'Sync Disabled Scroll' }}
+              color={'white'}
+              onClick={() => onChangeSyncScroll(false)}
+            >
+              <SyncIcon />
+            </IconButton>
+          ) : (
+            <IconButton label={{ value: 'Sync Scroll' }} color={'white'} onClick={() => onChangeSyncScroll(true)}>
+              <SyncDisabledIcon />
+            </IconButton>
+          )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>
           <IconButton label={{ value: 'Open properties' }} color={'white'} onClick={onOpenProperties}>

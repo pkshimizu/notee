@@ -106,6 +106,8 @@ export default {
   'Simple Personal Note': 'Simple Personal Note',
   Sublime: 'Sublime',
   Submit: 'Submit',
+  'Sync Scroll': 'Sync Scroll',
+  'Sync Disabled Scroll': 'Sync Disabled Scroll',
   // T
   Theme: 'Theme',
   'This operation is irreversible.': 'This operation is irreversible.',

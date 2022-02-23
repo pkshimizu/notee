@@ -34,7 +34,7 @@ function findElement(elements: HTMLCollection | undefined, row: number): Element
       }
     }
   }
-  
+
   return undefined
 }
 

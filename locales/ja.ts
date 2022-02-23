@@ -106,6 +106,8 @@ export default {
   'Simple Personal Note': 'シンプルな個人向けノートサービス',
   Sublime: 'Sublime',
   Submit: '実行',
+  'Sync Scroll': 'スクロールを同期する',
+  'Sync Disabled Scroll': 'スクロールを同期しない',
   // T
   Theme: 'テーマ',
   'This operation is irreversible.': 'この操作は元に戻せません。',

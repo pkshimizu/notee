@@ -23,6 +23,8 @@ import {
   Settings,
   Star,
   StarOutline,
+  Sync,
+  SyncDisabled,
   TextSnippet,
   Undo,
   VerticalSplit,
@@ -138,6 +140,10 @@ export function RestoreIcon(props: IconProps) {
   return <Icon {...props} icon={RestoreFromTrash} />
 }
 
+export function SearchIcon(props: IconProps) {
+  return <Icon {...props} icon={Search} />
+}
+
 export function SettingsIcon(props: IconProps) {
   return <Icon {...props} icon={Settings} />
 }
@@ -146,8 +152,12 @@ export function SidebarIcon(props: IconProps) {
   return <Icon {...props} icon={ViewSidebar} />
 }
 
-export function SearchIcon(props: IconProps) {
-  return <Icon {...props} icon={Search} />
+export function SyncIcon(props: IconProps) {
+  return <Icon {...props} icon={Sync} />
+}
+
+export function SyncDisabledIcon(props: IconProps) {
+  return <Icon {...props} icon={SyncDisabled} />
 }
 
 export function TrashIcon(props: IconProps) {
