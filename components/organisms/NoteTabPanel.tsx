@@ -1,6 +1,6 @@
 import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
-import TextEditor, { FontSize } from '../atoms/inputs/TextEditor'
+import TextEditor from '../atoms/inputs/TextEditor'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
@@ -18,11 +18,10 @@ type NoteTabPanelProps = {
 }
 
 export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
-  const { getEditor, setEditor } = useEditor()
+  const { getEditor, setEditor, fontSize } = useEditor(activeNote)
   const [propertiesPanel, setPropertiesPanel] = useState(false)
   const [editorRight, setEditorRight] = useState<string | number>(0)
   const [previewLeft, setPreviewLeft] = useState<string | number>('100%')
-  const [fontSize, setFontSize] = useState<FontSize>(14)
   const [cursorRow, setCursorRow] = useState<number>(0)
   const [syncScroll, setSyncScroll] = useState(true)
   const editorSettings = useSelector(editorSettingsSelector)
@@ -93,11 +92,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
           onChangeSyncScroll={setSyncScroll}
         />
       }
-      propertiesPanel={
-        propertiesPanel ? (
-          <NotePropertiesPanel note={activeNote} fontSize={fontSize} onChangeFontSize={(value) => setFontSize(value)} />
-        ) : undefined
-      }
+      propertiesPanel={propertiesPanel ? <NotePropertiesPanel note={activeNote} /> : undefined}
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       <RelativeBox width={'100%'} height={'100%'}>

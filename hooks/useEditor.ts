@@ -1,10 +1,20 @@
 import { EditorContext } from '../components/systems/EditorProvider'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import { Ace } from 'ace-builds'
 import Editor = Ace.Editor
+import { Note } from '../store/notes/models'
+import { useDispatch, useSelector } from 'react-redux'
+import EditorsSelectors from '../store/editors/selectors'
+import { FontSize } from '../components/atoms/inputs/TextEditor'
+import editorsSlice from '../store/editors'
 
-export function useEditor() {
+export function useEditor(note: Note) {
   const context = useContext(EditorContext)
+  const dispatch = useDispatch()
+  const fontSize = useSelector(EditorsSelectors.fontSize)
+  useEffect(() => {
+    dispatch(editorsSlice.actions.select({ id: note.id }))
+  }, [dispatch, note])
   const getEditor = useCallback(
     (id: string) => {
       return context?.getEditor(id)
@@ -43,6 +53,12 @@ export function useEditor() {
     },
     [context]
   )
+  const setFontSize = useCallback(
+    (size: FontSize) => {
+      dispatch(editorsSlice.actions.updateFontSize({ id: note.id, size }))
+    },
+    [dispatch, note]
+  )
   return {
     getEditor,
     setEditor,
@@ -50,5 +66,7 @@ export function useEditor() {
     redo,
     canUndo,
     canRedo,
+    setFontSize,
+    fontSize,
   }
 }

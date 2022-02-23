@@ -12,6 +12,7 @@ import dialogsSlice, { dialogsInitialState } from './dialogs'
 import storage from 'redux-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
+import editorsSlice, { editorsInitialState } from './editors'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   session: sessionSlice.reducer,
   workspace: workspaceSlice.reducer,
   notes: notesSlice.reducer,
+  editors: editorsSlice.reducer,
 })
 
 const preloadedState = () => ({
@@ -27,11 +29,10 @@ const preloadedState = () => ({
   session: sessionInitialState,
   workspace: workspaceInitialState,
   notes: notesInitialState,
+  editors: editorsInitialState,
 })
 
 export type StoreState = ReturnType<typeof preloadedState>
-
-export type ReduxStore = Store<StoreState>
 
 export type Repositories = {
   authRepository: AuthRepository

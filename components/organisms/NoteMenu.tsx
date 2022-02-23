@@ -42,7 +42,7 @@ export default function NoteMenu({
 }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
-  const { undo, redo, canUndo, canRedo } = useEditor()
+  const { undo, redo, canUndo, canRedo } = useEditor(note)
   const [undoDisabled, setUndoDisabled] = useState(false)
   const [redoDisabled, setRedoDisabled] = useState(false)
   const { close } = useWorkspaceTab()

@@ -9,18 +9,18 @@ import List from '../atoms/display/List'
 import ListItem from '../atoms/display/ListItem'
 import { useNoteLogDialog } from '../../hooks/useDialogs'
 import ContentTypeSelect from '../molecules/inputs/ContentTypeSelect'
-import { ContentType, FontSize } from '../atoms/inputs/TextEditor'
+import { ContentType } from '../atoms/inputs/TextEditor'
 import { useDispatch } from 'react-redux'
 import { updateNote } from '../../store/notes/actions'
 import FontSizeSelect from '../molecules/inputs/FontSizeSelect'
+import { useEditor } from '../../hooks/useEditor'
 
 type NotePropertiesPanelProps = {
   note: Note
-  fontSize: FontSize
-  onChangeFontSize: (_size: FontSize) => void
 }
 
-export default function NotePropertiesPanel({ note, fontSize, onChangeFontSize }: NotePropertiesPanelProps) {
+export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) {
+  const { fontSize, setFontSize } = useEditor(note)
   const [tab, setTab] = useState('info')
   const noteLogDialog = useNoteLogDialog()
   const dispatch = useDispatch()
@@ -55,7 +55,7 @@ export default function NotePropertiesPanel({ note, fontSize, onChangeFontSize }
                 <DateTimeLabel datetime={note.updatedAt} />
               </FlexColumn>
               <ContentTypeSelect value={note.contentType} onChange={handleChangeContentType} />
-              <FontSizeSelect value={fontSize} onChange={onChangeFontSize} />
+              <FontSizeSelect value={fontSize} onChange={setFontSize} />
             </FlexColumn>
           ),
         },
