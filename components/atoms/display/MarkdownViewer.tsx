@@ -63,6 +63,7 @@ export default function MarkdownViewer({ content, withToc, row }: MarkdownViewer
         sx={{
           height: '100%',
           overflowY: 'auto',
+          overflowWrap: 'anywhere',
           '& img': {
             maxWidth: '100%',
           },
