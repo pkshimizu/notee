@@ -35,6 +35,8 @@ export function useEditor(note: Note) {
   const dispatch = useDispatch()
   const fontSize = useSelector(EditorsSelectors.fontSize)
   const preview = useSelector(EditorsSelectors.preview)
+  const cursor = useSelector(EditorsSelectors.cursor)
+  const syncScroll = useSelector(EditorsSelectors.syncScroll)
 
   useEffect(() => {
     dispatch(editorsSlice.actions.select({ id: note.id }))
@@ -52,6 +54,36 @@ export function useEditor(note: Note) {
     },
     [context]
   )
+
+  const handleChangeCursor = useCallback(() => {
+    const editor = getEditor(note.id)
+    const cursor = editor?.getCursorPosition()
+    if (cursor) {
+      dispatch(
+        editorsSlice.actions.updateCursor({
+          id: note.id,
+          cursor: {
+            row: cursor.row + 1,
+            column: cursor.column + 1,
+          },
+        })
+      )
+    }
+  }, [getEditor, note, dispatch])
+
+  useEffect(() => {
+    const editor = getEditor(note.id)
+    if (syncScroll) {
+      editor?.getSession().getSelection().on('changeCursor', handleChangeCursor)
+    } else {
+      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
+    }
+
+    return () => {
+      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
+    }
+  }, [getEditor, note, syncScroll, handleChangeCursor])
+
   const undo = useCallback(
     (id: string) => {
       context?.getEditor(id)?.undo()
@@ -94,6 +126,12 @@ export function useEditor(note: Note) {
     },
     [dispatch, note, preview]
   )
+  const setSyncScroll = useCallback(
+    (sync: boolean) => {
+      dispatch(editorsSlice.actions.updateSyncScroll({ id: note.id, sync }))
+    },
+    [dispatch, note]
+  )
 
   return {
     getEditor,
@@ -107,5 +145,8 @@ export function useEditor(note: Note) {
     setPreview,
     editorRight: previewSizeToEditorRight(preview),
     previewLeft: previewSizeToPreviewLeft(preview),
+    cursor,
+    setSyncScroll,
+    syncScroll,
   }
 }

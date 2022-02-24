@@ -27,15 +27,13 @@ import { useDeviceType } from '../../hooks/useDeviceType'
 
 type NoteMenuProps = {
   note: Note
-  syncScroll: boolean
   onOpenProperties: () => void
-  onChangeSyncScroll: (_sync: boolean) => void
 }
 
-export default function NoteMenu({ note, syncScroll, onOpenProperties, onChangeSyncScroll }: NoteMenuProps) {
+export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
-  const { undo, redo, canUndo, canRedo, setPreview } = useEditor(note)
+  const { undo, redo, canUndo, canRedo, setPreview, setSyncScroll, syncScroll } = useEditor(note)
   const [undoDisabled, setUndoDisabled] = useState(false)
   const [redoDisabled, setRedoDisabled] = useState(false)
   const { close } = useWorkspaceTab()
@@ -98,15 +96,11 @@ export default function NoteMenu({ note, syncScroll, onOpenProperties, onChangeS
             <PreviewIcon />
           </IconButton>
           {syncScroll ? (
-            <IconButton
-              label={{ value: 'Sync Disabled Scroll' }}
-              color={'white'}
-              onClick={() => onChangeSyncScroll(false)}
-            >
+            <IconButton label={{ value: 'Sync Disabled Scroll' }} color={'white'} onClick={() => setSyncScroll(false)}>
               <SyncIcon />
             </IconButton>
           ) : (
-            <IconButton label={{ value: 'Sync Scroll' }} color={'white'} onClick={() => onChangeSyncScroll(true)}>
+            <IconButton label={{ value: 'Sync Scroll' }} color={'white'} onClick={() => setSyncScroll(true)}>
               <SyncDisabledIcon />
             </IconButton>
           )}

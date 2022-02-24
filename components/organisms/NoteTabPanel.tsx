@@ -1,7 +1,7 @@
 import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
 import TextEditor from '../atoms/inputs/TextEditor'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
@@ -18,10 +18,8 @@ type NoteTabPanelProps = {
 }
 
 export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
-  const { getEditor, setEditor, fontSize, editorRight, previewLeft } = useEditor(activeNote)
+  const { getEditor, setEditor, fontSize, editorRight, previewLeft, cursor } = useEditor(activeNote)
   const [propertiesPanel, setPropertiesPanel] = useState(false)
-  const [cursorRow, setCursorRow] = useState<number>(0)
-  const [syncScroll, setSyncScroll] = useState(true)
   const editorSettings = useSelector(editorSettingsSelector)
   const dispatch = useDispatch()
   const handleLoad = useCallback(
@@ -31,23 +29,6 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
     },
     [setEditor]
   )
-  const handleChangeCursor = useCallback(() => {
-    const editor = getEditor(activeNote.id)
-    setCursorRow((editor?.getCursorPosition().row ?? 0) + 1)
-  }, [getEditor, activeNote, setCursorRow])
-
-  useEffect(() => {
-    const editor = getEditor(activeNote.id)
-    if (syncScroll) {
-      editor?.getSession().getSelection().on('changeCursor', handleChangeCursor)
-    } else {
-      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
-    }
-
-    return () => {
-      editor?.getSession().getSelection().off('changeCursor', handleChangeCursor)
-    }
-  }, [getEditor, activeNote, syncScroll, handleChangeCursor])
 
   const handleResize = useCallback(() => {
     const editor = getEditor(activeNote.id)
@@ -62,14 +43,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
 
   return (
     <WorkspaceTabPanel
-      menu={
-        <NoteMenu
-          note={activeNote}
-          syncScroll={syncScroll}
-          onOpenProperties={() => setPropertiesPanel(!propertiesPanel)}
-          onChangeSyncScroll={setSyncScroll}
-        />
-      }
+      menu={<NoteMenu note={activeNote} onOpenProperties={() => setPropertiesPanel(!propertiesPanel)} />}
       propertiesPanel={propertiesPanel ? <NotePropertiesPanel note={activeNote} /> : undefined}
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
@@ -91,7 +65,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
         </AbsoluteBox>
         {activeNote.contentType === 'markdown' ? (
           <AbsoluteBox top={0} bottom={0} left={previewLeft} right={0} hidden={previewLeft === '100%'}>
-            <MarkdownViewer content={activeNote.content} row={cursorRow} />
+            <MarkdownViewer content={activeNote.content} row={cursor?.row} />
           </AbsoluteBox>
         ) : (
           <></>
