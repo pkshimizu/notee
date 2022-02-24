@@ -29,20 +29,13 @@ type NoteMenuProps = {
   note: Note
   syncScroll: boolean
   onOpenProperties: () => void
-  onOpenPreview: (_size: 'half' | 'full') => void
   onChangeSyncScroll: (_sync: boolean) => void
 }
 
-export default function NoteMenu({
-  note,
-  syncScroll,
-  onOpenProperties,
-  onOpenPreview,
-  onChangeSyncScroll,
-}: NoteMenuProps) {
+export default function NoteMenu({ note, syncScroll, onOpenProperties, onChangeSyncScroll }: NoteMenuProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
-  const { undo, redo, canUndo, canRedo } = useEditor(note)
+  const { undo, redo, canUndo, canRedo, setPreview } = useEditor(note)
   const [undoDisabled, setUndoDisabled] = useState(false)
   const [redoDisabled, setRedoDisabled] = useState(false)
   const { close } = useWorkspaceTab()
@@ -95,13 +88,13 @@ export default function NoteMenu({
           </IconButton>
           <Divider vertical />
           {deviceType === 'PC' ? (
-            <IconButton label={{ value: 'Editor and Preview' }} color={'white'} onClick={() => onOpenPreview('half')}>
+            <IconButton label={{ value: 'Editor and Preview' }} color={'white'} onClick={() => setPreview('half')}>
               <VerticalSplitIcon />
             </IconButton>
           ) : (
             <></>
           )}
-          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => onOpenPreview('full')}>
+          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => setPreview('full')}>
             <PreviewIcon />
           </IconButton>
           {syncScroll ? (

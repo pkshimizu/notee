@@ -18,10 +18,8 @@ type NoteTabPanelProps = {
 }
 
 export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
-  const { getEditor, setEditor, fontSize } = useEditor(activeNote)
+  const { getEditor, setEditor, fontSize, editorRight, previewLeft } = useEditor(activeNote)
   const [propertiesPanel, setPropertiesPanel] = useState(false)
-  const [editorRight, setEditorRight] = useState<string | number>(0)
-  const [previewLeft, setPreviewLeft] = useState<string | number>('100%')
   const [cursorRow, setCursorRow] = useState<number>(0)
   const [syncScroll, setSyncScroll] = useState(true)
   const editorSettings = useSelector(editorSettingsSelector)
@@ -61,25 +59,6 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
     },
     [dispatch, activeNote]
   )
-  const handleOpenPreview = useCallback(
-    (size: 'half' | 'full') => {
-      if (size === 'half' && editorRight !== '50%') {
-        setEditorRight('50%')
-        setPreviewLeft('50%')
-
-        return
-      }
-      if (size === 'full' && editorRight !== '100%') {
-        setEditorRight('100%')
-        setPreviewLeft(0)
-
-        return
-      }
-      setEditorRight(0)
-      setPreviewLeft('100%')
-    },
-    [editorRight, setEditorRight, setPreviewLeft]
-  )
 
   return (
     <WorkspaceTabPanel
@@ -88,7 +67,6 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
           note={activeNote}
           syncScroll={syncScroll}
           onOpenProperties={() => setPropertiesPanel(!propertiesPanel)}
-          onOpenPreview={handleOpenPreview}
           onChangeSyncScroll={setSyncScroll}
         />
       }

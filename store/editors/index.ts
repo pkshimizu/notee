@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Ace } from 'ace-builds'
 import Editor = Ace.Editor
 
-type PreviewSize = 'half' | 'full' | 'none'
+export type PreviewSize = 'half' | 'full' | 'none'
 
 type EditorCursor = {
   row: number
