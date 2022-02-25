@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { updateNote } from '../../store/notes/actions'
 import FontSizeSelect from '../molecules/inputs/FontSizeSelect'
 import { useEditor } from '../../hooks/useEditor'
+import editorsSlice from '../../store/editors'
 
 type NotePropertiesPanelProps = {
   note: Note
@@ -33,6 +34,9 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
   const handleChangeContentType = useCallback(
     (value: ContentType) => {
       dispatch(updateNote({ note: note, contentType: value }))
+      if (value !== 'markdown') {
+        dispatch(editorsSlice.actions.updatePreview({ id: note.id, size: 'none' }))
+      }
     },
     [dispatch, note]
   )
