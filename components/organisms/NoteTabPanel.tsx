@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { updateNote } from '../../store/notes/actions'
-import { editorSettingsSelector } from '../../store/session/selectors'
 import { useEditor } from '../../hooks/useEditor'
 import MarkdownViewer from '../atoms/display/MarkdownViewer'
 import RelativeBox from '../atoms/layout/RelativeBox'
 import AbsoluteBox from '../atoms/layout/AbsoluteBox'
+import SessionSelectors from '../../store/session/selectors'
 
 type NoteTabPanelProps = {
   notes: Note[]
@@ -20,7 +20,7 @@ type NoteTabPanelProps = {
 export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   const { getEditor, setEditor, fontSize, editorRight, previewLeft, cursor } = useEditor(activeNote)
   const [propertiesPanel, setPropertiesPanel] = useState(false)
-  const editorSettings = useSelector(editorSettingsSelector)
+  const editorSettings = useSelector(SessionSelectors.editorSettings)
   const dispatch = useDispatch()
   const handleLoad = useCallback(
     (id, editor) => {

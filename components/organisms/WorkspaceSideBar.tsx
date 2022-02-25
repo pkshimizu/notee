@@ -10,7 +10,7 @@ import Link from '../atoms/navigation/Link'
 import workspaceSlice from '../../store/workspace'
 import { usePath } from '../../hooks/usePath'
 import Label from '../atoms/display/Label'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type WorkspaceSideBarProps = {}
 

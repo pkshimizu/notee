@@ -4,15 +4,15 @@ import { GitHubIcon, GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRootPage } from '../hooks/usePages'
-import { currentUserSelector } from '../store/session/selectors'
 import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
 import { useTitle } from '../hooks/useTitle'
 import Image from '../components/atoms/display/Image'
 import Label from '../components/atoms/display/Label'
 import LocaleSelectLink from '../components/organisms/LocaleSelectLink'
+import SessionSelectors from '../store/session/selectors'
 
 export default function Login() {
-  const currentUser = useSelector(currentUserSelector)
+  const currentUser = useSelector(SessionSelectors.currentUser)
   const { setTitle } = useTitle()
   const rootPage = useRootPage()
   const dispatch = useDispatch()

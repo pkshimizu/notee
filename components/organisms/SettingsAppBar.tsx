@@ -5,13 +5,13 @@ import UserAvatar from '../molecules/display/UserAvatar'
 import AppBar from '../atoms/surfaces/AppBar'
 import UserMenu from './UserMenu'
 import { useSelector } from 'react-redux'
-import { currentUserSelector } from '../../store/session/selectors'
 import { useCallback, useState } from 'react'
 import { BackIcon } from '../atoms/display/Icons'
 import { useActiveNotesPage } from '../../hooks/usePages'
+import SessionSelectors from '../../store/session/selectors'
 
 export default function SettingsAppBar() {
-  const currentUser = useSelector(currentUserSelector)
+  const currentUser = useSelector(SessionSelectors.currentUser)
   const activeNotePage = useActiveNotesPage()
   const [menuTarget, setMenuTarget] = useState<Element | undefined>(undefined)
   const handleClickMenu = useCallback((target) => {

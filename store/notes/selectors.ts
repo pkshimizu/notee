@@ -47,20 +47,14 @@ const NotesSelectors = {
     return folders.find((folder) => folder.folderId === undefined)
   }),
   notes: createSelector([noteListSelector], (notes) => notes),
-  searchResultNotes: createSelector(
-    [noteListSelector, searchResultsSelector],
-    (notes, searchResults) => notes.filter((note) => searchResults?.notes?.includes(note.id))
+  searchResultNotes: createSelector([noteListSelector, searchResultsSelector], (notes, searchResults) =>
+    notes.filter((note) => searchResults?.notes?.includes(note.id))
   ),
-  searchResultFolders: createSelector(
-    [folderListSelector, searchResultsSelector],
-    (folders, searchResults) => folders.filter((folder) => searchResults?.folders?.includes(folder.id))
+  searchResultFolders: createSelector([folderListSelector, searchResultsSelector], (folders, searchResults) =>
+    folders.filter((folder) => searchResults?.folders?.includes(folder.id))
   ),
-  favoriteFolders: createSelector([folderListSelector], (folders) =>
-    folders.filter((folder) => folder.favorite)
-  ),
-  favoriteNotes: createSelector([noteListSelector], (notes) =>
-    notes.filter((note) => note.favorite)
-  ),
+  favoriteFolders: createSelector([folderListSelector], (folders) => folders.filter((folder) => folder.favorite)),
+  favoriteNotes: createSelector([noteListSelector], (notes) => notes.filter((note) => note.favorite)),
   trashFolders: createSelector([deletedFoldersSelector, deletedNotesSelector], (folders, notes) => {
     const folderIds = folders.map((folder) => folder.id)
     return buildFolders(folders, notes).filter((folder) => !folderIds.includes(folder.folderId ?? ''))

@@ -5,11 +5,11 @@ import { FlexColumn, FlexRow } from '../../components/atoms/layout/Flex'
 import Label from '../../components/atoms/display/Label'
 import Divider from '../../components/atoms/display/Divider'
 import { useDispatch, useSelector } from 'react-redux'
-import { editorSettingsSelector } from '../../store/session/selectors'
 import { updateKeyBinding, updateTheme } from '../../store/session/actions'
 import { EditorTheme, KeyBinding } from '../../components/atoms/inputs/TextEditor'
 import Button from '../../components/atoms/inputs/Button'
 import Image from '../../components/atoms/display/Image'
+import SessionSelectors from '../../store/session/selectors'
 
 const variant = (settingValue: string, value: string) => {
   if (settingValue === value) {
@@ -21,7 +21,7 @@ const variant = (settingValue: string, value: string) => {
 
 export default function Editor() {
   const { setTitle } = useTitle()
-  const editorSettings = useSelector(editorSettingsSelector)
+  const editorSettings = useSelector(SessionSelectors.editorSettings)
   useEffect(() => {
     setTitle({ value: 'Editor Settings' })
   }, [setTitle])

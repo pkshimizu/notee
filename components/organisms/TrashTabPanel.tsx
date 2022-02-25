@@ -9,7 +9,7 @@ import { Dispatch, useCallback } from 'react'
 import { restore } from '../../store/notes/actions'
 import { Folder, Note } from '../../store/notes/models'
 import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type TrashTabPanelProps = {}
 

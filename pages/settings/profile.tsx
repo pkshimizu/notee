@@ -6,11 +6,11 @@ import Label from '../../components/atoms/display/Label'
 import Divider from '../../components/atoms/display/Divider'
 import UserAvatar from '../../components/molecules/display/UserAvatar'
 import { useSelector } from 'react-redux'
-import { currentUserSelector } from '../../store/session/selectors'
 import TextField from '../../components/atoms/inputs/TextField'
+import SessionSelectors from '../../store/session/selectors'
 
 export default function Profile() {
-  const user = useSelector(currentUserSelector)
+  const user = useSelector(SessionSelectors.currentUser)
   const { setTitle } = useTitle()
   useEffect(() => {
     setTitle({ value: 'Profile Settings' })

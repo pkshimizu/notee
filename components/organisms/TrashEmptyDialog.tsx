@@ -4,7 +4,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlexColumn } from '../atoms/layout/Flex'
 import { deleteFolder, deleteNote } from '../../store/notes/actions'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type TrashEmptyDialogProps = {
   open: boolean

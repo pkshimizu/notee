@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLoginPage, useRootPage } from '../../hooks/usePages'
-import { currentUserSelector, initializedSelector } from '../../store/session/selectors'
 import { initializeSession } from '../../store/session'
 import systemSlice from '../../store/system'
 import { Component } from '../../types/react'
+import SessionSelectors from '../../store/session/selectors'
 
 export type LoginType = 'required' | 'any' | 'notAllowed'
 
@@ -14,8 +14,8 @@ type AuthProps = {
 }
 
 export default function Auth({ login = 'any', children }: AuthProps) {
-  const currentUser = useSelector(currentUserSelector)
-  const initialized = useSelector(initializedSelector)
+  const currentUser = useSelector(SessionSelectors.currentUser)
+  const initialized = useSelector(SessionSelectors.initialized)
   const loginPage = useLoginPage()
   const rootPage = useRootPage()
   const dispatch = useDispatch()

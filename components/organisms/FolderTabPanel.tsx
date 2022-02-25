@@ -11,7 +11,7 @@ import FolderPropertiesPanel from './FolderPropertiesPanel'
 import { useSelector } from 'react-redux'
 import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type FolderTabPanelProps = {
   folder: Folder

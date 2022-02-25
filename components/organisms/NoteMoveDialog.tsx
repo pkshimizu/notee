@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
 import FolderSelectDialog from '../molecules/feedback/FolderSelectDialog'
 import { updateNote } from '../../store/notes/actions'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type NoteMoveDialogProps = {
   open: boolean

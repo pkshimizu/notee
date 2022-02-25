@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useTitle } from '../../hooks/useTitle'
 import workspaceSlice from '../../store/workspace'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 export default function Folder() {
   const folders = useSelector(NotesSelectors.folders)

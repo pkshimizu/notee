@@ -7,7 +7,7 @@ import SearchResultsMenu from './SearchResultsMenu'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { useSelector } from 'react-redux'
 import FolderCard from '../molecules/surfaces/FolderCard'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type SearchResultsTabPanelProps = {}
 

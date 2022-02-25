@@ -8,7 +8,7 @@ import { useItemsPage } from '../../hooks/usePages'
 import workspaceSlice from '../../store/workspace'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import { useNote } from '../../hooks/useNote'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type WorkspaceTabViewProps = {}
 

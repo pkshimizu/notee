@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 type FavoritesTabPanelProps = {}
 

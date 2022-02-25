@@ -6,7 +6,7 @@ import workspaceSlice from '../../store/workspace'
 import { useTitle } from '../../hooks/useTitle'
 import NoteTabPanel from '../../components/organisms/NoteTabPanel'
 import { useNote } from '../../hooks/useNote'
-import NotesSelectors from "../../store/notes/selectors";
+import NotesSelectors from '../../store/notes/selectors'
 
 export default function Workspace() {
   const notes = useSelector(NotesSelectors.notes)

@@ -6,8 +6,8 @@ import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateNote } from '../../store/notes/actions'
-import { editorSettingsSelector } from '../../store/session/selectors'
 import { useDay } from '../../hooks/useDay'
+import SessionSelectors from '../../store/session/selectors'
 
 type NoteLogDialogProps = {
   open: boolean
@@ -18,7 +18,7 @@ type NoteLogDialogProps = {
 
 export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialogProps) {
   const [selectedIndex, setSelectedIndex] = useState(note.logs.map((log) => log.id).indexOf(log.id))
-  const editorSettings = useSelector(editorSettingsSelector)
+  const editorSettings = useSelector(SessionSelectors.editorSettings)
   const { dateTimeFormatter } = useDay()
   const dispatch = useDispatch()
   const handleNextLog = useCallback(() => {

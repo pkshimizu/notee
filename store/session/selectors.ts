@@ -2,6 +2,11 @@ import { StoreState } from '../index'
 import { createSelector } from '@reduxjs/toolkit'
 
 const sessionSelector = (state: StoreState) => state.session
-export const currentUserSelector = createSelector([sessionSelector], (state) => state.currentUser)
-export const initializedSelector = createSelector([sessionSelector], (state) => state.initialized)
-export const editorSettingsSelector = createSelector([sessionSelector], (state) => state.settings.editor)
+
+const SessionSelectors = {
+  currentUser: createSelector([sessionSelector], (state) => state.currentUser),
+  initialized: createSelector([sessionSelector], (state) => state.initialized),
+  editorSettings: createSelector([sessionSelector], (state) => state.settings.editor),
+}
+
+export default SessionSelectors
