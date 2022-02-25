@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import NotesSelectors from '../store/notes/selectors'
-import { activeItemIdSelector } from '../store/workspace/selectors'
 import { usePath } from './usePath'
+import WorkspaceSelectors from '../store/workspace/selectors'
 
 export const useRootPage = () => {
   const router = useRouter()
@@ -59,7 +59,7 @@ export const useFoldersPage = () => {
 }
 
 export const useActiveNotesPage = () => {
-  const activeId = useSelector(activeItemIdSelector)
+  const activeId = useSelector(WorkspaceSelectors.activeItemId)
   const itemsPage = useItemsPage()
   return useCallback(() => {
     if (activeId) {
@@ -107,6 +107,7 @@ export const useProfileSettingsPage = () => {
     router.push(settingsProfile())
   }, [])
 }
+
 export const useEditorSettingsPage = () => {
   const router = useRouter()
   const { settingsEditor } = usePath()

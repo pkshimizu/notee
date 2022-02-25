@@ -1,7 +1,6 @@
 import TabView from '../atoms/navigation/TabView'
 import { TrashIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { activeItemIdSelector, openItemsSelector } from '../../store/workspace/selectors'
 import { useCallback, useEffect } from 'react'
 import IconButton from '../atoms/inputs/IconButton'
 import { useItemsPage } from '../../hooks/usePages'
@@ -9,14 +8,15 @@ import workspaceSlice from '../../store/workspace'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import { useNote } from '../../hooks/useNote'
 import NotesSelectors from '../../store/notes/selectors'
+import WorkspaceSelectors from '../../store/workspace/selectors'
 
 type WorkspaceTabViewProps = {}
 
 export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const folders = useSelector(NotesSelectors.folders)
   const notes = useSelector(NotesSelectors.notes)
-  const activeItemId = useSelector(activeItemIdSelector)
-  const items = useSelector(openItemsSelector)
+  const activeItemId = useSelector(WorkspaceSelectors.activeItemId)
+  const items = useSelector(WorkspaceSelectors.openItems)
   const itemsPage = useItemsPage()
   const { close } = useWorkspaceTab()
   const { title } = useNote()

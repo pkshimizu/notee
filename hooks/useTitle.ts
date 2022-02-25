@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { titleSelector } from '../store/system/selectors'
 import { useCallback } from 'react'
 import systemSlice from '../store/system'
 import { LabelText, useLocale } from './useLocale'
+import SystemSelectors from '../store/system/selectors'
 
 export function useTitle() {
-  const title = useSelector(titleSelector)
+  const title = useSelector(SystemSelectors.title)
   const { t } = useLocale()
   const dispatch = useDispatch()
   const setTitle = useCallback(

@@ -5,17 +5,17 @@ import WorkspaceAppBar from '../organisms/WorkspaceAppBar'
 import WorkspaceSideBar from '../organisms/WorkspaceSideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import workspaceSlice from '../../store/workspace'
-import { openSideBarSelector } from '../../store/workspace/selectors'
 import WorkspaceTabView from '../organisms/WorkspaceTabView'
 import { Theme, useMediaQuery } from '@mui/material'
 import { Component } from '../../types/react'
+import WorkspaceSelectors from '../../store/workspace/selectors'
 
 type WorkspaceLayoutProps = {
   children: Component
 }
 
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
-  const openSideBar = useSelector(openSideBarSelector)
+  const openSideBar = useSelector(WorkspaceSelectors.openSideBar)
   const dispatch = useDispatch()
   const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
   const handleToggleSideBar = useCallback(() => {

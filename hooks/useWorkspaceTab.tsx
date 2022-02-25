@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { openItemsSelector } from '../store/workspace/selectors'
 import { useItemsPage, useRootPage } from './usePages'
 import workspaceSlice from '../store/workspace'
+import WorkspaceSelectors from '../store/workspace/selectors'
 
 export const useWorkspaceTab = () => {
-  const items = useSelector(openItemsSelector)
+  const items = useSelector(WorkspaceSelectors.openItems)
   const rootPage = useRootPage()
   const dispatch = useDispatch()
   const itemsPage = useItemsPage()

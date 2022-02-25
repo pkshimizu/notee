@@ -2,7 +2,12 @@ import { StoreState } from '../index'
 import { createSelector } from '@reduxjs/toolkit'
 
 const systemSelector = (state: StoreState) => state.system
-export const titleSelector = createSelector([systemSelector], (state) => state.title)
-export const errorSelector = createSelector([systemSelector], (state) => state.error)
-export const systemMessageSelector = createSelector([systemSelector], (state) => state.message)
-export const loadingSelector = createSelector([systemSelector], (state) => state.loading)
+
+const SystemSelectors = {
+  title: createSelector([systemSelector], (state) => state.title),
+  error: createSelector([systemSelector], (state) => state.error),
+  systemMessage: createSelector([systemSelector], (state) => state.message),
+  loading: createSelector([systemSelector], (state) => state.loading),
+}
+
+export default SystemSelectors

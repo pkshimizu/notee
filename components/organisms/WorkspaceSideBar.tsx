@@ -4,21 +4,21 @@ import { TrashIcon, FavoriteIcon } from '../atoms/display/Icons'
 import NoteTree from './NoteTree'
 import { useItemsPage } from '../../hooks/usePages'
 import { useDispatch, useSelector } from 'react-redux'
-import { activeItemIdSelector, expandedNoteTreeIdsSelector } from '../../store/workspace/selectors'
 import { useCallback } from 'react'
 import Link from '../atoms/navigation/Link'
 import workspaceSlice from '../../store/workspace'
 import { usePath } from '../../hooks/usePath'
 import Label from '../atoms/display/Label'
 import NotesSelectors from '../../store/notes/selectors'
+import WorkspaceSelectors from '../../store/workspace/selectors'
 
 type WorkspaceSideBarProps = {}
 
 export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const root = useSelector(NotesSelectors.rootFolder)
-  const activeItemId = useSelector(activeItemIdSelector)
+  const activeItemId = useSelector(WorkspaceSelectors.activeItemId)
   const itemsPage = useItemsPage()
-  const expandedNoteTreeIds = useSelector(expandedNoteTreeIdsSelector)
+  const expandedNoteTreeIds = useSelector(WorkspaceSelectors.expandedNoteTreeIds)
   const { favorites, trash } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
