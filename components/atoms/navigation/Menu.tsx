@@ -1,9 +1,9 @@
 import MuiMenu from '@mui/material/Menu'
-import { ReactElement } from 'react'
+import { Component } from '../../../types/react'
 
 type MenuProps = {
   target?: Element
-  children: ReactElement | ReactElement[]
+  children: Component
   onClose: () => void
 }
 

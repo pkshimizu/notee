@@ -2,8 +2,8 @@ import MuiDialog from '@mui/material/Dialog'
 import MuiDialogTitle from '@mui/material/DialogTitle'
 import MuiDialogContent from '@mui/material/DialogContent'
 import MuiDialogActions from '@mui/material/DialogActions'
-import { ReactElement } from 'react'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
+import { Component } from '../../../types/react'
 
 export type DialogWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
@@ -11,8 +11,8 @@ type DialogProps = {
   open: boolean
   title?: LabelText
   width?: DialogWidth
-  children: ReactElement | ReactElement[]
-  actions?: ReactElement | ReactElement[]
+  children: Component
+  actions?: Component
   onClose: () => void
 }
 

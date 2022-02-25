@@ -60,7 +60,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
           <IconButton label={{ value: 'Create note' }} color={'white'} onClick={handleCreateNote}>
             <CreateNoteIcon />
           </IconButton>
-          {folder.folderId ? (
+          {folder.folderId && (
             <>
               <IconButton
                 label={{ value: 'Move folder' }}
@@ -77,8 +77,6 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
                 <TrashIcon />
               </IconButton>
             </>
-          ) : (
-            <></>
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>

@@ -1,13 +1,13 @@
-import { ReactElement } from 'react'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import SettingsMenu from '../organisms/SettingsMenu'
 import Container from '../atoms/layout/Container'
 import SettingsAppBar from '../organisms/SettingsAppBar'
 import LocaleSelectLink from '../organisms/LocaleSelectLink'
 import { usePath } from '../../hooks/usePath'
+import { Component } from '../../types/react'
 
 type SettingsLayoutProps = {
-  children: ReactElement | ReactElement[]
+  children: Component
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {

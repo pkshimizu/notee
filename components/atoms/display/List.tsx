@@ -1,8 +1,8 @@
-import { ReactElement } from 'react'
 import MuiList from '@mui/material/List'
+import { Component } from '../../../types/react'
 
 type ListProps = {
-  children: ReactElement[]
+  children: Component
 }
 
 export default function List({ children }: ListProps) {

@@ -1,15 +1,16 @@
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLoginPage, useRootPage } from '../../hooks/usePages'
 import { currentUserSelector, initializedSelector } from '../../store/session/selectors'
 import { initializeSession } from '../../store/session'
 import systemSlice from '../../store/system'
+import { Component } from '../../types/react'
 
 export type LoginType = 'required' | 'any' | 'notAllowed'
 
 type AuthProps = {
   login?: LoginType
-  children: ReactNode
+  children: Component
 }
 
 export default function Auth({ login = 'any', children }: AuthProps) {

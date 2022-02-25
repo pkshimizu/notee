@@ -4,11 +4,12 @@ import MuiListItemIcon from '@mui/material/ListItemIcon'
 import MuiListItemButton from '@mui/material/ListItemButton'
 import MuiListItemText from '@mui/material/ListItemText'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
+import { Component } from '../../../types/react'
 
 type ListItemProps = {
   icon?: ReactElement
   label?: LabelText
-  children?: ReactElement
+  children?: Component
   onClick?: () => void
 }
 

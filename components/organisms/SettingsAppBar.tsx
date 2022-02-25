@@ -24,12 +24,10 @@ export default function SettingsAppBar() {
         <IconButton label={{ value: 'Back' }} color={'white'} onClick={activeNotePage}>
           <BackIcon />
         </IconButton>
-        {currentUser ? (
+        {currentUser && (
           <Button onClick={handleClickMenu} variant={'text'}>
             <UserAvatar user={currentUser} />
           </Button>
-        ) : (
-          <></>
         )}
       </FlexRow>
       <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />

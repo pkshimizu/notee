@@ -1,9 +1,9 @@
 import MuiBackdrop from '@mui/material/Backdrop'
-import { ReactElement } from 'react'
+import { Component } from '../../../types/react'
 
 type BackdropProps = {
   open: boolean
-  children: ReactElement
+  children: Component
   onClose?: () => void
 }
 

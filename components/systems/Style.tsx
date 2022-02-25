@@ -1,9 +1,9 @@
 import createCache from '@emotion/cache'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { ReactNode } from 'react'
 import Head from 'next/head'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import theme from '../../styles/theme'
+import { Component } from '../../types/react'
 
 export function createEmotionCache() {
   return createCache({ key: 'css', prepend: true })
@@ -13,7 +13,7 @@ const clientSideEmotionCache = createEmotionCache()
 
 type StyleProps = {
   cache?: EmotionCache
-  children: ReactNode
+  children: Component
 }
 
 export default function Style({ cache = clientSideEmotionCache, children }: StyleProps) {

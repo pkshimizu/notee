@@ -1,8 +1,8 @@
-import { ReactElement } from 'react'
 import MuiContainer from '@mui/material/Container'
+import { Component } from '../../../types/react'
 
 type ContainerProps = {
-  children: ReactElement | ReactElement[]
+  children: Component
 }
 
 export default function Container({ children }: ContainerProps) {

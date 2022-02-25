@@ -84,25 +84,31 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
           <IconButton label={{ value: 'Redo' }} color={'white'} disabled={redoDisabled} onClick={handleRedo}>
             <RedoIcon />
           </IconButton>
-          <Divider vertical />
-          {deviceType === 'PC' ? (
-            <IconButton label={{ value: 'Editor and Preview' }} color={'white'} onClick={() => setPreview('half')}>
-              <VerticalSplitIcon />
-            </IconButton>
-          ) : (
-            <></>
-          )}
-          <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => setPreview('full')}>
-            <PreviewIcon />
-          </IconButton>
-          {syncScroll ? (
-            <IconButton label={{ value: 'Sync Disabled Scroll' }} color={'white'} onClick={() => setSyncScroll(false)}>
-              <SyncIcon />
-            </IconButton>
-          ) : (
-            <IconButton label={{ value: 'Sync Scroll' }} color={'white'} onClick={() => setSyncScroll(true)}>
-              <SyncDisabledIcon />
-            </IconButton>
+          {note.contentType === 'markdown' && (
+            <>
+              <Divider vertical />
+              {deviceType === 'PC' && (
+                <IconButton label={{ value: 'Editor and Preview' }} color={'white'} onClick={() => setPreview('half')}>
+                  <VerticalSplitIcon />
+                </IconButton>
+              )}
+              <IconButton label={{ value: 'Preview' }} color={'white'} onClick={() => setPreview('full')}>
+                <PreviewIcon />
+              </IconButton>
+              {syncScroll ? (
+                <IconButton
+                  label={{ value: 'Sync Disabled Scroll' }}
+                  color={'white'}
+                  onClick={() => setSyncScroll(false)}
+                >
+                  <SyncIcon />
+                </IconButton>
+              ) : (
+                <IconButton label={{ value: 'Sync Scroll' }} color={'white'} onClick={() => setSyncScroll(true)}>
+                  <SyncDisabledIcon />
+                </IconButton>
+              )}
+            </>
           )}
         </FlexRow>
         <FlexRow justify={'flex-end'}>

@@ -1,5 +1,6 @@
-import { ReactElement, useCallback } from 'react'
+import { useCallback } from 'react'
 import MuiDrawer from '@mui/material/Drawer'
+import { Component } from '../../../types/react'
 
 type DrawerAnchor = 'left' | 'right' | 'top' | 'bottom'
 
@@ -7,7 +8,7 @@ type DrawerProps = {
   anchor?: DrawerAnchor
   open: boolean
   variant: 'permanent' | 'persistent' | 'temporary'
-  children: ReactElement | ReactElement[]
+  children: Component
   onClose?: () => void
 }
 

@@ -20,14 +20,12 @@ export default function Profile() {
     <FlexColumn>
       <Label variant={'title'} text={{ value: 'Profile' }} />
       <Divider />
-      {user ? (
+      {user && (
         <>
           <UserAvatar user={user} size={'xl'} />
           <TextField label={{ value: 'User Name' }} value={user.name} readonly size={'md'} />
           <TextField label={{ value: 'Email' }} value={user.email} readonly size={'md'} />
         </>
-      ) : (
-        <></>
       )}
     </FlexColumn>
   )

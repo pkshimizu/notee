@@ -1,9 +1,10 @@
-import { createContext, ReactNode, useCallback, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import { Ace } from 'ace-builds'
 import Editor = Ace.Editor
+import { Component } from '../../types/react'
 
 type EditorProviderProps = {
-  children: ReactNode
+  children: Component
 }
 
 type EditorState = {

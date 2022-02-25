@@ -1,11 +1,11 @@
-import { ReactElement } from 'react'
 import MuiLink from '@mui/material/Link'
 import NextLink from 'next/link'
+import { Component } from '../../../types/react'
 
 type LinkProps = {
   href: string
   locale?: 'ja' | 'en'
-  children: ReactElement
+  children: Component
 }
 
 export default function Link({ href, locale, children }: LinkProps) {

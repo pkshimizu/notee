@@ -1,9 +1,9 @@
 import MuiAppBar from '@mui/material/AppBar'
 import MuiToolbar from '@mui/material/Toolbar'
-import { ReactElement } from 'react'
+import { Component } from '../../../types/react'
 
 type AppBarProps = {
-  children: ReactElement | ReactElement[]
+  children: Component
 }
 
 export default function AppBar({ children }: AppBarProps) {

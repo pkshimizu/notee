@@ -1,5 +1,6 @@
-import { ReactElement, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import MuiBox from '@mui/material/Box'
+import { Component } from '../../../types/react'
 
 type AbsoluteBoxProps = {
   top?: string | number
@@ -8,7 +9,7 @@ type AbsoluteBoxProps = {
   bottom?: string | number
   hidden?: boolean
   onResize?: (_width: number, _height: number) => void
-  children: ReactElement | ReactElement[]
+  children: Component
 }
 
 export default function AbsoluteBox({ top, left, right, bottom, hidden, onResize, children }: AbsoluteBoxProps) {

@@ -63,12 +63,10 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
             />
           ))}
         </AbsoluteBox>
-        {activeNote.contentType === 'markdown' ? (
+        {activeNote.contentType === 'markdown' && (
           <AbsoluteBox top={0} bottom={0} left={previewLeft} right={0} hidden={previewLeft === '100%'}>
             <MarkdownViewer content={activeNote.content} row={cursor?.row} />
           </AbsoluteBox>
-        ) : (
-          <></>
         )}
       </RelativeBox>
     </WorkspaceTabPanel>

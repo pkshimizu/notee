@@ -1,7 +1,7 @@
-import { ReactElement } from 'react'
+import { Component } from '../../../types/react'
 
 type FormProps = {
-  children: ReactElement | ReactElement[]
+  children: Component
   onSubmit: () => void
 }
 

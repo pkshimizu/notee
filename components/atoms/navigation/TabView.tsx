@@ -4,18 +4,19 @@ import MuiTabs from '@mui/material/Tabs'
 import MuiBox from '@mui/material/Box'
 import MuiTypography from '@mui/material/Typography'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
+import { Component } from '../../../types/react'
 
 export type Tab = {
   value: string
   icon?: ReactElement
   label?: LabelText
-  panel?: ReactElement
+  panel?: Component
 }
 
 type TabViewProps = {
   value: string
   tabs: Tab[]
-  leftItem?: ReactElement
+  leftItem?: Component
   variant?: 'scrollable' | 'fullWidth'
   tabsOnly?: boolean
   onChange?: (_value: string) => void

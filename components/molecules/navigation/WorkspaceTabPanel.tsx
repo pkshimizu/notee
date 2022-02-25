@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
 import { FlexColumn, FlexRow } from '../../atoms/layout/Flex'
 import RelativeBox from '../../atoms/layout/RelativeBox'
 import AbsoluteBox from '../../atoms/layout/AbsoluteBox'
 import Drawer from '../../atoms/navigation/Drawer'
 import { Theme, useMediaQuery } from '@mui/material'
+import { Component } from '../../../types/react'
 
 type WorkspaceTabPanelProps = {
-  menu: ReactElement
-  propertiesPanel?: ReactElement
-  children: ReactElement | ReactElement[]
+  menu: Component
+  propertiesPanel?: Component
+  children: Component
   onResize?: (_width: number, _height: number) => void
   onClosePropertiesPanel?: () => void
 }
@@ -38,7 +38,7 @@ export default function WorkspaceTabPanel({
         variant={upSm ? 'persistent' : 'temporary'}
         onClose={onClosePropertiesPanel}
       >
-        <>{propertiesPanel && <FlexColumn width={256}>{propertiesPanel}</FlexColumn>}</>
+        {propertiesPanel && <FlexColumn width={256}>{propertiesPanel}</FlexColumn>}
       </Drawer>
     </FlexColumn>
   )

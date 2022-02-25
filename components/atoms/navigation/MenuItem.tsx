@@ -1,11 +1,11 @@
 import MuiMenuItem from '@mui/material/MenuItem'
 import MuiListItemIcon from '@mui/material/ListItemIcon'
 import MuiListItemText from '@mui/material/ListItemText'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
 
 type MenuItemProps = {
-  icon?: ReactNode
+  icon?: ReactElement
   label: LabelText
   onClick?: () => void
 }

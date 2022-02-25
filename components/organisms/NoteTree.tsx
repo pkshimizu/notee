@@ -23,12 +23,10 @@ function NoteTreeNoteItem({ note }: { note: Note }) {
 function NoteTreeFolderItem({ folder, folderOnly }: { folder: Folder; folderOnly: boolean }) {
   return (
     <TreeItem id={folder.id} label={{ value: folder.name, plain: true }} icon={<FolderIcon />}>
-      <>
-        {folder.folders.map((subFolder) => (
-          <NoteTreeFolderItem key={subFolder.id} folder={subFolder} folderOnly={folderOnly} />
-        ))}
-        {!folderOnly && folder.notes.map((note) => <NoteTreeNoteItem key={note.id} note={note} />)}
-      </>
+      {folder.folders.map((subFolder) => (
+        <NoteTreeFolderItem key={subFolder.id} folder={subFolder} folderOnly={folderOnly} />
+      ))}
+      {!folderOnly && folder.notes.map((note) => <NoteTreeNoteItem key={note.id} note={note} />)}
     </TreeItem>
   )
 }
@@ -61,7 +59,7 @@ export default function NoteTree({
 
   return (
     <TreeView selectedId={activeId} expanded={expanded} onSelect={handleSelect}>
-      <>{folder && <NoteTreeFolderItem folder={folder} folderOnly={folderOnly} />}</>
+      {folder && <NoteTreeFolderItem folder={folder} folderOnly={folderOnly} />}
     </TreeView>
   )
 }

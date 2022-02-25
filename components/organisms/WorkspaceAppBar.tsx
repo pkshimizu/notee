@@ -19,12 +19,10 @@ export default function WorkspaceAppBar({}: WorkspaceAppBarProps) {
   return (
     <AppBar>
       <FlexRow justify={'flex-end'} align={'center'} width={'100%'}>
-        {currentUser ? (
+        {currentUser && (
           <Button onClick={handleClickMenu} variant={'text'}>
             <UserAvatar user={currentUser} />
           </Button>
-        ) : (
-          <></>
         )}
       </FlexRow>
       <UserMenu target={menuTarget} onClose={() => setMenuTarget(undefined)} />

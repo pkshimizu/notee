@@ -2,13 +2,14 @@ import MuiTreeItem from '@mui/lab/TreeItem'
 import React, { ReactElement } from 'react'
 import MuiBox from '@mui/material/Box'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
+import { Component } from '../../../types/react'
 
 type TreeItemProps = {
   id: string
   icon: ReactElement
   label: LabelText
-  end?: ReactElement
-  children?: ReactElement | ReactElement[]
+  end?: Component
+  children?: Component
 }
 
 export default function TreeItem({ id, icon, label, end, children }: TreeItemProps) {

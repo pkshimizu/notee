@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from 'react'
+import { useCallback } from 'react'
 import Snackbar from '../atoms/feedback/Snackbar'
 import { useDispatch, useSelector } from 'react-redux'
 import systemSlice from '../../store/system'
@@ -6,9 +6,10 @@ import { errorSelector, loadingSelector, systemMessageSelector } from '../../sto
 import Head from 'next/head'
 import { useTitle } from '../../hooks/useTitle'
 import LoadingLayer from '../molecules/feedback/LoadingLayer'
+import { Component } from '../../types/react'
 
 type SystemProps = {
-  children: ReactNode
+  children: Component
 }
 
 export default function System({ children }: SystemProps) {
