@@ -4,16 +4,16 @@ import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import { useSelector } from 'react-redux'
-import { favoriteFoldersSelector, favoriteNotesSelector } from '../../store/notes/selectors'
 import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import FavoritesMenu from './FavoritesMenu'
+import NotesSelectors from "../../store/notes/selectors";
 
 type FavoritesTabPanelProps = {}
 
 export default function FavoritesTabPanel({}: FavoritesTabPanelProps) {
-  const folders = useSelector(favoriteFoldersSelector)
-  const notes = useSelector(favoriteNotesSelector)
+  const folders = useSelector(NotesSelectors.favoriteFolders)
+  const notes = useSelector(NotesSelectors.favoriteNotes)
   const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const openNotePage = useNotesPage()

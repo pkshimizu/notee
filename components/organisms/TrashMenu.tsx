@@ -5,14 +5,14 @@ import { FlexRow } from '../atoms/layout/Flex'
 import IconButton from '../atoms/inputs/IconButton'
 import { CloseIcon, DeleteIcon } from '../atoms/display/Icons'
 import { useSelector } from 'react-redux'
-import { trashFoldersSelector, trashNotesSelector } from '../../store/notes/selectors'
 import { useTrashEmptyDialog } from '../../hooks/useDialogs'
+import NotesSelectors from '../../store/notes/selectors'
 
 type TrashMenuProps = {}
 
 export default function TrashMenu({}: TrashMenuProps) {
-  const folders = useSelector(trashFoldersSelector)
-  const notes = useSelector(trashNotesSelector)
+  const folders = useSelector(NotesSelectors.trashFolders)
+  const notes = useSelector(NotesSelectors.trashNotes)
   const trashEmptyDialog = useTrashEmptyDialog()
   const { closeTrash } = useWorkspaceTab()
   const handleClose = useCallback(() => {

@@ -11,7 +11,7 @@ import FolderPropertiesPanel from './FolderPropertiesPanel'
 import { useSelector } from 'react-redux'
 import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
-import { foldersSelector } from '../../store/notes/selectors'
+import NotesSelectors from "../../store/notes/selectors";
 
 type FolderTabPanelProps = {
   folder: Folder
@@ -23,7 +23,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
-  const folders = useSelector(foldersSelector)
+  const folders = useSelector(NotesSelectors.folders)
 
   return (
     <WorkspaceTabPanel

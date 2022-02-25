@@ -5,16 +5,16 @@ import { activeItemIdSelector, openItemsSelector } from '../../store/workspace/s
 import { useCallback, useEffect } from 'react'
 import IconButton from '../atoms/inputs/IconButton'
 import { useItemsPage } from '../../hooks/usePages'
-import { foldersSelector, notesSelector } from '../../store/notes/selectors'
 import workspaceSlice from '../../store/workspace'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import { useNote } from '../../hooks/useNote'
+import NotesSelectors from "../../store/notes/selectors";
 
 type WorkspaceTabViewProps = {}
 
 export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
-  const folders = useSelector(foldersSelector)
-  const notes = useSelector(notesSelector)
+  const folders = useSelector(NotesSelectors.folders)
+  const notes = useSelector(NotesSelectors.notes)
   const activeItemId = useSelector(activeItemIdSelector)
   const items = useSelector(openItemsSelector)
   const itemsPage = useItemsPage()

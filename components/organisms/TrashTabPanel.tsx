@@ -1,7 +1,6 @@
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import { useDispatch, useSelector } from 'react-redux'
-import { trashFoldersSelector, trashNotesSelector } from '../../store/notes/selectors'
 import Label from '../atoms/display/Label'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
@@ -10,6 +9,7 @@ import { Dispatch, useCallback } from 'react'
 import { restore } from '../../store/notes/actions'
 import { Folder, Note } from '../../store/notes/models'
 import { useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
+import NotesSelectors from "../../store/notes/selectors";
 
 type TrashTabPanelProps = {}
 
@@ -20,8 +20,8 @@ const restoreFolder = (dispatch: Dispatch<any>, folder: Folder) => {
 }
 
 export default function TrashTabPanel({}: TrashTabPanelProps) {
-  const folders = useSelector(trashFoldersSelector)
-  const notes = useSelector(trashNotesSelector)
+  const folders = useSelector(NotesSelectors.trashFolders)
+  const notes = useSelector(NotesSelectors.trashNotes)
   const folderDeleteDialog = useFolderDeleteDialog()
   const noteDeleteDialog = useNoteDeleteDialog()
   const dispatch = useDispatch()

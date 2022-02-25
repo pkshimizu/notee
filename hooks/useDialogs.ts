@@ -1,21 +1,11 @@
 import { useCallback, useState } from 'react'
 import { Folder, Note, NoteLog } from '../store/notes/models'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  dialogsFolderMoveToTrashSelector,
-  dialogsNoteMoveToTrashSelector,
-  dialogsFolderCreateSelector,
-  dialogsNoteLogSelector,
-  dialogsFolderMoveSelector,
-  dialogsNoteMoveSelector,
-  dialogsFolderDeleteSelector,
-  dialogsNoteDeleteSelector,
-  dialogsTrashEmptySelector,
-} from '../store/dialogs/selectors'
 import dialogsSlice from '../store/dialogs'
+import DialogsSelectors from "../store/dialogs/selectors";
 
 export function useFolderCreateDialog() {
-  const folder = useSelector(dialogsFolderCreateSelector)
+  const folder = useSelector(DialogsSelectors.folderCreate)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -34,7 +24,7 @@ export function useFolderCreateDialog() {
   }
 }
 export const useFolderMoveToTrashDialog = () => {
-  const folder = useSelector(dialogsFolderMoveToTrashSelector)
+  const folder = useSelector(DialogsSelectors.folderMoveToTrash)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -54,7 +44,7 @@ export const useFolderMoveToTrashDialog = () => {
 }
 
 export const useFolderMoveDialog = () => {
-  const folder = useSelector(dialogsFolderMoveSelector)
+  const folder = useSelector(DialogsSelectors.folderMove)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -74,7 +64,7 @@ export const useFolderMoveDialog = () => {
 }
 
 export const useNoteMoveToTrashDialog = () => {
-  const note = useSelector(dialogsNoteMoveToTrashSelector)
+  const note = useSelector(DialogsSelectors.noteMoveToTrash)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -94,7 +84,7 @@ export const useNoteMoveToTrashDialog = () => {
 }
 
 export const useNoteMoveDialog = () => {
-  const note = useSelector(dialogsNoteMoveSelector)
+  const note = useSelector(DialogsSelectors.noteMove)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -114,7 +104,7 @@ export const useNoteMoveDialog = () => {
 }
 
 export const useNoteLogDialog = () => {
-  const dialog = useSelector(dialogsNoteLogSelector)
+  const dialog = useSelector(DialogsSelectors.noteLog)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note, log: NoteLog) => {
@@ -135,7 +125,7 @@ export const useNoteLogDialog = () => {
 }
 
 export const useFolderDeleteDialog = () => {
-  const folder = useSelector(dialogsFolderDeleteSelector)
+  const folder = useSelector(DialogsSelectors.folderDelete)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -155,7 +145,7 @@ export const useFolderDeleteDialog = () => {
 }
 
 export const useNoteDeleteDialog = () => {
-  const note = useSelector(dialogsNoteDeleteSelector)
+  const note = useSelector(DialogsSelectors.noteDelete)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -175,7 +165,7 @@ export const useNoteDeleteDialog = () => {
 }
 
 export const useTrashEmptyDialog = () => {
-  const state = useSelector(dialogsTrashEmptySelector)
+  const state = useSelector(DialogsSelectors.trashEmpty)
   const dispatch = useDispatch()
   const open = useCallback(() => {
     dispatch(dialogsSlice.actions.openTrashEmptyDialog())

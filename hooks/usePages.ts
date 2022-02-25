@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
+import NotesSelectors from '../store/notes/selectors'
 import { activeItemIdSelector } from '../store/workspace/selectors'
-import { foldersSelector, notesSelector } from '../store/notes/selectors'
 import { usePath } from './usePath'
 
 export const useRootPage = () => {
@@ -14,8 +14,8 @@ export const useRootPage = () => {
 }
 
 export const useItemsPage = () => {
-  const folders = useSelector(foldersSelector)
-  const notes = useSelector(notesSelector)
+  const folders = useSelector(NotesSelectors.folders)
+  const notes = useSelector(NotesSelectors.notes)
   const foldersPage = useFoldersPage()
   const notesPage = useNotesPage()
   const searchPage = useSearchPage()

@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
-import { rootFolderSelector } from '../store/notes/selectors'
 import { useEffect } from 'react'
 import { useFoldersPage } from '../hooks/usePages'
+import NotesSelectors from "../store/notes/selectors";
 
 export default function Home() {
-  const root = useSelector(rootFolderSelector)
+  const root = useSelector(NotesSelectors.rootFolder)
   const foldersPage = useFoldersPage()
   useEffect(() => {
     if (root) {

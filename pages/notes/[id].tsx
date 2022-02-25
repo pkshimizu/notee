@@ -2,14 +2,14 @@ import WorkspaceLayout from '../../components/templates/WorkspaceLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { notesSelector } from '../../store/notes/selectors'
 import workspaceSlice from '../../store/workspace'
 import { useTitle } from '../../hooks/useTitle'
 import NoteTabPanel from '../../components/organisms/NoteTabPanel'
 import { useNote } from '../../hooks/useNote'
+import NotesSelectors from "../../store/notes/selectors";
 
 export default function Workspace() {
-  const notes = useSelector(notesSelector)
+  const notes = useSelector(NotesSelectors.notes)
   const { setTitle } = useTitle()
   const router = useRouter()
   const dispatch = useDispatch()

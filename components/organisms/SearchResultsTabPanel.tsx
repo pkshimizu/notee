@@ -1,4 +1,3 @@
-import { searchResultFoldersSelector, searchResultNotesSelector } from '../../store/notes/selectors'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import NoteCard from '../molecules/surfaces/NoteCard'
@@ -8,12 +7,13 @@ import SearchResultsMenu from './SearchResultsMenu'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { useSelector } from 'react-redux'
 import FolderCard from '../molecules/surfaces/FolderCard'
+import NotesSelectors from "../../store/notes/selectors";
 
 type SearchResultsTabPanelProps = {}
 
 export default function SearchResultsTabPanel({}: SearchResultsTabPanelProps) {
-  const notes = useSelector(searchResultNotesSelector)
-  const folders = useSelector(searchResultFoldersSelector)
+  const notes = useSelector(NotesSelectors.searchResultNotes)
+  const folders = useSelector(NotesSelectors.searchResultFolders)
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()

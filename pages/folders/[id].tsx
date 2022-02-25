@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { foldersSelector } from '../../store/notes/selectors'
 import FolderTabPanel from '../../components/organisms/FolderTabPanel'
 import WorkspaceLayout from '../../components/templates/WorkspaceLayout'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useTitle } from '../../hooks/useTitle'
 import workspaceSlice from '../../store/workspace'
+import NotesSelectors from "../../store/notes/selectors";
 
 export default function Folder() {
-  const folders = useSelector(foldersSelector)
+  const folders = useSelector(NotesSelectors.folders)
   const router = useRouter()
   const { setTitle } = useTitle()
   const dispatch = useDispatch()

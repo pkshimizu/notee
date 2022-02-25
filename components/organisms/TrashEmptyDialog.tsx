@@ -4,7 +4,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlexColumn } from '../atoms/layout/Flex'
 import { deleteFolder, deleteNote } from '../../store/notes/actions'
-import { trashFoldersSelector, trashNotesSelector } from '../../store/notes/selectors'
+import NotesSelectors from "../../store/notes/selectors";
 
 type TrashEmptyDialogProps = {
   open: boolean
@@ -12,8 +12,8 @@ type TrashEmptyDialogProps = {
 }
 
 export default function TrashEmptyDialog({ open, onClose }: TrashEmptyDialogProps) {
-  const folders = useSelector(trashFoldersSelector)
-  const notes = useSelector(trashNotesSelector)
+  const folders = useSelector(NotesSelectors.trashFolders)
+  const notes = useSelector(NotesSelectors.trashNotes)
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
     folders.forEach((folder) => dispatch(deleteFolder({ folder })))
