@@ -10,7 +10,7 @@ export default function RecentMenu() {
   const handleClose = useCallback(() => {
     closeRecent()
   }, [closeRecent])
-  
+
   return (
     <AppBar>
       <FlexRow justify={'flex-end'}>

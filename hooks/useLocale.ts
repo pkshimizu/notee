@@ -42,7 +42,7 @@ export const useLocale = () => {
       if (defaultValue === undefined) {
         console.warn(`Undefined text "${value}"`)
       }
-      return value ?? defaultValue
+      return value ?? defaultValue ?? 'undefined'
     },
     [dict]
   )
