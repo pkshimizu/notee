@@ -37,7 +37,7 @@ const deletedNotesSelector = createSelector([noteSelector], (state) =>
   Object.values(state.notes).filter((note) => note.deletedAt !== undefined)
 )
 const recentNotesSelector = createSelector([noteSelector], (state) =>
-  Object.values(state.notes).filter((note) => dayjs().subtract(7, 'day').isAfter(dayjs(note.updatedAt)))
+  Object.values(state.notes).filter((note) => dayjs(note.updatedAt).isAfter(dayjs().subtract(7, 'day')))
 )
 const foldersSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
   return buildFolders(folders, notes)
