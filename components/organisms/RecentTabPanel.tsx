@@ -4,12 +4,14 @@ import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import NoteCard from '../molecules/surfaces/NoteCard'
-import { useNoteDeleteDialog } from '../../hooks/useDialogs'
+import { useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import RecentMenu from './RecentMenu'
+import { useNotesPage } from '../../hooks/usePages'
 
 export default function RecentTabPanel() {
   const notes = useSelector(NotesSelectors.recentNotes)
-  const noteDeleteDialog = useNoteDeleteDialog()
+  const openNotePage = useNotesPage()
+  const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
 
   return (
     <WorkspaceTabPanel menu={<RecentMenu />}>
@@ -19,7 +21,12 @@ export default function RecentTabPanel() {
         </FlexRow>
         <FlexRow>
           {notes.map((note) => (
-            <NoteCard note={note} key={note.id} onClickDelete={noteDeleteDialog.open} />
+            <NoteCard
+              note={note}
+              key={note.id}
+              onClickNoteLink={() => openNotePage(note.id)}
+              onClickMoveToTrash={noteMoveToTrashDialog.open}
+            />
           ))}
         </FlexRow>
       </FlexColumn>

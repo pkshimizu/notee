@@ -1,7 +1,7 @@
 import { Note } from '../../store/notes/models'
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
 import { useCallback } from 'react'
-import { FolderIcon } from '../atoms/display/Icons'
+import { NoteIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
@@ -25,7 +25,7 @@ export default function NoteMoveToTrashDialog({ open, note, onClose }: NoteMoveT
     <ConfirmDialog open={open} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={onClose}>
       <FlexColumn>
         <FlexRow>
-          <FolderIcon />
+          <NoteIcon />
           <NoteTitleLabel note={note} />
         </FlexRow>
         <Label text={{ value: 'Do you want to move this note to Trash?' }} />
