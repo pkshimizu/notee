@@ -65,7 +65,7 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
       <TextEditor
         content={note.logs[selectedIndex].content}
         width={'100%'}
-        height={'80vh'}
+        height={'calc(80vh - 120px)'}
         keyBinding={editorSettings.keyBinding}
         theme={editorSettings.theme}
         mode={note.contentType}
