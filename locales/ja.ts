@@ -92,6 +92,7 @@ export default {
   // Q
   // R
   Redo: 'やり直す',
+  Recent: '最近使用したノート',
   'Removed folder from favorites.': 'フォルダをお気に入りから外しました',
   'Removed note from favorites.': 'ノートをお気に入りから外しました',
   'Restore folder': '元に戻す',

@@ -2,6 +2,7 @@ import sortBy from 'lodash/sortBy'
 import { StoreState } from '../index'
 import { createSelector } from '@reduxjs/toolkit'
 import { Folder, Note } from './models'
+import dayjs from 'dayjs'
 
 function sortFolders(folders: Folder[]): Folder[] {
   return sortBy(folders, 'name')
@@ -35,6 +36,9 @@ const deletedFoldersSelector = createSelector([noteSelector], (state) =>
 const deletedNotesSelector = createSelector([noteSelector], (state) =>
   Object.values(state.notes).filter((note) => note.deletedAt !== undefined)
 )
+const recentNotesSelector = createSelector([noteSelector], (state) =>
+  Object.values(state.notes).filter((note) => dayjs().subtract(7, 'day').isAfter(dayjs(note.updatedAt)))
+)
 const foldersSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
   return buildFolders(folders, notes)
 })
@@ -62,6 +66,9 @@ const NotesSelectors = {
   trashNotes: createSelector([deletedFoldersSelector, deletedNotesSelector], (folders, notes) => {
     const folderIds = folders.map((folder) => folder.id)
     return notes.filter((note) => !folderIds.includes(note.folderId))
+  }),
+  recentNotes: createSelector([recentNotesSelector], (notes) => {
+    return notes
   }),
 }
 

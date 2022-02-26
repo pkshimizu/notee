@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type WorkspaceItemType = 'folder' | 'note' | 'search' | 'favorites' | 'trash'
+type WorkspaceItemType = 'folder' | 'note' | 'search' | 'favorites' | 'trash' | 'recent'
 
 export type WorkspaceItem = {
   id: string
@@ -64,6 +64,9 @@ const workspaceSlice = createSlice({
     },
     openFavorites: (state: WorkspaceState) => {
       openItem(state, 'favorites', 'favorites')
+    },
+    openRecent: (state: WorkspaceState) => {
+      openItem(state, 'recent', 'recent')
     },
     openTrash: (state: WorkspaceState) => {
       openItem(state, 'trash', 'trash')

@@ -92,6 +92,7 @@ export default {
   // Q
   // R
   Redo: 'Redo',
+  Recent: 'Recent',
   'Removed folder from favorites.': 'Removed folder from favorites.',
   'Removed note from favorites.': 'Removed note from favorites.',
   'Restore folder': 'Restore folder',

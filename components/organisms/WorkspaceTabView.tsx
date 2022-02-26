@@ -1,5 +1,5 @@
 import TabView from '../atoms/navigation/TabView'
-import { TrashIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon } from '../atoms/display/Icons'
+import { TrashIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon, LogIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
 import IconButton from '../atoms/inputs/IconButton'
@@ -92,6 +92,12 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: { value: 'Favorites' },
             icon: <FavoriteIcon key={item.id} />,
+          }
+        case 'recent':
+          return {
+            value: item.id,
+            label: { value: 'Recent' },
+            icon: <LogIcon key={item.id} />,
           }
         case 'trash':
           return {

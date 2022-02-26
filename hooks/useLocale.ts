@@ -27,8 +27,8 @@ export const useLocale = () => {
   const { locale } = useRouter()
   const dict = selectDict(locale)
   const t = useCallback(
-    ({ value, defaultValue = 'undefined', args, plain = false, truncate }: LabelText) => {
-      let translatedText = plain ? value : dict[value ?? defaultValue]
+    ({ value, defaultValue, args, plain = false, truncate }: LabelText) => {
+      let translatedText = plain ? value : dict[value ?? defaultValue ?? 'undefined']
       if (translatedText) {
         if (args) {
           translatedText = template(translatedText)(args)
@@ -39,7 +39,9 @@ export const useLocale = () => {
         }
         return translatedText
       }
-      console.warn(`Undefined text "${value}"`)
+      if (defaultValue === undefined) {
+        console.warn(`Undefined text "${value}"`)
+      }
       return value ?? defaultValue
     },
     [dict]

@@ -12,6 +12,7 @@ export const usePath = () => {
     search: useCallback(() => '/search', []),
     favorites: useCallback(() => '/favorites', []),
     trash: useCallback(() => '/trash', []),
+    recent: useCallback(() => '/recent', []),
     settingsProfile: useCallback(() => `/settings/profile`, []),
     settingsEditor: useCallback(() => '/settings/editor', []),
   }

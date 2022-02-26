@@ -1,6 +1,6 @@
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import SearchField from '../molecules/inputs/SearchField'
-import { TrashIcon, FavoriteIcon } from '../atoms/display/Icons'
+import { TrashIcon, FavoriteIcon, LogIcon } from '../atoms/display/Icons'
 import NoteTree from './NoteTree'
 import { useItemsPage } from '../../hooks/usePages'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +19,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const activeItemId = useSelector(WorkspaceSelectors.activeItemId)
   const itemsPage = useItemsPage()
   const expandedNoteTreeIds = useSelector(WorkspaceSelectors.expandedNoteTreeIds)
-  const { favorites, trash } = usePath()
+  const { favorites, trash, recent } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
     (id) => {
@@ -39,13 +39,19 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
       <SearchField />
       <FlexColumn space={0} noWrap>
         <Link href={favorites()}>
-          <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
+          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
             <FavoriteIcon />
             <Label text={{ value: 'Favorites' }} />
           </FlexRow>
         </Link>
+        <Link href={recent()}>
+          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
+            <LogIcon />
+            <Label text={{ value: 'Recent' }} />
+          </FlexRow>
+        </Link>
         <Link href={trash()}>
-          <FlexRow space={0} noGrow pt={1} pb={1} pl={1} pr={1}>
+          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
             <TrashIcon />
             <Label text={{ value: 'Trash' }} />
           </FlexRow>
