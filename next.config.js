@@ -1,4 +1,6 @@
 const { withSentryConfig } = require('@sentry/nextjs')
+const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
 
 const moduleExports = {
   reactStrictMode: true,
@@ -19,6 +21,10 @@ const moduleExports = {
     locales: ['en', 'ja'],
     defaultLocale: 'ja',
   },
+  pwa: {
+    dest: 'public',
+    runtimeCaching,
+  },
 }
 
 const sentryWebpackPluginOptions = {
@@ -35,4 +41,4 @@ const sentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+module.exports = withPWA(withSentryConfig(moduleExports, sentryWebpackPluginOptions))

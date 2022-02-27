@@ -15,12 +15,11 @@ export default class MyDocument extends Document {
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
-          <link rel='apple-touch-icon' sizes='180x180' href='/favicons/apple-touch-icon.png' />
           <link rel='icon' type='image/png' sizes='32x32' href='/favicons/favicon-32x32.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/favicons/favicon-16x16.png' />
-          <link rel='manifest' href='/favicons/site.webmanifest' />
           <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color='#000000' />
-          <link rel='shortcut icon' href='/favicons/favicon.ico' />
+          <link rel='manifest' href='/manifest.webmanifest' />
+          <link rel='apple-touch-icon' href='/favicons/icon-192x192.png' />
           <meta name='msapplication-TileColor' content='#ffffff' />
           <meta name='msapplication-config' content='/favicons/browserconfig.xml' />
         </Head>
