@@ -12,6 +12,10 @@ function sortNotes(notes: Note[]): Note[] {
   return sortBy(notes, 'createdAt').reverse()
 }
 
+function sortNotesByUpdatedAt(notes: Note[]): Note[] {
+  return sortBy(notes, 'updatedAt').reverse()
+}
+
 function buildFolders(folders: Folder[], notes: Note[]) {
   const itemsInFolders: Folder[] = folders.map((folder) => ({ ...folder, folders: [], notes: [] }))
   itemsInFolders.forEach((folder) => {
@@ -36,8 +40,8 @@ const deletedFoldersSelector = createSelector([noteSelector], (state) =>
 const deletedNotesSelector = createSelector([noteSelector], (state) =>
   Object.values(state.notes).filter((note) => note.deletedAt !== undefined)
 )
-const recentNotesSelector = createSelector([noteSelector], (state) =>
-  Object.values(state.notes).filter((note) => dayjs(note.updatedAt).isAfter(dayjs().subtract(7, 'day')))
+const recentNotesSelector = createSelector([noteListSelector], (notes) =>
+  sortNotesByUpdatedAt(Object.values(notes).filter((note) => dayjs(note.updatedAt).isAfter(dayjs().subtract(7, 'day'))))
 )
 const foldersSelector = createSelector([folderListSelector, noteListSelector], (folders, notes) => {
   return buildFolders(folders, notes)
