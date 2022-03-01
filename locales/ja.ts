@@ -61,8 +61,8 @@ export default {
   Language: '言語',
   'Last Updated Date': '最終更新日時',
   Login: 'ログイン',
-  'Login with Google': 'Googleアカウントでログインする',
-  'Login with GitHub': 'GitHubアカウントでログインする',
+  'Login with Google': 'Googleでログイン',
+  'Login with GitHub': 'GitHubでログイン',
   Logout: 'ログアウト',
   // M
   'Move folder': 'フォルダを移動する',
