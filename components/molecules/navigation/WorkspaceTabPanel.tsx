@@ -38,7 +38,7 @@ export default function WorkspaceTabPanel({
         variant={upSm ? 'persistent' : 'temporary'}
         onClose={onClosePropertiesPanel}
       >
-        {propertiesPanel && <FlexColumn width={256}>{propertiesPanel}</FlexColumn>}
+        <FlexColumn width={256}>{propertiesPanel}</FlexColumn>
       </Drawer>
     </FlexColumn>
   )
