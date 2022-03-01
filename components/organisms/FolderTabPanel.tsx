@@ -31,9 +31,9 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
       propertiesPanel={propertiesPanel ? <FolderPropertiesPanel folder={folder} /> : undefined}
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
-      <FlexColumn pl={2} pr={2} pb={4}>
+      <FlexColumn px={2} pb={4}>
         <FolderBreadcrumbs folders={folders} folder={folder} />
-        <FlexRow pt={2} pb={2}>
+        <FlexRow py={2}>
           <Label variant={'caption'} text={{ value: 'Folder' }} />
         </FlexRow>
         <FlexRow>
@@ -46,7 +46,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
             />
           ))}
         </FlexRow>
-        <FlexRow pt={2} pb={2}>
+        <FlexRow py={2}>
           <Label variant={'caption'} text={{ value: 'Note' }} />
         </FlexRow>
         <FlexRow>

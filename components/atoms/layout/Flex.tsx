@@ -15,10 +15,16 @@ type FlexProps = {
   space?: SpaceSize
   noWrap?: boolean
   noGrow?: boolean
+  ma?: MarginSize
+  mx?: MarginSize
+  my?: MarginSize
   ml?: MarginSize
   mr?: MarginSize
   mt?: MarginSize
   mb?: MarginSize
+  pa?: PaddingSize
+  px?: PaddingSize
+  py?: PaddingSize
   pl?: PaddingSize
   pr?: PaddingSize
   pt?: PaddingSize
@@ -55,14 +61,20 @@ function Flex({
   space = 1,
   noWrap = false,
   noGrow = false,
-  mt,
-  mb,
-  ml,
-  mr,
-  pt,
-  pb,
-  pl,
-  pr,
+  ma,
+  mx = ma,
+  my = ma,
+  mt = my,
+  mb = my,
+  ml = mx,
+  mr = mx,
+  pa,
+  px = pa,
+  py = pa,
+  pt = py,
+  pb = py,
+  pl = px,
+  pr = px,
   children,
 }: BaseFlexProps) {
   return (

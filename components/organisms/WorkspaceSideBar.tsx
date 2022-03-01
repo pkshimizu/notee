@@ -39,19 +39,19 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
       <SearchField />
       <FlexColumn space={0} noWrap>
         <Link href={favorites()}>
-          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
+          <FlexRow noGrow pa={1}>
             <FavoriteIcon />
             <Label text={{ value: 'Favorites' }} />
           </FlexRow>
         </Link>
         <Link href={recent()}>
-          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
+          <FlexRow noGrow pa={1}>
             <LogIcon />
             <Label text={{ value: 'Recent' }} />
           </FlexRow>
         </Link>
         <Link href={trash()}>
-          <FlexRow noGrow pt={1} pb={1} pl={1} pr={1}>
+          <FlexRow noGrow pa={1}>
             <TrashIcon />
             <Label text={{ value: 'Trash' }} />
           </FlexRow>
