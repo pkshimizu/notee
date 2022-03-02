@@ -62,18 +62,23 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: (getDefaultMiddleware) => {
+    const middleware = getDefaultMiddleware({
       thunk: { extraArgument: thunkExtra },
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(
-      createLogger({
-        diff: true,
-        collapsed: true,
-      })
-    ),
+    })
+    if (process.env.NODE_ENV !== 'production') {
+      middleware.push(
+        createLogger({
+          diff: true,
+          collapsed: true,
+        })
+      )
+    }
+    return middleware
+  },
   devTools: process.env.NODE_ENV !== 'production',
   preloadedState: preloadedState(),
 })
