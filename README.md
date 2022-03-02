@@ -3,27 +3,23 @@
 
 ## 初期設定
 ```shell
-$ yarn install
+yarn install
 ```
 
 ## 開発手順
 ローカル環境で起動する場合
 ```shell
-$ yarn dev
+yarn dev
 ```
 http://localhost:4000 にアクセスする
 
 コードのフォーマットチェックと自動整形
 ```shell
-$ yarn fix
+yarn fix
 ```
 
 ## デプロイ手順
-masterにコミットするとgithub actionsによって、本番環境にデプロイする
-ローカル環境からデプロイする場合はいこのコマンドを実行する
-```shell
-$ TODO
-```
+masterにコミットするとVercelによって、本番環境にデプロイする
 
 ### Vercel
 [Dashboard](https://vercel.com/pkshimizu/gmemo)
@@ -52,4 +48,4 @@ $ TODO
 - スタイルは、Atomコンポーネントに使用して、その他のコンポーネントは、AtomコンポーネントのPropsを通してスタイルを指定する
 
 ## 環境
-- [本番環境](https://notee.net/)
+- [本番環境](https://www.notee.site/)
