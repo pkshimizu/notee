@@ -9,11 +9,9 @@ export default class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
-          {/* PWA primary color */}
           <meta name='theme-color' content={theme.palette.primary.main} />
           <link rel='shortcut icon' href='/static/favicon.ico' />
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
-          {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
           <link rel='icon' type='image/png' sizes='32x32' href='/favicons/favicon-32x32.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/favicons/favicon-16x16.png' />
@@ -22,6 +20,11 @@ export default class MyDocument extends Document {
           <link rel='apple-touch-icon' href='/favicons/icon-192x192.png' />
           <meta name='msapplication-TileColor' content='#ffffff' />
           <meta name='msapplication-config' content='/favicons/browserconfig.xml' />
+          <script
+            async
+            src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129589224188235'
+            crossOrigin='anonymous'
+          />
         </Head>
         <body>
           <Main />
