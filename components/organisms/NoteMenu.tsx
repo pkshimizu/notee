@@ -16,6 +16,7 @@ import {
   PreviewIcon,
   SyncIcon,
   SyncDisabledIcon,
+  FolderIcon,
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
@@ -24,6 +25,7 @@ import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import Divider from '../atoms/display/Divider'
 import { useEditor } from '../../hooks/useEditor'
 import { useDeviceType } from '../../hooks/useDeviceType'
+import { useFoldersPage } from '../../hooks/usePages'
 
 type NoteMenuProps = {
   note: Note
@@ -31,6 +33,7 @@ type NoteMenuProps = {
 }
 
 export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
+  const foldersPage = useFoldersPage()
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
   const noteMoveDialog = useNoteMoveDialog()
   const { undo, redo, canUndo, canRedo, setPreview, setSyncScroll, syncScroll } = useEditor(note)
@@ -46,6 +49,9 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
       dispatch(favorite({ note: note }))
     }
   }, [dispatch, note])
+  const handleGoFolder = useCallback(() => {
+    foldersPage(note.folderId)
+  }, [foldersPage, note])
   const handleClose = useCallback(() => {
     close(note.id)
   }, [close, note])
@@ -67,6 +73,10 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
           <IconButton label={{ value: 'Favorites' }} color={'white'} onClick={handleFavorite}>
             {note.favorite ? <FavoriteIcon /> : <FavoriteOutlinedIcon />}
           </IconButton>
+          <IconButton label={{ value: 'Folder' }} color={'white'} onClick={handleGoFolder}>
+            <FolderIcon />
+          </IconButton>
+          <Divider vertical />
           <IconButton label={{ value: 'Move note' }} color={'white'} onClick={() => noteMoveDialog.open(note)}>
             <MoveIcon />
           </IconButton>
