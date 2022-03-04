@@ -47,6 +47,28 @@ const foldersSelector = createSelector([folderListSelector, noteListSelector], (
   return buildFolders(folders, notes)
 })
 
+function calcSize(object: boolean | number | string | object): number {
+  switch (typeof object) {
+    case 'boolean':
+      return 1
+    case 'number':
+      return 8
+    case 'string':
+      return object.length * 4
+    case 'object':
+      const sizeArray = Object.keys(object).map((key) => {
+        const value = object as { [key: string]: boolean | number | string | object }
+        return calcSize(value[key])
+      })
+      if (sizeArray.length === 0) {
+        return 0
+      }
+      return sizeArray.reduce((previousValue, currentValue) => previousValue + currentValue)
+    default:
+      return 0
+  }
+}
+
 const NotesSelectors = {
   folders: createSelector([foldersSelector], (folders) => {
     return folders
@@ -74,6 +96,7 @@ const NotesSelectors = {
   recentNotes: createSelector([recentNotesSelector], (notes) => {
     return notes
   }),
+  usageCapacity: createSelector([noteSelector], (state) => calcSize(state.folders) + calcSize(state.notes)),
 }
 
 export default NotesSelectors

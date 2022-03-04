@@ -11,6 +11,8 @@ import { usePath } from '../../hooks/usePath'
 import Label from '../atoms/display/Label'
 import NotesSelectors from '../../store/notes/selectors'
 import WorkspaceSelectors from '../../store/workspace/selectors'
+import Divider from '../atoms/display/Divider'
+import CapacityLabel from '../molecules/display/CapacityLabel'
 
 type WorkspaceSideBarProps = {}
 
@@ -19,6 +21,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const activeItemId = useSelector(WorkspaceSelectors.activeItemId)
   const itemsPage = useItemsPage()
   const expandedNoteTreeIds = useSelector(WorkspaceSelectors.expandedNoteTreeIds)
+  const usageCapacity = useSelector(NotesSelectors.usageCapacity)
   const { favorites, trash, recent } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
@@ -63,6 +66,8 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
           onSelect={handleSelectItem}
           onChangeExpanded={handleChangeExpanded}
         />
+        <Divider />
+        <CapacityLabel bytes={usageCapacity} />
       </FlexColumn>
     </FlexColumn>
   )
