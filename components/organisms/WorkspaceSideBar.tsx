@@ -12,7 +12,8 @@ import Label from '../atoms/display/Label'
 import NotesSelectors from '../../store/notes/selectors'
 import WorkspaceSelectors from '../../store/workspace/selectors'
 import Divider from '../atoms/display/Divider'
-import CapacityLabel from '../molecules/display/CapacityLabel'
+import SessionSelectors from '../../store/session/selectors'
+import StorageCapacityView from './StorageCapacityView'
 
 type WorkspaceSideBarProps = {}
 
@@ -22,6 +23,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const itemsPage = useItemsPage()
   const expandedNoteTreeIds = useSelector(WorkspaceSelectors.expandedNoteTreeIds)
   const usageCapacity = useSelector(NotesSelectors.usageCapacity)
+  const maxCapacity = useSelector(SessionSelectors.maxCapacity)
   const { favorites, trash, recent } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
@@ -67,7 +69,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
           onChangeExpanded={handleChangeExpanded}
         />
         <Divider />
-        <CapacityLabel bytes={usageCapacity} />
+        <StorageCapacityView usage={usageCapacity} max={maxCapacity} />
       </FlexColumn>
     </FlexColumn>
   )

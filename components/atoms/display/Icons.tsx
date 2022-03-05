@@ -23,6 +23,7 @@ import {
   Settings,
   Star,
   StarOutline,
+  Storage,
   Sync,
   SyncDisabled,
   TextSnippet,
@@ -150,6 +151,10 @@ export function SettingsIcon(props: IconProps) {
 
 export function SidebarIcon(props: IconProps) {
   return <Icon {...props} icon={ViewSidebar} />
+}
+
+export function StorageIcon(props: IconProps) {
+  return <Icon {...props} icon={Storage} />
 }
 
 export function SyncIcon(props: IconProps) {

@@ -105,6 +105,7 @@ export default {
   Select: '選択',
   Settings: '設定',
   'Simple Personal Note': 'シンプルな個人向けノートサービス',
+  'Storage Capacity': '保存容量',
   Sublime: 'Sublime',
   Submit: '実行',
   'Sync Scroll': 'スクロールを同期する',

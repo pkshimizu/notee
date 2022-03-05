@@ -9,13 +9,13 @@ const sizeToText = (size: number, units: string[]): string => {
     return `${size} ${units[0]}`
   }
   units.shift()
-  
+
   return sizeToText(Math.floor((size * 100) / 1024) / 100, units)
 }
 
 export default function CapacityLabel({ bytes }: CapacityLabelProps) {
   const units: string[] = ['B', 'KB', 'MB', 'GB']
   const text = sizeToText(bytes, units)
-  
+
   return <Label text={{ value: text, plain: true }} />
 }

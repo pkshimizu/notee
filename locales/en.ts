@@ -105,6 +105,7 @@ export default {
   Select: 'Select',
   Settings: 'Settings',
   'Simple Personal Note': 'Simple Personal Note',
+  'Storage Capacity': 'Storage Capacity',
   Sublime: 'Sublime',
   Submit: 'Submit',
   'Sync Scroll': 'Sync Scroll',

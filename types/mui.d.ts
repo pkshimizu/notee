@@ -31,3 +31,13 @@ declare module '@mui/material/IconButton' {
     black: true
   }
 }
+
+declare module '@mui/material/LinearProgress' {
+  export interface LinearProgressPropsColorOverrides {
+    white: true
+    black: true
+  }
+}
+
+export type Color = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'white' | 'black'
+export type ServiceColor = 'google' | 'github'
