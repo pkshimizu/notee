@@ -34,7 +34,7 @@ export default function System({ children }: SystemProps) {
       {error && (
         <Snackbar
           open={true}
-          message={{ value: `${error.message}(${error.code})`, plain: true }}
+          message={{ value: error.message, defaultValue: `${error.message}(${error.code})` }}
           severity={'error'}
           onClose={handleCloseError}
         />

@@ -96,7 +96,7 @@ const NotesSelectors = {
   recentNotes: createSelector([recentNotesSelector], (notes) => {
     return notes
   }),
-  usageCapacity: createSelector([noteSelector], (state) => calcSize(state.folders) + calcSize(state.notes)),
+  usageCapacity: createSelector([noteSelector], (state) => state.usageFolderCapacity + state.usageNoteCapacity),
 }
 
 export default NotesSelectors

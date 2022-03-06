@@ -19,6 +19,7 @@ export default {
   Close: 'Close',
   'Close tab': 'Close tab',
   'Content Type': 'Content Type',
+  'Could not save due to insufficient capacity': 'Could not save due to insufficient capacity',
   'Create folder': 'Create folder',
   'Create note': 'Create note',
   'Created Date': 'Created Date',

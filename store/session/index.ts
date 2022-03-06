@@ -9,6 +9,7 @@ export type SessionState = {
   initialized: boolean
   currentUser?: User
   settings: Settings
+  maxCapacity: number
 }
 
 export const sessionInitialState: SessionState = {
@@ -20,6 +21,7 @@ export const sessionInitialState: SessionState = {
       theme: 'monokai',
     },
   },
+  maxCapacity: 10 * 1024 * 1024,
 }
 
 const initializeUser = async (

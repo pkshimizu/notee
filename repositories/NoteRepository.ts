@@ -72,26 +72,6 @@ export default class NoteRepository {
     })
     return folders
   }
-  async loadRootFolder(user: User) {
-    const userDoc = doc(firestore, `/users/${user.uid}`)
-    const foldersDocs = await getDocs(collection(userDoc, 'folders'))
-    if (foldersDocs.empty) {
-      return undefined
-    }
-    const folders: { [key: string]: Folder } = {}
-    foldersDocs.forEach((doc) => {
-      folders[doc.id] = docToFolder(doc)
-    })
-    Object.values(folders).map((folder) => {
-      if (folder.folderId) {
-        const parent = folders[folder.folderId]
-        if (parent) {
-          parent.folders.push(folder)
-        }
-      }
-    })
-    return Object.values(folders).find((folder) => folder.folderId === undefined)
-  }
   async loadNotes(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesDocs = await getDocs(collection(userDoc, 'notes'))

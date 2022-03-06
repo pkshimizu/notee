@@ -3,6 +3,7 @@ import systemSlice from '../system'
 import { Folder, Note } from '../notes/models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
+import { StoreState } from '../index'
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }
@@ -74,10 +75,19 @@ type CreateFolderParams = {
   parentFolder: Folder
 }
 
+function confirmInsufficientCapacity(state: StoreState) {
+  const usage = state.notes.usageFolderCapacity + state.notes.usageNoteCapacity
+  const max = state.session.maxCapacity
+  if (usage > max) {
+    throw new Error('Could not save due to insufficient capacity')
+  }
+}
+
 export const createFolder = createAsyncAction<CreateFolderParams, void>(
   'CreateFolder',
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
       await noteRepository.createFolder(state.session.currentUser, params.name, params.parentFolder)
       dispatch(systemSlice.actions.message({ message: { value: 'Created new folder.' } }))
     }
@@ -92,6 +102,7 @@ export const createNote = createAsyncAction<CreateNoteParams, void>(
   'CreateNote',
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
       await noteRepository.createNote(state.session.currentUser, params.parentFolder)
       dispatch(systemSlice.actions.message({ message: { value: 'Created new note.' } }))
     }
@@ -108,6 +119,7 @@ export const updateFolder = createAsyncAction<UpdateFolderParams, void>(
   'UpdateFolder',
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
       const folder = params.folder
       await noteRepository.updateFolder(state.session.currentUser, folder, {
         name: params.name,
@@ -128,6 +140,7 @@ export const updateNote = createAsyncAction<UpdateNoteParams, void>(
   'UpdateNote',
   async (params, { noteRepository }, state) => {
     if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
       await noteRepository.updateNote(state.session.currentUser, params.note, {
         content: params.content,
         folderId: params.folderId,
@@ -217,6 +230,7 @@ export const restore = createAsyncAction<RestoreParams, void>(
   'restore',
   async (params, { noteRepository }, state, dispatch) => {
     if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
       if (params.folder) {
         await noteRepository.resetDeletedAtFolder(state.session.currentUser, params.folder)
         dispatch(systemSlice.actions.message({ message: { value: `Restored folder.` } }))

@@ -19,6 +19,7 @@ export default {
   Close: '閉じる',
   'Close tab': 'タブを閉じる',
   'Content Type': 'コンテンツ種別',
+  'Could not save due to insufficient capacity': '容量不足のため保存できませんでした',
   'Create folder': 'フォルダを作成する',
   'Create note': 'ノートを作成する',
   'Created Date': '作成日時',
