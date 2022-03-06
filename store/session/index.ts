@@ -3,7 +3,7 @@ import { Settings, User } from './models'
 import UserRepository from '../../repositories/UserRepository'
 import { Dispatch } from 'react'
 import { createAsyncAction } from '../actions'
-import { updateKeyBinding, updateTheme } from './actions'
+import SessionActions from './actions'
 
 export type SessionState = {
   initialized: boolean
@@ -75,10 +75,10 @@ const sessionSlice = createSlice({
     builder.addCase(initializeSession.rejected, (state) => {
       state.initialized = true
     })
-    builder.addCase(updateKeyBinding.fulfilled, (state, action) => {
+    builder.addCase(SessionActions.updateKeyBinding.fulfilled, (state, action) => {
       state.settings.editor.keyBinding = action.payload.keyBinding
     })
-    builder.addCase(updateTheme.fulfilled, (state, action) => {
+    builder.addCase(SessionActions.updateTheme.fulfilled, (state, action) => {
       state.settings.editor.theme = action.payload.theme
     })
   },

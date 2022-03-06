@@ -4,7 +4,7 @@ import { GitHubIcon, GoogleIcon } from '../components/atoms/display/Icons'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRootPage } from '../hooks/usePages'
-import { loginWithGitHub, loginWithGoogle } from '../store/session/actions'
+import SessionActions from '../store/session/actions'
 import { useTitle } from '../hooks/useTitle'
 import Image from '../components/atoms/display/Image'
 import Label from '../components/atoms/display/Label'
@@ -25,10 +25,10 @@ export default function Login() {
   }, [currentUser, rootPage, setTitle])
 
   const handleLogInWithGoogle = useCallback(() => {
-    dispatch(loginWithGoogle())
+    dispatch(SessionActions.loginWithGoogle())
   }, [dispatch])
   const handleLogInWithGitHub = useCallback(() => {
-    dispatch(loginWithGitHub())
+    dispatch(SessionActions.loginWithGitHub())
   }, [dispatch])
 
   return (

@@ -5,7 +5,7 @@ import { FlexColumn, FlexRow } from '../../components/atoms/layout/Flex'
 import Label from '../../components/atoms/display/Label'
 import Divider from '../../components/atoms/display/Divider'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateKeyBinding, updateTheme } from '../../store/session/actions'
+import SessionActions from '../../store/session/actions'
 import { EditorTheme, KeyBinding } from '../../components/atoms/inputs/TextEditor'
 import Button from '../../components/atoms/inputs/Button'
 import Image from '../../components/atoms/display/Image'
@@ -28,13 +28,13 @@ export default function Editor() {
   const dispatch = useDispatch()
   const handleKeybinding = useCallback(
     (value: KeyBinding) => {
-      dispatch(updateKeyBinding({ keyBinding: value }))
+      dispatch(SessionActions.updateKeyBinding({ keyBinding: value }))
     },
     [dispatch]
   )
   const handleTheme = useCallback(
     (value: string) => {
-      dispatch(updateTheme({ theme: value as EditorTheme }))
+      dispatch(SessionActions.updateTheme({ theme: value as EditorTheme }))
     },
     [dispatch]
   )

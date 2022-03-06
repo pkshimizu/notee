@@ -3,7 +3,7 @@ import MenuItem from '../atoms/navigation/MenuItem'
 import { LogoutIcon, SettingsIcon } from '../atoms/display/Icons'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../store/session/actions'
+import SessionActions from '../../store/session/actions'
 import { useProfileSettingsPage } from '../../hooks/usePages'
 import Divider from '../atoms/display/Divider'
 
@@ -16,7 +16,7 @@ export default function UserMenu({ target, onClose }: UserMenuProps) {
   const profileSettingsPage = useProfileSettingsPage()
   const dispatch = useDispatch()
   const handleLogout = useCallback(() => {
-    dispatch(logout())
+    dispatch(SessionActions.logout())
     onClose()
   }, [dispatch, onClose])
   const handleSettings = useCallback(() => {
