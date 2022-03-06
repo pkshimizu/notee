@@ -1,7 +1,6 @@
 import { FontSize } from '../../components/atoms/inputs/TextEditor'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Ace } from 'ace-builds'
-import Editor = Ace.Editor
 
 export type PreviewSize = 'half' | 'full' | 'none'
 
@@ -31,11 +30,6 @@ export const editorsInitialState: EditorsState = {
 
 type SelectParams = {
   id: string
-}
-
-type UpdateEditorParams = {
-  id: string
-  editor: Editor
 }
 
 type UpdatePropertiesPanelParams = {

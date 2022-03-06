@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
-import { updateNote } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import { useEditor } from '../../hooks/useEditor'
 import MarkdownViewer from '../atoms/display/MarkdownViewer'
 import RelativeBox from '../atoms/layout/RelativeBox'
@@ -36,7 +36,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
   }, [activeNote, getEditor])
   const handleChangeContent = useCallback(
     (content: string) => {
-      dispatch(updateNote({ note: activeNote, content }))
+      dispatch(NotesActions.updateNote({ note: activeNote, content }))
     },
     [dispatch, activeNote]
   )

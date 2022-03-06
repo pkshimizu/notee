@@ -5,7 +5,7 @@ import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateNote } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import { useDay } from '../../hooks/useDay'
 import SessionSelectors from '../../store/session/selectors'
 
@@ -32,7 +32,7 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
     }
   }, [selectedIndex, setSelectedIndex])
   const handleApplyLog = useCallback(() => {
-    dispatch(updateNote({ note, content: note.logs[selectedIndex].content }))
+    dispatch(NotesActions.updateNote({ note, content: note.logs[selectedIndex].content }))
   }, [dispatch, note, selectedIndex])
 
   return (

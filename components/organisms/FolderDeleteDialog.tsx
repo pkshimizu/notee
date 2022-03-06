@@ -5,7 +5,7 @@ import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { deleteFolder, deleteNote } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 
 type FolderDeleteDialogProps = {
   open: boolean
@@ -15,8 +15,8 @@ type FolderDeleteDialogProps = {
 
 const deleteFolderItems = (dispatch: Dispatch<any>, folder: Folder) => {
   folder.folders.forEach((subFolder) => deleteFolderItems(dispatch, subFolder))
-  folder.notes.forEach((note) => dispatch(deleteNote({ note: note })))
-  dispatch(deleteFolder({ folder: folder }))
+  folder.notes.forEach((note) => dispatch(NotesActions.deleteNote({ note: note })))
+  dispatch(NotesActions.deleteFolder({ folder: folder }))
 }
 
 export default function FolderDeleteDialog({ open, folder, onClose }: FolderDeleteDialogProps) {

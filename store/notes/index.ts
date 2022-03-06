@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchNotes, fetchRoot } from './actions'
+import NotesActions from './actions'
 import { Folder, Note } from './models'
 
 export type NotesState = {
@@ -108,13 +108,13 @@ const notesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchRoot.fulfilled, (state, action) => {
+    builder.addCase(NotesActions.fetchRoot.fulfilled, (state, action) => {
       state.folders = action.payload.folders
       state.notes = action.payload.notes
       state.usageFolderCapacity = calcSize(action.payload.folders)
       state.usageNoteCapacity = calcSize(action.payload.notes)
     })
-    builder.addCase(fetchNotes.fulfilled, (state, action) => {
+    builder.addCase(NotesActions.fetchNotes.fulfilled, (state, action) => {
       state.notes = action.payload.notes
       state.usageNoteCapacity = calcSize(action.payload.notes)
     })

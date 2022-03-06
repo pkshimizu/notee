@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import TextField from '../atoms/inputs/TextField'
 import Form from '../atoms/inputs/Form'
 import Button from '../atoms/inputs/Button'
-import { updateFolder } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import Label from '../atoms/display/Label'
 
 type FolderPropertiesPanelProps = {
@@ -37,7 +37,7 @@ export default function FolderPropertiesPanel({ folder }: FolderPropertiesPanelP
   const dispatch = useDispatch()
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      await dispatch(updateFolder({ folder: folder, name: data.name }))
+      await dispatch(NotesActions.updateFolder({ folder: folder, name: data.name }))
     },
     [dispatch, folder]
   )

@@ -20,7 +20,7 @@ import {
 } from '../atoms/display/Icons'
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
-import { favorite, unFavorite } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import Divider from '../atoms/display/Divider'
 import { useEditor } from '../../hooks/useEditor'
@@ -44,9 +44,9 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (note.favorite) {
-      dispatch(unFavorite({ note: note }))
+      dispatch(NotesActions.unFavorite({ note: note }))
     } else {
-      dispatch(favorite({ note: note }))
+      dispatch(NotesActions.favorite({ note: note }))
     }
   }, [dispatch, note])
   const handleGoFolder = useCallback(() => {

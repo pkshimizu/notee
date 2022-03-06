@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { createFolder } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 
 type FolderSettingDialogProps = {
   open: boolean
@@ -34,7 +34,7 @@ export default function FolderCreateDialog({ open, folder, onClose }: FolderSett
   }, [onClose, reset])
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      await dispatch(createFolder({ name: data.name, parentFolder: folder }))
+      await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: folder }))
       onClose()
     },
     [dispatch, folder, onClose]

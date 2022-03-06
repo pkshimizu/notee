@@ -5,7 +5,7 @@ import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { moveFolderToTrash, moveNoteToTrash } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 
 type FolderMoveToTrashDialogProps = {
   open: boolean
@@ -15,8 +15,8 @@ type FolderMoveToTrashDialogProps = {
 
 const moveFolderItemsToTrash = (dispatch: Dispatch<any>, folder: Folder) => {
   folder.folders.forEach((subFolder) => moveFolderItemsToTrash(dispatch, subFolder))
-  folder.notes.forEach((note) => dispatch(moveNoteToTrash({ note: note })))
-  dispatch(moveFolderToTrash({ folder: folder }))
+  folder.notes.forEach((note) => dispatch(NotesActions.moveNoteToTrash({ note: note })))
+  dispatch(NotesActions.moveFolderToTrash({ folder: folder }))
 }
 
 export default function FolderMoveToTrashDialog({ open, folder, onClose }: FolderMoveToTrashDialogProps) {

@@ -5,7 +5,7 @@ import { NoteIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { moveNoteToTrash } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 
 type NoteMoveToTrashDialogProps = {
@@ -17,7 +17,7 @@ type NoteMoveToTrashDialogProps = {
 export default function NoteMoveToTrashDialog({ open, note, onClose }: NoteMoveToTrashDialogProps) {
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    dispatch(moveNoteToTrash({ note: note }))
+    dispatch(NotesActions.moveNoteToTrash({ note: note }))
     onClose()
   }, [dispatch, note, onClose])
 

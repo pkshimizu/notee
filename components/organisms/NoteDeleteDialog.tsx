@@ -5,7 +5,7 @@ import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
-import { deleteNote } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 
 type NoteDeleteDialogProps = {
@@ -17,7 +17,7 @@ type NoteDeleteDialogProps = {
 export default function NoteDeleteDialog({ open, note, onClose }: NoteDeleteDialogProps) {
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await dispatch(deleteNote({ note: note }))
+    await dispatch(NotesActions.deleteNote({ note: note }))
     onClose()
   }, [dispatch, note, onClose])
 

@@ -11,7 +11,7 @@ import { useNoteLogDialog } from '../../hooks/useDialogs'
 import ContentTypeSelect from '../molecules/inputs/ContentTypeSelect'
 import { ContentType } from '../atoms/inputs/TextEditor'
 import { useDispatch } from 'react-redux'
-import { updateNote } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import FontSizeSelect from '../molecules/inputs/FontSizeSelect'
 import { useEditor } from '../../hooks/useEditor'
 import editorsSlice from '../../store/editors'
@@ -33,7 +33,7 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
   )
   const handleChangeContentType = useCallback(
     (value: ContentType) => {
-      dispatch(updateNote({ note: note, contentType: value }))
+      dispatch(NotesActions.updateNote({ note: note, contentType: value }))
       if (value !== 'markdown') {
         dispatch(editorsSlice.actions.updatePreview({ id: note.id, size: 'none' }))
       }

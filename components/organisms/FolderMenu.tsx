@@ -15,7 +15,7 @@ import {
   FavoriteOutlinedIcon,
 } from '../atoms/display/Icons'
 import { useFolderMoveToTrashDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
-import { createNote, favorite, unFavorite } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type FolderMenuProps = {
@@ -31,13 +31,13 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (folder.favorite) {
-      dispatch(unFavorite({ folder: folder }))
+      dispatch(NotesActions.unFavorite({ folder: folder }))
     } else {
-      dispatch(favorite({ folder: folder }))
+      dispatch(NotesActions.favorite({ folder: folder }))
     }
   }, [dispatch, folder])
   const handleCreateNote = useCallback(() => {
-    dispatch(createNote({ parentFolder: folder }))
+    dispatch(NotesActions.createNote({ parentFolder: folder }))
   }, [dispatch, folder])
   const handleClose = useCallback(() => {
     close(folder.id)

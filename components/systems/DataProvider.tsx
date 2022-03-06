@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchNotes, fetchRoot } from '../../store/notes/actions'
+import NotesActions from '../../store/notes/actions'
 import { fetchUserSettings } from '../../store/session/actions'
 import { useDeviceType } from '../../hooks/useDeviceType'
 import { Component } from '../../types/react'
@@ -17,10 +17,10 @@ export default function DataProvider({ children }: DataProviderProps) {
   const deviceType = useDeviceType()
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchRoot())
+    dispatch(NotesActions.fetchRoot())
     dispatch(fetchUserSettings({ mobile: deviceType === 'Mobile' }))
     const onFocus = () => {
-      dispatch(fetchNotes())
+      dispatch(NotesActions.fetchNotes())
     }
     window.addEventListener('focus', onFocus)
 
