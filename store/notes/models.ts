@@ -1,4 +1,5 @@
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
+import { Diff } from 'diff-match-patch'
 
 type Item = {
   id: string
@@ -7,6 +8,7 @@ type Item = {
 export type NoteLog = {
   id: string
   content: string
+  diff?: string
   updatedAt: string
 }
 

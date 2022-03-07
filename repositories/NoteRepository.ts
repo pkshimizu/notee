@@ -15,6 +15,7 @@ import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { ContentType } from '../components/atoms/inputs/TextEditor'
+import { diff_match_patch } from 'diff-match-patch'
 
 type FolderEventListener = (folder: Folder) => void
 type NoteEventListener = (note: Note) => void
@@ -60,6 +61,12 @@ type UpdateNoteParams = {
 }
 
 export default class NoteRepository {
+  private dmp: diff_match_patch
+
+  constructor() {
+    this.dmp = new diff_match_patch()
+  }
+
   async loadFolders(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersDocs = await getDocs(collection(userDoc, 'folders'))
@@ -184,6 +191,7 @@ export default class NoteRepository {
           .concat({
             id: uuidv4(),
             content: note.content,
+            diff: this.makePatchText(note.content, content),
             updatedAt: note.updatedAt,
           })
           .slice(-100)
@@ -242,5 +250,12 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
     return deleteDoc(doc(notesCollection, note.id))
+  }
+
+  private makePatchText(content1: string, content2: string): string {
+    const diff = this.dmp.diff_main(content1, content2, true)
+    this.dmp.diff_cleanupSemantic(diff)
+    const patchList = this.dmp.patch_make(content1, content2, diff)
+    return this.dmp.patch_toText(patchList)
   }
 }
