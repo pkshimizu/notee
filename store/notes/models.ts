@@ -7,7 +7,7 @@ type Item = {
 
 export type NoteLog = {
   id: string
-  content: string
+  content?: string
   diff?: string
   updatedAt: string
 }

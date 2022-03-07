@@ -1,13 +1,13 @@
 import { Note, NoteLog } from '../../store/notes/models'
-import TextEditor from '../atoms/inputs/TextEditor'
 import Dialog from '../atoms/feedback/Dialog'
 import IconButton from '../atoms/inputs/IconButton'
 import { useCallback, useState } from 'react'
 import { ApplyIcon, CloseIcon, NextIcon, PrevIcon } from '../atoms/display/Icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import NotesActions from '../../store/notes/actions'
 import { useDay } from '../../hooks/useDay'
-import SessionSelectors from '../../store/session/selectors'
+import NoteLogView from '../molecules/display/NoteLogView'
+import useNoteLog from '../../hooks/useNoteLog'
 
 type NoteLogDialogProps = {
   open: boolean
@@ -18,8 +18,8 @@ type NoteLogDialogProps = {
 
 export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialogProps) {
   const [selectedIndex, setSelectedIndex] = useState(note.logs.map((log) => log.id).indexOf(log.id))
-  const editorSettings = useSelector(SessionSelectors.editorSettings)
   const { dateTimeFormatter } = useDay()
+  const { restore } = useNoteLog()
   const dispatch = useDispatch()
   const handleNextLog = useCallback(() => {
     if (selectedIndex < note.logs.length - 1) {
@@ -32,8 +32,9 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
     }
   }, [selectedIndex, setSelectedIndex])
   const handleApplyLog = useCallback(() => {
-    dispatch(NotesActions.updateNote({ note, content: note.logs[selectedIndex].content }))
-  }, [dispatch, note, selectedIndex])
+    const content = restore(note.logs, note.logs[selectedIndex].id).nextContent
+    dispatch(NotesActions.updateNote({ note, content: content }))
+  }, [dispatch, note, selectedIndex, restore])
 
   return (
     <Dialog
@@ -62,15 +63,7 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
         </>
       }
     >
-      <TextEditor
-        content={note.logs[selectedIndex].content}
-        width={'100%'}
-        height={'calc(80vh - 120px)'}
-        keyBinding={editorSettings.keyBinding}
-        theme={editorSettings.theme}
-        mode={note.contentType}
-        readOnly
-      />
+      <NoteLogView note={note} log={note.logs[selectedIndex]} />
     </Dialog>
   )
 }

@@ -186,12 +186,12 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const noteDoc = doc(userDoc, 'notes', note.id)
     const updatedAt = dayjs().toISOString()
-    const logs = content
+    const diff = content ? this.makePatchText(note.content, content) : undefined
+    const logs = diff
       ? note.logs
           .concat({
             id: uuidv4(),
-            content: note.content,
-            diff: this.makePatchText(note.content, content),
+            diff: diff,
             updatedAt: note.updatedAt,
           })
           .slice(-100)
