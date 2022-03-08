@@ -40,6 +40,7 @@ export default function NoteLogDialog({ open, note, log, onClose }: NoteLogDialo
     <Dialog
       open={open}
       width={'xl'}
+      height={'80vh'}
       title={dateTimeFormatter(note.logs[selectedIndex].updatedAt)}
       onClose={onClose}
       actions={

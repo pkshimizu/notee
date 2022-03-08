@@ -11,18 +11,21 @@ type DialogProps = {
   open: boolean
   title?: LabelText
   width?: DialogWidth
+  height?: string
   children: Component
   actions?: Component
   onClose: () => void
 }
 
-export default function Dialog({ open, title, width = 'sm', children, actions, onClose }: DialogProps) {
+export default function Dialog({ open, title, width = 'sm', height, children, actions, onClose }: DialogProps) {
   const { t } = useLocale()
 
   return (
     <MuiDialog open={open} fullWidth maxWidth={width} onClose={onClose}>
       {title && <MuiDialogTitle>{t(title)}</MuiDialogTitle>}
-      <MuiDialogContent dividers>{children}</MuiDialogContent>
+      <MuiDialogContent dividers sx={{ height: height }}>
+        {children}
+      </MuiDialogContent>
       {actions && <MuiDialogActions>{actions}</MuiDialogActions>}
     </MuiDialog>
   )
