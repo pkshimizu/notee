@@ -19,7 +19,7 @@ export default function DiffView({ content1, content2 }: DiffViewProps) {
   }, [content1, content2, setDiffs])
 
   return (
-    <MuiBox sx={{ whiteSpace: 'pre' }}>
+    <MuiBox sx={{ whiteSpace: 'pre-line' }}>
       {diffs.map((diff) => {
         const type = diff[0]
         const text = diff[1]
@@ -30,6 +30,7 @@ export default function DiffView({ content1, content2 }: DiffViewProps) {
                 display: 'inline',
                 bgcolor: theme.palette.secondary.light,
                 textDecoration: 'line-through',
+                wordBreak: 'break-word',
               }}
             >
               {text}
@@ -41,6 +42,7 @@ export default function DiffView({ content1, content2 }: DiffViewProps) {
             <MuiTypography
               sx={{
                 display: 'inline',
+                wordBreak: 'break-word',
               }}
             >
               {text}
@@ -53,6 +55,7 @@ export default function DiffView({ content1, content2 }: DiffViewProps) {
               sx={{
                 display: 'inline',
                 bgcolor: theme.palette.primary.light,
+                wordBreak: 'break-word',
               }}
             >
               {text}
