@@ -117,6 +117,7 @@ export default {
   Trash: 'Trash',
   // U
   'Updated Date': 'Updated Date',
+  'Upload file': 'Upload file',
   Undo: 'Undo',
   UnKnown: 'UnKnown',
   'User Name': 'User Name',

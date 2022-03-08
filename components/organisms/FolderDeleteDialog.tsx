@@ -6,12 +6,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NotesActions from '../../store/notes/actions'
-
-type FolderDeleteDialogProps = {
-  open: boolean
-  folder: Folder
-  onClose: () => void
-}
+import { useFolderDeleteDialog } from '../../hooks/useDialogs'
 
 const deleteFolderItems = (dispatch: Dispatch<any>, folder: Folder) => {
   folder.folders.forEach((subFolder) => deleteFolderItems(dispatch, subFolder))
@@ -19,19 +14,22 @@ const deleteFolderItems = (dispatch: Dispatch<any>, folder: Folder) => {
   dispatch(NotesActions.deleteFolder({ folder: folder }))
 }
 
-export default function FolderDeleteDialog({ open, folder, onClose }: FolderDeleteDialogProps) {
+export default function FolderDeleteDialog() {
+  const { state, close } = useFolderDeleteDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await deleteFolderItems(dispatch, folder)
-    onClose()
-  }, [dispatch, folder, onClose])
+    if (state) {
+      await deleteFolderItems(dispatch, state.folder)
+    }
+    close()
+  }, [dispatch, state, close])
 
   return (
-    <ConfirmDialog open={open} title={{ value: 'Delete' }} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={state !== undefined} title={{ value: 'Delete' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={{ value: folder.name, plain: true }} />
+          <Label text={{ value: state?.folder?.name, plain: true }} />
         </FlexRow>
         <Label text={{ value: 'Do you want to delete this folder?' }} />
         <Label text={{ value: 'Items in folder will also be delete.' }} />

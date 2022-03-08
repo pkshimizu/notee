@@ -3,6 +3,7 @@ import {
   Article,
   Check,
   Close,
+  CloudUpload,
   CreateNewFolder,
   Delete,
   DeleteForever,
@@ -171,6 +172,10 @@ export function TrashIcon(props: IconProps) {
 
 export function UndoIcon(props: IconProps) {
   return <Icon {...props} icon={Undo} />
+}
+
+export function UploadIcon(props: IconProps) {
+  return <Icon {...props} icon={CloudUpload} />
 }
 
 export function VerticalSplitIcon(props: IconProps) {

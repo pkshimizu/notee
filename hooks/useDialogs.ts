@@ -5,7 +5,7 @@ import dialogsSlice from '../store/dialogs'
 import DialogsSelectors from '../store/dialogs/selectors'
 
 export function useFolderCreateDialog() {
-  const folder = useSelector(DialogsSelectors.folderCreate)
+  const state = useSelector(DialogsSelectors.folderCreate)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -17,14 +17,13 @@ export function useFolderCreateDialog() {
     dispatch(dialogsSlice.actions.closeFolderCreateDialog())
   }, [])
   return {
-    state: folder !== undefined,
-    folder,
+    state,
     open,
     close,
   }
 }
 export const useFolderMoveToTrashDialog = () => {
-  const folder = useSelector(DialogsSelectors.folderMoveToTrash)
+  const state = useSelector(DialogsSelectors.folderMoveToTrash)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -36,15 +35,14 @@ export const useFolderMoveToTrashDialog = () => {
     dispatch(dialogsSlice.actions.closeFolderMoveToTrashDialog())
   }, [])
   return {
-    state: folder !== undefined,
-    folder,
+    state,
     open,
     close,
   }
 }
 
 export const useFolderMoveDialog = () => {
-  const folder = useSelector(DialogsSelectors.folderMove)
+  const state = useSelector(DialogsSelectors.folderMove)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -56,15 +54,14 @@ export const useFolderMoveDialog = () => {
     dispatch(dialogsSlice.actions.closeFolderMoveDialog())
   }, [])
   return {
-    state: folder !== undefined,
-    folder,
+    state,
     open,
     close,
   }
 }
 
 export const useNoteMoveToTrashDialog = () => {
-  const note = useSelector(DialogsSelectors.noteMoveToTrash)
+  const state = useSelector(DialogsSelectors.noteMoveToTrash)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -76,15 +73,14 @@ export const useNoteMoveToTrashDialog = () => {
     dispatch(dialogsSlice.actions.closeNoteMoveToTrashDialog())
   }, [])
   return {
-    state: note !== undefined,
-    note,
+    state,
     open,
     close,
   }
 }
 
 export const useNoteMoveDialog = () => {
-  const note = useSelector(DialogsSelectors.noteMove)
+  const state = useSelector(DialogsSelectors.noteMove)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -96,15 +92,14 @@ export const useNoteMoveDialog = () => {
     dispatch(dialogsSlice.actions.closeNoteMoveDialog())
   }, [])
   return {
-    state: note !== undefined,
-    note,
+    state,
     open,
     close,
   }
 }
 
 export const useNoteLogDialog = () => {
-  const dialog = useSelector(DialogsSelectors.noteLog)
+  const state = useSelector(DialogsSelectors.noteLog)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note, log: NoteLog) => {
@@ -116,16 +111,14 @@ export const useNoteLogDialog = () => {
     dispatch(dialogsSlice.actions.closeNoteLogDialog())
   }, [])
   return {
-    state: dialog !== undefined,
-    note: dialog?.note,
-    log: dialog?.log,
+    state,
     open,
     close,
   }
 }
 
 export const useFolderDeleteDialog = () => {
-  const folder = useSelector(DialogsSelectors.folderDelete)
+  const state = useSelector(DialogsSelectors.folderDelete)
   const dispatch = useDispatch()
   const open = useCallback(
     (folder: Folder) => {
@@ -137,15 +130,14 @@ export const useFolderDeleteDialog = () => {
     dispatch(dialogsSlice.actions.closeFolderDeleteDialog())
   }, [])
   return {
-    state: folder !== undefined,
-    folder,
+    state,
     open,
     close,
   }
 }
 
 export const useNoteDeleteDialog = () => {
-  const note = useSelector(DialogsSelectors.noteDelete)
+  const state = useSelector(DialogsSelectors.noteDelete)
   const dispatch = useDispatch()
   const open = useCallback(
     (note: Note) => {
@@ -157,8 +149,7 @@ export const useNoteDeleteDialog = () => {
     dispatch(dialogsSlice.actions.closeNoteDeleteDialog())
   }, [])
   return {
-    state: note !== undefined,
-    note,
+    state,
     open,
     close,
   }
@@ -172,6 +163,22 @@ export const useTrashEmptyDialog = () => {
   }, [dispatch])
   const close = useCallback(() => {
     dispatch(dialogsSlice.actions.closeTrashEmptyDialog())
+  }, [])
+  return {
+    state,
+    open,
+    close,
+  }
+}
+
+export const useFileUploadDialog = () => {
+  const state = useSelector(DialogsSelectors.fileUpload)
+  const dispatch = useDispatch()
+  const open = useCallback(() => {
+    dispatch(dialogsSlice.actions.openFileUploadDialog())
+  }, [dispatch])
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeFileUploadDialog())
   }, [])
   return {
     state,

@@ -13,8 +13,14 @@ import {
   MoveIcon,
   FavoriteIcon,
   FavoriteOutlinedIcon,
+  UploadIcon,
 } from '../atoms/display/Icons'
-import { useFolderMoveToTrashDialog, useFolderCreateDialog, useFolderMoveDialog } from '../../hooks/useDialogs'
+import {
+  useFolderMoveToTrashDialog,
+  useFolderCreateDialog,
+  useFolderMoveDialog,
+  useFileUploadDialog,
+} from '../../hooks/useDialogs'
 import NotesActions from '../../store/notes/actions'
 import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
@@ -27,6 +33,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
   const folderCreateDialog = useFolderCreateDialog()
   const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const folderMoveDialog = useFolderMoveDialog()
+  const fileUploadDialog = useFileUploadDialog()
   const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
@@ -59,6 +66,9 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
           </IconButton>
           <IconButton label={{ value: 'Create note' }} color={'white'} onClick={handleCreateNote}>
             <CreateNoteIcon />
+          </IconButton>
+          <IconButton label={{ value: 'Upload file' }} color={'white'} onClick={fileUploadDialog.open}>
+            <UploadIcon />
           </IconButton>
           {folder.folderId && (
             <>

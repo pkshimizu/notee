@@ -117,6 +117,7 @@ export default {
   Trash: 'ゴミ箱',
   // U
   'Updated Date': '更新日時',
+  'Upload file': 'ファイルアップロード',
   Undo: '戻す',
   UnKnown: '不明',
   'User Name': 'ユーザー名',

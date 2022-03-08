@@ -1,20 +1,15 @@
 import FormDialog from '../molecules/feedback/FormDialog'
 import { useCallback } from 'react'
-import { Folder } from '../../store/notes/models'
 import TextField from '../atoms/inputs/TextField'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import NotesActions from '../../store/notes/actions'
+import { useFolderCreateDialog } from '../../hooks/useDialogs'
 
-type FolderSettingDialogProps = {
-  open: boolean
-  folder: Folder
-  onClose: () => void
-}
-
-export default function FolderCreateDialog({ open, folder, onClose }: FolderSettingDialogProps) {
+export default function FolderCreateDialog() {
+  const { state, close } = useFolderCreateDialog()
   const schema = yup.object().shape({
     name: yup.string().max(30).required(),
   })
@@ -29,20 +24,22 @@ export default function FolderCreateDialog({ open, folder, onClose }: FolderSett
   })
   const dispatch = useDispatch()
   const handleClose = useCallback(() => {
-    onClose()
+    close()
     reset()
-  }, [onClose, reset])
+  }, [close, reset])
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: folder }))
-      onClose()
+      if (state) {
+        await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: state.folder }))
+      }
+      close()
     },
-    [dispatch, folder, onClose]
+    [dispatch, state, close]
   )
 
   return (
     <FormDialog
-      open={open}
+      open={state !== undefined}
       title={{ value: 'Create folder' }}
       width={'xs'}
       onSubmit={handleSubmit(handleSaveFolderSettings)}

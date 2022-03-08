@@ -6,12 +6,7 @@ import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NotesActions from '../../store/notes/actions'
-
-type FolderMoveToTrashDialogProps = {
-  open: boolean
-  folder: Folder
-  onClose: () => void
-}
+import { useFolderMoveToTrashDialog } from '../../hooks/useDialogs'
 
 const moveFolderItemsToTrash = (dispatch: Dispatch<any>, folder: Folder) => {
   folder.folders.forEach((subFolder) => moveFolderItemsToTrash(dispatch, subFolder))
@@ -19,19 +14,22 @@ const moveFolderItemsToTrash = (dispatch: Dispatch<any>, folder: Folder) => {
   dispatch(NotesActions.moveFolderToTrash({ folder: folder }))
 }
 
-export default function FolderMoveToTrashDialog({ open, folder, onClose }: FolderMoveToTrashDialogProps) {
+export default function FolderMoveToTrashDialog() {
+  const { state, close } = useFolderMoveToTrashDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await moveFolderItemsToTrash(dispatch, folder)
-    onClose()
-  }, [dispatch, folder, onClose])
+    if (state) {
+      await moveFolderItemsToTrash(dispatch, state.folder)
+    }
+    close()
+  }, [dispatch, state, close])
 
   return (
-    <ConfirmDialog open={open} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={onClose}>
+    <ConfirmDialog open={state !== undefined} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={{ value: folder.name, plain: true }} />
+          <Label text={{ value: state?.folder?.name, plain: true }} />
         </FlexRow>
         <Label text={{ value: 'Do you want to move this folder to Trash?' }} />
         <Label text={{ value: 'Items in folder will also be moved to Trash.' }} />

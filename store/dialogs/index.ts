@@ -2,15 +2,16 @@ import { Folder, Note, NoteLog } from '../notes/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type DialogsState = {
-  folderCreate?: Folder
-  folderMoveToTrash?: Folder
-  folderMove?: Folder
-  noteMoveToTrash?: Note
-  noteMove?: Note
+  folderCreate?: { folder: Folder }
+  folderMoveToTrash?: { folder: Folder }
+  folderMove?: { folder: Folder }
+  noteMoveToTrash?: { note: Note }
+  noteMove?: { note: Note }
   noteLog?: { note: Note; log: NoteLog }
-  folderDelete?: Folder
-  noteDelete?: Note
-  trashEmpty?: boolean
+  folderDelete?: { folder: Folder }
+  noteDelete?: { note: Note }
+  trashEmpty?: {}
+  fileUpload?: {}
 }
 
 export const dialogsInitialState: DialogsState = {
@@ -20,7 +21,8 @@ export const dialogsInitialState: DialogsState = {
   noteMoveToTrash: undefined,
   noteMove: undefined,
   noteLog: undefined,
-  trashEmpty: false,
+  trashEmpty: undefined,
+  fileUpload: undefined,
 }
 
 type OpenFolderSettingsDialogParams = {
@@ -61,31 +63,31 @@ const dialogsSlice = createSlice({
   initialState: dialogsInitialState,
   reducers: {
     openFolderCreateDialog: (state: DialogsState, action: PayloadAction<OpenFolderSettingsDialogParams>) => {
-      state.folderCreate = action.payload.folder
+      state.folderCreate = action.payload
     },
     closeFolderCreateDialog: (state: DialogsState) => {
       state.folderCreate = undefined
     },
     openFolderMoveToTrashDialog: (state: DialogsState, action: PayloadAction<OpenFolderMoveToTrashDialogParams>) => {
-      state.folderMoveToTrash = action.payload.folder
+      state.folderMoveToTrash = action.payload
     },
     closeFolderMoveToTrashDialog: (state: DialogsState) => {
       state.folderMoveToTrash = undefined
     },
     openFolderMoveDialog: (state: DialogsState, action: PayloadAction<OpenFolderMoveDialogParams>) => {
-      state.folderMove = action.payload.folder
+      state.folderMove = action.payload
     },
     closeFolderMoveDialog: (state: DialogsState) => {
       state.folderMove = undefined
     },
     openNoteMoveToTrashDialog: (state: DialogsState, action: PayloadAction<OpenNoteMoveToTrashDialogParams>) => {
-      state.noteMoveToTrash = action.payload.note
+      state.noteMoveToTrash = action.payload
     },
     closeNoteMoveToTrashDialog: (state: DialogsState) => {
       state.noteMoveToTrash = undefined
     },
     openNoteMoveDialog: (state: DialogsState, action: PayloadAction<OpenNoteMoveDialogParams>) => {
-      state.noteMove = action.payload.note
+      state.noteMove = action.payload
     },
     closeNoteMoveDialog: (state: DialogsState) => {
       state.noteMove = undefined
@@ -97,22 +99,28 @@ const dialogsSlice = createSlice({
       state.noteLog = undefined
     },
     openFolderDeleteDialog: (state: DialogsState, action: PayloadAction<OpenFolderDeleteDialogParams>) => {
-      state.folderDelete = action.payload.folder
+      state.folderDelete = action.payload
     },
     closeFolderDeleteDialog: (state: DialogsState) => {
       state.folderDelete = undefined
     },
     openNoteDeleteDialog: (state: DialogsState, action: PayloadAction<OpenNoteDeleteDialogParams>) => {
-      state.noteDelete = action.payload.note
+      state.noteDelete = action.payload
     },
     closeNoteDeleteDialog: (state: DialogsState) => {
       state.noteDelete = undefined
     },
     openTrashEmptyDialog: (state: DialogsState) => {
-      state.trashEmpty = true
+      state.trashEmpty = {}
     },
     closeTrashEmptyDialog: (state: DialogsState) => {
-      state.trashEmpty = false
+      state.trashEmpty = undefined
+    },
+    openFileUploadDialog: (state: DialogsState) => {
+      state.fileUpload = {}
+    },
+    closeFileUploadDialog: (state: DialogsState) => {
+      state.fileUpload = undefined
     },
   },
 })
