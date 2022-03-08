@@ -7,6 +7,7 @@ import NoteMoveDialog from '../organisms/NoteMoveDialog'
 import FolderDeleteDialog from '../organisms/FolderDeleteDialog'
 import NoteDeleteDialog from '../organisms/NoteDeleteDialog'
 import FileUploadDialog from '../organisms/FileUploadDialog'
+import TrashEmptyDialog from '../organisms/TrashEmptyDialog'
 
 export default function DialogProvider() {
   return (
@@ -19,6 +20,7 @@ export default function DialogProvider() {
       <NoteMoveDialog />
       <NoteLogDialog />
       <NoteDeleteDialog />
+      <TrashEmptyDialog />
       <FileUploadDialog />
     </>
   )
