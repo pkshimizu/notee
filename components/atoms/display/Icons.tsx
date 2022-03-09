@@ -36,18 +36,20 @@ import { ElementType } from 'react'
 import { SvgIcon } from '@mui/material'
 import MuiMenuIcon from '@mui/icons-material/Menu'
 
-export type IconColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'white' | 'black'
+export type IconColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
+export type IconSize = 24 | 48 | 64
 
 type IconProps = {
   color?: IconColor
+  size?: IconSize
 }
 
 type BaseIconProps = {
   icon: ElementType
 } & IconProps
 
-export function Icon({ color, icon }: BaseIconProps) {
-  return <SvgIcon component={icon} sx={{ color: color }} />
+export function Icon({ color, icon, size }: BaseIconProps) {
+  return <SvgIcon component={icon} sx={{ fontSize: size }} color={color} />
 }
 
 export function ApplyIcon(props: IconProps) {

@@ -86,6 +86,7 @@ export default {
   'Open properties': 'プロパティを開く',
   'Open side bar': 'サイドバーを開く',
   // P
+  'Please drop file': 'ファイルをドロップしてください',
   'Prev log': '前のログ',
   Preview: 'プレビュー',
   Profile: 'プロフィール',

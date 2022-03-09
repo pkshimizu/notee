@@ -86,6 +86,7 @@ export default {
   'Open properties': 'Open properties',
   'Open side bar': 'Open side bar',
   // P
+  'Please drop file': 'Please drop file',
   'Prev log': 'Prev log',
   Preview: 'Preview',
   Profile: 'Profile',

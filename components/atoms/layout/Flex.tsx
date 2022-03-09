@@ -3,6 +3,7 @@ import { Component } from '../../../types/react'
 
 export type FlexAlign = 'flex-start' | 'center' | 'flex-end' | 'baseline'
 export type FlexJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
+type Color = 'primary' | 'secondary'
 type SpaceSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
 type MarginSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
 type PaddingSize = 0 | 1 | 2 | 4 | 8 | 16 | 32
@@ -29,6 +30,7 @@ type FlexProps = {
   pr?: PaddingSize
   pt?: PaddingSize
   pb?: PaddingSize
+  color?: Color
   children: Component
 }
 
@@ -75,6 +77,7 @@ function Flex({
   pb = py,
   pl = px,
   pr = px,
+  color,
   children,
 }: BaseFlexProps) {
   return (
@@ -98,6 +101,7 @@ function Flex({
         pb: pb,
         pl: pl,
         pr: pr,
+        backgroundColor: color ? `${color}.light` : undefined,
       }}
     >
       {children}
