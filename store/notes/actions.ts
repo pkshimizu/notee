@@ -1,6 +1,6 @@
 import { createAsyncAction } from '../actions'
 import systemSlice from '../system'
-import { Folder, Note } from './models'
+import { File, Folder, Note } from './models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
@@ -8,6 +8,7 @@ import { StoreState } from '../index'
 type FetchRootResults = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
+  files: File[]
 }
 
 type FetchNotesResults = {
@@ -20,6 +21,12 @@ type CreateFolderParams = {
 }
 
 type CreateNoteParams = {
+  parentFolder: Folder
+}
+
+type CreateFileParams = {
+  name: string
+  bites: number
   parentFolder: Folder
 }
 
@@ -36,12 +43,22 @@ type UpdateNoteParams = {
   contentType?: ContentType
 }
 
+type UpdateFileParams = {
+  file: File
+  name?: string
+  folderId?: string
+}
+
 type MoveFolderToTrashParams = {
   folder: Folder
 }
 
 type MoveNoteToTrashParams = {
   note: Note
+}
+
+type MoveFileToTrashParams = {
+  file: File
 }
 
 type FavoriteParams = {
@@ -57,6 +74,7 @@ type UnFavoriteParams = {
 type RestoreParams = {
   folder?: Folder
   note?: Note
+  file?: File
 }
 
 type DeleteFolderParams = {
@@ -65,6 +83,10 @@ type DeleteFolderParams = {
 
 type DeleteNoteParams = {
   note: Note
+}
+
+type DeleteFileParams = {
+  file: File
 }
 
 function confirmInsufficientCapacity(state: StoreState) {
@@ -86,9 +108,10 @@ const NotesActions = {
           const newRoot = await noteRepository.createFolder(currentUser, 'My Notes')
           const newFolders: { [key: string]: Folder } = {}
           newFolders[newRoot.id] = newRoot
-          return { folders: newFolders, notes: {} }
+          return { folders: newFolders, notes: {}, files: [] }
         }
         const notes = await noteRepository.loadNotes(currentUser)
+        const files = await noteRepository.loadFiles(currentUser)
         noteRepository.onSnapshotFolders(
           currentUser,
           (folder) => {
@@ -113,9 +136,21 @@ const NotesActions = {
             dispatch(notesSlice.actions.removeNote({ note }))
           }
         )
-        return { folders: folders, notes: notes }
+        noteRepository.onSnapshotFiles(
+          currentUser,
+          (file) => {
+            dispatch(notesSlice.actions.addFile({ file }))
+          },
+          (file) => {
+            dispatch(notesSlice.actions.modifyFile({ file }))
+          },
+          (file) => {
+            dispatch(notesSlice.actions.removeFile({ file }))
+          }
+        )
+        return { folders: folders, notes: notes, files: files }
       }
-      return { folders: {}, notes: {} }
+      return { folders: {}, notes: {}, files: [] }
     }
   ),
   fetchNotes: createAsyncAction<void, FetchNotesResults>('fetchNotes', async (params, { noteRepository }, state) => {
@@ -153,6 +188,17 @@ const NotesActions = {
     }
   ),
 
+  createFiles: createAsyncAction<CreateFileParams, void>(
+    'CreateFile',
+    async (params, { noteRepository }, state, dispatch) => {
+      if (state.session.currentUser) {
+        confirmInsufficientCapacity(state)
+        await noteRepository.createFile(state.session.currentUser, params.name, params.bites, params.parentFolder)
+        dispatch(systemSlice.actions.message({ message: { value: 'Upload file.' } }))
+      }
+    }
+  ),
+
   updateFolder: createAsyncAction<UpdateFolderParams, void>(
     'UpdateFolder',
     async (params, { noteRepository }, state) => {
@@ -178,6 +224,16 @@ const NotesActions = {
     }
   }),
 
+  updateFile: createAsyncAction<UpdateFileParams, void>('UpdateFile', async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      confirmInsufficientCapacity(state)
+      await noteRepository.updateFile(state.session.currentUser, params.file, {
+        name: params.name,
+        folderId: params.folderId,
+      })
+    }
+  }),
+
   moveFolderToTrash: createAsyncAction<MoveFolderToTrashParams, void>(
     'moveFolderToTrash',
     async (params, { noteRepository }, state, dispatch) => {
@@ -195,6 +251,16 @@ const NotesActions = {
       if (state.session.currentUser) {
         await noteRepository.updateDeletedAtNote(state.session.currentUser, params.note)
         dispatch(systemSlice.actions.message({ message: { value: 'Moved note to trash' } }))
+      }
+    }
+  ),
+
+  moveFileToTrash: createAsyncAction<MoveFileToTrashParams, void>(
+    'MoveFileToTrash',
+    async (params, { noteRepository }, state, dispatch) => {
+      if (state.session.currentUser) {
+        await noteRepository.updateDeletedAtFile(state.session.currentUser, params.file)
+        dispatch(systemSlice.actions.message({ message: { value: 'Moved file to trash' } }))
       }
     }
   ),
@@ -242,6 +308,10 @@ const NotesActions = {
         await noteRepository.resetDeletedAtNote(state.session.currentUser, params.note)
         dispatch(systemSlice.actions.message({ message: { value: `Restored note.` } }))
       }
+      if (params.file) {
+        await noteRepository.resetDeletedAtFile(state.session.currentUser, params.file)
+        dispatch(systemSlice.actions.message({ message: { value: `Restored file.` } }))
+      }
     }
   }),
 
@@ -262,6 +332,16 @@ const NotesActions = {
       if (state.session.currentUser) {
         await noteRepository.deleteNote(state.session.currentUser, params.note)
         dispatch(systemSlice.actions.message({ message: { value: 'Deleted note' } }))
+      }
+    }
+  ),
+
+  deleteFile: createAsyncAction<DeleteFileParams, void>(
+    'DeleteFile',
+    async (params, { noteRepository }, state, dispatch) => {
+      if (state.session.currentUser) {
+        await noteRepository.deleteFile(state.session.currentUser, params.file)
+        dispatch(systemSlice.actions.message({ message: { value: 'Deleted file' } }))
       }
     }
   ),

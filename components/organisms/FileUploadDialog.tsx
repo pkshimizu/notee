@@ -2,10 +2,28 @@ import Dialog from '../atoms/feedback/Dialog'
 import { useFileUploadDialog } from '../../hooks/useDialogs'
 import FileSelectField from '../molecules/inputs/FileSelectField'
 import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import NotesActions from '../../store/notes/actions'
 
 export default function FileUploadDialog() {
   const { state, close } = useFileUploadDialog()
-  const handleSelect = useCallback((_files: File[]) => {}, [])
+  const dispatch = useDispatch()
+  const handleSelect = useCallback(
+    (files: File[]) => {
+      if (state) {
+        files.forEach((file) => {
+          dispatch(
+            NotesActions.createFiles({
+              name: file.name,
+              bites: file.size,
+              parentFolder: state.folder,
+            })
+          )
+        })
+      }
+    },
+    [dispatch, state]
+  )
 
   return (
     <Dialog open={state !== undefined} onClose={close}>

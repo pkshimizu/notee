@@ -1,21 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import NotesActions from './actions'
-import { Folder, Note } from './models'
+import { Folder, Note, File } from './models'
 
 export type NotesState = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
+  files: File[]
   searchResults?: { notes: string[]; folders: string[] }
   usageFolderCapacity: number
   usageNoteCapacity: number
+  usageFileCapacity: number
 }
 
 export const notesInitialState: NotesState = {
   folders: {},
   notes: {},
+  files: [],
   searchResults: undefined,
   usageFolderCapacity: 0,
   usageNoteCapacity: 0,
+  usageFileCapacity: 0,
 }
 
 type AddFolderParams = {
@@ -38,6 +42,15 @@ type RemoveNoteParams = {
 }
 type SearchNotesParams = {
   keyword: string
+}
+type AddFileParams = {
+  file: File
+}
+type ModifyFileParams = {
+  file: File
+}
+type RemoveFileParams = {
+  file: File
 }
 
 function calcSize(object: boolean | number | string | object): number {
@@ -95,6 +108,25 @@ const notesSlice = createSlice({
       const note = action.payload.note
       delete state.notes[note.id]
       state.usageNoteCapacity = calcSize(state.notes)
+    },
+    addFile: (state, action: PayloadAction<AddFileParams>) => {
+      state.files.push(action.payload.file)
+      state.usageFileCapacity = calcSize(state.files)
+    },
+    modifyFile: (state, action: PayloadAction<ModifyFileParams>) => {
+      const file = action.payload.file
+      state.files.map((item) => {
+        if (item.id === file.id) {
+          return file
+        }
+        return item
+      })
+      state.usageFileCapacity = calcSize(state.files)
+    },
+    removeFile: (state, action: PayloadAction<RemoveFileParams>) => {
+      const file = action.payload.file
+      state.files = state.files.filter((item) => item.id !== file.id)
+      state.usageFileCapacity = calcSize(state.files)
     },
     searchNotes: (state, action: PayloadAction<SearchNotesParams>) => {
       state.searchResults = {

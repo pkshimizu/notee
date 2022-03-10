@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from '@firebase/firestore'
 import { User } from '../store/session/models'
-import { Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
+import { File, FileDoc, Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { ContentType } from '../components/atoms/inputs/TextEditor'
@@ -19,6 +19,7 @@ import { diff_match_patch } from 'diff-match-patch'
 
 type FolderEventListener = (folder: Folder) => void
 type NoteEventListener = (note: Note) => void
+type FileEventListener = (file: File) => void
 
 const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
   return {
@@ -28,6 +29,7 @@ const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
     favorite: doc.data().favorite,
     folders: [],
     notes: [],
+    files: [],
     deletedAt: doc.data().deletedAt ?? undefined,
   }
 }
@@ -47,6 +49,18 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
   }
 }
 
+const docToFile = (doc: QueryDocumentSnapshot<DocumentData>): File => {
+  const data = doc.data()
+  return {
+    id: doc.id,
+    name: data.name,
+    bites: data.bites,
+    folderId: data.folderId,
+    createdAt: data.createdAt,
+    deletedAt: data.deletedAt ?? undefined,
+  }
+}
+
 type UpdateFolderParams = {
   name?: string
   folderId?: string
@@ -58,6 +72,11 @@ type UpdateNoteParams = {
   folderId?: string
   favorite?: boolean
   contentType?: ContentType
+}
+
+type UpdateFileParams = {
+  name?: string
+  folderId?: string
 }
 
 export default class NoteRepository {
@@ -87,6 +106,15 @@ export default class NoteRepository {
       notes[doc.id] = docToNote(doc)
     })
     return notes
+  }
+  async loadFiles(user: User) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const fileDocs = await getDocs(collection(userDoc, 'files'))
+    const files: File[] = []
+    fileDocs.forEach((doc) => {
+      files.push(docToFile(doc))
+    })
+    return files
   }
   onSnapshotFolders(
     user: User,
@@ -133,6 +161,27 @@ export default class NoteRepository {
       })
     })
   }
+  onSnapshotFiles(user: User, onAdded: FileEventListener, onModified: FileEventListener, onRemoved: FileEventListener) {
+    const filesCollection = collection(doc(firestore, `/users/${user.uid}`), 'files')
+    onSnapshot(filesCollection, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        const file = docToFile(change.doc)
+        switch (change.type) {
+          case 'added':
+            onAdded(file)
+            return
+          case 'modified':
+            if (change.doc.metadata.hasPendingWrites) {
+              onModified(file)
+            }
+            return
+          case 'removed':
+            onRemoved(file)
+            return
+        }
+      })
+    })
+  }
   async createFolder(user: User, name: string, parent?: Folder): Promise<Folder> {
     const folder: FolderDoc = {
       folderId: parent?.id,
@@ -146,6 +195,7 @@ export default class NoteRepository {
       id: folderRef.id,
       folders: [],
       notes: [],
+      files: [],
     }
   }
   async createNote(user: User, folder: Folder) {
@@ -161,6 +211,18 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notes = collection(userDoc, 'notes')
     return addDoc(notes, note)
+  }
+
+  async createFile(user: User, name: string, bites: number, folder: Folder) {
+    const file: FileDoc = {
+      name: name,
+      bites: bites,
+      folderId: folder.id,
+      createdAt: dayjs().toISOString(),
+    }
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const notes = collection(userDoc, 'files')
+    return addDoc(notes, file)
   }
 
   async updateFolder(user: User, folder: Folder, { name, folderId, favorite }: UpdateFolderParams): Promise<Folder> {
@@ -213,6 +275,19 @@ export default class NoteRepository {
       logs: logs,
     }
   }
+  async updateFile(user: User, file: File, { name, folderId }: UpdateFileParams): Promise<File> {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const folderDoc = doc(userDoc, 'files', file.id)
+    await updateDoc(folderDoc, {
+      name: name,
+      folderId: folderId,
+    })
+    return {
+      ...file,
+      name: name ?? file.name,
+      folderId: folderId ?? file.folderId,
+    }
+  }
   updateDeletedAtFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersCollection = collection(userDoc, 'folders')
@@ -224,6 +299,13 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
     return updateDoc(doc(notesCollection, note.id), {
+      deletedAt: dayjs().toISOString(),
+    })
+  }
+  updateDeletedAtFile(user: User, file: File) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const filesCollection = collection(userDoc, 'files')
+    return updateDoc(doc(filesCollection, file.id), {
       deletedAt: dayjs().toISOString(),
     })
   }
@@ -241,6 +323,13 @@ export default class NoteRepository {
       deletedAt: null,
     })
   }
+  resetDeletedAtFile(user: User, file: File) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const filesCollection = collection(userDoc, 'files')
+    return updateDoc(doc(filesCollection, file.id), {
+      deletedAt: null,
+    })
+  }
   deleteFolder(user: User, folder: Folder) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const foldersCollection = collection(userDoc, 'folders')
@@ -250,6 +339,11 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const notesCollection = collection(userDoc, 'notes')
     return deleteDoc(doc(notesCollection, note.id))
+  }
+  deleteFile(user: User, file: File) {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const filesCollection = collection(userDoc, 'files')
+    return deleteDoc(doc(filesCollection, file.id))
   }
 
   private makePatchText(content1: string, content2: string): string {

@@ -1,6 +1,6 @@
 import '@mui/material/styles/createPalette'
 import '@mui/material/Button'
-import {SvgIconPropsColorOverrides} from "@mui/material/SvgIcon/SvgIcon";
+import { SvgIconPropsColorOverrides } from '@mui/material/SvgIcon/SvgIcon'
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {

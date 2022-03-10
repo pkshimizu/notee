@@ -23,7 +23,7 @@ export type NoteDoc = {
   deletedAt?: string
 }
 
-export type Note = {} & Item & NoteDoc
+export type Note = Item & NoteDoc
 
 export type FolderDoc = {
   folderId?: string
@@ -35,5 +35,16 @@ export type FolderDoc = {
 export type Folder = {
   folders: Folder[]
   notes: Note[]
+  files: File[]
 } & Item &
   FolderDoc
+
+export type FileDoc = {
+  name: string
+  folderId: string
+  bites: number
+  createdAt: string
+  deletedAt?: string
+}
+
+export type File = Item & FileDoc

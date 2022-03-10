@@ -67,7 +67,7 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
           <IconButton label={{ value: 'Create note' }} color={'white'} onClick={handleCreateNote}>
             <CreateNoteIcon />
           </IconButton>
-          <IconButton label={{ value: 'Upload file' }} color={'white'} onClick={fileUploadDialog.open}>
+          <IconButton label={{ value: 'Upload file' }} color={'white'} onClick={() => fileUploadDialog.open(folder)}>
             <UploadIcon />
           </IconButton>
           {folder.folderId && (

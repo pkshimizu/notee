@@ -174,9 +174,12 @@ export const useTrashEmptyDialog = () => {
 export const useFileUploadDialog = () => {
   const state = useSelector(DialogsSelectors.fileUpload)
   const dispatch = useDispatch()
-  const open = useCallback(() => {
-    dispatch(dialogsSlice.actions.openFileUploadDialog())
-  }, [dispatch])
+  const open = useCallback(
+    (folder: Folder) => {
+      dispatch(dialogsSlice.actions.openFileUploadDialog({ folder }))
+    },
+    [dispatch]
+  )
   const close = useCallback(() => {
     dispatch(dialogsSlice.actions.closeFileUploadDialog())
   }, [])

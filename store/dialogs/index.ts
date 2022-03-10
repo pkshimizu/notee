@@ -11,7 +11,7 @@ export type DialogsState = {
   folderDelete?: { folder: Folder }
   noteDelete?: { note: Note }
   trashEmpty?: {}
-  fileUpload?: {}
+  fileUpload?: { folder: Folder }
 }
 
 export const dialogsInitialState: DialogsState = {
@@ -56,6 +56,10 @@ type OpenFolderDeleteDialogParams = {
 
 type OpenNoteDeleteDialogParams = {
   note: Note
+}
+
+type OpenFileUploadDialogParams = {
+  folder: Folder
 }
 
 const dialogsSlice = createSlice({
@@ -116,8 +120,8 @@ const dialogsSlice = createSlice({
     closeTrashEmptyDialog: (state: DialogsState) => {
       state.trashEmpty = undefined
     },
-    openFileUploadDialog: (state: DialogsState) => {
-      state.fileUpload = {}
+    openFileUploadDialog: (state: DialogsState, action: PayloadAction<OpenFileUploadDialogParams>) => {
+      state.fileUpload = { folder: action.payload.folder }
     },
     closeFileUploadDialog: (state: DialogsState) => {
       state.fileUpload = undefined
