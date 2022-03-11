@@ -46,6 +46,7 @@ export default {
   English: '英語',
   // F
   Favorites: 'お気に入り',
+  'File uploaded': 'ファイルをアップロードしました',
   Folder: 'フォルダ',
   'Folder Name': 'フォルダ名',
   'Font Size': 'フォントサイズ',

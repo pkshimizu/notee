@@ -213,7 +213,7 @@ export default class NoteRepository {
     return addDoc(notes, note)
   }
 
-  async createFile(user: User, name: string, bites: number, folder: Folder) {
+  async createFile(user: User, name: string, bites: number, folder: Folder): Promise<File> {
     const file: FileDoc = {
       name: name,
       bites: bites,
@@ -221,8 +221,12 @@ export default class NoteRepository {
       createdAt: dayjs().toISOString(),
     }
     const userDoc = doc(firestore, `/users/${user.uid}`)
-    const notes = collection(userDoc, 'files')
-    return addDoc(notes, file)
+    const files = collection(userDoc, 'files')
+    const fileRef = await addDoc(files, file)
+    return {
+      ...file,
+      id: fileRef.id,
+    }
   }
 
   async updateFolder(user: User, folder: Folder, { name, folderId, favorite }: UpdateFolderParams): Promise<Folder> {

@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
 import editorsSlice, { editorsInitialState } from './editors'
+import FileRepository from '../repositories/FileRepository'
 
 const rootReducer = combineReducers({
   system: systemSlice.reducer,
@@ -38,6 +39,7 @@ export type Repositories = {
   authRepository: AuthRepository
   userRepository: UserRepository
   noteRepository: NoteRepository
+  fileRepository: FileRepository
 }
 
 export type ThunkExtra = {
@@ -49,6 +51,7 @@ const thunkExtra: ThunkExtra = {
     authRepository: new AuthRepository(),
     userRepository: new UserRepository(),
     noteRepository: new NoteRepository(),
+    fileRepository: new FileRepository(),
   },
 }
 

@@ -14,8 +14,7 @@ export default function FileUploadDialog() {
         files.forEach((file) => {
           dispatch(
             NotesActions.createFiles({
-              name: file.name,
-              bites: file.size,
+              file,
               parentFolder: state.folder,
             })
           )

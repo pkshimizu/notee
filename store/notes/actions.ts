@@ -1,6 +1,6 @@
 import { createAsyncAction } from '../actions'
 import systemSlice from '../system'
-import { File, Folder, Note } from './models'
+import { File as FileAttributes, Folder, Note } from './models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
@@ -8,7 +8,7 @@ import { StoreState } from '../index'
 type FetchRootResults = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
-  files: File[]
+  files: FileAttributes[]
 }
 
 type FetchNotesResults = {
@@ -25,8 +25,7 @@ type CreateNoteParams = {
 }
 
 type CreateFileParams = {
-  name: string
-  bites: number
+  file: File
   parentFolder: Folder
 }
 
@@ -44,7 +43,7 @@ type UpdateNoteParams = {
 }
 
 type UpdateFileParams = {
-  file: File
+  file: FileAttributes
   name?: string
   folderId?: string
 }
@@ -58,7 +57,7 @@ type MoveNoteToTrashParams = {
 }
 
 type MoveFileToTrashParams = {
-  file: File
+  file: FileAttributes
 }
 
 type FavoriteParams = {
@@ -74,7 +73,7 @@ type UnFavoriteParams = {
 type RestoreParams = {
   folder?: Folder
   note?: Note
-  file?: File
+  file?: FileAttributes
 }
 
 type DeleteFolderParams = {
@@ -86,7 +85,7 @@ type DeleteNoteParams = {
 }
 
 type DeleteFileParams = {
-  file: File
+  file: FileAttributes
 }
 
 function confirmInsufficientCapacity(state: StoreState) {
@@ -190,11 +189,12 @@ const NotesActions = {
 
   createFiles: createAsyncAction<CreateFileParams, void>(
     'CreateFile',
-    async (params, { noteRepository }, state, dispatch) => {
+    async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
         confirmInsufficientCapacity(state)
-        await noteRepository.createFile(state.session.currentUser, params.name, params.bites, params.parentFolder)
-        dispatch(systemSlice.actions.message({ message: { value: 'Upload file.' } }))
+        const fileAttributes = await noteRepository.createFile(state.session.currentUser, params.file.name, params.file.size, params.parentFolder)
+        await fileRepository.upload(state.session.currentUser, fileAttributes.id, params.file)
+        dispatch(systemSlice.actions.message({ message: { value: 'File uploaded' } }))
       }
     }
   ),
