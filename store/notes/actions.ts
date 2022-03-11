@@ -192,7 +192,12 @@ const NotesActions = {
     async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
         confirmInsufficientCapacity(state)
-        const fileAttributes = await noteRepository.createFile(state.session.currentUser, params.file.name, params.file.size, params.parentFolder)
+        const fileAttributes = await noteRepository.createFile(
+          state.session.currentUser,
+          params.file.name,
+          params.file.size,
+          params.parentFolder
+        )
         await fileRepository.upload(state.session.currentUser, fileAttributes.id, params.file)
         dispatch(systemSlice.actions.message({ message: { value: 'File uploaded' } }))
       }
