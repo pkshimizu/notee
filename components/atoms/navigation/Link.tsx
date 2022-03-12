@@ -12,7 +12,7 @@ export default function Link({ href, locale, children }: LinkProps) {
   const external = href.startsWith('http')
   if (external) {
     return (
-      <MuiLink href={href} rel={'noopener'} sx={{ textDecoration: 'none' }}>
+      <MuiLink href={href} rel={'noopener'} sx={{ textDecoration: 'none' }} target={'_blank'}>
         {children}
       </MuiLink>
     )

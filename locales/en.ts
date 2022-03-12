@@ -46,6 +46,7 @@ export default {
   English: 'English',
   // F
   Favorites: 'Favorites',
+  File: 'File',
   'File uploaded': 'File uploaded',
   Folder: 'Folder',
   'Folder Name': 'Folder Name',
@@ -67,6 +68,7 @@ export default {
   'Login with GitHub': 'Login with GitHub',
   Logout: 'Logout',
   // M
+  'Move file to trash': 'Move file to trash',
   'Move folder': 'Move folder',
   'Move folder to trash': 'Move folder to trash',
   'Move note': 'Move note',
@@ -108,6 +110,7 @@ export default {
   Select: 'Select',
   Settings: 'Settings',
   'Simple Personal Note': 'Simple Personal Note',
+  Size: 'Size',
   'Storage Capacity': 'Storage Capacity',
   Sublime: 'Sublime',
   Submit: 'Submit',
@@ -120,6 +123,8 @@ export default {
   // U
   'Updated Date': 'Updated Date',
   'Upload file': 'Upload file',
+  'Uploaded Date': 'Uploaded Date',
+  URL: 'URL',
   Undo: 'Undo',
   UnKnown: 'UnKnown',
   'User Name': 'User Name',

@@ -140,16 +140,17 @@ const notesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(NotesActions.fetchRoot.fulfilled, (state, action) => {
-      state.folders = action.payload.folders
-      state.notes = action.payload.notes
-      state.usageFolderCapacity = calcSize(action.payload.folders)
-      state.usageNoteCapacity = calcSize(action.payload.notes)
-    })
-    builder.addCase(NotesActions.fetchNotes.fulfilled, (state, action) => {
-      state.notes = action.payload.notes
-      state.usageNoteCapacity = calcSize(action.payload.notes)
-    })
+    builder
+      .addCase(NotesActions.fetchRoot.fulfilled, (state, action) => {
+        state.folders = action.payload.folders
+        state.notes = action.payload.notes
+        state.usageFolderCapacity = calcSize(action.payload.folders)
+        state.usageNoteCapacity = calcSize(action.payload.notes)
+      })
+      .addCase(NotesActions.fetchNotes.fulfilled, (state, action) => {
+        state.notes = action.payload.notes
+        state.usageNoteCapacity = calcSize(action.payload.notes)
+      })
   },
 })
 

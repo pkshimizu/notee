@@ -42,9 +42,12 @@ export type Folder = {
 export type FileDoc = {
   name: string
   folderId: string
-  bites: number
+  bytes: number
   createdAt: string
   deletedAt?: string
 }
 
-export type File = Item & FileDoc
+export type File = {
+  url?: string
+} & Item &
+  FileDoc

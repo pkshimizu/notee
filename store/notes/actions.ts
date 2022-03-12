@@ -99,7 +99,7 @@ function confirmInsufficientCapacity(state: StoreState) {
 const NotesActions = {
   fetchRoot: createAsyncAction<void, FetchRootResults>(
     'fetchRoot',
-    async (params, { noteRepository }, state, dispatch) => {
+    async (params, { noteRepository, fileRepository }, state, dispatch) => {
       const currentUser = state.session.currentUser
       if (currentUser) {
         const folders = await noteRepository.loadFolders(currentUser)
@@ -137,14 +137,17 @@ const NotesActions = {
         )
         noteRepository.onSnapshotFiles(
           currentUser,
-          (file) => {
-            dispatch(notesSlice.actions.addFile({ file }))
+          async (file) => {
+            const url = await fileRepository.url(currentUser, file.id)
+            dispatch(notesSlice.actions.addFile({ file: { ...file, url } }))
           },
-          (file) => {
-            dispatch(notesSlice.actions.modifyFile({ file }))
+          async (file) => {
+            const url = await fileRepository.url(currentUser, file.id)
+            dispatch(notesSlice.actions.modifyFile({ file: { ...file, url } }))
           },
-          (file) => {
-            dispatch(notesSlice.actions.removeFile({ file }))
+          async (file) => {
+            const url = await fileRepository.url(currentUser, file.id)
+            dispatch(notesSlice.actions.removeFile({ file: { ...file, url } }))
           }
         )
         return { folders: folders, notes: notes, files: files }

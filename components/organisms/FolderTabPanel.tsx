@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import NotesSelectors from '../../store/notes/selectors'
+import FileCard from '../molecules/surfaces/FileCard'
 
 type FolderTabPanelProps = {
   folder: Folder
@@ -57,6 +58,14 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
               onClickNoteLink={() => openNotePage(note.id)}
               onClickMoveToTrash={noteMoveToTrashDialog.open}
             />
+          ))}
+        </FlexRow>
+        <FlexRow py={2}>
+          <Label variant={'caption'} text={{ value: 'File' }} />
+        </FlexRow>
+        <FlexRow>
+          {folder.files.map((file) => (
+            <FileCard file={file} key={file.id} onClickMoveToTrash={() => {}} />
           ))}
         </FlexRow>
       </FlexColumn>

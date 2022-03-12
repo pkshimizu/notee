@@ -13,6 +13,7 @@ import {
   Google,
   History,
   Info,
+  Link,
   Logout,
   NavigateBefore,
   NavigateNext,
@@ -98,6 +99,10 @@ export function GoogleIcon(props: IconProps) {
 
 export function InfoIcon(props: IconProps) {
   return <Icon {...props} icon={Info} />
+}
+
+export function LinkIcon(props: IconProps) {
+  return <Icon {...props} icon={Link} />
 }
 
 export function LogIcon(props: IconProps) {

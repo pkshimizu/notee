@@ -46,6 +46,7 @@ export default {
   English: '英語',
   // F
   Favorites: 'お気に入り',
+  File: 'ファイル',
   'File uploaded': 'ファイルをアップロードしました',
   Folder: 'フォルダ',
   'Folder Name': 'フォルダ名',
@@ -67,6 +68,7 @@ export default {
   'Login with GitHub': 'GitHubでログイン',
   Logout: 'ログアウト',
   // M
+  'Move file to trash': 'ゴミ箱に移動する',
   'Move folder': 'フォルダを移動する',
   'Move folder to trash': 'ゴミ箱に移動する',
   'Move note': 'ノートを移動する',
@@ -108,6 +110,7 @@ export default {
   Select: '選択',
   Settings: '設定',
   'Simple Personal Note': 'シンプルな個人向けノートサービス',
+  Size: 'サイズ',
   'Storage Capacity': '保存容量',
   Sublime: 'Sublime',
   Submit: '実行',
@@ -120,6 +123,8 @@ export default {
   // U
   'Updated Date': '更新日時',
   'Upload file': 'ファイルアップロード',
+  'Uploaded Date': 'アップロード日時',
+  URL: 'URL',
   Undo: '戻す',
   UnKnown: '不明',
   'User Name': 'ユーザー名',
