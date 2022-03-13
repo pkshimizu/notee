@@ -13,6 +13,7 @@ import {
   Google,
   History,
   Info,
+  InsertDriveFile,
   Link,
   Logout,
   NavigateBefore,
@@ -83,6 +84,10 @@ export function FavoriteIcon(props: IconProps) {
 
 export function FavoriteOutlinedIcon(props: IconProps) {
   return <Icon {...props} icon={StarOutline} />
+}
+
+export function FileIcon(props: IconProps) {
+  return <Icon {...props} icon={InsertDriveFile} />
 }
 
 export function FolderIcon(props: IconProps) {

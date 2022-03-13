@@ -14,6 +14,7 @@ const DialogsSelectors = {
   noteDelete: createSelector([dialogsSelector], (state) => state.noteDelete),
   trashEmpty: createSelector([dialogsSelector], (state) => state.trashEmpty),
   fileUpload: createSelector([dialogsSelector], (state) => state.fileUpload),
+  fileMoveToTrash: createSelector([dialogsSelector], (state) => state.fileMoveToTrash),
 }
 
 export default DialogsSelectors

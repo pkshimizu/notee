@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
-import { Folder, Note, NoteLog } from '../store/notes/models'
+import { useCallback } from 'react'
+import { File, Folder, Note, NoteLog } from '../store/notes/models'
 import { useDispatch, useSelector } from 'react-redux'
 import dialogsSlice from '../store/dialogs'
 import DialogsSelectors from '../store/dialogs/selectors'
@@ -182,6 +182,25 @@ export const useFileUploadDialog = () => {
   )
   const close = useCallback(() => {
     dispatch(dialogsSlice.actions.closeFileUploadDialog())
+  }, [])
+  return {
+    state,
+    open,
+    close,
+  }
+}
+
+export const useFileMoveToTrashDialog = () => {
+  const state = useSelector(DialogsSelectors.fileMoveToTrash)
+  const dispatch = useDispatch()
+  const open = useCallback(
+    (file: File) => {
+      dispatch(dialogsSlice.actions.openFileMoveToTrashDialog({ file }))
+    },
+    [dispatch]
+  )
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeFileMoveToTrashDialog())
   }, [])
   return {
     state,

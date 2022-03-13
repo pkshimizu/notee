@@ -34,6 +34,7 @@ export default {
   'Do you want to delete items in trash?': 'ゴミ箱を空にしますか？',
   'Do you want to delete this folder?': 'このフォルダを削除しますか？',
   'Do you want to delete this note?': 'このノートを削除しますか？',
+  'Do you want to move this file to Trash?': 'ファイルをゴミ箱に移動しますか？',
   'Do you want to move this folder to Trash?': 'フォルダをゴミ箱に移動しますか？',
   'Do you want to move this note to Trash?': 'ノートをゴミ箱に移動しますか？',
   // E

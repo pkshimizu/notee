@@ -4,7 +4,7 @@ import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
-import { useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
+import { useFileMoveToTrashDialog, useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
 import { useState } from 'react'
 import FolderPropertiesPanel from './FolderPropertiesPanel'
@@ -22,6 +22,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const [propertiesPanel, setPropertiesPanel] = useState(false)
   const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const noteMoveToTrashDialog = useNoteMoveToTrashDialog()
+  const fileMoveToTrashDialog = useFileMoveToTrashDialog()
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
   const folders = useSelector(NotesSelectors.folders)
@@ -65,7 +66,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
         </FlexRow>
         <FlexRow>
           {folder.files.map((file) => (
-            <FileCard file={file} key={file.id} onClickMoveToTrash={() => {}} />
+            <FileCard file={file} key={file.id} onClickMoveToTrash={() => fileMoveToTrashDialog.open(file)} />
           ))}
         </FlexRow>
       </FlexColumn>
