@@ -346,8 +346,9 @@ const NotesActions = {
 
   deleteFile: createAsyncAction<DeleteFileParams, void>(
     'DeleteFile',
-    async (params, { noteRepository }, state, dispatch) => {
+    async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
+        await fileRepository.delete(state.session.currentUser, params.file.id)
         await noteRepository.deleteFile(state.session.currentUser, params.file)
         dispatch(systemSlice.actions.message({ message: { value: 'Deleted file' } }))
       }

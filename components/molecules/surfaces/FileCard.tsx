@@ -5,15 +5,17 @@ import CapacityLabel from '../display/CapacityLabel'
 import DateTimeLabel from '../display/DateTimeLabel'
 import { File } from '../../../store/notes/models'
 import Link from '../../atoms/navigation/Link'
-import { TrashIcon } from '../../atoms/display/Icons'
+import { DeleteIcon, RestoreIcon, TrashIcon } from '../../atoms/display/Icons'
 import IconButton from '../../atoms/inputs/IconButton'
 
 type FileCardProps = {
   file: File
-  onClickMoveToTrash: (_file: File) => void
+  onClickMoveToTrash?: (_file: File) => void
+  onClickRestore?: (_file: File) => void
+  onClickDelete?: (_file: File) => void
 }
 
-export default function FileCard({ file, onClickMoveToTrash }: FileCardProps) {
+export default function FileCard({ file, onClickMoveToTrash, onClickRestore, onClickDelete }: FileCardProps) {
   return (
     <Card
       header={
@@ -22,9 +24,23 @@ export default function FileCard({ file, onClickMoveToTrash }: FileCardProps) {
         </Link>
       }
       actions={
-        <IconButton label={{ value: 'Move folder to trash' }} onClick={() => onClickMoveToTrash(file)}>
-          <TrashIcon />
-        </IconButton>
+        <>
+          {onClickMoveToTrash && (
+            <IconButton label={{ value: 'Move folder to trash' }} onClick={() => onClickMoveToTrash(file)}>
+              <TrashIcon />
+            </IconButton>
+          )}
+          {onClickRestore && (
+            <IconButton label={{ value: 'Restore file' }} onClick={() => onClickRestore(file)}>
+              <RestoreIcon />
+            </IconButton>
+          )}
+          {onClickDelete && (
+            <IconButton label={{ value: 'Delete file' }} onClick={() => onClickDelete(file)}>
+              <DeleteIcon />
+            </IconButton>
+          )}
+        </>
       }
     >
       <FlexColumn>

@@ -208,3 +208,22 @@ export const useFileMoveToTrashDialog = () => {
     close,
   }
 }
+
+export const useFileDeleteDialog = () => {
+  const state = useSelector(DialogsSelectors.fileDelete)
+  const dispatch = useDispatch()
+  const open = useCallback(
+    (file: File) => {
+      dispatch(dialogsSlice.actions.openFileDeleteDialog({ file }))
+    },
+    [dispatch]
+  )
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeFileDeleteDialog())
+  }, [])
+  return {
+    state,
+    open,
+    close,
+  }
+}
