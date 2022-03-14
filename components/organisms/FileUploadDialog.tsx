@@ -20,6 +20,7 @@ export default function FileUploadDialog() {
           )
         })
       }
+      close()
     },
     [dispatch, state]
   )

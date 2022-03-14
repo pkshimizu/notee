@@ -4,6 +4,7 @@ import { File as FileAttributes, Folder, Note } from './models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
+import {v4} from "uuid";
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }
@@ -138,16 +139,15 @@ const NotesActions = {
         noteRepository.onSnapshotFiles(
           currentUser,
           async (file) => {
-            const url = await fileRepository.url(currentUser, file.id)
+            const url = await fileRepository.url(currentUser, file.uuid)
             dispatch(notesSlice.actions.addFile({ file: { ...file, url } }))
           },
           async (file) => {
-            const url = await fileRepository.url(currentUser, file.id)
+            const url = await fileRepository.url(currentUser, file.uuid)
             dispatch(notesSlice.actions.modifyFile({ file: { ...file, url } }))
           },
           async (file) => {
-            const url = await fileRepository.url(currentUser, file.id)
-            dispatch(notesSlice.actions.removeFile({ file: { ...file, url } }))
+            dispatch(notesSlice.actions.removeFile({ file: { ...file } }))
           }
         )
         return { folders: folders, notes: notes, files: files }
@@ -195,13 +195,15 @@ const NotesActions = {
     async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
         confirmInsufficientCapacity(state)
+        const uuid = v4()
+        await fileRepository.upload(state.session.currentUser, uuid, params.file)
         const fileAttributes = await noteRepository.createFile(
           state.session.currentUser,
+          uuid,
           params.file.name,
           params.file.size,
           params.parentFolder
         )
-        await fileRepository.upload(state.session.currentUser, fileAttributes.id, params.file)
         dispatch(systemSlice.actions.message({ message: { value: 'File uploaded' } }))
       }
     }
@@ -348,8 +350,8 @@ const NotesActions = {
     'DeleteFile',
     async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
-        await fileRepository.delete(state.session.currentUser, params.file.id)
         await noteRepository.deleteFile(state.session.currentUser, params.file)
+        await fileRepository.delete(state.session.currentUser, params.file.uuid)
         dispatch(systemSlice.actions.message({ message: { value: 'Deleted file' } }))
       }
     }

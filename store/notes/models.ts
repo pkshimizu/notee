@@ -40,6 +40,7 @@ export type Folder = {
   FolderDoc
 
 export type FileDoc = {
+  uuid: string
   name: string
   folderId: string
   bytes: number

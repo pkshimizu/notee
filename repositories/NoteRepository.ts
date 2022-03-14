@@ -53,6 +53,7 @@ const docToFile = (doc: QueryDocumentSnapshot<DocumentData>): File => {
   const data = doc.data()
   return {
     id: doc.id,
+    uuid: data.uuid,
     name: data.name,
     bytes: data.bytes,
     folderId: data.folderId,
@@ -213,8 +214,9 @@ export default class NoteRepository {
     return addDoc(notes, note)
   }
 
-  async createFile(user: User, name: string, bytes: number, folder: Folder): Promise<File> {
+  async createFile(user: User, uuid: string, name: string, bytes: number, folder: Folder): Promise<File> {
     const file: FileDoc = {
+      uuid,
       name: name,
       bytes: bytes,
       folderId: folder.id,
