@@ -115,7 +115,7 @@ const notesSlice = createSlice({
     },
     modifyFile: (state, action: PayloadAction<ModifyFileParams>) => {
       const file = action.payload.file
-      state.files.map((item) => {
+      state.files = state.files.map((item) => {
         if (item.id === file.id) {
           return file
         }

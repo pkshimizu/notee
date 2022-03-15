@@ -9,10 +9,12 @@ import NoteDeleteDialog from '../organisms/NoteDeleteDialog'
 import FileUploadDialog from '../organisms/FileUploadDialog'
 import TrashEmptyDialog from '../organisms/TrashEmptyDialog'
 import FileMoveToTrashDialog from '../organisms/FileMoveToTrashDialog'
-import { useFileDeleteDialog, useFileMoveToTrashDialog } from '../../hooks/useDialogs'
+import { useFileDeleteDialog, useFileMoveDialog, useFileMoveToTrashDialog } from '../../hooks/useDialogs'
 import FileDeleteDialog from '../organisms/FileDeleteDialog'
+import FileMoveDialog from '../organisms/FileMoveDialog'
 
 export default function DialogProvider() {
+  const fileMoveDialog = useFileMoveDialog()
   const fileMoveToTrashDialog = useFileMoveToTrashDialog()
   const fileDeleteDialog = useFileDeleteDialog()
 
@@ -28,6 +30,7 @@ export default function DialogProvider() {
       <NoteDeleteDialog />
       <TrashEmptyDialog />
       <FileUploadDialog />
+      {fileMoveDialog.state && <FileMoveDialog file={fileMoveDialog.state.file} />}
       {fileMoveToTrashDialog.state && <FileMoveToTrashDialog file={fileMoveToTrashDialog.state.file} />}
       {fileDeleteDialog.state && <FileDeleteDialog file={fileDeleteDialog.state.file} />}
     </>

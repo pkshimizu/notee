@@ -72,6 +72,7 @@ export default {
   'Login with GitHub': 'GitHubでログイン',
   Logout: 'ログアウト',
   // M
+  'Move file': 'ファイルを移動する',
   'Move file to trash': 'ゴミ箱に移動する',
   'Move folder': 'フォルダを移動する',
   'Move folder to trash': 'ゴミ箱に移動する',

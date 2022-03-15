@@ -190,6 +190,25 @@ export const useFileUploadDialog = () => {
   }
 }
 
+export const useFileMoveDialog = () => {
+  const state = useSelector(DialogsSelectors.fileMove)
+  const dispatch = useDispatch()
+  const open = useCallback(
+    (file: File) => {
+      dispatch(dialogsSlice.actions.openFileMoveDialog({ file }))
+    },
+    [dispatch]
+  )
+  const close = useCallback(() => {
+    dispatch(dialogsSlice.actions.closeFileMoveDialog())
+  }, [])
+  return {
+    state,
+    open,
+    close,
+  }
+}
+
 export const useFileMoveToTrashDialog = () => {
   const state = useSelector(DialogsSelectors.fileMoveToTrash)
   const dispatch = useDispatch()

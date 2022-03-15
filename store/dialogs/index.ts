@@ -12,6 +12,7 @@ export type DialogsState = {
   noteDelete?: { note: Note }
   trashEmpty?: {}
   fileUpload?: { folder: Folder }
+  fileMove?: { file: File }
   fileMoveToTrash?: { file: File }
   fileDelete?: { file: File }
 }
@@ -25,6 +26,7 @@ export const dialogsInitialState: DialogsState = {
   noteLog: undefined,
   trashEmpty: undefined,
   fileUpload: undefined,
+  fileMove: undefined,
   fileMoveToTrash: undefined,
   fileDelete: undefined,
 }
@@ -64,6 +66,10 @@ type OpenNoteDeleteDialogParams = {
 
 type OpenFileUploadDialogParams = {
   folder: Folder
+}
+
+type OpenFileMoveDialogParams = {
+  file: File
 }
 
 type OpenFileMoveToTrashDialogParams = {
@@ -137,6 +143,12 @@ const dialogsSlice = createSlice({
     },
     closeFileUploadDialog: (state: DialogsState) => {
       state.fileUpload = undefined
+    },
+    openFileMoveDialog: (state: DialogsState, action: PayloadAction<OpenFileMoveDialogParams>) => {
+      state.fileMove = { file: action.payload.file }
+    },
+    closeFileMoveDialog: (state: DialogsState) => {
+      state.fileMove = undefined
     },
     openFileMoveToTrashDialog: (state: DialogsState, action: PayloadAction<OpenFileMoveToTrashDialogParams>) => {
       state.fileMoveToTrash = { file: action.payload.file }

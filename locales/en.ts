@@ -71,6 +71,7 @@ export default {
   'Login with GitHub': 'Login with GitHub',
   Logout: 'Logout',
   // M
+  'Move file': 'Move file',
   'Move file to trash': 'Move file to trash',
   'Move folder': 'Move folder',
   'Move folder to trash': 'Move folder to trash',
