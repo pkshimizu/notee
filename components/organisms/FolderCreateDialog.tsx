@@ -7,8 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import NotesActions from '../../store/notes/actions'
 import { useFolderCreateDialog } from '../../hooks/useDialogs'
+import { Folder } from '../../store/notes/models'
 
-export default function FolderCreateDialog() {
+type FolderCreateDialogProps = {
+  folder: Folder
+}
+
+export default function FolderCreateDialog({ folder }: FolderCreateDialogProps) {
   const { state, close } = useFolderCreateDialog()
   const schema = yup.object().shape({
     name: yup.string().max(30).required(),
@@ -29,12 +34,10 @@ export default function FolderCreateDialog() {
   }, [close, reset])
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      if (state) {
-        await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: state.folder }))
-      }
+      await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: folder }))
       close()
     },
-    [dispatch, state, close]
+    [dispatch, folder, close]
   )
 
   return (

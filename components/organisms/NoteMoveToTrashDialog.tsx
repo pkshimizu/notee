@@ -7,23 +7,26 @@ import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NotesActions from '../../store/notes/actions'
 import NoteTitleLabel from '../molecules/display/NoteTitleLabel'
 import { useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
+import { Note } from '../../store/notes/models'
 
-export default function NoteMoveToTrashDialog() {
+type NoteMoveToTrashDialogProps = {
+  note: Note
+}
+
+export default function NoteMoveToTrashDialog({ note }: NoteMoveToTrashDialogProps) {
   const { state, close } = useNoteMoveToTrashDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    if (state) {
-      dispatch(NotesActions.moveNoteToTrash({ note: state.note }))
-    }
+    dispatch(NotesActions.moveNoteToTrash({ note: note }))
     close()
-  }, [dispatch, state, close])
+  }, [dispatch, note, close])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
           <NoteIcon />
-          {state && <NoteTitleLabel note={state.note} />}
+          <NoteTitleLabel note={note} />
         </FlexRow>
         <Label text={{ value: 'Do you want to move this note to Trash?' }} />
       </FlexColumn>

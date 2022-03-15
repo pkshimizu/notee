@@ -14,22 +14,24 @@ const moveFolderItemsToTrash = (dispatch: Dispatch<any>, folder: Folder) => {
   dispatch(NotesActions.moveFolderToTrash({ folder: folder }))
 }
 
-export default function FolderMoveToTrashDialog() {
+type FolderMoveToTrashDialogProps = {
+  folder: Folder
+}
+
+export default function FolderMoveToTrashDialog({ folder }: FolderMoveToTrashDialogProps) {
   const { state, close } = useFolderMoveToTrashDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    if (state) {
-      await moveFolderItemsToTrash(dispatch, state.folder)
-    }
+    await moveFolderItemsToTrash(dispatch, folder)
     close()
-  }, [dispatch, state, close])
+  }, [dispatch, folder, close])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={{ value: state?.folder?.name, plain: true }} />
+          <Label text={{ value: folder.name, plain: true }} />
         </FlexRow>
         <Label text={{ value: 'Do you want to move this folder to Trash?' }} />
         <Label text={{ value: 'Items in folder will also be moved to Trash.' }} />

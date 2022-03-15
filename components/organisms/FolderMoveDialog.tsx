@@ -4,18 +4,21 @@ import { useCallback } from 'react'
 import NotesActions from '../../store/notes/actions'
 import NotesSelectors from '../../store/notes/selectors'
 import { useFolderMoveDialog } from '../../hooks/useDialogs'
+import { Folder } from '../../store/notes/models'
 
-export default function FolderMoveDialog() {
+type FolderMoveDialogProps = {
+  folder: Folder
+}
+
+export default function FolderMoveDialog({ folder }: FolderMoveDialogProps) {
   const { state, close } = useFolderMoveDialog()
   const root = useSelector(NotesSelectors.rootFolder)
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (id: string) => {
-      if (state) {
-        dispatch(NotesActions.updateFolder({ folder: state.folder, folderId: id }))
-      }
+      dispatch(NotesActions.updateFolder({ folder: folder, folderId: id }))
     },
-    [dispatch, state]
+    [dispatch, folder]
   )
   if (root) {
     return (
@@ -23,7 +26,7 @@ export default function FolderMoveDialog() {
         title={{ value: 'Move To' }}
         open={state !== undefined}
         root={root}
-        targetFolder={state?.folder}
+        targetFolder={folder}
         onClose={close}
         onSelect={handleSelect}
       />

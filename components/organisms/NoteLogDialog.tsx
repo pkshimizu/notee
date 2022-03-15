@@ -8,43 +8,43 @@ import { useDay } from '../../hooks/useDay'
 import NoteLogView from '../molecules/display/NoteLogView'
 import useNoteLog from '../../hooks/useNoteLog'
 import { useNoteLogDialog } from '../../hooks/useDialogs'
+import { Note, NoteLog } from '../../store/notes/models'
 
-export default function NoteLogDialog() {
+type NoteLogDialogProps = {
+  note: Note
+  log: NoteLog
+}
+
+export default function NoteLogDialog({ note, log }: NoteLogDialogProps) {
   const { state, close } = useNoteLogDialog()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const { dateTimeFormatter } = useDay()
   const { restore } = useNoteLog()
   const dispatch = useDispatch()
   useEffect(() => {
-    if (state) {
-      setSelectedIndex(state.note.logs.map((log) => log.id).indexOf(state.log.id))
-    }
-  }, [state, setSelectedIndex])
+    setSelectedIndex(note.logs.map((log) => log.id).indexOf(log.id))
+  }, [note, log, setSelectedIndex])
   const handleNextLog = useCallback(() => {
-    if (state) {
-      if (selectedIndex < state.note.logs.length - 1) {
-        setSelectedIndex(selectedIndex + 1)
-      }
+    if (selectedIndex < note.logs.length - 1) {
+      setSelectedIndex(selectedIndex + 1)
     }
-  }, [selectedIndex, state, setSelectedIndex])
+  }, [selectedIndex, note, setSelectedIndex])
   const handlePrevLog = useCallback(() => {
     if (selectedIndex > 0) {
       setSelectedIndex(selectedIndex - 1)
     }
   }, [selectedIndex, setSelectedIndex])
   const handleApplyLog = useCallback(() => {
-    if (state) {
-      const content = restore(state.note.logs, state.note.logs[selectedIndex].id).nextContent
-      dispatch(NotesActions.updateNote({ note: state.note, content: content }))
-    }
-  }, [dispatch, state, selectedIndex, restore])
+    const content = restore(note.logs, note.logs[selectedIndex].id).nextContent
+    dispatch(NotesActions.updateNote({ note: note, content: content }))
+  }, [dispatch, note, selectedIndex, restore])
 
   return (
     <Dialog
       open={state !== undefined}
       width={'xl'}
       height={'80vh'}
-      title={state && dateTimeFormatter(state.note.logs[selectedIndex].updatedAt)}
+      title={dateTimeFormatter(note.logs[selectedIndex].updatedAt)}
       onClose={close}
       actions={
         <>
@@ -53,7 +53,7 @@ export default function NoteLogDialog() {
           </IconButton>
           <IconButton
             label={{ value: 'Next log' }}
-            disabled={state && selectedIndex >= state.note.logs.length - 1}
+            disabled={selectedIndex >= note.logs.length - 1}
             onClick={handleNextLog}
           >
             <NextIcon />
@@ -67,7 +67,7 @@ export default function NoteLogDialog() {
         </>
       }
     >
-      {state && <NoteLogView note={state.note} log={state.note.logs[selectedIndex]} />}
+      <NoteLogView note={note} log={note.logs[selectedIndex]} />
     </Dialog>
   )
 }

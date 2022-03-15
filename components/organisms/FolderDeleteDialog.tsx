@@ -14,22 +14,24 @@ const deleteFolderItems = (dispatch: Dispatch<any>, folder: Folder) => {
   dispatch(NotesActions.deleteFolder({ folder: folder }))
 }
 
-export default function FolderDeleteDialog() {
+type FolderDeleteDialogProps = {
+  folder: Folder
+}
+
+export default function FolderDeleteDialog({ folder }: FolderDeleteDialogProps) {
   const { state, close } = useFolderDeleteDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    if (state) {
-      await deleteFolderItems(dispatch, state.folder)
-    }
+    await deleteFolderItems(dispatch, folder)
     close()
-  }, [dispatch, state, close])
+  }, [dispatch, folder, close])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Delete' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
           <FolderIcon />
-          <Label text={{ value: state?.folder?.name, plain: true }} />
+          <Label text={{ value: folder?.name, plain: true }} />
         </FlexRow>
         <Label text={{ value: 'Do you want to delete this folder?' }} />
         <Label text={{ value: 'Items in folder will also be delete.' }} />

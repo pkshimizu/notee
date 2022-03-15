@@ -4,25 +4,28 @@ import FileSelectField from '../molecules/inputs/FileSelectField'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import NotesActions from '../../store/notes/actions'
+import { Folder } from '../../store/notes/models'
 
-export default function FileUploadDialog() {
+type FileUploadDialogProps = {
+  folder: Folder
+}
+
+export default function FileUploadDialog({ folder }: FileUploadDialogProps) {
   const { state, close } = useFileUploadDialog()
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (files: File[]) => {
-      if (state) {
-        files.forEach((file) => {
-          dispatch(
-            NotesActions.createFiles({
-              file,
-              parentFolder: state.folder,
-            })
-          )
-        })
-      }
+      files.forEach((file) => {
+        dispatch(
+          NotesActions.createFiles({
+            file,
+            parentFolder: folder,
+          })
+        )
+      })
       close()
     },
-    [dispatch, state, close]
+    [dispatch, folder, close]
   )
 
   return (
