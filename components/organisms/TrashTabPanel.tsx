@@ -5,7 +5,7 @@ import Label from '../atoms/display/Label'
 import FolderCard from '../molecules/surfaces/FolderCard'
 import NoteCard from '../molecules/surfaces/NoteCard'
 import TrashMenu from './TrashMenu'
-import { Dispatch, useCallback } from 'react'
+import { useCallback } from 'react'
 import NotesActions from '../../store/notes/actions'
 import { File, Folder, Note } from '../../store/notes/models'
 import { useFileDeleteDialog, useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
@@ -13,12 +13,6 @@ import NotesSelectors from '../../store/notes/selectors'
 import FileCard from '../molecules/surfaces/FileCard'
 
 type TrashTabPanelProps = {}
-
-const restoreFolder = (dispatch: Dispatch<any>, folder: Folder) => {
-  folder.folders.forEach((subFolder) => restoreFolder(dispatch, subFolder))
-  folder.notes.forEach((note) => dispatch(NotesActions.restore({ note: note })))
-  dispatch(NotesActions.restore({ folder: folder }))
-}
 
 export default function TrashTabPanel({}: TrashTabPanelProps) {
   const folders = useSelector(NotesSelectors.trashFolders)
@@ -30,7 +24,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
   const dispatch = useDispatch()
   const handleRestoreFolder = useCallback(
     (folder: Folder) => {
-      restoreFolder(dispatch, folder)
+      dispatch(NotesActions.restore({ folder: folder }))
     },
     [dispatch]
   )

@@ -17,8 +17,7 @@ export default function FileDeleteDialog({ file }: FileDeleteDialogProps) {
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
     await dispatch(NotesActions.deleteFile({ file: file }))
-    close()
-  }, [dispatch, file, close])
+  }, [dispatch, file])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Delete' }} onOk={handleOk} onCancel={close}>

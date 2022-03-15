@@ -15,17 +15,14 @@ export default function FileUploadDialog({ folder }: FileUploadDialogProps) {
   const dispatch = useDispatch()
   const handleSelect = useCallback(
     (files: File[]) => {
-      files.forEach((file) => {
-        dispatch(
-          NotesActions.createFiles({
-            file,
-            parentFolder: folder,
-          })
-        )
-      })
-      close()
+      dispatch(
+        NotesActions.createFiles({
+          files,
+          parentFolder: folder,
+        })
+      )
     },
-    [dispatch, folder, close]
+    [dispatch, folder]
   )
 
   return (

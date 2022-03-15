@@ -1,18 +1,12 @@
 import { Folder } from '../../store/notes/models'
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
-import { Dispatch, useCallback } from 'react'
+import { useCallback } from 'react'
 import { FolderIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NotesActions from '../../store/notes/actions'
 import { useFolderDeleteDialog } from '../../hooks/useDialogs'
-
-const deleteFolderItems = (dispatch: Dispatch<any>, folder: Folder) => {
-  folder.folders.forEach((subFolder) => deleteFolderItems(dispatch, subFolder))
-  folder.notes.forEach((note) => dispatch(NotesActions.deleteNote({ note: note })))
-  dispatch(NotesActions.deleteFolder({ folder: folder }))
-}
 
 type FolderDeleteDialogProps = {
   folder: Folder
@@ -22,9 +16,8 @@ export default function FolderDeleteDialog({ folder }: FolderDeleteDialogProps) 
   const { state, close } = useFolderDeleteDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await deleteFolderItems(dispatch, folder)
-    close()
-  }, [dispatch, folder, close])
+    dispatch(NotesActions.deleteFolder({ folder: folder }))
+  }, [dispatch, folder])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Delete' }} onOk={handleOk} onCancel={close}>

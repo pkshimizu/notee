@@ -11,12 +11,11 @@ export default function TrashEmptyDialog() {
   const { state, close } = useTrashEmptyDialog()
   const folders = useSelector(NotesSelectors.trashFolders)
   const notes = useSelector(NotesSelectors.trashNotes)
+  const files = useSelector(NotesSelectors.trashFiles)
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    folders.forEach((folder) => dispatch(NotesActions.deleteFolder({ folder })))
-    notes.forEach((note) => dispatch(NotesActions.deleteNote({ note })))
-    close()
-  }, [dispatch, folders, notes, close])
+    dispatch(NotesActions.emptyTrash({ folders, notes, files }))
+  }, [dispatch, folders, notes, files])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Empty trash' }} onOk={handleOk} onCancel={close}>

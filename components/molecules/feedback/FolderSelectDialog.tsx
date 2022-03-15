@@ -42,8 +42,7 @@ export default function FolderSelectDialog({
     if (folderId) {
       onSelect(folderId)
     }
-    onClose()
-  }, [folderId, onSelect, onClose])
+  }, [folderId, onSelect])
   const handleSelect = useCallback(
     (selectedFolderId: string) => {
       if (!targetFolder || selectable(targetFolder, selectedFolderId)) {

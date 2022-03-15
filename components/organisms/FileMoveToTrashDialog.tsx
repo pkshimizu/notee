@@ -17,8 +17,7 @@ export default function FileMoveToTrashDialog({ file }: FileMoveToTrashDialogPro
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
     dispatch(NotesActions.moveFileToTrash({ file }))
-    close()
-  }, [dispatch, file, close])
+  }, [dispatch, file])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Move To Trash' }} onOk={handleOk} onCancel={close}>

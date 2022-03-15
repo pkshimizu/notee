@@ -1,6 +1,6 @@
 import ConfirmDialog from '../molecules/feedback/ConfirmDialog'
 import { useCallback } from 'react'
-import { FolderIcon } from '../atoms/display/Icons'
+import { NoteIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
@@ -17,15 +17,14 @@ export default function NoteDeleteDialog({ note }: NoteDeleteDialogProps) {
   const { state, close } = useNoteDeleteDialog()
   const dispatch = useDispatch()
   const handleOk = useCallback(async () => {
-    await dispatch(NotesActions.deleteNote({ note: note }))
-    close()
-  }, [dispatch, note, close])
+    dispatch(NotesActions.deleteNote({ note: note }))
+  }, [dispatch, note])
 
   return (
     <ConfirmDialog open={state !== undefined} title={{ value: 'Delete' }} onOk={handleOk} onCancel={close}>
       <FlexColumn>
         <FlexRow>
-          <FolderIcon />
+          <NoteIcon />
           <NoteTitleLabel note={note} />
         </FlexRow>
         <Label text={{ value: 'Do you want to delete this note?' }} />

@@ -1,5 +1,6 @@
 import { File, Folder, Note, NoteLog } from '../notes/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import NotesActions from '../notes/actions'
 
 export type DialogsState = {
   folderCreate?: { folder: Folder }
@@ -162,6 +163,46 @@ const dialogsSlice = createSlice({
     closeFileDeleteDialog: (state: DialogsState) => {
       state.fileDelete = undefined
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(NotesActions.createFolder.fulfilled, (state) => {
+        state.folderCreate = undefined
+      })
+      .addCase(NotesActions.moveFolderToTrash.fulfilled, (state) => {
+        state.folderMoveToTrash = undefined
+      })
+      .addCase(NotesActions.updateFolder.fulfilled, (state) => {
+        state.folderMove = undefined
+      })
+      .addCase(NotesActions.deleteFolder.fulfilled, (state) => {
+        state.folderDelete = undefined
+      })
+      .addCase(NotesActions.moveNoteToTrash.fulfilled, (state) => {
+        state.noteMoveToTrash = undefined
+      })
+      .addCase(NotesActions.updateNote.fulfilled, (state) => {
+        state.noteMove = undefined
+        state.noteLog = undefined
+      })
+      .addCase(NotesActions.deleteNote.fulfilled, (state) => {
+        state.noteDelete = undefined
+      })
+      .addCase(NotesActions.emptyTrash.fulfilled, (state) => {
+        state.trashEmpty = undefined
+      })
+      .addCase(NotesActions.createFiles.fulfilled, (state) => {
+        state.fileUpload = undefined
+      })
+      .addCase(NotesActions.updateFile.fulfilled, (state) => {
+        state.fileMove = undefined
+      })
+      .addCase(NotesActions.moveFileToTrash.fulfilled, (state) => {
+        state.fileMoveToTrash = undefined
+      })
+      .addCase(NotesActions.deleteFile.fulfilled, (state) => {
+        state.fileDelete = undefined
+      })
   },
 })
 

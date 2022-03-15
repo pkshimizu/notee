@@ -5,6 +5,9 @@ import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
 import { v4 } from 'uuid'
+import NoteRepository from '../../repositories/NoteRepository'
+import { User } from '../session/models'
+import FileRepository from '../../repositories/FileRepository'
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }
@@ -25,8 +28,8 @@ type CreateNoteParams = {
   parentFolder: Folder
 }
 
-type CreateFileParams = {
-  file: File
+type CreateFilesParams = {
+  files: File[]
   parentFolder: Folder
 }
 
@@ -89,12 +92,63 @@ type DeleteFileParams = {
   file: FileAttributes
 }
 
+type EmptyTrashParams = {
+  folders: Folder[]
+  notes: Note[]
+  files: FileAttributes[]
+}
+
 function confirmInsufficientCapacity(state: StoreState) {
   const usage = state.notes.usageFolderCapacity + state.notes.usageNoteCapacity
   const max = state.session.maxCapacity
   if (usage > max) {
     throw new Error('Could not save due to insufficient capacity')
   }
+}
+
+async function moveFolderToTrash(user: User, noteRepository: NoteRepository, folder: Folder) {
+  for (const subFolder of folder.folders) {
+    await moveFolderToTrash(user, noteRepository, subFolder)
+  }
+  for (const note of folder.notes) {
+    await noteRepository.updateDeletedAtNote(user, note)
+  }
+  for (const file of folder.files) {
+    await noteRepository.updateDeletedAtFile(user, file)
+  }
+  await noteRepository.updateDeletedAtFolder(user, folder)
+}
+
+async function restoreFolder(user: User, noteRepository: NoteRepository, folder: Folder) {
+  for (const subFolder of folder.folders) {
+    await restoreFolder(user, noteRepository, subFolder)
+  }
+  for (const note of folder.notes) {
+    await noteRepository.resetDeletedAtNote(user, note)
+  }
+  for (const file of folder.files) {
+    await noteRepository.resetDeletedAtFile(user, file)
+  }
+  await noteRepository.resetDeletedAtFolder(user, folder)
+}
+
+async function deleteFolder(
+  user: User,
+  noteRepository: NoteRepository,
+  fileRepository: FileRepository,
+  folder: Folder
+) {
+  for (const subFolder of folder.folders) {
+    await deleteFolder(user, noteRepository, fileRepository, subFolder)
+  }
+  for (const note of folder.notes) {
+    await noteRepository.deleteNote(user, note)
+  }
+  for (const file of folder.files) {
+    await noteRepository.deleteFile(user, file)
+    await fileRepository.delete(user, file.uuid)
+  }
+  await noteRepository.deleteFolder(user, folder)
 }
 
 const NotesActions = {
@@ -190,20 +244,22 @@ const NotesActions = {
     }
   ),
 
-  createFiles: createAsyncAction<CreateFileParams, void>(
+  createFiles: createAsyncAction<CreateFilesParams, void>(
     'CreateFile',
     async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
         confirmInsufficientCapacity(state)
-        const uuid = v4()
-        await fileRepository.upload(state.session.currentUser, uuid, params.file)
-        const fileAttributes = await noteRepository.createFile(
-          state.session.currentUser,
-          uuid,
-          params.file.name,
-          params.file.size,
-          params.parentFolder
-        )
+        for (const file of params.files) {
+          const uuid = v4()
+          await fileRepository.upload(state.session.currentUser, uuid, file)
+          const fileAttributes = await noteRepository.createFile(
+            state.session.currentUser,
+            uuid,
+            file.name,
+            file.size,
+            params.parentFolder
+          )
+        }
         dispatch(systemSlice.actions.message({ message: { value: 'File uploaded' } }))
       }
     }
@@ -249,7 +305,7 @@ const NotesActions = {
     async (params, { noteRepository }, state, dispatch) => {
       const folder = params.folder
       if (state.session.currentUser) {
-        await noteRepository.updateDeletedAtFolder(state.session.currentUser, folder)
+        await moveFolderToTrash(state.session.currentUser, noteRepository, folder)
         dispatch(systemSlice.actions.message({ message: { value: 'Moved folder to trash' } }))
       }
     }
@@ -311,7 +367,7 @@ const NotesActions = {
     if (state.session.currentUser) {
       confirmInsufficientCapacity(state)
       if (params.folder) {
-        await noteRepository.resetDeletedAtFolder(state.session.currentUser, params.folder)
+        await restoreFolder(state.session.currentUser, noteRepository, params.folder)
         dispatch(systemSlice.actions.message({ message: { value: `Restored folder.` } }))
       }
       if (params.note) {
@@ -327,10 +383,10 @@ const NotesActions = {
 
   deleteFolder: createAsyncAction<DeleteFolderParams, void>(
     'deleteFolder',
-    async (params, { noteRepository }, state, dispatch) => {
+    async (params, { noteRepository, fileRepository }, state, dispatch) => {
       const folder = params.folder
       if (state.session.currentUser) {
-        await noteRepository.deleteFolder(state.session.currentUser, folder)
+        await deleteFolder(state.session.currentUser, noteRepository, fileRepository, folder)
         dispatch(systemSlice.actions.message({ message: { value: 'Deleted folder' } }))
       }
     }
@@ -353,6 +409,24 @@ const NotesActions = {
         await noteRepository.deleteFile(state.session.currentUser, params.file)
         await fileRepository.delete(state.session.currentUser, params.file.uuid)
         dispatch(systemSlice.actions.message({ message: { value: 'Deleted file' } }))
+      }
+    }
+  ),
+  emptyTrash: createAsyncAction<EmptyTrashParams, void>(
+    'emptyTrash',
+    async (params, { noteRepository, fileRepository }, state) => {
+      const user = state.session.currentUser
+      if (user) {
+        for (const folder of params.folders) {
+          await deleteFolder(user, noteRepository, fileRepository, folder)
+        }
+        for (const note of params.notes) {
+          await noteRepository.deleteNote(user, note)
+        }
+        for (const file of params.files) {
+          await noteRepository.deleteFile(user, file)
+          await fileRepository.delete(user, file.uuid)
+        }
       }
     }
   ),

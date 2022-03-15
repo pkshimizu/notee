@@ -34,10 +34,9 @@ export default function FolderCreateDialog({ folder }: FolderCreateDialogProps) 
   }, [close, reset])
   const handleSaveFolderSettings = useCallback(
     async (data) => {
-      await dispatch(NotesActions.createFolder({ name: data.name, parentFolder: folder }))
-      close()
+      dispatch(NotesActions.createFolder({ name: data.name, parentFolder: folder }))
     },
-    [dispatch, folder, close]
+    [dispatch, folder]
   )
 
   return (
