@@ -4,7 +4,7 @@ import { File as FileAttributes, Folder, Note } from './models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
-import {v4} from "uuid";
+import { v4 } from 'uuid'
 
 type FetchRootResults = {
   folders: { [key: string]: Folder }

@@ -1,4 +1,4 @@
-import { Folder } from '../../store/notes/models'
+import { File, Folder } from '../../store/notes/models'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
@@ -6,13 +6,14 @@ import NoteCard from '../molecules/surfaces/NoteCard'
 import Label from '../atoms/display/Label'
 import { useFileMoveToTrashDialog, useFolderMoveToTrashDialog, useNoteMoveToTrashDialog } from '../../hooks/useDialogs'
 import { useFoldersPage, useNotesPage } from '../../hooks/usePages'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import FolderPropertiesPanel from './FolderPropertiesPanel'
 import { useSelector } from 'react-redux'
 import FolderBreadcrumbs from '../molecules/navigation/FolderBreadcrumbs'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
 import NotesSelectors from '../../store/notes/selectors'
 import FileCard from '../molecules/surfaces/FileCard'
+import useClipboard from '../../hooks/useClipboard'
 
 type FolderTabPanelProps = {
   folder: Folder
@@ -26,6 +27,15 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const openNotePage = useNotesPage()
   const openFolderPage = useFoldersPage()
   const folders = useSelector(NotesSelectors.folders)
+  const { copy } = useClipboard()
+  const handleCopyLink = useCallback(
+    (file: File) => {
+      if (file.url) {
+        copy(file.url)
+      }
+    },
+    [copy]
+  )
 
   return (
     <WorkspaceTabPanel
@@ -66,7 +76,12 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
         </FlexRow>
         <FlexRow>
           {folder.files.map((file) => (
-            <FileCard file={file} key={file.id} onClickMoveToTrash={() => fileMoveToTrashDialog.open(file)} />
+            <FileCard
+              file={file}
+              key={file.id}
+              onClickCopyLink={handleCopyLink}
+              onClickMoveToTrash={() => fileMoveToTrashDialog.open(file)}
+            />
           ))}
         </FlexRow>
       </FlexColumn>
