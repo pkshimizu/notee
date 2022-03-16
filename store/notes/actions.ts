@@ -99,10 +99,18 @@ type EmptyTrashParams = {
 }
 
 function confirmInsufficientCapacity(state: StoreState) {
-  const usage = state.notes.usageFolderCapacity + state.notes.usageNoteCapacity
+  const usage = state.notes.usageFolderCapacity + state.notes.usageNoteCapacity + state.notes.usageFileCapacity
   const max = state.session.maxCapacity
   if (usage > max) {
     throw new Error('Could not save due to insufficient capacity')
+  }
+}
+
+function confirmInsufficientStorageCapacity(state: StoreState, fileSize: number) {
+  const usage = state.notes.usageStorageCapacity
+  const max = state.session.maxStorageCapacity
+  if (usage + fileSize > max) {
+    throw new Error('Could not upload due to insufficient capacity')
   }
 }
 
@@ -248,7 +256,9 @@ const NotesActions = {
     'CreateFile',
     async (params, { noteRepository, fileRepository }, state, dispatch) => {
       if (state.session.currentUser) {
+        const fileSize = params.files.map((file) => file.size).reduce((prev, current) => prev + current)
         confirmInsufficientCapacity(state)
+        confirmInsufficientStorageCapacity(state, fileSize)
         for (const file of params.files) {
           const uuid = v4()
           await fileRepository.upload(state.session.currentUser, uuid, file)

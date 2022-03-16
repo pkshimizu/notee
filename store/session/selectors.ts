@@ -8,6 +8,7 @@ const SessionSelectors = {
   initialized: createSelector([sessionSelector], (state) => state.initialized),
   editorSettings: createSelector([sessionSelector], (state) => state.settings.editor),
   maxCapacity: createSelector([sessionSelector], (state) => state.maxCapacity),
+  maxStorageCapacity: createSelector([sessionSelector], (state) => state.maxStorageCapacity),
 }
 
 export default SessionSelectors

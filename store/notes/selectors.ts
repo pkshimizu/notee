@@ -95,6 +95,7 @@ const NotesSelectors = {
     [noteSelector],
     (state) => state.usageFolderCapacity + state.usageNoteCapacity + state.usageFileCapacity
   ),
+  usageStorageCapacity: createSelector([noteSelector], (state) => state.usageStorageCapacity),
 }
 
 export default NotesSelectors

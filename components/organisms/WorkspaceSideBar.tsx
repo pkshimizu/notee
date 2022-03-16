@@ -24,6 +24,8 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
   const expandedNoteTreeIds = useSelector(WorkspaceSelectors.expandedNoteTreeIds)
   const usageCapacity = useSelector(NotesSelectors.usageCapacity)
   const maxCapacity = useSelector(SessionSelectors.maxCapacity)
+  const usageStorageCapacity = useSelector(NotesSelectors.usageStorageCapacity)
+  const maxStorageCapacity = useSelector(SessionSelectors.maxStorageCapacity)
   const { favorites, trash, recent } = usePath()
   const dispatch = useDispatch()
   const handleSelectItem = useCallback(
@@ -69,7 +71,12 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
           onChangeExpanded={handleChangeExpanded}
         />
         <Divider />
-        <StorageCapacityView usage={usageCapacity} max={maxCapacity} />
+        <StorageCapacityView
+          usage={usageCapacity}
+          max={maxCapacity}
+          storageUsage={usageStorageCapacity}
+          storageMax={maxStorageCapacity}
+        />
       </FlexColumn>
     </FlexColumn>
   )

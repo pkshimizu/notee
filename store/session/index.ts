@@ -10,6 +10,7 @@ export type SessionState = {
   currentUser?: User
   settings: Settings
   maxCapacity: number
+  maxStorageCapacity: number
 }
 
 export const sessionInitialState: SessionState = {
@@ -22,6 +23,7 @@ export const sessionInitialState: SessionState = {
     },
   },
   maxCapacity: 10 * 1024 * 1024,
+  maxStorageCapacity: 50 * 1024 * 1024,
 }
 
 const initializeUser = async (

@@ -10,6 +10,7 @@ export type NotesState = {
   usageFolderCapacity: number
   usageNoteCapacity: number
   usageFileCapacity: number
+  usageStorageCapacity: number
 }
 
 export const notesInitialState: NotesState = {
@@ -20,6 +21,7 @@ export const notesInitialState: NotesState = {
   usageFolderCapacity: 0,
   usageNoteCapacity: 0,
   usageFileCapacity: 0,
+  usageStorageCapacity: 0,
 }
 
 type AddFolderParams = {
@@ -112,6 +114,7 @@ const notesSlice = createSlice({
     addFile: (state, action: PayloadAction<AddFileParams>) => {
       state.files.push(action.payload.file)
       state.usageFileCapacity = calcSize(state.files)
+      state.usageStorageCapacity = state.files.map((file) => file.bytes).reduce((prev, current) => prev + current)
     },
     modifyFile: (state, action: PayloadAction<ModifyFileParams>) => {
       const file = action.payload.file
@@ -122,11 +125,13 @@ const notesSlice = createSlice({
         return item
       })
       state.usageFileCapacity = calcSize(state.files)
+      state.usageStorageCapacity = state.files.map((file) => file.bytes).reduce((prev, current) => prev + current)
     },
     removeFile: (state, action: PayloadAction<RemoveFileParams>) => {
       const file = action.payload.file
       state.files = state.files.filter((item) => item.id !== file.id)
       state.usageFileCapacity = calcSize(state.files)
+      state.usageStorageCapacity = state.files.map((file) => file.bytes).reduce((prev, current) => prev + current)
     },
     searchNotes: (state, action: PayloadAction<SearchNotesParams>) => {
       state.searchResults = {
