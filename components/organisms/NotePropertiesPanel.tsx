@@ -15,6 +15,7 @@ import NotesActions from '../../store/notes/actions'
 import FontSizeSelect from '../molecules/inputs/FontSizeSelect'
 import { useEditor } from '../../hooks/useEditor'
 import editorsSlice from '../../store/editors'
+import FromNowLabel from '../molecules/display/FromNowLabel'
 
 type NotePropertiesPanelProps = {
   note: Note
@@ -70,7 +71,10 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
             <List>
               {[...note.logs].reverse().map((log) => (
                 <ListItem key={log.id} onClick={() => handleSelectLog(log)}>
-                  <DateTimeLabel datetime={log.updatedAt} />
+                  <FlexColumn>
+                    <FromNowLabel datetime={log.updatedAt} />
+                    <DateTimeLabel datetime={log.updatedAt} />
+                  </FlexColumn>
                 </ListItem>
               ))}
             </List>

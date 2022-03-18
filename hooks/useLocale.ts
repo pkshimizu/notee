@@ -48,6 +48,7 @@ export const useLocale = () => {
   )
 
   return {
+    locale,
     t,
   }
 }
