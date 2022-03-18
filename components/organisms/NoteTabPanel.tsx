@@ -1,7 +1,7 @@
 import { Note } from '../../store/notes/models'
 import NoteMenu from './NoteMenu'
 import TextEditor from '../atoms/inputs/TextEditor'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotePropertiesPanel from './NotePropertiesPanel'
 import WorkspaceTabPanel from '../molecules/navigation/WorkspaceTabPanel'
@@ -40,6 +40,25 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
     },
     [dispatch, activeNote]
   )
+  const editors = useMemo(() => {
+    return (
+      <AbsoluteBox top={0} bottom={0} left={0} right={editorRight} onResize={handleResize}>
+        {notes.map((note) => (
+          <TextEditor
+            key={note.id}
+            content={note.content}
+            keyBinding={editorSettings.keyBinding}
+            theme={editorSettings.theme}
+            mode={note.contentType}
+            fontSize={fontSize}
+            height={note.id === activeNote.id ? '100%' : '0'}
+            onLoad={(editor) => handleLoad(note.id, editor)}
+            onChangeContent={handleChangeContent}
+          />
+        ))}
+      </AbsoluteBox>
+    )
+  }, [editorRight, handleResize, notes, editorSettings, fontSize, activeNote, handleLoad, handleChangeContent])
 
   return (
     <WorkspaceTabPanel
@@ -48,21 +67,7 @@ export default function NoteTabPanel({ notes, activeNote }: NoteTabPanelProps) {
       onClosePropertiesPanel={() => setPropertiesPanel(false)}
     >
       <RelativeBox width={'100%'} height={'100%'}>
-        <AbsoluteBox top={0} bottom={0} left={0} right={editorRight} onResize={handleResize}>
-          {notes.map((note) => (
-            <TextEditor
-              key={note.id}
-              content={note.content}
-              keyBinding={editorSettings.keyBinding}
-              theme={editorSettings.theme}
-              mode={note.contentType}
-              fontSize={fontSize}
-              height={note.id === activeNote.id ? '100%' : '0'}
-              onLoad={(editor) => handleLoad(note.id, editor)}
-              onChangeContent={handleChangeContent}
-            />
-          ))}
-        </AbsoluteBox>
+        {editors}
         {activeNote.contentType === 'markdown' && (
           <AbsoluteBox top={0} bottom={0} left={previewLeft} right={0} hidden={previewLeft === '100%'}>
             <MarkdownViewer content={activeNote.content} row={cursor?.row} />

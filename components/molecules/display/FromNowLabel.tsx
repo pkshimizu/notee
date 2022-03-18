@@ -7,6 +7,6 @@ type FromNowLabelProps = {
 
 export default function FromNowLabel({ datetime }: FromNowLabelProps) {
   const { fromNow } = useDay()
-  
+
   return <Label text={fromNow(datetime)} />
 }
