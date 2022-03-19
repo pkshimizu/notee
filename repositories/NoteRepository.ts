@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from '@firebase/firestore'
 import { User } from '../store/session/models'
-import { File, FileDoc, Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
+import { FileMeta, FileMetaDoc, Folder, FolderDoc, Note, NoteDoc } from '../store/notes/models'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { ContentType } from '../components/atoms/inputs/TextEditor'
@@ -19,7 +19,7 @@ import { diff_match_patch } from 'diff-match-patch'
 
 type FolderEventListener = (folder: Folder) => void
 type NoteEventListener = (note: Note) => void
-type FileEventListener = (file: File) => void
+type FileEventListener = (file: FileMeta) => void
 
 const docToFolder = (doc: QueryDocumentSnapshot<DocumentData>): Folder => {
   return {
@@ -49,7 +49,7 @@ const docToNote = (doc: QueryDocumentSnapshot<DocumentData>): Note => {
   }
 }
 
-const docToFile = (doc: QueryDocumentSnapshot<DocumentData>): File => {
+const docToFile = (doc: QueryDocumentSnapshot<DocumentData>): FileMeta => {
   const data = doc.data()
   return {
     id: doc.id,
@@ -111,7 +111,7 @@ export default class NoteRepository {
   async loadFiles(user: User) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const fileDocs = await getDocs(collection(userDoc, 'files'))
-    const files: File[] = []
+    const files: FileMeta[] = []
     fileDocs.forEach((doc) => {
       files.push(docToFile(doc))
     })
@@ -214,8 +214,8 @@ export default class NoteRepository {
     return addDoc(notes, note)
   }
 
-  async createFile(user: User, uuid: string, name: string, bytes: number, folder: Folder): Promise<File> {
-    const file: FileDoc = {
+  async createFile(user: User, uuid: string, name: string, bytes: number, folder: Folder): Promise<FileMeta> {
+    const file: FileMetaDoc = {
       uuid,
       name: name,
       bytes: bytes,
@@ -281,7 +281,7 @@ export default class NoteRepository {
       logs: logs,
     }
   }
-  async updateFile(user: User, file: File, { name, folderId }: UpdateFileParams): Promise<File> {
+  async updateFile(user: User, file: FileMeta, { name, folderId }: UpdateFileParams): Promise<FileMeta> {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const folderDoc = doc(userDoc, 'files', file.id)
     await updateDoc(folderDoc, {
@@ -308,7 +308,7 @@ export default class NoteRepository {
       deletedAt: dayjs().toISOString(),
     })
   }
-  updateDeletedAtFile(user: User, file: File) {
+  updateDeletedAtFile(user: User, file: FileMeta) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const filesCollection = collection(userDoc, 'files')
     return updateDoc(doc(filesCollection, file.id), {
@@ -329,7 +329,7 @@ export default class NoteRepository {
       deletedAt: null,
     })
   }
-  resetDeletedAtFile(user: User, file: File) {
+  resetDeletedAtFile(user: User, file: FileMeta) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const filesCollection = collection(userDoc, 'files')
     return updateDoc(doc(filesCollection, file.id), {
@@ -346,7 +346,7 @@ export default class NoteRepository {
     const notesCollection = collection(userDoc, 'notes')
     return deleteDoc(doc(notesCollection, note.id))
   }
-  deleteFile(user: User, file: File) {
+  deleteFile(user: User, file: FileMeta) {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const filesCollection = collection(userDoc, 'files')
     return deleteDoc(doc(filesCollection, file.id))

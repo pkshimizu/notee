@@ -3,18 +3,18 @@ import Label from '../../atoms/display/Label'
 import { FlexColumn, FlexRow } from '../../atoms/layout/Flex'
 import CapacityLabel from '../display/CapacityLabel'
 import DateTimeLabel from '../display/DateTimeLabel'
-import { File } from '../../../store/notes/models'
+import { FileMeta } from '../../../store/notes/models'
 import Link from '../../atoms/navigation/Link'
 import { DeleteIcon, LinkIcon, MoveIcon, RestoreIcon, TrashIcon } from '../../atoms/display/Icons'
 import IconButton from '../../atoms/inputs/IconButton'
 
 type FileCardProps = {
-  file: File
-  onClickCopyLink?: (_file: File) => void
-  onClickMove?: (_file: File) => void
-  onClickMoveToTrash?: (_file: File) => void
-  onClickRestore?: (_file: File) => void
-  onClickDelete?: (_file: File) => void
+  file: FileMeta
+  onClickCopyLink?: (_file: FileMeta) => void
+  onClickMove?: (_file: FileMeta) => void
+  onClickMoveToTrash?: (_file: FileMeta) => void
+  onClickRestore?: (_file: FileMeta) => void
+  onClickDelete?: (_file: FileMeta) => void
 }
 
 export default function FileCard({

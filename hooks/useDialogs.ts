@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { File, Folder, Note, NoteLog } from '../store/notes/models'
+import { FileMeta, Folder, Note, NoteLog } from '../store/notes/models'
 import { useDispatch, useSelector } from 'react-redux'
 import dialogsSlice from '../store/dialogs'
 import DialogsSelectors from '../store/dialogs/selectors'
@@ -194,7 +194,7 @@ export const useFileMoveDialog = () => {
   const state = useSelector(DialogsSelectors.fileMove)
   const dispatch = useDispatch()
   const open = useCallback(
-    (file: File) => {
+    (file: FileMeta) => {
       dispatch(dialogsSlice.actions.openFileMoveDialog({ file }))
     },
     [dispatch]
@@ -213,7 +213,7 @@ export const useFileMoveToTrashDialog = () => {
   const state = useSelector(DialogsSelectors.fileMoveToTrash)
   const dispatch = useDispatch()
   const open = useCallback(
-    (file: File) => {
+    (file: FileMeta) => {
       dispatch(dialogsSlice.actions.openFileMoveToTrashDialog({ file }))
     },
     [dispatch]
@@ -232,7 +232,7 @@ export const useFileDeleteDialog = () => {
   const state = useSelector(DialogsSelectors.fileDelete)
   const dispatch = useDispatch()
   const open = useCallback(
-    (file: File) => {
+    (file: FileMeta) => {
       dispatch(dialogsSlice.actions.openFileDeleteDialog({ file }))
     },
     [dispatch]

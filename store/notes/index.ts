@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import NotesActions from './actions'
-import { Folder, Note, File } from './models'
+import { Folder, Note, FileMeta } from './models'
 
 export type NotesState = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
-  files: File[]
+  files: FileMeta[]
   searchResults?: { notes: string[]; folders: string[] }
   usageFolderCapacity: number
   usageNoteCapacity: number
@@ -46,13 +46,13 @@ type SearchNotesParams = {
   keyword: string
 }
 type AddFileParams = {
-  file: File
+  file: FileMeta
 }
 type ModifyFileParams = {
-  file: File
+  file: FileMeta
 }
 type RemoveFileParams = {
-  file: File
+  file: FileMeta
 }
 
 function calcSize(object: boolean | number | string | object): number {

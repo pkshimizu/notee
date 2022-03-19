@@ -7,7 +7,7 @@ import NoteCard from '../molecules/surfaces/NoteCard'
 import TrashMenu from './TrashMenu'
 import { useCallback } from 'react'
 import NotesActions from '../../store/notes/actions'
-import { File, Folder, Note } from '../../store/notes/models'
+import { FileMeta, Folder, Note } from '../../store/notes/models'
 import { useFileDeleteDialog, useFolderDeleteDialog, useNoteDeleteDialog } from '../../hooks/useDialogs'
 import NotesSelectors from '../../store/notes/selectors'
 import FileCard from '../molecules/surfaces/FileCard'
@@ -35,7 +35,7 @@ export default function TrashTabPanel({}: TrashTabPanelProps) {
     [dispatch]
   )
   const handleRestoreFile = useCallback(
-    (file: File) => {
+    (file: FileMeta) => {
       dispatch(NotesActions.restore({ file: file }))
     },
     [dispatch]

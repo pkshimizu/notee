@@ -5,11 +5,11 @@ import Label from '../atoms/display/Label'
 import { useDispatch } from 'react-redux'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import NotesActions from '../../store/notes/actions'
-import { File } from '../../store/notes/models'
+import { FileMeta } from '../../store/notes/models'
 import { useFileDeleteDialog } from '../../hooks/useDialogs'
 
 type FileDeleteDialogProps = {
-  file: File
+  file: FileMeta
 }
 
 export default function FileDeleteDialog({ file }: FileDeleteDialogProps) {

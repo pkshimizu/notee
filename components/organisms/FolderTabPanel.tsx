@@ -1,4 +1,4 @@
-import { File, Folder } from '../../store/notes/models'
+import { FileMeta, Folder } from '../../store/notes/models'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import FolderMenu from './FolderMenu'
 import FolderCard from '../molecules/surfaces/FolderCard'
@@ -35,7 +35,7 @@ export default function FolderTabPanel({ folder }: FolderTabPanelProps) {
   const folders = useSelector(NotesSelectors.folders)
   const { copy } = useClipboard()
   const handleCopyLink = useCallback(
-    (file: File) => {
+    (file: FileMeta) => {
       if (file.url) {
         copy(file.url)
       }

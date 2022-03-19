@@ -1,4 +1,4 @@
-import { File, Folder, Note, NoteLog } from '../notes/models'
+import { FileMeta, Folder, Note, NoteLog } from '../notes/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import NotesActions from '../notes/actions'
 
@@ -13,9 +13,9 @@ export type DialogsState = {
   noteDelete?: { note: Note }
   trashEmpty?: {}
   fileUpload?: { folder: Folder }
-  fileMove?: { file: File }
-  fileMoveToTrash?: { file: File }
-  fileDelete?: { file: File }
+  fileMove?: { file: FileMeta }
+  fileMoveToTrash?: { file: FileMeta }
+  fileDelete?: { file: FileMeta }
 }
 
 export const dialogsInitialState: DialogsState = {
@@ -70,15 +70,15 @@ type OpenFileUploadDialogParams = {
 }
 
 type OpenFileMoveDialogParams = {
-  file: File
+  file: FileMeta
 }
 
 type OpenFileMoveToTrashDialogParams = {
-  file: File
+  file: FileMeta
 }
 
 type OpenFileDeleteDialogParams = {
-  file: File
+  file: FileMeta
 }
 
 const dialogsSlice = createSlice({

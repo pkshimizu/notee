@@ -6,10 +6,10 @@ import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import { FileIcon } from '../atoms/display/Icons'
 import Label from '../atoms/display/Label'
 import NotesActions from '../../store/notes/actions'
-import { File } from '../../store/notes/models'
+import { FileMeta } from '../../store/notes/models'
 
 type FileMoveToTrashDialogProps = {
-  file: File
+  file: FileMeta
 }
 
 export default function FileMoveToTrashDialog({ file }: FileMoveToTrashDialogProps) {

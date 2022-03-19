@@ -35,11 +35,11 @@ export type FolderDoc = {
 export type Folder = {
   folders: Folder[]
   notes: Note[]
-  files: File[]
+  files: FileMeta[]
 } & Item &
   FolderDoc
 
-export type FileDoc = {
+export type FileMetaDoc = {
   uuid: string
   name: string
   folderId: string
@@ -48,7 +48,7 @@ export type FileDoc = {
   deletedAt?: string
 }
 
-export type File = {
+export type FileMeta = {
   url?: string
 } & Item &
-  FileDoc
+  FileMetaDoc

@@ -1,6 +1,6 @@
 import { createAsyncAction } from '../actions'
 import systemSlice from '../system'
-import { File as FileAttributes, Folder, Note } from './models'
+import { FileMeta, Folder, Note } from './models'
 import notesSlice from '.'
 import { ContentType } from '../../components/atoms/inputs/TextEditor'
 import { StoreState } from '../index'
@@ -12,7 +12,7 @@ import FileRepository from '../../repositories/FileRepository'
 type FetchRootResults = {
   folders: { [key: string]: Folder }
   notes: { [key: string]: Note }
-  files: FileAttributes[]
+  files: FileMeta[]
 }
 
 type FetchNotesResults = {
@@ -47,7 +47,7 @@ type UpdateNoteParams = {
 }
 
 type UpdateFileParams = {
-  file: FileAttributes
+  file: FileMeta
   name?: string
   folderId?: string
 }
@@ -61,7 +61,7 @@ type MoveNoteToTrashParams = {
 }
 
 type MoveFileToTrashParams = {
-  file: FileAttributes
+  file: FileMeta
 }
 
 type FavoriteParams = {
@@ -77,7 +77,7 @@ type UnFavoriteParams = {
 type RestoreParams = {
   folder?: Folder
   note?: Note
-  file?: FileAttributes
+  file?: FileMeta
 }
 
 type DeleteFolderParams = {
@@ -89,13 +89,13 @@ type DeleteNoteParams = {
 }
 
 type DeleteFileParams = {
-  file: FileAttributes
+  file: FileMeta
 }
 
 type EmptyTrashParams = {
   folders: Folder[]
   notes: Note[]
-  files: FileAttributes[]
+  files: FileMeta[]
 }
 
 function confirmInsufficientCapacity(state: StoreState) {

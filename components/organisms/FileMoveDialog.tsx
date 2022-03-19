@@ -4,10 +4,10 @@ import { useCallback } from 'react'
 import NotesActions from '../../store/notes/actions'
 import NotesSelectors from '../../store/notes/selectors'
 import { useFileMoveDialog } from '../../hooks/useDialogs'
-import { File } from '../../store/notes/models'
+import { FileMeta } from '../../store/notes/models'
 
 type FileMoveDialogProps = {
-  file: File
+  file: FileMeta
 }
 
 export default function FileMoveDialog({ file }: FileMoveDialogProps) {

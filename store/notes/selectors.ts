@@ -1,7 +1,7 @@
 import sortBy from 'lodash/sortBy'
 import { StoreState } from '../index'
 import { createSelector } from '@reduxjs/toolkit'
-import { File, Folder, Note } from './models'
+import { FileMeta, Folder, Note } from './models'
 import dayjs from 'dayjs'
 
 function sortFolders(folders: Folder[]): Folder[] {
@@ -16,7 +16,7 @@ function sortNotesByUpdatedAt(notes: Note[]): Note[] {
   return sortBy(notes, 'updatedAt').reverse()
 }
 
-function buildFolders(folders: Folder[], notes: Note[], files: File[]) {
+function buildFolders(folders: Folder[], notes: Note[], files: FileMeta[]) {
   const itemsInFolders: Folder[] = folders.map((folder) => ({ ...folder, folders: [], notes: [] }))
   itemsInFolders.forEach((folder) => {
     folder.folders = sortFolders(itemsInFolders.filter((subFolder) => subFolder.folderId === folder.id))
