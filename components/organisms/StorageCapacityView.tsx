@@ -13,12 +13,12 @@ type StorageCapacityViewProps = {
 
 export default function StorageCapacityView({ usage, max, storageUsage, storageMax }: StorageCapacityViewProps) {
   return (
-    <FlexColumn pa={2} noGrow>
+    <FlexColumn px={2} noGrow noWrap height={160}>
       <FlexRow align={'center'}>
         <StorageIcon />
         <Label text={{ value: 'Storage Capacity' }} variant={'caption'} />
       </FlexRow>
-      <FlexColumn space={0}>
+      <FlexColumn space={0} noWrap>
         <Label text={{ value: 'Data' }} variant={'caption'} />
         <CapacityProgress value={usage} max={max} />
         <FlexRow>
@@ -27,7 +27,7 @@ export default function StorageCapacityView({ usage, max, storageUsage, storageM
           <CapacityLabel bytes={max} />
         </FlexRow>
       </FlexColumn>
-      <FlexColumn space={0}>
+      <FlexColumn space={0} noWrap>
         <Label text={{ value: 'File' }} variant={'caption'} />
         <CapacityProgress value={storageUsage} max={storageMax} />
         <FlexRow>

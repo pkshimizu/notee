@@ -26,7 +26,7 @@ export default function TreeView({ width, selectedId = '', expanded, children, o
       expanded={expanded}
       onNodeSelect={handleSelect}
       selected={selectedId}
-      sx={{ width: width }}
+      sx={{ width: width, overflowY: 'auto' }}
     >
       {children}
     </MuiTreeView>

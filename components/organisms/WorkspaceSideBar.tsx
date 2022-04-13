@@ -63,6 +63,7 @@ export default function WorkspaceSideBar({}: WorkspaceSideBarProps) {
             <Label text={{ value: 'Trash' }} />
           </FlexRow>
         </Link>
+        <Divider />
         <NoteTree
           folder={root}
           activeId={activeItemId}

@@ -89,6 +89,8 @@ function Flex({
         justifyContent: justify,
         width,
         height,
+        minWidth: width,
+        minHeight: height,
         flexGrow: noGrow ? 0 : 1,
         overflowY: 'auto',
         flexWrap: noWrap ? 'nowrap' : 'wrap',
