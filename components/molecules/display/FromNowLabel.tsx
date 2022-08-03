@@ -1,12 +1,13 @@
 import { useDay } from '../../../hooks/useDay'
-import Label from '../../atoms/display/Label'
+import Label, { LabelVariant } from '../../atoms/display/Label'
 
 type FromNowLabelProps = {
   datetime: string
+  variant?: LabelVariant
 }
 
-export default function FromNowLabel({ datetime }: FromNowLabelProps) {
+export default function FromNowLabel({ datetime, variant }: FromNowLabelProps) {
   const { fromNow } = useDay()
 
-  return <Label text={fromNow(datetime)} />
+  return <Label text={fromNow(datetime)} variant={variant} />
 }

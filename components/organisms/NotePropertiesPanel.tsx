@@ -1,6 +1,6 @@
 import TabView from '../atoms/navigation/TabView'
 import { InfoIcon, LogIcon } from '../atoms/display/Icons'
-import { FlexColumn } from '../atoms/layout/Flex'
+import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
 import { Note, NoteLog } from '../../store/notes/models'
@@ -16,6 +16,7 @@ import FontSizeSelect from '../molecules/inputs/FontSizeSelect'
 import { useEditor } from '../../hooks/useEditor'
 import editorsSlice from '../../store/editors'
 import FromNowLabel from '../molecules/display/FromNowLabel'
+import Button from '../atoms/inputs/Button'
 
 type NotePropertiesPanelProps = {
   note: Note
@@ -41,6 +42,9 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
     },
     [dispatch, note]
   )
+  const handleClearLogs = useCallback(() => {
+    dispatch(NotesActions.clearLogs({ note }))
+  }, [dispatch, note])
 
   return (
     <TabView
@@ -68,16 +72,21 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
           value: 'log',
           icon: <LogIcon />,
           panel: (
-            <List>
-              {[...note.logs].reverse().map((log) => (
-                <ListItem key={log.id} onClick={() => handleSelectLog(log)}>
-                  <FlexColumn>
-                    <FromNowLabel datetime={log.updatedAt} />
-                    <DateTimeLabel datetime={log.updatedAt} />
-                  </FlexColumn>
-                </ListItem>
-              ))}
-            </List>
+            <FlexColumn>
+              <Button onClick={handleClearLogs}>
+                <Label text={{ value: 'Clear logs' }} />
+              </Button>
+              <List>
+                {[...note.logs].reverse().map((log) => (
+                  <ListItem key={log.id} onClick={() => handleSelectLog(log)}>
+                    <FlexRow align={'center'}>
+                      <DateTimeLabel datetime={log.updatedAt} />
+                      <FromNowLabel datetime={log.updatedAt} variant={'caption'} />
+                    </FlexRow>
+                  </ListItem>
+                ))}
+              </List>
+            </FlexColumn>
           ),
         },
       ]}

@@ -98,6 +98,10 @@ type EmptyTrashParams = {
   files: FileMeta[]
 }
 
+type ClearLogsParams = {
+  note: Note
+}
+
 function confirmInsufficientCapacity(state: StoreState) {
   const usage = state.notes.usageFolderCapacity + state.notes.usageNoteCapacity + state.notes.usageFileCapacity
   const max = state.session.maxCapacity
@@ -440,6 +444,11 @@ const NotesActions = {
       }
     }
   ),
+  clearLogs: createAsyncAction<ClearLogsParams, void>('clearLogs', async (params, { noteRepository }, state) => {
+    if (state.session.currentUser) {
+      await noteRepository.clearLogs(state.session.currentUser, params.note)
+    }
+  }),
 }
 
 export default NotesActions

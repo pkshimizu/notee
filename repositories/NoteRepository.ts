@@ -256,13 +256,11 @@ export default class NoteRepository {
     const updatedAt = dayjs().toISOString()
     const diff = content ? this.makePatchText(note.content, content) : undefined
     const logs = diff
-      ? note.logs
-          .concat({
-            id: uuidv4(),
-            diff: diff,
-            updatedAt: note.updatedAt,
-          })
-          .slice(-100)
+      ? note.logs.concat({
+          id: uuidv4(),
+          diff: diff,
+          updatedAt: note.updatedAt,
+        })
       : note.logs
     await updateDoc(noteDoc, {
       content: content,
@@ -350,6 +348,25 @@ export default class NoteRepository {
     const userDoc = doc(firestore, `/users/${user.uid}`)
     const filesCollection = collection(userDoc, 'files')
     return deleteDoc(doc(filesCollection, file.id))
+  }
+  async clearLogs(user: User, note: Note): Promise<Note> {
+    const userDoc = doc(firestore, `/users/${user.uid}`)
+    const noteDoc = doc(userDoc, 'notes', note.id)
+    const diff = this.makePatchText('', note.content)
+    const logs = [
+      {
+        id: uuidv4(),
+        diff: diff,
+        updatedAt: note.updatedAt,
+      },
+    ]
+    await updateDoc(noteDoc, {
+      logs: logs,
+    })
+    return {
+      ...note,
+      logs: logs,
+    }
   }
 
   private makePatchText(content1: string, content2: string): string {

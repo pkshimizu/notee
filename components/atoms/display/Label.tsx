@@ -1,7 +1,7 @@
 import MuiTypography from '@mui/material/Typography'
 import { LabelText, useLocale } from '../../../hooks/useLocale'
 
-type LabelVariant = 'body' | 'caption' | 'title' | 'subtitle'
+export type LabelVariant = 'body' | 'caption' | 'title' | 'subtitle'
 
 const typographyVariant = (variant: LabelVariant) => {
   switch (variant) {

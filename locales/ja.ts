@@ -27,6 +27,7 @@ export default {
   'Created Date': '作成日時',
   'Created new folder.': '新しいフォルダを作成しました',
   'Created new note.': '新しいノートを作成しました',
+  'Clear logs': 'ログをクリア',
   // D
   Data: 'データ',
   Delete: '削除',
