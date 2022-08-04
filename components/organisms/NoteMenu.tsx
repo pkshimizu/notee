@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import AppBar from '../atoms/surfaces/AppBar'
 import {
-  CloseIcon,
   TrashIcon,
   FavoriteIcon,
   FavoriteOutlinedIcon,
@@ -21,7 +20,6 @@ import {
 import { FlexRow } from '../atoms/layout/Flex'
 import { useNoteMoveToTrashDialog, useNoteMoveDialog } from '../../hooks/useDialogs'
 import NotesActions from '../../store/notes/actions'
-import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 import Divider from '../atoms/display/Divider'
 import { useEditor } from '../../hooks/useEditor'
 import { useDeviceType } from '../../hooks/useDeviceType'
@@ -39,7 +37,6 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
   const { undo, redo, canUndo, canRedo, setPreview, setSyncScroll, syncScroll } = useEditor(note)
   const [undoDisabled, setUndoDisabled] = useState(false)
   const [redoDisabled, setRedoDisabled] = useState(false)
-  const { close } = useWorkspaceTab()
   const deviceType = useDeviceType()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
@@ -49,12 +46,9 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
       dispatch(NotesActions.favorite({ note: note }))
     }
   }, [dispatch, note])
-  const handleGoFolder = useCallback(() => {
-    foldersPage(note.folderId)
+  const handleGoFolder = useCallback(async () => {
+    await foldersPage(note.folderId)
   }, [foldersPage, note])
-  const handleClose = useCallback(() => {
-    close(note.id)
-  }, [close, note])
   useEffect(() => {
     setUndoDisabled(!canUndo(note.id))
     setRedoDisabled(!canRedo(note.id))
@@ -124,9 +118,6 @@ export default function NoteMenu({ note, onOpenProperties }: NoteMenuProps) {
         <FlexRow justify={'flex-end'}>
           <IconButton label={{ value: 'Open properties' }} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
-          </IconButton>
-          <IconButton label={{ value: 'Close tab' }} color={'white'} onClick={handleClose}>
-            <CloseIcon />
           </IconButton>
         </FlexRow>
       </FlexRow>

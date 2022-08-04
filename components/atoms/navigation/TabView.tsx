@@ -46,9 +46,10 @@ export default function TabView({
           {tabs.map((tab) => (
             <MuiTab
               label={
-                <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-                  {tab.icon && <MuiBox sx={{ mr: 1 }}>{tab.icon}</MuiBox>}
+                <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
+                  {tab.icon}
                   {tab.label && <MuiTypography variant='button'>{t({ ...tab.label, truncate: 20 })}</MuiTypography>}
+                  {tab.panel}
                 </MuiBox>
               }
               value={tab.value}

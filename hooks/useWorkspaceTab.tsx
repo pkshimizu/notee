@@ -11,33 +11,33 @@ export const useWorkspaceTab = () => {
   const itemsPage = useItemsPage()
 
   const close = useCallback(
-    (id: string) => {
-      if (items.length === 1) {
-        dispatch(workspaceSlice.actions.close({ id: id }))
-        rootPage()
-        return
-      }
+    async (id: string) => {
       const itemIds = items.map((item) => item.id)
       const index = itemIds.indexOf(id)
       if (index < 0) {
         return
       }
-      itemsPage(index === 0 ? itemIds[1] : itemIds[index - 1])
+      if (items.length === 1) {
+        await rootPage()
+        dispatch(workspaceSlice.actions.close({ id: id }))
+        return
+      }
+      await itemsPage(index === 0 ? itemIds[1] : itemIds[index - 1])
       dispatch(workspaceSlice.actions.close({ id: id }))
     },
     [items, rootPage, itemsPage]
   )
-  const closeSearch = useCallback(() => {
-    close('search')
+  const closeSearch = useCallback(async () => {
+    await close('search')
   }, [close])
-  const closeFavorites = useCallback(() => {
-    close('favorites')
+  const closeFavorites = useCallback(async () => {
+    await close('favorites')
   }, [close])
-  const closeRecent = useCallback(() => {
-    close('recent')
+  const closeRecent = useCallback(async () => {
+    await close('recent')
   }, [close])
-  const closeTrash = useCallback(() => {
-    close('trash')
+  const closeTrash = useCallback(async () => {
+    await close('trash')
   }, [close])
   return {
     close,

@@ -8,7 +8,6 @@ import {
   CreateFolderIcon,
   CreateNoteIcon,
   TrashIcon,
-  CloseIcon,
   SidebarIcon,
   MoveIcon,
   FavoriteIcon,
@@ -22,7 +21,6 @@ import {
   useFileUploadDialog,
 } from '../../hooks/useDialogs'
 import NotesActions from '../../store/notes/actions'
-import { useWorkspaceTab } from '../../hooks/useWorkspaceTab'
 
 type FolderMenuProps = {
   folder: Folder
@@ -34,7 +32,6 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
   const folderMoveToTrashDialog = useFolderMoveToTrashDialog()
   const folderMoveDialog = useFolderMoveDialog()
   const fileUploadDialog = useFileUploadDialog()
-  const { close } = useWorkspaceTab()
   const dispatch = useDispatch()
   const handleFavorite = useCallback(() => {
     if (folder.favorite) {
@@ -46,9 +43,6 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
   const handleCreateNote = useCallback(() => {
     dispatch(NotesActions.createNote({ parentFolder: folder }))
   }, [dispatch, folder])
-  const handleClose = useCallback(() => {
-    close(folder.id)
-  }, [close, folder])
 
   return (
     <AppBar>
@@ -92,14 +86,6 @@ export default function FolderMenu({ folder, onOpenProperties }: FolderMenuProps
         <FlexRow justify={'flex-end'}>
           <IconButton label={{ value: 'Open properties' }} color={'white'} onClick={onOpenProperties}>
             <SidebarIcon />
-          </IconButton>
-          <IconButton
-            label={{ value: 'Close tab' }}
-            color={'white'}
-            onClick={handleClose}
-            disabled={folder.folderId === undefined}
-          >
-            <CloseIcon />
           </IconButton>
         </FlexRow>
       </FlexRow>

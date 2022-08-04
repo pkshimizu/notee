@@ -39,7 +39,7 @@ import { SvgIcon } from '@mui/material'
 import MuiMenuIcon from '@mui/icons-material/Menu'
 
 export type IconColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'white' | 'black'
-export type IconSize = 24 | 48 | 64
+export type IconSize = 12 | 24 | 48 | 64
 
 type IconProps = {
   color?: IconColor

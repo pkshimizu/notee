@@ -8,8 +8,8 @@ import WorkspaceSelectors from '../store/workspace/selectors'
 export const useRootPage = () => {
   const router = useRouter()
   const { root } = usePath()
-  return useCallback(() => {
-    router.push(root())
+  return useCallback(async () => {
+    await router.push(root())
   }, [])
 }
 
@@ -24,19 +24,19 @@ export const useItemsPage = () => {
   const trashPage = useTrashPage()
 
   return useCallback(
-    (id: string) => {
+    async (id: string) => {
       if (id === 'search') {
-        searchPage()
+        await searchPage()
       } else if (id === 'favorites') {
-        favoritesPage()
+        await favoritesPage()
       } else if (id === 'recent') {
-        recentPage()
+        await recentPage()
       } else if (id === 'trash') {
-        trashPage()
+        await trashPage()
       } else if (folders.find((folder) => folder.id === id)) {
-        foldersPage(id)
+        await foldersPage(id)
       } else if (notes.find((note) => note.id === id)) {
-        notesPage(id)
+        await notesPage(id)
       }
     },
     [folders, notes, foldersPage, notesPage]
@@ -46,18 +46,16 @@ export const useItemsPage = () => {
 export const useNotesPage = () => {
   const router = useRouter()
   const { notes } = usePath()
-  return useCallback((id: string) => {
-    router.push(notes(id))
-    return
+  return useCallback(async (id: string) => {
+    await router.push(notes(id))
   }, [])
 }
 
 export const useFoldersPage = () => {
   const router = useRouter()
   const { folders } = usePath()
-  return useCallback((id: string) => {
-    router.push(folders(id))
-    return
+  return useCallback(async (id: string) => {
+    await router.push(folders(id))
   }, [])
 }
 
@@ -74,55 +72,55 @@ export const useActiveNotesPage = () => {
 export const useLoginPage = () => {
   const router = useRouter()
   const { login } = usePath()
-  return useCallback(() => {
-    router.push(login())
+  return useCallback(async () => {
+    await router.push(login())
   }, [])
 }
 
 export const useSearchPage = () => {
   const router = useRouter()
   const { search } = usePath()
-  return useCallback(() => {
-    router.push(search())
+  return useCallback(async () => {
+    await router.push(search())
   }, [])
 }
 
 export const useFavoritesPage = () => {
   const router = useRouter()
   const { favorites } = usePath()
-  return useCallback(() => {
-    router.push(favorites())
+  return useCallback(async () => {
+    await router.push(favorites())
   }, [])
 }
 
 export const useRecentPage = () => {
   const router = useRouter()
   const { recent } = usePath()
-  return useCallback(() => {
-    router.push(recent())
+  return useCallback(async () => {
+    await router.push(recent())
   }, [])
 }
 
 export const useTrashPage = () => {
   const router = useRouter()
   const { trash } = usePath()
-  return useCallback(() => {
-    router.push(trash())
+  return useCallback(async () => {
+    await router.push(trash())
   }, [])
 }
 
 export const useProfileSettingsPage = () => {
   const router = useRouter()
   const { settingsProfile } = usePath()
-  return useCallback(() => {
-    router.push(settingsProfile())
+  return useCallback(async () => {
+    await router.push(settingsProfile())
   }, [])
 }
 
 export const useEditorSettingsPage = () => {
   const router = useRouter()
   const { settingsEditor } = usePath()
-  return useCallback(() => {
-    router.push(settingsEditor())
+  return useCallback(async () => {
+    await router.push(settingsEditor())
   }, [])
 }

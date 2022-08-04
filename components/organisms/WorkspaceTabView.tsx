@@ -1,5 +1,14 @@
 import TabView from '../atoms/navigation/TabView'
-import { TrashIcon, FavoriteIcon, FolderIcon, MenuIcon, NoteIcon, SearchIcon, LogIcon } from '../atoms/display/Icons'
+import {
+  TrashIcon,
+  FavoriteIcon,
+  FolderIcon,
+  MenuIcon,
+  NoteIcon,
+  SearchIcon,
+  LogIcon,
+  CloseIcon,
+} from '../atoms/display/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
 import IconButton from '../atoms/inputs/IconButton'
@@ -22,26 +31,26 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
   const { title } = useNote()
   const dispatch = useDispatch()
   useEffect(() => {
-    items.forEach((item) => {
+    items.forEach(async (item) => {
       if (item.type === 'folder') {
         const folder = folders.find((folder) => folder.id === item.id)
         if (folder === undefined) {
           // 存在しないitemを閉じる
-          close(item.id)
+          await close(item.id)
         }
       }
       if (item.type === 'note') {
         const note = notes.find((note) => note.id === item.id)
         if (note === undefined) {
           // 存在しないitemを閉じる
-          close(item.id)
+          await close(item.id)
         }
       }
     })
   }, [items, folders, notes, close])
   const handleChangeTab = useCallback(
-    (value: string) => {
-      itemsPage(value)
+    async (value: string) => {
+      await itemsPage(value)
     },
     [itemsPage]
   )
@@ -71,6 +80,11 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             label: { value: folder?.name, defaultValue: 'No Name', plain: true },
             icon: <FolderIcon key={item.id} />,
             plain: true,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         case 'note':
           const note = notes.find((note) => note.id === item.id)
@@ -80,35 +94,65 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             label: title(note),
             icon: <NoteIcon key={item.id} />,
             plain: true,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         case 'search':
           return {
             value: item.id,
             label: { value: 'Search Results' },
             icon: <SearchIcon key={item.id} />,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         case 'favorites':
           return {
             value: item.id,
             label: { value: 'Favorites' },
             icon: <FavoriteIcon key={item.id} />,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         case 'recent':
           return {
             value: item.id,
             label: { value: 'Recent' },
             icon: <LogIcon key={item.id} />,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         case 'trash':
           return {
             value: item.id,
             label: { value: 'Trash' },
             icon: <TrashIcon key={item.id} />,
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         default:
           return {
             value: item.id,
             label: { value: 'UnKnown' },
+            panel: (
+              <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
+                <CloseIcon size={12} />
+              </IconButton>
+            ),
           }
         }
       })}
