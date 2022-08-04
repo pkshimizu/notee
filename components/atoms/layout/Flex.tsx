@@ -31,7 +31,7 @@ type FlexProps = {
   pt?: PaddingSize
   pb?: PaddingSize
   color?: Color
-  children: Component
+  children?: Component
 }
 
 export function FlexColumn(props: FlexProps) {
