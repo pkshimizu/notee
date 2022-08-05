@@ -10,6 +10,7 @@ export type Tab = {
   value: string
   icon?: ReactElement
   label?: LabelText
+  action?: Component
   panel?: Component
 }
 
@@ -49,7 +50,7 @@ export default function TabView({
                 <MuiBox sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
                   {tab.icon}
                   {tab.label && <MuiTypography variant='button'>{t({ ...tab.label, truncate: 20 })}</MuiTypography>}
-                  {tab.panel}
+                  {tab.action}
                 </MuiBox>
               }
               value={tab.value}

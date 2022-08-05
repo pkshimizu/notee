@@ -80,7 +80,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             label: { value: folder?.name, defaultValue: 'No Name', plain: true },
             icon: <FolderIcon key={item.id} />,
             plain: true,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -94,7 +94,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             label: title(note),
             icon: <NoteIcon key={item.id} />,
             plain: true,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -105,7 +105,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: { value: 'Search Results' },
             icon: <SearchIcon key={item.id} />,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -116,7 +116,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: { value: 'Favorites' },
             icon: <FavoriteIcon key={item.id} />,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -127,7 +127,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: { value: 'Recent' },
             icon: <LogIcon key={item.id} />,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -138,7 +138,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
             value: item.id,
             label: { value: 'Trash' },
             icon: <TrashIcon key={item.id} />,
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
@@ -148,7 +148,7 @@ export default function WorkspaceTabView({}: WorkspaceTabViewProps) {
           return {
             value: item.id,
             label: { value: 'UnKnown' },
-            panel: (
+            action: (
               <IconButton label={{ value: 'Close tab' }} onClick={() => close(item.id)}>
                 <CloseIcon size={12} />
               </IconButton>
