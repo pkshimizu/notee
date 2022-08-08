@@ -1,5 +1,5 @@
 import TabView from '../atoms/navigation/TabView'
-import { InfoIcon, LogIcon } from '../atoms/display/Icons'
+import { InfoIcon, LogIcon, TrashIcon } from '../atoms/display/Icons'
 import { FlexColumn, FlexRow } from '../atoms/layout/Flex'
 import Label from '../atoms/display/Label'
 import DateTimeLabel from '../molecules/display/DateTimeLabel'
@@ -73,7 +73,7 @@ export default function NotePropertiesPanel({ note }: NotePropertiesPanelProps) 
           icon: <LogIcon />,
           panel: (
             <FlexColumn>
-              <Button onClick={handleClearLogs}>
+              <Button onClick={handleClearLogs} icon={<TrashIcon />} variant={'text'}>
                 <Label text={{ value: 'Clear logs' }} />
               </Button>
               <List>
